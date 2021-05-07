@@ -1,0 +1,7 @@
+<h1>Login</h1>
+<%= form_tag sessions_path do |form| %>
+    <%= text_field_tag :name, nil, placeholder: "name", class: "form-control form-control-lg mt-3 w300" %>
+    <%= password_field_tag :password, nil, placeholder: "Password", class: "form-control form-control-lg w300 mt-3" %>
+    <br>
+    <%= submit_tag "Submit", class: 'btn btn-lg btn-primary'%>
+<% end %>

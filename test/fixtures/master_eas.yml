@@ -1,0 +1,31 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  lid: 1
+  list: MyString
+  lic: MyString
+  fname: MyString
+  mi: MyString
+  lname: MyString
+  suf: MyString
+  co: MyString
+  add: MyString
+  add2: MyString
+  city: MyString
+  st: MyString
+  zip: MyString
+
+two:
+  lid: 1
+  list: MyString
+  lic: MyString
+  fname: MyString
+  mi: MyString
+  lname: MyString
+  suf: MyString
+  co: MyString
+  add: MyString
+  add2: MyString
+  city: MyString
+  st: MyString
+  zip: MyString

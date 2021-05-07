@@ -1,4 +1,9 @@
 Rails.application.routes.draw do
+  resources :sequoia_customers do collection {post :import}
+    collection do
+      get 'run_update'
+    end
+  end
   resources :master_ea_double_accounts do collection {post :import} end
   resources :master_cpa_double_accounts do collection {post :import} end
   resources :master_eas do collection {post :import} end

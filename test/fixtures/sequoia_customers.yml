@@ -1,0 +1,47 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  s_id: 1
+  order_id: 1
+  uid: 1
+  lic_state: MyString
+  lic_num: MyString
+  exisiting: MyString
+  purchase_s: MyString
+  purchase: 2021-05-06
+  price_s: MyString
+  price: 1
+  product_1: MyString
+  product_2: MyString
+  designation: MyString
+  email: MyString
+  fname: MyString
+  lname: MyString
+  street_1: MyString
+  street_2: MyString
+  city: MyString
+  state: MyString
+  zip: MyString
+
+two:
+  s_id: 1
+  order_id: 1
+  uid: 1
+  lic_state: MyString
+  lic_num: MyString
+  exisiting: MyString
+  purchase_s: MyString
+  purchase: 2021-05-06
+  price_s: MyString
+  price: 1
+  product_1: MyString
+  product_2: MyString
+  designation: MyString
+  email: MyString
+  fname: MyString
+  lname: MyString
+  street_1: MyString
+  street_2: MyString
+  city: MyString
+  state: MyString
+  zip: MyString

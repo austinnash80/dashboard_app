@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_06_210429) do
+ActiveRecord::Schema.define(version: 2021_05_07_055856) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -126,6 +126,33 @@ ActiveRecord::Schema.define(version: 2021_05_06_210429) do
     t.string "zip"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "sequoia_customers", force: :cascade do |t|
+    t.integer "s_id"
+    t.integer "order_id"
+    t.integer "uid"
+    t.string "lic_state"
+    t.string "lic_num"
+    t.string "exisiting"
+    t.string "purchase_s"
+    t.date "purchase"
+    t.string "price_s"
+    t.integer "price"
+    t.string "product_1"
+    t.string "product_2"
+    t.string "designation"
+    t.string "email"
+    t.string "fname"
+    t.string "lname"
+    t.string "street_1"
+    t.string "street_2"
+    t.string "city"
+    t.string "state"
+    t.string "zip"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "existing"
   end
 
   create_table "users", force: :cascade do |t|

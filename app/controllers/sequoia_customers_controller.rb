@@ -37,7 +37,6 @@ class SequoiaCustomersController < ApplicationController
           designation: params['designation'],
           fname: params['fname'],
           lname: params['lname'],
-          # simple fix -> move street_1 to end -> Still may lose unit number from address? okay to mail?
           city: params['city'],
           state: params['state'],
           zip: params['zip'],

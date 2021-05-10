@@ -1,0 +1,130 @@
+<h1 class="text-center">CPA Customer Matching Search</h1>
+<% if params['uid'].present? %>
+  <% sequoia = SequoiaCustomer.find_by(uid: params['uid']) %>
+<% else %>
+  <% uid = SequoiaMember.where.not(uid: @cpa_matches_uid).where.not(uid: @cpa_double_uid).where.not(uid: @cpa_no_matches_uid).where(cpa: true).order(created_at: :desc).limit(1).pluck(:uid) %>
+  <% sequoia = SequoiaCustomer.find_by(uid: uid) %>
+<% end %>
+<div class="m-5">
+  <table class="table">
+    <caption class="caption-top">Search</caption>
+    <thead>
+      <tr class="bg-secondary bg-gradient text-light">
+        <th>UID</th>
+        <th>Lic St</th>
+        <th>Lic Num</th>
+        <th>Purchase</th>
+        <th>Fname</th>
+        <th>Lname</th>
+        <th>Street</th>
+        <th>Street 2</th>
+        <th>City</th>
+        <th>State</th>
+        <th>Zip</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><%= sequoia.uid %></td>
+        <td><%= sequoia.lic_state %></td>
+        <td><%= sequoia.lic_num %></td>
+        <td><%= sequoia.purchase %></td>
+        <td><%= sequoia.fname %></td>
+        <td><%= sequoia.lname %></td>
+        <td><%= sequoia.street_1 %></td>
+        <td><%= sequoia.street_2 %></td>
+        <td><%= sequoia.city %></td>
+        <td><%= sequoia.state %></td>
+        <td><%= sequoia.zip %></td>
+        <% if params['lname'].present? %>
+          <td><%= link_to 'No Match', sequoia_matchings_cpa_customer_matching_path(no_match: 'yes', uid: sequoia.uid), class: 'btn btn-sm btn-danger text-light' %></td>
+        <% else %>
+          <td><%= link_to 'Search', sequoia_matchings_cpa_customer_matching_path(lname: sequoia.lname, uid: sequoia.uid), class: 'btn btn-sm btn-info text-light' %></td>
+        <% end %>
+      </tr>
+    </tbody>
+  </table>
+
+
+
+
+<% if params['lname'].present? %>
+
+<p><a class="btn btn-sm btn-light text-dark" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">Edit Last Name</a></p>
+<div class="collapse" id="collapseExample">
+  <div class="w300">
+    <%= text_field_tag "id", '', class: "lname_field form-control", value: params['lname'] %>
+    <%= link_to 'Search', sequoia_matchings_cpa_customer_matching_path(uid: params['uid']), class: 'search_link' %>
+  </div>
+</div>
+
+  <div class="w300 mb-3 mt-5"><input class="form-control" id="myInput" type="text" placeholder="Filter Table"></div>
+
+  <table class="table table-striped">
+    <thead>
+      <tr class="bg-secondary bg-gradient text-light">
+        <th>LID</th>
+        <th>List</th>
+        <th>Lic</th>
+        <th>Lic St</th>
+        <th>Fname</th>
+        <th>MI</th>
+        <th>Lname</th>
+        <th>Suf</th>
+        <th>CO</th>
+        <th>Address</th>
+        <th>address 2</th>
+        <th>City</th>
+        <th>State</th>
+        <th>Zip</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody id="myTable">
+      <% MasterCpa.where(lname: params['lname'].upcase).order(lid: :asc).all.each do |i| %>
+      <tr>
+        <td><%= i.lid %></td>
+        <td><%= i.list %></td>
+        <td><%= i.lic %></td>
+        <td><%= i.lic_st %></td>
+        <td><%= i.fname %></td>
+        <td><%= i.mi %></td>
+        <td><%= i.lname %></td>
+        <td><%= i.suf %></td>
+        <td><%= i.co %></td>
+        <td><%= i.add %></td>
+        <td><%= i.add2 %></td>
+        <td><%= i.city %></td>
+        <td><%= i.st %></td>
+        <td><%= i.zip %></td>
+        <% if @cpa_matches_lid.include? i.lid %>
+          <td><%= link_to 'Double', sequoia_matchings_cpa_customer_matching_path(double: 'yes', lid: i.lid, uid: sequoia.uid), class: 'btn btn-sm btn-warning text-light' %></td>
+        <% else %>
+          <td><%= link_to 'Match', sequoia_matchings_cpa_customer_matching_path(match: 'yes', lid: i.lid, uid: sequoia.uid), class: 'btn btn-sm btn-primary text-light' %></td>
+        <% end %>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <% end %>
+</div>
+
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    $("#myInput").on("keyup", function() {
+      var value = $(this).val().toLowerCase();
+      $("#myTable tr").filter(function() {
+        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+      });
+    });
+  });
+
+  $(".search_link").click(function() {
+    $(this).attr("href", function() {
+      return this.href + "&lname=" + $('.lname_field').val().toUpperCase();
+      // return this.href + "?zip=" + $('.zip_field').val() + "&lname=" + $('.lname_field').val().toUpperCase() + "&state=" + $('.state_field').val().toUpperCase() + "&no_mail=find";
+    });
+  });
+</script>

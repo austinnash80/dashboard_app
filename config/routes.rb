@@ -26,6 +26,8 @@ Rails.application.routes.draw do
   resources :users
   get 'sequoia_matchings/no_mail_search'
   get 'sequoia_matchings/ea_no_mail_search'
+  get 'sequoia_matchings/cpa_customer_matching'
+  get 'sequoia_matchings/ea_customer_matching'
   get 'pages/home'
   get 'pages/master_lists'
   get 'pages/customer_matching_cpa'

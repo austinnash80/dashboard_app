@@ -26,7 +26,7 @@ class SequoiaMembersController < ApplicationController
     uid = SequoiaMember.pluck(:uid)
 
       SequoiaCustomer.where('order_id > ?', @order_id).where.not(uid: uid).order(id: :ASC).all.each do |i|
-        SequoiaMember.create(uid: i.uid, lname: i.lname, first_purchase: i.purchase, last_purchase: i.purchase, cpa_memberships: 0, ea_memberships: 0, ethics_purchases: 0, afsp_purchases: 0).save
+        SequoiaMember.create(uid: i.uid, lname: i.lname, first_purchase: i.purchase, last_purchase: i.purchase, cpa_memberships: 0, ea_memberships: 0, ethics_purchases: 0, afsp_purchases: 0, other: 0).save
       end
   end
 
@@ -40,7 +40,7 @@ class SequoiaMembersController < ApplicationController
       ethics = SequoiaProductList.where(group: 'ethics').pluck(:product)
       other = SequoiaProductList.where(group: 'upgrade').pluck(:product)
 
-      SequoiaCustomer.where('order_id > ?', @order_id).order(id: :asc).limit(2000).each do |i|
+      SequoiaCustomer.where('order_id > ?', @order_id).order(id: :asc).each do |i|
         member = SequoiaMember.find_by(uid: i.uid)
         if cpa_membership.include? i.product_1
           SequoiaMember.where(uid: i.uid).update_all cpa: true, cpa_memberships: (member.cpa_memberships + 1), last_purchase: i.purchase

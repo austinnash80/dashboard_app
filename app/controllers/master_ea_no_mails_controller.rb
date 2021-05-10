@@ -87,6 +87,6 @@ class MasterEaNoMailsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def master_ea_no_mail_params
-      params.require(:master_ea_no_mail).permit(:lid, :list, :lname, :search_date)
+      params.require(:master_ea_no_mail).permit(:lid, :list, :lname, :search_date, :note)
     end
 end

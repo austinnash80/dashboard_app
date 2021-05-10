@@ -31,7 +31,7 @@
   </thead>
 
   <tbody>
-    <% @master_cpa_no_matches.limit(100).each do |master_cpa_no_match| %>
+    <% @master_cpa_no_matches.limit(100).order(created_at: :desc).each do |master_cpa_no_match| %>
       <tr>
         <td><%= master_cpa_no_match.uid %></td>
         <td><%= master_cpa_no_match.list %></td>

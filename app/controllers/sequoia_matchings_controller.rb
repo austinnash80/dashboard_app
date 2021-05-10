@@ -1,0 +1,3 @@
+class SequoiaMatchingsController < ApplicationController
+
+end

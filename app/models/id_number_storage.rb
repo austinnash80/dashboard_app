@@ -1,0 +1,2 @@
+class IdNumberStorage < ApplicationRecord
+end

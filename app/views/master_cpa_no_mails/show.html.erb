@@ -1,5 +1,7 @@
 <p id="notice"><%= notice %></p>
 
+<% master_list = MasterCpa.find_by(lid: @master_cpa_no_mail.lid) %>
+
 <p>
   <strong>Lid:</strong>
   <%= @master_cpa_no_mail.lid %>
@@ -11,14 +13,62 @@
 </p>
 
 <p>
+  <strong>Lic State:</strong>
+  <%= master_list.lic_st %>
+</p>
+<p>
+  <strong>Lic:</strong>
+  <%= master_list.lic %>
+</p>
+<p>
+  <strong>Fname:</strong>
+  <%= master_list.fname %>
+</p>
+<p>
+  <strong>Middle:</strong>
+  <%= master_list.mi %>
+</p>
+<p>
   <strong>Lname:</strong>
-  <%= @master_cpa_no_mail.lname %>
+  <%= master_list.lname %>
+</p>
+<p>
+  <strong>Suf:</strong>
+  <%= master_list.suf %>
+</p>
+<p>
+  <strong>Co:</strong>
+  <%= master_list.co %>
+</p>
+<p>
+  <strong>Add:</strong>
+  <%= master_list.add %>
+</p>
+<p>
+  <strong>Add2:</strong>
+  <%= master_list.add2 %>
+</p>
+<p>
+  <strong>City:</strong>
+  <%= master_list.city %>
+</p>
+<p>
+  <strong>State:</strong>
+  <%= master_list.st %>
+</p>
+<p>
+  <strong>Zip:</strong>
+  <%= master_list.zip %>
 </p>
 
 <p>
   <strong>Search date:</strong>
   <%= @master_cpa_no_mail.search_date %>
 </p>
+<p>
+  <strong>Notes:</strong>
+  <%= @master_cpa_no_mail.note %>
+</p>
 
-<%= link_to 'Edit', edit_master_cpa_no_mail_path(@master_cpa_no_mail) %> |
+<%= link_to 'Edit/Add Note', edit_master_cpa_no_mail_path(@master_cpa_no_mail) %> |
 <%= link_to 'Back', master_cpa_no_mails_path %>

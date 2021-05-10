@@ -1,0 +1,64 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Uid:</strong>
+  <%= @sequoia_member.uid %>
+</p>
+
+<p>
+  <strong>Lname:</strong>
+  <%= @sequoia_member.lname %>
+</p>
+
+<p>
+  <strong>First purchase:</strong>
+  <%= @sequoia_member.first_purchase %>
+</p>
+
+<p>
+  <strong>Last purchase:</strong>
+  <%= @sequoia_member.last_purchase %>
+</p>
+
+<p>
+  <strong>Cpa:</strong>
+  <%= @sequoia_member.cpa %>
+</p>
+
+<p>
+  <strong>Cpa memberships:</strong>
+  <%= @sequoia_member.cpa_memberships %>
+</p>
+
+<p>
+  <strong>Ea:</strong>
+  <%= @sequoia_member.ea %>
+</p>
+
+<p>
+  <strong>Memberships:</strong>
+  <%= @sequoia_member.memberships %>
+</p>
+
+<p>
+  <strong>Afsp:</strong>
+  <%= @sequoia_member.afsp %>
+</p>
+
+<p>
+  <strong>Afsp purchases:</strong>
+  <%= @sequoia_member.afsp_purchases %>
+</p>
+
+<p>
+  <strong>Ethics:</strong>
+  <%= @sequoia_member.ethics %>
+</p>
+
+<p>
+  <strong>Ethics purchases:</strong>
+  <%= @sequoia_member.ethics_purchases %>
+</p>
+
+<%= link_to 'Edit', edit_sequoia_member_path(@sequoia_member) %> |
+<%= link_to 'Back', sequoia_members_path %>

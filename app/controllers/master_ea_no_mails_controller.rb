@@ -16,6 +16,11 @@ class MasterEaNoMailsController < ApplicationController
       format.html
       format.csv { send_data @master_ea_no_mails.to_csv, filename: "Sequoia-Master-EA-No-Mail-#{Date.today}.csv" }
     end
+
+    # ADD NEW NO MAIL FROM SEARCH (Sequoia_matchings/ea_no_mail)
+    if params['match'] == 'yes'
+      MasterEaNoMail.create(lid: params['lid'], list: params['list'], lname: params['lname'], search_date: Date.today).save
+    end
   end
 
   # GET /master_ea_no_mails/1 or /master_ea_no_mails/1.json

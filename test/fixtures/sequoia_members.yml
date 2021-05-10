@@ -1,0 +1,29 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  uid: 1
+  lname: MyString
+  first_purchase: 2021-05-07
+  last_purchase: 2021-05-07
+  cpa: false
+  cpa_memberships: 1
+  ea: false
+  memberships: 1
+  afsp: false
+  afsp_purchases: 1
+  ethics: false
+  ethics_purchases: 1
+
+two:
+  uid: 1
+  lname: MyString
+  first_purchase: 2021-05-07
+  last_purchase: 2021-05-07
+  cpa: false
+  cpa_memberships: 1
+  ea: false
+  memberships: 1
+  afsp: false
+  afsp_purchases: 1
+  ethics: false
+  ethics_purchases: 1

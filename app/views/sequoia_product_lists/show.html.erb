@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Product:</strong>
+  <%= @sequoia_product_list.product %>
+</p>
+
+<p>
+  <strong>Who:</strong>
+  <%= @sequoia_product_list.who %>
+</p>
+
+<p>
+  <strong>Type:</strong>
+  <%= @sequoia_product_list.type %>
+</p>
+
+<%= link_to 'Edit', edit_sequoia_product_list_path(@sequoia_product_list) %> |
+<%= link_to 'Back', sequoia_product_lists_path %>

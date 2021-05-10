@@ -1,5 +1,7 @@
 class MasterCpaNoMail < ApplicationRecord
   validates :lid, presence: true, uniqueness: true
+  has_one :master_cpa, foreign_key: 'lid'
+
 
   def self.my_import(file)
     batch,batch_size = [], 2_000

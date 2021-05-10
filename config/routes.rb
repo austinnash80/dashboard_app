@@ -1,4 +1,12 @@
 Rails.application.routes.draw do
+  resources :sequoia_product_lists do collection {post :import} end
+  resources :id_number_storages
+  resources :sequoia_members do collection {post :import}
+    collection do
+      get 'run_update'
+      get 'run_update_2'
+    end
+  end
   resources :sequoia_customers do collection {post :import}
     collection do
       get 'run_update'
@@ -16,8 +24,11 @@ Rails.application.routes.draw do
   resources :master_cpa_matches do collection {post :import} end
   resources :sessions, :only => [:create, :destroy]
   resources :users
+  get 'sequoia_matchings/no_mail_search'
+  get 'sequoia_matchings/ea_no_mail_search'
   get 'pages/home'
   get 'pages/master_lists'
+  get 'pages/customer_matching_cpa'
   root :to => 'pages#home'              # Replace this with whatever you want your root_path to be.
                                         # This path is where unauthorized users will be redirected_to.
   get '/login' => 'sessions#new'         # This will be our sign-in page.

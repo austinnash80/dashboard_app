@@ -1,0 +1,95 @@
+<h1 class="text-center">No Mails Matching Search</h1>
+<p class="text-center"><%= link_to 'View Current No Mail List', master_cpa_no_mails_path %></p>
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">CPA No Mail Search</button>
+
+<!-- Modal No Mail CPA Modal-->
+<div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">CPA No Mail Search</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <%= text_field_tag "id", '', placeholder: 'Search Last Name', class: "lname_field form-control" %>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <%= link_to 'Search', sequoia_matchings_no_mail_search_path(), class: 'search_link btn btn-primary' %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<% if params['lname'].present?%>
+<div class="w300 m-5"><input class="form-control" id="myInput" type="text" placeholder="Filter Table"></div>
+<div class="m-5">
+<table class="table">
+  <thead>
+    <tr>
+      <th>LID</th>
+      <th>List</th>
+      <th>lic St</th>
+      <th>lic num</th>
+      <th>Fname</th>
+      <th>MI</th>
+      <th>Lname</th>
+      <th>Suf</th>
+      <th>CO</th>
+      <th>Add</th>
+      <th>Add2</th>
+      <th>City</th>
+      <th>State</th>
+      <th>Zip</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody id="myTable">
+    <% no_mail_lid = MasterCpaNoMail.pluck(:lid) %>
+    <% MasterCpa.where(lname: params['lname']).all.each do |i| %>
+    <tr>
+      <td><%= i.lid %></td>
+      <td><%= i.list %></td>
+      <td><%= i.lic_st %></td>
+      <td><%= i.lic %></td>
+      <td><%= i.fname %></td>
+      <td><%= i.mi %></td>
+      <td><%= i.lname %></td>
+      <td><%= i.suf %></td>
+      <td><%= i.co %></td>
+      <td><%= i.add %></td>
+      <td><%= i.add2 %></td>
+      <td><%= i.city %></td>
+      <td><%= i.st %></td>
+      <td><%= i.zip %></td>
+      <% if no_mail_lid.include? i.lid %>
+        <td><%= link_to 'On List', master_cpa_no_mails_path(), class: 'btn btn-sm btn-info' %></td>
+      <% else %>
+        <td><%= link_to 'No Mail', master_cpa_no_mails_path(match: 'yes', lid: i.lid, list: i.list, lname: i.lname), notice: "#{i.lname} has been add to the CPA no mail list." , class: 'btn btn-sm btn-warning' %></td>
+      <% end %>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+</div>
+<% end %>
+
+<script>
+$(".search_link").click(function() {
+  $(this).attr("href", function() {
+    return this.href + "?lname=" + $('.lname_field').val().toUpperCase();
+    // return this.href + "?zip=" + $('.zip_field').val() + "&lname=" + $('.lname_field').val().toUpperCase() + "&state=" + $('.state_field').val().toUpperCase() + "&no_mail=find";
+  });
+});
+
+$(document).ready(function(){
+  $("#myInput").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("#myTable tr").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+});
+</script>

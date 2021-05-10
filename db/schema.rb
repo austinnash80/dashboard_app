@@ -10,10 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_07_055856) do
+ActiveRecord::Schema.define(version: 2021_05_08_001823) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "id_number_storages", force: :cascade do |t|
+    t.integer "sequoia_members_order_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
 
   create_table "master_cpa_double_accounts", force: :cascade do |t|
     t.integer "lid"
@@ -42,6 +48,7 @@ ActiveRecord::Schema.define(version: 2021_05_07_055856) do
     t.date "search_date"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.text "note"
   end
 
   create_table "master_cpa_no_matches", force: :cascade do |t|
@@ -153,6 +160,32 @@ ActiveRecord::Schema.define(version: 2021_05_07_055856) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "existing"
+  end
+
+  create_table "sequoia_members", force: :cascade do |t|
+    t.integer "uid"
+    t.string "lname"
+    t.date "first_purchase"
+    t.date "last_purchase"
+    t.boolean "cpa"
+    t.integer "cpa_memberships"
+    t.boolean "ea"
+    t.integer "ea_memberships"
+    t.boolean "afsp"
+    t.integer "afsp_purchases"
+    t.boolean "ethics"
+    t.integer "ethics_purchases"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.integer "other"
+  end
+
+  create_table "sequoia_product_lists", force: :cascade do |t|
+    t.string "product"
+    t.string "who"
+    t.string "group"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "users", force: :cascade do |t|

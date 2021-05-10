@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<h1 class="text-center">Id Number Storages</h1>
+
+<div class="m-5">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Sequoia members order</th>
+        <th colspan="3"></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @id_number_storages.each do |id_number_storage| %>
+        <tr>
+          <td><%= id_number_storage.sequoia_members_order_id %></td>
+          <td><%= link_to 'Show', id_number_storage %></td>
+          <td><%= link_to 'Edit', edit_id_number_storage_path(id_number_storage) %></td>
+          <!-- <td><%= link_to 'Destroy', id_number_storage, method: :delete, data: { confirm: 'Are you sure?' } %></td> -->
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

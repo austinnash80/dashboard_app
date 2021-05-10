@@ -1,0 +1,46 @@
+<p id="notice"><%= notice %></p>
+
+<h1 class="text-center">Sequoia Product Lists</h1>
+<p class="fs-4">Upload New List</p>
+  <%= form_tag import_sequoia_product_lists_path, multipart: true do %>
+  <%= file_field_tag :file, class: 'btn btn-sm btn-light' %>
+  <%= submit_tag 'Upload', class: 'btn btn-sm btn-primary' %>
+<% end %>
+
+<% if params['remove_all'] == 'yes' %>
+  <p><%= link_to "Confirm Delete", sequoia_product_lists_path(remove_all: 'yes', confirm: 'yes'), class: 'btn btn-sm btn-danger mt-4' %></p>
+<% else %>
+  <p><%= link_to "Remove All Records", sequoia_product_lists_path(remove_all: 'yes'), class: 'btn btn-sm btn-warning mt-4' %></p>
+<% end %>
+
+<p><%= link_to 'Export List (csv)', sequoia_product_lists_path('csv'), class: 'btn btn-sm btn-secondary mt-2' %></p>
+
+
+<div class="m-5">
+
+<table class="table">
+<thead>
+<caption class="caption-top">Total Records: <%= number_with_delimiter(SequoiaProductList.count) %></caption>
+<tr>
+      <th>Product</th>
+      <th>Who</th>
+      <th>Group</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @sequoia_product_lists.each do |sequoia_product_list| %>
+      <tr>
+        <td><%= sequoia_product_list.product %></td>
+        <td><%= sequoia_product_list.who %></td>
+        <td><%= sequoia_product_list.group %></td>
+        <td><%= link_to 'Show', sequoia_product_list %></td>
+        <td><%= link_to 'Edit', edit_sequoia_product_list_path(sequoia_product_list) %></td>
+        <td><%= link_to 'Destroy', sequoia_product_list, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+</div>
+<%= link_to 'New Sequoia Product List', new_sequoia_product_list_path %>

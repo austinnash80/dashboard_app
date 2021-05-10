@@ -1,0 +1,24 @@
+
+<%= simple_form_for(@sequoia_member) do |f| %>
+  <%= f.error_notification %>
+  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+  <div class="form-inputs">
+    <%= f.input :uid %>
+    <%= f.input :lname %>
+    <%= f.input :first_purchase %>
+    <%= f.input :last_purchase %>
+    <%= f.input :cpa %>
+    <%= f.input :cpa_memberships %>
+    <%= f.input :ea %>
+    <%= f.input :memberships %>
+    <%= f.input :afsp %>
+    <%= f.input :afsp_purchases %>
+    <%= f.input :ethics %>
+    <%= f.input :ethics_purchases %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

@@ -15,6 +15,11 @@ class MasterCpaNoMailsController < ApplicationController
       format.html
       format.csv { send_data @master_cpa_no_mails.to_csv, filename: "Sequoia-CPA-No-Mail-#{Date.today}.csv" }
     end
+
+    # ADD NEW NO MAIL FROM SEARCH (Sequoia_matchings/cpa_no_mail)
+    if params['match'] == 'yes'
+      MasterCpaNoMail.create(lid: params['lid'], list: params['list'], lname: params['lname'], search_date: Date.today).save
+    end
   end
 
   # GET /master_cpa_no_mails/1 or /master_cpa_no_mails/1.json
@@ -80,6 +85,6 @@ class MasterCpaNoMailsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def master_cpa_no_mail_params
-      params.require(:master_cpa_no_mail).permit(:lid, :list, :lname, :search_date)
+      params.require(:master_cpa_no_mail).permit(:lid, :list, :lname, :search_date, :note)
     end
 end

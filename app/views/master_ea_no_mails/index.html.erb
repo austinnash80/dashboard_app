@@ -2,6 +2,9 @@
 
 <h1 class="text-center">Master EA No Mails</h1>
 
+<p class="text-center"><%= link_to 'Search to add new', sequoia_matchings_ea_no_mail_search_path() %></p>
+
+
 <p class="fs-4">Upload New List</p>
   <%= form_tag import_master_ea_no_mails_path, multipart: true do %>
   <%= file_field_tag :file, class: 'btn btn-sm btn-light' %>
@@ -16,29 +19,35 @@
 
 <p><%= link_to 'Export List (csv)', master_ea_no_mails_path('csv'), class: 'btn btn-sm btn-secondary mt-2' %></p>
 
+<div class="w300 m-5"><input class="form-control" id="myInput" type="text" placeholder="Filter Table"></div>
 
 <div class="m-5">
 
 <table class="table">
   <thead>
-    <caption class="caption-top">Total Records: <%= number_with_delimiter(MasterEaNoMail.count) %> | Display Limit: 100</caption>
+    <caption class="caption-top">Total Records: <%= number_with_delimiter(MasterEaNoMail.count) %></caption>
     <tr>
       <th>Lid</th>
       <th>List</th>
+      <th>Fname</th>
       <th>Lname</th>
+      <th>zip</th>
       <th>Search date</th>
       <th colspan="3"></th>
     </tr>
   </thead>
 
-  <tbody>
-    <% @master_ea_no_mails.limit(100).each do |master_ea_no_mail| %>
+  <tbody id="myTable">
+    <% @master_ea_no_mails.order(created_at: :desc).each do |master_ea_no_mail| %>
+    <% master_list = MasterEa.find_by(lid: master_ea_no_mail.lid) %>
       <tr>
         <td><%= master_ea_no_mail.lid %></td>
         <td><%= master_ea_no_mail.list %></td>
-        <td><%= master_ea_no_mail.lname %></td>
+        <td><%= master_list.fname %></td>
+        <td><%= master_list.lname %></td>
+        <td><%= master_list.zip %></td>
         <td><%= master_ea_no_mail.search_date %></td>
-        <td><%= link_to 'Show', master_ea_no_mail %></td>
+        <td><%= link_to 'More Info', master_ea_no_mail, class: 'btn btn-info btn-sm' %></td>
         <td><%= link_to 'Edit', edit_master_ea_no_mail_path(master_ea_no_mail) %></td>
         <td><%= link_to 'Destroy', master_ea_no_mail, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
@@ -47,3 +56,14 @@
 </table>
 
 </div>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    $("#myInput").on("keyup", function() {
+      var value = $(this).val().toLowerCase();
+      $("#myTable tr").filter(function() {
+        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+      });
+    });
+  });
+</script>

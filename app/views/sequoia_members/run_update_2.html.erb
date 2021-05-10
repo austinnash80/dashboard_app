@@ -1,0 +1,42 @@
+<h1 class="text-center">Sequoia Members - Run Update 2 (purchases)</h1>
+
+<% SequoiaMember.limit(10).all.each do |i| %>
+  <% customer = SequoiaCustomer.find_by(uid: i.uid) %>
+  <p><%= customer.fname %></p>
+<% end %>
+
+
+<p>Order ID Counter: <%= number_with_delimiter(@order_id) %></p>
+<div class="m-5">
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>CPA</th>
+      <th>CPA Memberships</th>
+      <th>EA</th>
+      <th>EA Memberships</th>
+      <th>Ethics</th>
+      <th>Ehics Purchases</th>
+      <th>AFSP</th>
+      <th>AFSP Purchases</th>
+      <th>Other</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><%= number_with_delimiter(SequoiaMember.where(cpa: true).count) %></td>
+      <td><%= number_with_delimiter(SequoiaMember.sum(:cpa_memberships)) %></td>
+      <td><%= number_with_delimiter(SequoiaMember.where(ea: true).count) %></td>
+      <td><%= number_with_delimiter(SequoiaMember.sum(:ea_memberships)) %></td>
+      <td><%= number_with_delimiter(SequoiaMember.where(ethics: true).count) %></td>
+      <td><%= number_with_delimiter(SequoiaMember.sum(:ethics_purchases)) %></td>
+      <td><%= number_with_delimiter(SequoiaMember.where(afsp: true).count) %></td>
+      <td><%= number_with_delimiter(SequoiaMember.sum(:afsp_purchases)) %></td>
+      <td><%= number_with_delimiter(SequoiaMember.sum(:other)) %></td>
+    </tr>
+  </tbody>
+
+</table>
+
+</div>

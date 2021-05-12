@@ -10,15 +10,34 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_10_190001) do
+ActiveRecord::Schema.define(version: 2021_05_11_180312) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "daily_sales", force: :cascade do |t|
+    t.date "day"
+    t.string "year"
+    t.string "month"
+    t.string "day_of_week"
+    t.integer "sales"
+    t.integer "cpa_full_price"
+    t.integer "cpa_renewal_price"
+    t.integer "ea_full_price"
+    t.integer "ea_renewal_price"
+    t.integer "ethics"
+    t.integer "afsp"
+    t.integer "other"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
 
   create_table "id_number_storages", force: :cascade do |t|
     t.integer "sequoia_members_order_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "daily_sales_id"
+    t.integer "daily_sales_sequoia_customer_order_id"
   end
 
   create_table "master_cpa_double_accounts", force: :cascade do |t|
@@ -187,6 +206,8 @@ ActiveRecord::Schema.define(version: 2021_05_10_190001) do
     t.string "group"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.boolean "full_price"
+    t.boolean "renewal_price"
   end
 
   create_table "users", force: :cascade do |t|

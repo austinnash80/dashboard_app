@@ -2,7 +2,7 @@
 <p class="text-center"><%= link_to 'View Current No Mail List', master_ea_no_mails_path %></p>
 
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
+<button type="button" class="btn btn-primary text-light" data-bs-toggle="modal" data-bs-target="#myModal">
   EA No Mail Search
 </button>
 
@@ -17,8 +17,8 @@
         <%= text_field_tag "id", '', placeholder: 'Search Last Name', class: "lname_field form-control" %>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <%= link_to 'Search', sequoia_matchings_ea_no_mail_search_path(), class: 'search_link btn btn-primary' %>
+        <button type="button" class="btn btn-secondary text-light" data-bs-dismiss="modal">Close</button>
+        <%= link_to 'Search', sequoia_matchings_ea_no_mail_search_path(), class: 'search_link btn btn-primary text-light' %>
       </div>
     </div>
   </div>

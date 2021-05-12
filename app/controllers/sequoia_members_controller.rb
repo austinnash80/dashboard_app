@@ -52,7 +52,11 @@ class SequoiaMembersController < ApplicationController
           SequoiaMember.where(uid: i.uid).update_all other: (member.other + 1), last_purchase: i.purchase
         end
 
-        if ethics.include? i.product_1 || i.product_2
+        if ethics.include? i.product_1
+          SequoiaMember.where(uid: i.uid).update_all ethics: true, ethics_purchases: (member.ethics_purchases + 1), last_purchase: i.purchase
+        end
+
+        if ethics.include? i.product_2
           SequoiaMember.where(uid: i.uid).update_all ethics: true, ethics_purchases: (member.ethics_purchases + 1), last_purchase: i.purchase
         end
 

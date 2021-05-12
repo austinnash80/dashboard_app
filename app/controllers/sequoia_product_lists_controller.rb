@@ -81,6 +81,6 @@ class SequoiaProductListsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def sequoia_product_list_params
-      params.require(:sequoia_product_list).permit(:product, :who, :group)
+      params.require(:sequoia_product_list).permit(:product, :who, :group, :full_price, :renewal_price)
     end
 end

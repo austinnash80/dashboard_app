@@ -101,7 +101,7 @@
         <% if @cpa_matches_lid.include? i.lid %>
           <td><%= link_to 'Double', sequoia_matchings_cpa_customer_matching_path(double: 'yes', lid: i.lid, uid: sequoia.uid), class: 'btn btn-sm btn-warning text-light' %></td>
         <% else %>
-          <td><%= link_to 'Match', sequoia_matchings_cpa_customer_matching_path(match: 'yes', lid: i.lid, uid: sequoia.uid), class: 'btn btn-sm btn-primary text-light' %></td>
+          <td><%= link_to 'Match', sequoia_matchings_cpa_customer_matching_path(match: 'yes', lid: i.lid, uid: sequoia.uid), class: 'btn btn-sm btn-primary text-light text-light' %></td>
         <% end %>
       </tr>
       <% end %>

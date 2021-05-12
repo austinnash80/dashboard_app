@@ -1,0 +1,24 @@
+
+<%= simple_form_for(@daily_sale) do |f| %>
+  <%= f.error_notification %>
+  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+  <div class="form-inputs">
+    <%= f.input :day %>
+    <%= f.input :year %>
+    <%= f.input :month %>
+    <%= f.input :day_of_week %>
+    <%= f.input :sales %>
+    <%= f.input :cpa_full_price %>
+    <%= f.input :cpa_renewal_price %>
+    <%= f.input :ea_full_price %>
+    <%= f.input :ea_renewal_price %>
+    <%= f.input :ethics %>
+    <%= f.input :afsp %>
+    <%= f.input :other %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

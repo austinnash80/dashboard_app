@@ -7,6 +7,8 @@
     <thead>
       <tr>
         <th>Sequoia members order</th>
+        <th>Daily Sales Order Id</th>
+        <th>Daily Sales Sequoia Customer Order Id</th>
         <th colspan="3"></th>
       </tr>
     </thead>
@@ -15,6 +17,8 @@
       <% @id_number_storages.each do |id_number_storage| %>
         <tr>
           <td><%= id_number_storage.sequoia_members_order_id %></td>
+          <td><%= id_number_storage.daily_sales_id %></td>
+          <td><%= id_number_storage.daily_sales_sequoia_customer_order_id %></td>
           <td><%= link_to 'Show', id_number_storage %></td>
           <td><%= link_to 'Edit', edit_id_number_storage_path(id_number_storage) %></td>
           <!-- <td><%= link_to 'Destroy', id_number_storage, method: :delete, data: { confirm: 'Are you sure?' } %></td> -->

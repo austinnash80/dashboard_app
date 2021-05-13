@@ -1,0 +1,119 @@
+<h1 class="text-center">Admin Page</h1>
+
+<div class="m-5">
+  <h3>Updates to Run</h3>
+  <ul>
+    <li><%= link_to 'Sequoia Customers', sequoia_customers_path, target: 'blank' %></li>
+    <li><%= link_to 'Sequoia Members', sequoia_members_path, target: 'blank' %></li>
+    <li><%= link_to 'Daily Sales', daily_sales_path, target: 'blank' %></li>
+  </ul>
+
+
+</div>
+
+<div class="m-5">
+  <h3 class="">All Tables</h3>
+  <table class="table table-striped">
+    <thead>
+      <tr class="bg-secondary bg-gradient text-light">
+        <th>Table</th>
+        <th>Count</th>
+        <th>Last Update</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><%= link_to 'Daily Sales', daily_sales_path %></td>
+        <td><%= number_to_currency(DailySale.sum(:sales) / 100, precision: 0) %></td>
+        <td><%= DailySale.count > 0 ? (DailySale.pluck(:updated_at).max).strftime('%Y-%m-%d') : '' %></td>
+        <td>Calculates sales by day using the orders from the SequoiaCustomer table</td>
+      </tr>
+      <tr>
+        <td><%= link_to 'Master CPA', master_cpas_path %></td>
+        <td><%= number_with_delimiter(MasterCpa.count) %></td>
+        <td><%=  MasterCpa.count > 0 ? (MasterCpa.last(1).pluck(:updated_at))[0].strftime('%Y-%m-%d') : '' %></td>
+        <td>Full master list from Steve, updated 2-3 times per year</td>
+      </tr>
+      <tr>
+        <td><%= link_to 'Master CPA Match', master_cpa_matches_path %></td>
+        <td><%= number_with_delimiter(MasterCpaMatch.count) %></td>
+        <td><%= MasterCpaMatch.count > 0 ? (MasterCpaMatch.pluck(:updated_at).max).strftime('%Y-%m-%d') : '' %></td>
+        <td>Matches customers to the MasterCPA table. Uses SequoiaMembers table and MasterCPA</td>
+      </tr>
+      <tr>
+        <td><%= link_to 'Master CPA No Match', master_cpa_no_matches_path %></td>
+        <td><%= number_with_delimiter(MasterCpaNoMatch.count) %></td>
+        <td><%= MasterCpaNoMatch.count > 0 ? (MasterCpaNoMatch.pluck(:updated_at).max).strftime('%Y-%m-%d') : '' %></td>
+        <td>The CPA customers that were not found when trying to match to MasterCPA table</td>
+      </tr>
+      <tr>
+        <td><%= link_to 'Master CPA Double Account', master_cpa_double_accounts_path %></td>
+        <td><%= number_with_delimiter(MasterCpaDoubleAccount.count) %></td>
+        <td><%= MasterCpaDoubleAccount.count > 0 ? (MasterCpaDoubleAccount.pluck(:updated_at).max).strftime('%Y-%m-%d') : '' %></td>
+        <td>A CPA that has 2 or more accounts matched with a single license from the MasterCPA table</td>
+      </tr>
+      <tr>
+        <td><%= link_to 'Master CPA No Mail', master_cpa_no_mails_path %></td>
+        <td><%= number_with_delimiter(MasterCpaNoMail.count) %></td>
+        <td><%= MasterCpaNoMail.count > 0 ? (MasterCpaNoMail.pluck(:updated_at).max).strftime('%Y-%m-%d') : '' %></td>
+        <td>CPA's who request off the MasterCPA mailing list</td>
+      </tr>
+      <tr>
+        <td><%= link_to 'Master EA', master_eas_path %></td>
+        <td><%= number_with_delimiter(MasterEa.count) %></td>
+        <td><%= MasterEa.count > 0 ? (MasterEa.last(1).pluck(:updated_at))[0].strftime('%Y-%m-%d') : '' %></td>
+        <td>Full master list from Steve, updated 2-3 times per year</td>
+      </tr>
+      <tr>
+        <td><%= link_to 'Master EA Match', master_ea_matches_path %></td>
+        <td><%= number_with_delimiter(MasterEaMatch.count) %></td>
+        <td><%= MasterEaMatch.count > 0 ? (MasterEaMatch.pluck(:updated_at).max).strftime('%Y-%m-%d') : '' %></td>
+        <td>Matching Sequoia EA customers to the MasterEA table data</td>
+      </tr>
+      <tr>
+        <td><%= link_to 'Master EA No Match', master_ea_no_matches_path %></td>
+        <td><%= number_with_delimiter(MasterEaNoMatch.count) %></td>
+        <td><%= MasterEaNoMatch.count > 0 ? (MasterEaNoMatch.pluck(:updated_at).max).strftime('%Y-%m-%d') : '' %></td>
+        <td>Customers that could not be found in the MasterEA table - SequoiaMember table to seperate CPA/EA</td>
+      </tr>
+      <tr>
+        <td><%= link_to 'Master EA Double Account', master_ea_double_accounts_path %></td>
+        <td><%= number_with_delimiter(MasterEaDoubleAccount.count) %></td>
+        <td><%= MasterEaDoubleAccount.count > 0 ? (MasterEaDoubleAccount.pluck(:updated_at).max).strftime('%Y-%m-%d') : '' %></td>
+        <td>An EA that has 2 or more accounts matched with a single license from the MasterCPA table</td>
+      </tr>
+      <tr>
+        <td><%= link_to 'Master EA No Mail', master_ea_no_mails_path %></td>
+        <td><%= number_with_delimiter(MasterEaNoMail.count) %></td>
+        <td><%= MasterEaNoMail.count > 0 ? (MasterEaNoMail.pluck(:updated_at).max).strftime('%Y-%m-%d') : '' %></td>
+        <td>EA's who requests off the MasterEA mailing list</td>
+      </tr>
+      <tr>
+        <td><%= link_to 'Sequoia Customers', sequoia_customers_path %></td>
+        <td><%= number_with_delimiter(SequoiaCustomer.count) %></td>
+        <td><%= SequoiaCustomer.count > 0 ? (SequoiaCustomer.pluck(:updated_at).max).strftime('%Y-%m-%d') : '' %></td>
+        <td>Data from SequoiaCPE.com. Has every Sequoia Order</td>
+      </tr>
+      <tr>
+        <td><%= link_to 'Sequoia Members', sequoia_members_path %></td>
+        <td><%= number_with_delimiter(SequoiaMember.count) %></td>
+        <td><%= SequoiaMember.count > 0 ? (SequoiaMember.pluck(:updated_at).max).strftime('%Y-%m-%d') : '' %></td>
+        <td>Populated by SequoiaCustomer table - Unique UIDs shows how many purchases each customer has made.</td>
+      </tr>
+      <tr>
+        <td><%= link_to 'Sequoia Product List', sequoia_product_lists_path %></td>
+        <td><%= number_with_delimiter(SequoiaProductList.count) %></td>
+        <td><%= SequoiaProductList.count > 0 ? (SequoiaProductList.pluck(:updated_at).max).strftime('%Y-%m-%d') : '' %></td>
+        <td>Lsit of all Sequoia product types. Used for SequoiaMember and DailySales table to determin CPA/EA/Ethics etc.</td>
+      </tr>
+      <tr>
+        <td><%= link_to 'User', users_path %></td>
+        <td><%= number_with_delimiter(User.count) %></td>
+        <td><%= User.count > 0 ? (User.pluck(:updated_at).max).strftime('%Y-%m-%d') : '' %></td>
+        <td>All Users on the site</td>
+      </tr>
+    </tbody>
+
+  </table>
+</div>

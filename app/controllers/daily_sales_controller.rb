@@ -28,15 +28,19 @@ class DailySalesController < ApplicationController
         ethics = SequoiaProductList.where(group: 'ethics').pluck(:product)
         other = SequoiaProductList.where(group: 'upgrade').pluck(:product)
 
-        order_id = IdNumberStorage.pluck(:daily_sales_sequoia_customer_order_id)[0]
+        order_id = IdNumberStorage.pluck(:daily_sales_sequoia_customer_order_id)
         daily_sales_id = IdNumberStorage.pluck(:daily_sales_id)[0]
 
         # Use ID as the start number = id_number_storages
-        # date_range = (Date.parse('2013-09-15')..Date.parse('2014-12-31'))
+        # date_range = (Date.parse('2013-09-04')..Date.parse('2021-05-05'))
 
-        SequoiaCustomer.order(order_id: :asc).where('order_id > ?', order_id).each do |i|
+        SequoiaCustomer.where.not(order_id: order_id).all.each do |i|
+        # SequoiaCustomer.order(order_id: :asc).where.not(order_id: order_id).all.each do |i|
+        # SequoiaCustomer.order(order_id: :asc).where('order_id > ?', order_id).each do |i|
           day = DailySale.find_by(day: i.purchase)
-          DailySale.where('id > ?', daily_sales_id).where(id: day.id).update_all sales: day.sales + i.price
+
+          DailySale.where(id: day.id).update_all sales: day.sales + i.price
+          # DailySale.where('id > ?', daily_sales_id).where(id: day.id).update_all sales: day.sales + i.price
 
           if cpa_new.include? i.product_1
             DailySale.where(id: day.id).update_all cpa_full_price: day.cpa_full_price + 1
@@ -58,8 +62,8 @@ class DailySalesController < ApplicationController
             DailySale.where(id: day.id).update_all ethics: day.ethics + 1
           end
 
-          IdNumberStorage.update_all daily_sales_id: day.id
-          IdNumberStorage.update_all daily_sales_sequoia_customer_order_id: i.order_id
+          IdNumberStorage.create(daily_sales_sequoia_customer_order_id: i.order_id).save
+          IdNumberStorage.update_all daily_sales_id: i.id
 
         end
         redirect_to daily_sales_path(), notice: 'Update Complete'

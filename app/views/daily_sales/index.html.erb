@@ -63,6 +63,7 @@
         <!-- <td><%= link_to 'Show', daily_sale %></td> -->
         <td><%= link_to 'Edit', edit_daily_sale_path(daily_sale) %></td>
         <!-- <td><%= link_to 'Destroy', daily_sale, method: :delete, data: { confirm: 'Are you sure?' } %></td> -->
+        <td class="fw-bold"><%= daily_sale.ea_full_price + daily_sale.ea_renewal_price + daily_sale.cpa_full_price + daily_sale.cpa_renewal_price + daily_sale.ethics + daily_sale.afsp + daily_sale.other%></td>
       </tr>
     <% end %>
   </tbody>

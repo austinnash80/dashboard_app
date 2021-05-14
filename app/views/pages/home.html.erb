@@ -15,11 +15,20 @@
     <%= link_to 'Sequoia Customer Purchases', sequoia_customers_path() %>
   </div>
 </div>
-<div class="card w350 mt-3">
+<!-- <div class="card w350 mt-3">
   <div class="card-body">
     <h5 class="card-title">Customer Member Update</h5>
     <h6 class="card-subtitle mb-2 text-muted">Unique Sequoia Customers Only</h6>
     <p class="card-text">Table displays unique UID's only and counts the types and number of purchases each individual person has made. This seperates the customers to by EA and CPA for master list matching. Run Daily or before doing master list matching. Two types of updates. One to add new unique customers to the table and another to update new purhcases for all customers</p>
     <%= link_to 'Sequoia Members Table', sequoia_members_path() %>
   </div>
-</div>
+</div> -->
+
+<h1>Test Section</h1>
+
+<% cpa_membership = SequoiaProductList.where(who: 'cpa').where(group: 'membership').pluck(:product) %>
+<% SequoiaMember.where(cpa: true).limit(10).each do |i| %>
+  <% order_id =  SequoiaCustomer.where(uid: i.uid).where(product_1: cpa_membership).pluck(:order_id).min %>
+  <% order = SequoiaCustomer.find_by(order_id: order_id) %>
+  <p><%= order.purchase %></p>
+<% end %>

@@ -15,7 +15,7 @@ class DailySale < ApplicationRecord
 
   # EXPORT
     def self.to_csv # Export to csv function
-      attributes = %w{day year month day_of_week sales cpa_full_price cpa_renewal_price ea_full_price ea_renewal_price ethics afsp other}
+      attributes = %w{id day year month day_of_week sales cpa_full_price cpa_renewal_price ea_full_price ea_renewal_price ethics afsp other}
       CSV.generate(headers: true) do |csv|
         csv << attributes
           all.each do |i|

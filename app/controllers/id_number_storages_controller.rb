@@ -64,6 +64,6 @@ class IdNumberStoragesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def id_number_storage_params
-      params.require(:id_number_storage).permit(:sequoia_members_order_id, :daily_sales_id, :daily_sales_sequoia_customer_order_id)
+      params.require(:id_number_storage).permit(:sequoia_members_order_id, :daily_sales_id, :daily_sales_sequoia_customer_order_id, :sequoia_customer_s_id, :sequoia_member_exps_order_id)
     end
 end

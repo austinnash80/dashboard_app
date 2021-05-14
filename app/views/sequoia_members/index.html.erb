@@ -24,9 +24,9 @@
 <div class="m-5">
   <p>Order ID Counter: <%= number_with_delimiter(@order_id) %></p>
 
-<table class="table">
+<table class="table table-striped">
   <thead>
-    <tr>
+    <tr class="bg-secondary bg-gradient text-light">
       <th>CPA</th>
       <th>CPA Memberships</th>
       <th>EA</th>
@@ -57,10 +57,11 @@
 
 <div class="m-5">
 
-<table class="table">
+<table class="table table-striped">
+
 <thead>
 <caption class="caption-top">Total Records: <%= number_with_delimiter(SequoiaMember.count) %> | Display Limit: 200</caption>
-<tr>
+<tr class="bg-secondary bg-gradient text-light">
       <th>Uid</th>
       <th>Lname</th>
       <th>First purchase</th>

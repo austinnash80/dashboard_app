@@ -28,45 +28,67 @@ class DailySalesController < ApplicationController
         ethics = SequoiaProductList.where(group: 'ethics').pluck(:product)
         other = SequoiaProductList.where(group: 'upgrade').pluck(:product)
 
-        order_id = IdNumberStorage.pluck(:daily_sales_sequoia_customer_order_id)
+        s_id = IdNumberStorage.pluck(:sequoia_customer_s_id)[0]
         daily_sales_id = IdNumberStorage.pluck(:daily_sales_id)[0]
 
         # Use ID as the start number = id_number_storages
-        # date_range = (Date.parse('2013-09-04')..Date.parse('2021-05-05'))
+        # date_range = (Date.parse('2014-09-04')..Date.parse('2015-12-31'))
+        # date_range = (Date.parse('2014-05-30')..Date.parse('2014-09-03'))
 
-        SequoiaCustomer.where.not(order_id: order_id).all.each do |i|
-        # SequoiaCustomer.order(order_id: :asc).where.not(order_id: order_id).all.each do |i|
-        # SequoiaCustomer.order(order_id: :asc).where('order_id > ?', order_id).each do |i|
-          day = DailySale.find_by(day: i.purchase)
+        DailySale.where("day < ?", Date.today).where("id > ?", daily_sales_id).order(id: :asc).each do |i|
 
-          DailySale.where(id: day.id).update_all sales: day.sales + i.price
-          # DailySale.where('id > ?', daily_sales_id).where(id: day.id).update_all sales: day.sales + i.price
-
-          if cpa_new.include? i.product_1
-            DailySale.where(id: day.id).update_all cpa_full_price: day.cpa_full_price + 1
-          elsif cpa_renewal.include? i.product_1
-            DailySale.where(id: day.id).update_all cpa_renewal_price: day.cpa_renewal_price + 1
-          elsif ea_new.include? i.product_1
-            DailySale.where(id: day.id).update_all ea_full_price: day.ea_full_price + 1
-          elsif ea_renewal.include? i.product_1
-            DailySale.where(id: day.id).update_all ea_renewal_price: day.ea_renewal_price + 1
-          elsif ethics.include? i.product_1
-            DailySale.where(id: day.id).update_all ethics: day.ethics + 1
-          elsif afsp.include? i.product_1
-            DailySale.where(id: day.id).update_all afsp: day.afsp + 1
-          elsif other.include? i.product_1
-            DailySale.where(id: day.id).update_all other: day.other + 1
+          price = SequoiaCustomer.where(purchase: i.day).sum(:price)
+          if i.day.present?
+            cpa_new_count = SequoiaCustomer.where(purchase: i.day).where(product_1: cpa_new).count
+            cpa_renewal_count = SequoiaCustomer.where(purchase: i.day).where(product_1: cpa_renewal).count
+            ea_new_count = SequoiaCustomer.where(purchase: i.day).where(product_1: ea_new).count
+            ea_renewal_count = SequoiaCustomer.where(purchase: i.day).where(product_1: ea_renewal).count
+            afsp_count = SequoiaCustomer.where(purchase: i.day).where(product_1: afsp).count
+            ethics_count = (SequoiaCustomer.where(purchase: i.day).where(product_1: ethics).count + SequoiaCustomer.where(purchase: i.day).where(product_2: ethics).count)
+            other_count = SequoiaCustomer.where(purchase: i.day).where(product_1: other).count
           end
+          DailySale.where(id: i.id).update_all sales: price, cpa_full_price: cpa_new_count, cpa_renewal_price: cpa_renewal_count, ea_full_price: ea_new_count, ea_renewal_price: ea_renewal_count, afsp: afsp_count, ethics: ethics_count, other: other_count
 
-          if ethics.include? i.product_2
-            DailySale.where(id: day.id).update_all ethics: day.ethics + 1
+          unless i.sales == 0
+            IdNumberStorage.update_all daily_sales_id: i.id
           end
-
-          IdNumberStorage.create(daily_sales_sequoia_customer_order_id: i.order_id).save
-          IdNumberStorage.update_all daily_sales_id: i.id
-
         end
+
         redirect_to daily_sales_path(), notice: 'Update Complete'
+
+        # SequoiaCustomer.order(s_id: :asc).where("s_id > ?", s_id).limit(10000).all.each do |i|
+        # # SequoiaCustomer.order(order_id: :asc).where.not(order_id: order_id).all.each do |i|
+        # # SequoiaCustomer.order(order_id: :asc).where('order_id > ?', order_id).each do |i|
+        #   day = DailySale.find_by(day: i.purchase)
+        #
+        #   DailySale.where(id: day.id).update_all sales: day.sales + i.price
+        #   # DailySale.where('id > ?', daily_sales_id).where(id: day.id).update_all sales: day.sales + i.price
+        #
+        #   if cpa_new.include? i.product_1
+        #     DailySale.where(id: day.id).update_all cpa_full_price: day.cpa_full_price + 1
+        #   elsif cpa_renewal.include? i.product_1
+        #     DailySale.where(id: day.id).update_all cpa_renewal_price: day.cpa_renewal_price + 1
+        #   elsif ea_new.include? i.product_1
+        #     DailySale.where(id: day.id).update_all ea_full_price: day.ea_full_price + 1
+        #   elsif ea_renewal.include? i.product_1
+        #     DailySale.where(id: day.id).update_all ea_renewal_price: day.ea_renewal_price + 1
+        #   elsif ethics.include? i.product_1
+        #     DailySale.where(id: day.id).update_all ethics: day.ethics + 1
+        #   elsif afsp.include? i.product_1
+        #     DailySale.where(id: day.id).update_all afsp: day.afsp + 1
+        #   elsif other.include? i.product_1
+        #     DailySale.where(id: day.id).update_all other: day.other + 1
+        #   end
+        #
+        #   if ethics.include? i.product_2
+        #     DailySale.where(id: day.id).update_all ethics: day.ethics + 1
+        #   end
+        #
+        #   IdNumberStorage.update_all(sequoia_customer_s_id: i.s_id)
+        #   IdNumberStorage.update_all daily_sales_id: i.id
+        #
+        #   end
+        #   redirect_to daily_sales_path(), notice: 'Update Complete'
       end
   end
 

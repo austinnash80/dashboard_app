@@ -1,4 +1,9 @@
 Rails.application.routes.draw do
+  resources :sequoia_member_exps do collection {post :import}
+    collection do
+      get 'run_update'
+    end
+  end
   resources :daily_sales do collection {post :import}
     collection do
       get 'run_update'

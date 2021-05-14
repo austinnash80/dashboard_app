@@ -3,9 +3,9 @@
 <div class="m-5">
   <h3>Updates to Run</h3>
   <ul>
-    <li><%= link_to 'Sequoia Customers', sequoia_customers_path, target: 'blank' %></li>
-    <li><%= link_to 'Sequoia Members', sequoia_members_path, target: 'blank' %></li>
-    <li><%= link_to 'Daily Sales', daily_sales_path, target: 'blank' %></li>
+    <li><%= link_to 'Sequoia Customers', sequoia_customers_path, target: :_blank %></li>
+    <li><%= link_to 'Sequoia Members', sequoia_members_path, target: :_blank  %></li>
+    <li><%= link_to 'Daily Sales', daily_sales_path, target: :_blank  %></li>
   </ul>
 
 
@@ -100,6 +100,12 @@
         <td><%= number_with_delimiter(SequoiaMember.count) %></td>
         <td><%= SequoiaMember.count > 0 ? (SequoiaMember.pluck(:updated_at).max).strftime('%Y-%m-%d') : '' %></td>
         <td>Populated by SequoiaCustomer table - Unique UIDs shows how many purchases each customer has made.</td>
+      </tr>
+      <tr>
+        <td><%= link_to 'Sequoia Members EXP', sequoia_member_exps_path %></td>
+        <td><%= number_with_delimiter(SequoiaMemberExp.count) %></td>
+        <td><%= SequoiaMemberExp.count > 0 ? (SequoiaMemberExp.pluck(:updated_at).max).strftime('%Y-%m-%d') : '' %></td>
+        <td>Populated by SequoiaCustomer and Sequoia Members table - Shows Membership EXP dates per UID - For Postcard and Email Marketing.</td>
       </tr>
       <tr>
         <td><%= link_to 'Sequoia Product List', sequoia_product_lists_path %></td>

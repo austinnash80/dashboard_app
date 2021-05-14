@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_11_180312) do
+ActiveRecord::Schema.define(version: 2021_05_14_184759) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -38,6 +38,9 @@ ActiveRecord::Schema.define(version: 2021_05_11_180312) do
     t.datetime "updated_at", precision: 6, null: false
     t.integer "daily_sales_id"
     t.integer "daily_sales_sequoia_customer_order_id"
+    t.string "sequoia_customer_s_id"
+    t.string "integer"
+    t.integer "sequoia_member_exps_order_id"
   end
 
   create_table "master_cpa_double_accounts", force: :cascade do |t|
@@ -180,6 +183,15 @@ ActiveRecord::Schema.define(version: 2021_05_11_180312) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "existing"
+  end
+
+  create_table "sequoia_member_exps", force: :cascade do |t|
+    t.integer "uid"
+    t.string "membership"
+    t.date "last_membership"
+    t.date "membership_exp"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "sequoia_members", force: :cascade do |t|

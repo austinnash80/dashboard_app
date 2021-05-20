@@ -1,0 +1,33 @@
+
+<%= simple_form_for(@mktg_export) do |f| %>
+  <%= f.error_notification %>
+  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+  <div class="form-inputs">
+    <%= f.input :uid %>
+    <%= f.input :campaign %>
+    <%= f.input :des %>
+    <%= f.input :exp %>
+    <%= f.input :fname %>
+    <%= f.input :lname %>
+    <%= f.input :street_1 %>
+    <%= f.input :street_2 %>
+    <%= f.input :city %>
+    <%= f.input :state %>
+    <%= f.input :zip %>
+    <%= f.input :text_1 %>
+    <%= f.input :text_2 %>
+    <%= f.input :text_3 %>
+    <%= f.input :text_4 %>
+    <%= f.input :text_5 %>
+    <%= f.input :text_6 %>
+    <%= f.input :text_7 %>
+    <%= f.input :text_8 %>
+    <%= f.input :text_9 %>
+    <%= f.input :text_10 %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

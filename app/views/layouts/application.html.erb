@@ -14,8 +14,9 @@
   <body>
 
       <% if current_user.present? %>
-        <p class=""><span class="text-success fw-bold">You are logged in as <%= current_user.name %>.</span> <%= link_to("Log Out", login_path, :method => :delete) %></p>
-
+        <% unless controller_name = 'mktg_export' && page_name = 'print' %>
+          <p class=""><span class="text-success fw-bold">You are logged in as <%= current_user.name %>.</span> <%= link_to("Log Out", login_path, :method => :delete) %></p>
+        <% end %>
         <%= yield %>
 
       <% else %>

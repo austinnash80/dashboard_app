@@ -1,0 +1,47 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  uid: 1
+  campaign: MyString
+  des: MyString
+  exp: 2021-05-14
+  fname: MyString
+  lname: MyString
+  street_1: MyString
+  street_2: MyString
+  city: MyString
+  state: MyString
+  zip: MyString
+  text_1: MyString
+  text_2: MyString
+  text_3: MyString
+  text_4: MyString
+  text_5: MyString
+  text_6: MyString
+  text_7: MyString
+  text_8: MyString
+  text_9: MyString
+  text_10: MyString
+
+two:
+  uid: 1
+  campaign: MyString
+  des: MyString
+  exp: 2021-05-14
+  fname: MyString
+  lname: MyString
+  street_1: MyString
+  street_2: MyString
+  city: MyString
+  state: MyString
+  zip: MyString
+  text_1: MyString
+  text_2: MyString
+  text_3: MyString
+  text_4: MyString
+  text_5: MyString
+  text_6: MyString
+  text_7: MyString
+  text_8: MyString
+  text_9: MyString
+  text_10: MyString

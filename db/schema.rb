@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_14_184759) do
+ActiveRecord::Schema.define(version: 2021_05_14_234013) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -154,6 +154,32 @@ ActiveRecord::Schema.define(version: 2021_05_14_184759) do
     t.string "city"
     t.string "st"
     t.string "zip"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "mktg_exports", force: :cascade do |t|
+    t.integer "uid"
+    t.string "campaign"
+    t.string "des"
+    t.date "exp"
+    t.string "fname"
+    t.string "lname"
+    t.string "street_1"
+    t.string "street_2"
+    t.string "city"
+    t.string "state"
+    t.string "zip"
+    t.string "text_1"
+    t.string "text_2"
+    t.string "text_3"
+    t.string "text_4"
+    t.string "text_5"
+    t.string "text_6"
+    t.string "text_7"
+    t.string "text_8"
+    t.string "text_9"
+    t.string "text_10"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

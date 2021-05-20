@@ -1,4 +1,9 @@
 Rails.application.routes.draw do
+  resources :mktg_exports do collection {post :import}
+    collection do
+      get 'print'
+    end
+  end
   resources :sequoia_member_exps do collection {post :import}
     collection do
       get 'run_update'

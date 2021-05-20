@@ -1,0 +1,6 @@
+
+<div class="mktg_print_page_top">
+  <% MktgExport.order(exp: :asc).order(uid: :asc).all.each do |i| %>
+    <p class="mktg_print_padding mktg_export_text"><%= i.fname %> <%= i.lname %><br> <%= i.street_1 %> <%= i.street_2 %> <br> <%= i.city %> <%= i.state %> <%= i.zip %></p>
+  <% end %>
+</div>

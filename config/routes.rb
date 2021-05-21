@@ -1,4 +1,9 @@
 Rails.application.routes.draw do
+  resources :empire_customers do collection {post :import}
+    collection do
+      get 'run_update'
+    end
+  end
   resources :mktg_exports do collection {post :import}
     collection do
       get 'print'

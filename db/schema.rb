@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_20_202746) do
+ActiveRecord::Schema.define(version: 2021_05_21_183546) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -55,6 +55,43 @@ ActiveRecord::Schema.define(version: 2021_05_20_202746) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "empire_master_ny_lists", force: :cascade do |t|
+    t.integer "lid"
+    t.string "list"
+    t.string "lic"
+    t.string "record_type"
+    t.string "lic_status"
+    t.string "iss_date_s"
+    t.date "iss_date"
+    t.string "exp_date_s"
+    t.date "exp_date"
+    t.string "fname"
+    t.string "mi"
+    t.string "lname"
+    t.string "suf"
+    t.string "co"
+    t.string "add"
+    t.string "add2"
+    t.string "city"
+    t.string "st"
+    t.string "zip"
+    t.string "email"
+    t.string "phone"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "empire_members", force: :cascade do |t|
+    t.integer "uid"
+    t.string "lname"
+    t.date "first_purchase"
+    t.date "last_purchase"
+    t.string "state"
+    t.integer "purchases"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "id_number_storages", force: :cascade do |t|
     t.integer "sequoia_members_order_id"
     t.datetime "created_at", precision: 6, null: false
@@ -64,6 +101,7 @@ ActiveRecord::Schema.define(version: 2021_05_20_202746) do
     t.string "sequoia_customer_s_id"
     t.string "integer"
     t.integer "sequoia_member_exps_order_id"
+    t.integer "empire_member_e_id"
   end
 
   create_table "master_cpa_double_accounts", force: :cascade do |t|

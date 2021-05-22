@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Uid:</strong>
+  <%= @empire_member.uid %>
+</p>
+
+<p>
+  <strong>Lname:</strong>
+  <%= @empire_member.lname %>
+</p>
+
+<p>
+  <strong>First purchase:</strong>
+  <%= @empire_member.first_purchase %>
+</p>
+
+<p>
+  <strong>Last purchase:</strong>
+  <%= @empire_member.last_purchase %>
+</p>
+
+<p>
+  <strong>State:</strong>
+  <%= @empire_member.state %>
+</p>
+
+<p>
+  <strong>Purchases:</strong>
+  <%= @empire_member.purchases %>
+</p>
+
+<%= link_to 'Edit', edit_empire_member_path(@empire_member) %> |
+<%= link_to 'Back', empire_members_path %>

@@ -1,6 +1,6 @@
 <h1 class="text-center">Sequoia</h1>
 <br>
-<h3 class="text-center">Master Lists + Matching</h3>
+<h3 class="text-center">Master Lists</h3>
 <table class="table table-striped">
   <thead>
     <tr class="bg-secondary bg-gradient text-light">
@@ -44,6 +44,34 @@
   </tbody>
 </table>
 
+<br>
+<h3 class="text-center">Matching</h3>
+<table class="table table-striped">
+  <thead>
+    <tr class="bg-secondary bg-gradient text-light">
+      <th>Table</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><%= link_to 'CPA Matching', sequoia_matchings_cpa_customer_matching_path() %></td>
+      <td>Match all customers to the master CPA list - searching</td>
+    </tr>
+    <tr>
+      <td><%= link_to 'EA Matching', sequoia_matchings_ea_customer_matching_path() %></td>
+      <td>Match all customers to the master EA list - searching</td>
+    </tr>
+    <tr>
+      <td><%= link_to 'CPA No Mails', master_cpa_no_mails_path() %></td>
+      <td>Table with all CPA No Mails - To search for new <%= link_to 'CPA No Mail Search', sequoia_matchings_no_mail_search_path() %></td>
+    </tr>
+    <tr>
+      <td><%= link_to 'EA No Mails', master_ea_no_mails_path() %></td>
+      <td>Table with all EA No Mails - To search for new <%= link_to 'EA No Mail Search', sequoia_matchings_ea_no_mail_search_path() %></td>
+    </tr>
+  </tbody>
+</table>
 <br>
 <h3 class="text-center">Customer Data</h3>
 <table class="table table-striped">
@@ -122,6 +150,25 @@
     <tr>
       <td><%= link_to 'Empire Customers', empire_customers_path %></td>
       <td>Brings in purchase data from EmpireLearning.com - Run Daily</td>
+    </tr>
+    <tr>
+      <td><%= link_to 'Empire Members', empire_members_path %></td>
+      <td>Populated by EmpireCustomer table - Unique UIDs shows how many purchases each customer has made. Creates a unique table of Customers</td>
+    </tr>
+  </tbody>
+</table>
+<h3 class="text-center">Master State Lists + Matching</h3>
+<table class="table table-striped">
+  <thead>
+    <tr class="bg-secondary bg-gradient text-light">
+      <th>Table</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><%= link_to 'Empire Master NY List', empire_master_ny_lists_path %></td>
+      <td>Licensee data from the state board of NY - Update regularly with new list from the board website</td>
     </tr>
   </tbody>
 </table>

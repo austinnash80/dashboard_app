@@ -1,4 +1,11 @@
 Rails.application.routes.draw do
+  resources :empire_members do collection {post :import}
+    collection do
+      get 'run_update'
+      get 'run_update_2'
+    end
+  end
+  resources :empire_master_ny_lists do collection {post :import} end
   resources :empire_customers do collection {post :import}
     collection do
       get 'run_update'

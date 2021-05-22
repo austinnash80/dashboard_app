@@ -1,0 +1,2 @@
+module EmpireMasterNyListsHelper
+end

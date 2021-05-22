@@ -34,7 +34,7 @@
   </thead>
 
   <tbody>
-    <% @master_ea_matches.limit(100).each do |master_ea_match| %>
+    <% @master_ea_matches.order(created_at: :DESC).limit(100).each do |master_ea_match| %>
       <tr>
         <td><%= master_ea_match.lid %></td>
         <td><%= master_ea_match.list %></td>

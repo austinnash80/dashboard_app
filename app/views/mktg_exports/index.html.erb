@@ -64,14 +64,16 @@
     </div>
   </div>
 <!-- END INPUT FIELDS -->
-<!-- CAMPAIGN BUTTONS -->
+<!-- CAMPAIGN BUTTONS SEQUOIA-->
   <% if params['co'] == 'sequoia' %>
     <%= link_to 'CPA RC', mktg_exports_path(co: 'sequoia', campaign: 'Return Customer', des: 'cpa'), class: 'w100 search_link btn btn-sm btn-primary text-light bg-gradient' %>
     <%= link_to 'EA RC', mktg_exports_path(co: 'sequoia', campaign: 'Return Customer', des: 'ea'), class: 'w100 search_link btn btn-sm btn-primary text-light bg-gradient' %>
     <%= link_to 'CPA NM', mktg_exports_path(co: 'sequoia', campaign: 'New Customer', des: 'cpa'), class: 'w100 search_link btn btn-sm btn-primary text-light bg-gradient' %>
     <%= link_to 'EA NM', mktg_exports_path(co: 'sequoia', campaign: 'New Customer', des: 'ea'), class: 'w100 search_link btn btn-sm btn-primary text-light bg-gradient' %>
   <% elsif params['co'] == 'empire' %>
-    'NY Email'
+    <%= text_field_tag "id", '', class: "empire_st_field form-control w150", placeholder: 'State', value: params['empire_st'] %><br>
+    <%= link_to 'New Customer', mktg_exports_path(co: 'empire', campaign: 'New Customer', des: 'ny'), class: 'w150 search_link btn btn-sm btn-primary text-light bg-gradient' %>
+    <%= link_to 'Return Customer', mktg_exports_path(co: 'empire', campaign: 'Return Customer', des: 'ny'), class: 'w150 search_link btn btn-sm btn-primary text-light bg-gradient' %>
   <% end %>
 <!-- END CAMPAIGN BUTTONS -->
 
@@ -83,7 +85,7 @@
 <tr class="bg-secondary bg-gradient text-light">
       <th>Uid</th>
       <th>Campaign</th>
-      <th>Des</th>
+      <th><%= params['co'].present? && params['co'] == 'empire' ? 'Lic St' : params['co'].present? && params['co'] == 'sequoia' ? 'DES' : '' %></th>
       <th><%= params['campaign'].present? && params['campaign'] == 'New Customer' ? 'Purchase' : params['campaign'].present? && params['campaign'] == 'Return Customer' ? 'EXP' : 'Date' %></th>
       <th>Email</th>
       <th>Fname</th>
@@ -144,7 +146,7 @@
 <script type="text/javascript">
   $(".search_link").click(function() {
     $(this).attr("href", function() {
-      return this.href + "&range_1_date_1=" + $('.range_1_date_1_field').val() + "&range_1_date_2=" + $('.range_1_date_2_field').val() + "&range_2_date_1=" + $('.range_2_date_1_field').val() + "&range_2_date_2=" + $('.range_2_date_2_field').val();
+      return this.href + "&range_1_date_1=" + $('.range_1_date_1_field').val() + "&range_1_date_2=" + $('.range_1_date_2_field').val() + "&range_2_date_1=" + $('.range_2_date_1_field').val() + "&range_2_date_2=" + $('.range_2_date_2_field').val() + "&empire_st=" + $('.empire_st_field').val();
       // return this.href + "?zip=" + $('.zip_field').val() + "&lname=" + $('.lname_field').val().toUpperCase() + "&state=" + $('.state_field').val().toUpperCase() + "&no_mail=find";
     });
   });

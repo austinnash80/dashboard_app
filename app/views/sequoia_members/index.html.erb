@@ -60,7 +60,7 @@
 <table class="table table-striped">
 
 <thead>
-<caption class="caption-top">Total Records: <%= number_with_delimiter(SequoiaMember.count) %> | Display Limit: 200</caption>
+<caption class="caption-top">Total Records: <%= number_with_delimiter(SequoiaMember.count) %> | Display Limit: 250</caption>
 <tr class="bg-secondary bg-gradient text-light">
       <th>Uid</th>
       <th>Lname</th>
@@ -75,12 +75,12 @@
       <th>Ethics</th>
       <th>Ethics purchases</th>
       <th>Other</th>
-      <th colspan="3"></th>
+      <th colspan="1"></th>
     </tr>
   </thead>
 
   <tbody>
-    <% @sequoia_members.order(last_purchase: :desc).order(first_purchase: :desc).limit(200).each do |sequoia_member| %>
+    <% @sequoia_members.order(last_purchase: :desc).order(first_purchase: :desc).limit(250).each do |sequoia_member| %>
       <tr>
         <td><%= sequoia_member.uid %></td>
         <td><%= sequoia_member.lname %></td>
@@ -95,9 +95,7 @@
         <td><%= sequoia_member.ethics %></td>
         <td><%= sequoia_member.ethics_purchases %></td>
         <td><%= sequoia_member.other %></td>
-        <td><%= link_to 'Show', sequoia_member %></td>
-        <td><%= link_to 'Edit', edit_sequoia_member_path(sequoia_member) %></td>
-        <td><%= link_to 'Destroy', sequoia_member, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Info', sequoia_member, class: 'btn btn-xs btn-info bg-gradient text-light' %></td>
       </tr>
     <% end %>
   </tbody>

@@ -1,64 +1,89 @@
 <p id="notice"><%= notice %></p>
+<p><%= link_to 'Back to Sequoia Members Page', sequoia_members_path, class: 'btn btn-sm btn-info text-light bg-gradient' %></p>
 
-<p>
-  <strong>Uid:</strong>
-  <%= @sequoia_member.uid %>
-</p>
+<% sequoia_customer = SequoiaCustomer.find_by(uid: @sequoia_member.uid) %>
+<br>
+<h1 class=""><%= sequoia_customer.fname %> <%= sequoia_customer.lname %> </h1>
+<h5 class=""><strong>UID:</strong> <%= @sequoia_member.uid %></h5>
+<br><br>
+<p><strong>Membership Type:</strong> <%= @sequoia_member.cpa? ? 'CPA' : @sequoia_member.ea? ? 'EA' : '' %></p>
+<p><strong>First purchase:</strong> <%= @sequoia_member.first_purchase %></p>
+<p><strong>Last purchase:</strong> <%= @sequoia_member.last_purchase %></p>
+<% if @sequoia_member.cpa? %><p><strong>CPA Memberships:</strong> <%= @sequoia_member.cpa_memberships %></p><% end %>
+<% if @sequoia_member.ea? %><p><strong>EA Memberships:</strong> <%= @sequoia_member.ea_memberships %></p><% end %>
+<% if @sequoia_member.ethics? %><p><strong>Ethics Purchases:</strong> <%= @sequoia_member.ethics_purchases %></p><% end %>
+<% if @sequoia_member.afsp? %><p><strong>AFSP Purchases:</strong> <%= @sequoia_member.afsp_purchases %></p><% end %>
+<% if @sequoia_member.other? %><p><strong>Other Purchases:</strong> <%= @sequoia_member.other %></p><% end %>
 
-<p>
-  <strong>Lname:</strong>
-  <%= @sequoia_member.lname %>
-</p>
+<div class="m-5 w800">
+<!-- PURCHASES TABLE -->
+  <table class="table table-striped">
+    <caption class="caption-top fw-bold">Sequoia Customer Purchases</caption>
+    <thead>
+      <tr class="bg-secondary bg-gradient text-light">
+        <th>Date</th>
+        <th colspan="2">Purchase</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% SequoiaCustomer.where(uid: @sequoia_member.uid).all.each do  |i| %>
+        <tr>
+          <td><%= i.purchase %></td>
+          <td><%= i.product_1 %></td>
+          <td><%= i.product_2 == 'null' || i.product_2 == 'XX' ? "" : i.product_2 %></td>
+          <td><%= number_to_currency(i.price / 100, precision: 0)%></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<br>
+<!-- MASTER LIST MATCHES TABLE-->
+  <% master_cpa_list = MasterCpaMatch.find_by(uid: @sequoia_member.uid) %>
+  <% master_ea_list = MasterEaMatch.find_by(uid: @sequoia_member.uid) %>
+  <% if master_cpa_list.present? %>
+  <table class="table table-striped">
+    <caption class="caption-top fw-bold">Master CPA List Match</caption>
+    <thead>
+      <tr class="bg-secondary bg-gradient text-light">
+        <th>LID</th>
+        <th>List</th>
+        <th>Search Date</th>
+      </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><%= master_cpa_list.lid %></td>
+          <td><%= master_cpa_list.list %></td>
+          <td><%= master_cpa_list.search_date %></td>
+        </tr>
+      </tbody>
+  </table>
+  <% elsif master_ea_list.present? %>
+  <table class="table table-striped">
+    <caption class="caption-top fw-bold">Master CPA List Match</caption>
+    <thead>
+      <tr class="bg-secondary bg-gradient text-light">
+        <th>LID</th>
+        <th>List</th>
+        <th>Search Date</th>
+      </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><%= master_cpa_list.lid %></td>
+          <td><%= master_cpa_list.list %></td>
+          <td><%= master_cpa_list.search_date %></td>
+        </tr>
+      </tbody>
+  </table>
+  <% else %>
+  <p class="fw-bold">No Master List Match</p>
+  <% end %>
+<!-- END MASTER LIST MATCHES -->
 
-<p>
-  <strong>First purchase:</strong>
-  <%= @sequoia_member.first_purchase %>
-</p>
+  <br>
+  <p>Future - table of all marketing materials sent?</p>
+</div>
 
-<p>
-  <strong>Last purchase:</strong>
-  <%= @sequoia_member.last_purchase %>
-</p>
-
-<p>
-  <strong>Cpa:</strong>
-  <%= @sequoia_member.cpa %>
-</p>
-
-<p>
-  <strong>Cpa memberships:</strong>
-  <%= @sequoia_member.cpa_memberships %>
-</p>
-
-<p>
-  <strong>Ea:</strong>
-  <%= @sequoia_member.ea %>
-</p>
-
-<p>
-  <strong>Memberships:</strong>
-  <%= @sequoia_member.ea_memberships %>
-</p>
-
-<p>
-  <strong>Afsp:</strong>
-  <%= @sequoia_member.afsp %>
-</p>
-
-<p>
-  <strong>Afsp purchases:</strong>
-  <%= @sequoia_member.afsp_purchases %>
-</p>
-
-<p>
-  <strong>Ethics:</strong>
-  <%= @sequoia_member.ethics %>
-</p>
-
-<p>
-  <strong>Ethics purchases:</strong>
-  <%= @sequoia_member.ethics_purchases %>
-</p>
-
-<%= link_to 'Edit', edit_sequoia_member_path(@sequoia_member) %> |
-<%= link_to 'Back', sequoia_members_path %>
+<%= link_to 'Edit', edit_sequoia_member_path(@sequoia_member) %>

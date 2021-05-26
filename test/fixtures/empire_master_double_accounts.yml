@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  uid: 1
+  lic_st: MyString
+  list: MyString
+  lname: MyString
+  search_date: 2021-05-26
+
+two:
+  uid: 1
+  lic_st: MyString
+  list: MyString
+  lname: MyString
+  search_date: 2021-05-26

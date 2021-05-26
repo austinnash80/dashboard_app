@@ -1,0 +1,152 @@
+<h1 class="text-center">Empire Master Matching Page</h1>
+<p class="text-center"><%= link_to 'Auto Match', matching_empire_master_matches_path(auto_match: 'yes'), class: 'btn btn-sm btn-success bg-gradient text-light text-light w200 fw-bold' %></p>
+<p id="notice" class='fw-bold text-success text-center'><%= notice %></p>
+
+
+<% uid = EmpireMember.where.not(uid: @match_table).where.not(uid: @no_match_table).where(state: 'NY').order(created_at: :desc).limit(1).pluck(:uid) %>
+<% empire = EmpireCustomer.find_by(uid: uid) %>
+
+<div class="m-5">
+<table class="table table-striped">
+    <caption class="caption-top">Search</caption>
+    <thead>
+      <tr class="bg-secondary bg-gradient text-light">
+        <th>UID</th>
+        <th>Lic St</th>
+        <th>Lic Num</th>
+        <th>Purchase</th>
+        <th>Fname</th>
+        <th>Lname</th>
+        <th>Street</th>
+        <th>Street 2</th>
+        <th>City</th>
+        <th>State</th>
+        <th>Zip</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><%= empire.uid %></td>
+        <td><%= empire.lic_state %></td>
+        <td><%= empire.lic_num %></td>
+        <td><%= empire.purchase %></td>
+        <td><%= empire.fname %></td>
+        <td><%= empire.lname %></td>
+        <td><%= empire.street_1 %></td>
+        <td><%= empire.street_2 %></td>
+        <td><%= empire.city %></td>
+        <td><%= empire.state %></td>
+        <td><%= empire.zip %></td>
+        <% if params['lname'].present? || params['lic_search'] %>
+          <td><%= link_to 'No Match', matching_empire_master_matches_path(no_match: 'yes', uid: empire.uid), class: 'btn btn-sm btn-danger text-light bg-gradient fw-bold w100' %></td>
+        <% else %>
+          <td><%= link_to 'Search', matching_empire_master_matches_path(lname: empire.lname, uid: empire.uid), class: 'btn btn-sm btn-info text-light bg-gradient fw-bold w100' %></td>
+        <% end %>
+      </tr>
+    </tbody>
+  </table>
+
+<% if params['lname'].present? || params['lic_search'] %>
+  <p><a class="btn btn-sm btn-secondary bg-gradient text-light fw-bold w200" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">Edit Last Name</a> <a class="btn btn-sm btn-secondary bg-gradient text-light fw-bold w200" data-bs-toggle="collapse" href="#collapseLic" role="button" aria-expanded="false" aria-controls="collapseExample">Enter Lic Number</a></p>
+  <div class="collapse" id="collapseExample">
+    <div class="w300">
+      <%= text_field_tag "id", '', class: "lname_field form-control", value: params['lname'] %>
+      <%= link_to 'Search', matching_empire_master_matches_path(uid: params['uid']), class: 'search_link' %>
+    </div>
+  </div>
+  <div class="collapse" id="collapseLic">
+    <div class="w300">
+      <%= text_field_tag "id", '', class: "lic_field form-control", value: params['lic'] %>
+      <%= link_to 'Search', matching_empire_master_matches_path(lic_search: 'yes', uid: params['uid'], lname: params['lname']), class: 'search_link_lic' %>
+    </div>
+  </div>
+    <div class="w300 mb-3 mt-4"><input class="form-control" id="myInput" type="text" placeholder="Filter Table"></div>
+    <table class="table table-striped">
+      <thead>
+        <tr class="bg-secondary bg-gradient text-light">
+          <th>LID</th>
+          <th>List</th>
+          <th>Lic</th>
+          <th>Fname</th>
+          <th>MI</th>
+          <th>Lname</th>
+          <th>Suf</th>
+          <th>CO</th>
+          <th>Address</th>
+          <th>address 2</th>
+          <th>City</th>
+          <th>State</th>
+          <th>Zip</th>
+          <th></th>
+        </tr>
+      </thead>
+      <% if params['lic_search'].present? %>
+      <tbody id="myTable">
+          <% EmpireMasterNyList.where('upper(lic) = ?', params['lic'].upcase).order(lid: :asc).all.each do |i| %>
+        <tr>
+          <td><%= i.lid %></td>
+          <td><%= i.list %></td>
+          <td><%= i.lic %></td>
+          <td><%= i.fname %></td>
+          <td><%= i.mi %></td>
+          <td><%= i.lname %></td>
+          <td><%= i.suf %></td>
+          <td><%= i.co %></td>
+          <td><%= i.add %></td>
+          <td><%= i.add2 %></td>
+          <td><%= i.city %></td>
+          <td><%= i.st %></td>
+          <td><%= i.zip %></td>
+          <td><%= link_to 'Match', matching_empire_master_matches_path(match: 'yes', lid: i.lid, uid: empire.uid), class: 'btn btn-sm btn-success bg-gradient text-light text-light fw-bold w100' %></td>
+        </tr>
+        <% end %>
+      </tbody>
+      <% else %>
+      <tbody id="myTable">
+          <% EmpireMasterNyList.where('upper(lname) = ?', params['lname'].upcase).order(lid: :asc).all.each do |i| %>
+        <tr>
+          <td><%= i.lid %></td>
+          <td><%= i.list %></td>
+          <td><%= i.lic %></td>
+          <td><%= i.fname %></td>
+          <td><%= i.mi %></td>
+          <td><%= i.lname %></td>
+          <td><%= i.suf %></td>
+          <td><%= i.co %></td>
+          <td><%= i.add %></td>
+          <td><%= i.add2 %></td>
+          <td><%= i.city %></td>
+          <td><%= i.st %></td>
+          <td><%= i.zip %></td>
+          <td><%= link_to 'Match', matching_empire_master_matches_path(match: 'yes', lid: i.lid, uid: empire.uid), class: 'btn btn-sm btn-success bg-gradient text-light text-light fw-bold w100' %></td>
+        </tr>
+        <% end %>
+      </tbody>
+      <% end %>
+    </table>
+    <% end %>
+
+  <script type="text/javascript">
+    $(document).ready(function(){
+      $("#myInput").on("keyup", function() {
+        var value = $(this).val().toLowerCase();
+        $("#myTable tr").filter(function() {
+          $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+      });
+    });
+
+    $(".search_link").click(function() {
+      $(this).attr("href", function() {
+        return this.href + "&lname=" + $('.lname_field').val().toUpperCase();
+        // return this.href + "?zip=" + $('.zip_field').val() + "&lname=" + $('.lname_field').val().toUpperCase() + "&state=" + $('.state_field').val().toUpperCase() + "&no_mail=find";
+      });
+    });
+    $(".search_link_lic").click(function() {
+      $(this).attr("href", function() {
+        return this.href + "&lic=" + $('.lic_field').val().toUpperCase();
+        // return this.href + "?zip=" + $('.zip_field').val() + "&lname=" + $('.lname_field').val().toUpperCase() + "&state=" + $('.state_field').val().toUpperCase() + "&no_mail=find";
+      });
+    });
+  </script>

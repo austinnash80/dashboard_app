@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_21_183546) do
+ActiveRecord::Schema.define(version: 2021_05_26_210932) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -53,6 +53,37 @@ ActiveRecord::Schema.define(version: 2021_05_21_183546) do
     t.string "zip"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "empire_master_double_accounts", force: :cascade do |t|
+    t.integer "uid"
+    t.string "lic_st"
+    t.string "list"
+    t.string "lname"
+    t.date "search_date"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "empire_master_matches", force: :cascade do |t|
+    t.integer "lid"
+    t.string "list"
+    t.string "lic_st"
+    t.integer "uid"
+    t.date "search_date"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "lname"
+  end
+
+  create_table "empire_master_no_matches", force: :cascade do |t|
+    t.integer "uid"
+    t.string "list"
+    t.string "lic_st"
+    t.date "search_date"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "lname"
   end
 
   create_table "empire_master_ny_lists", force: :cascade do |t|
@@ -102,6 +133,7 @@ ActiveRecord::Schema.define(version: 2021_05_21_183546) do
     t.string "integer"
     t.integer "sequoia_member_exps_order_id"
     t.integer "empire_member_e_id"
+    t.integer "empire_auto_match_id"
   end
 
   create_table "master_cpa_double_accounts", force: :cascade do |t|

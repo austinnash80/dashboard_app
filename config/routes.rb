@@ -1,4 +1,11 @@
 Rails.application.routes.draw do
+  resources :empire_master_double_accounts do collection {post :import} end
+  resources :empire_master_no_matches do collection {post :import} end
+  resources :empire_master_matches do collection {post :import}
+    collection do
+      get 'matching'
+    end
+  end
   resources :empire_members do collection {post :import}
     collection do
       get 'run_update'

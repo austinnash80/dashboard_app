@@ -2,18 +2,31 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
 
-.mktg_print_padding {
-  padding-bottom: 1330px
-}
 .mktg_print_page_top {
-  padding-top: 200px
+  padding-top: 0px;
+}
+.mktg_print_padding {
+  padding-bottom: 384px
 }
 .mktg_export_text {
   text-align: right;
-  padding-right: 100px
+  padding-right: 75px;
+  font-size: 14px
 
 }
 .rotate {
 
   transform: rotate(-90deg);
+}
+
+@media print {
+  .no_print {
+    display: none;
+  }
+}
+
+@page {
+  size: 8.5in 5.5in;
+  // size: landscape
+
 }

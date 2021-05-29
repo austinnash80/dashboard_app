@@ -25,6 +25,7 @@
     <tr class="bg-secondary bg-gradient text-light">
       <th>Lid</th>
       <th>List</th>
+      <th>EXP</th>
       <th>Lic st</th>
       <th>Uid</th>
       <th>Lname</th>
@@ -34,10 +35,11 @@
   </thead>
 
   <tbody>
-    <% @empire_master_matches.limit(250).each do |empire_master_match| %>
+    <% @empire_master_matches.order(created_at: :DESC).limit(250).each do |empire_master_match| %>
       <tr>
         <td><%= empire_master_match.lid %></td>
         <td><%= empire_master_match.list %></td>
+        <td><%= empire_master_match.exp %></td>
         <td><%= empire_master_match.lic_st %></td>
         <td><%= empire_master_match.uid %></td>
         <td><%= empire_master_match.lname %></td>

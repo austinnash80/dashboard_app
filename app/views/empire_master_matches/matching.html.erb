@@ -2,8 +2,8 @@
 <p class="text-center"><%= link_to 'Auto Match', matching_empire_master_matches_path(auto_match: 'yes'), class: 'btn btn-sm btn-success bg-gradient text-light text-light w200 fw-bold' %></p>
 <p id="notice" class='fw-bold text-success text-center'><%= notice %></p>
 
-
-<% uid = EmpireMember.where.not(uid: @match_table).where.not(uid: @no_match_table).where(state: 'NY').order(created_at: :desc).limit(1).pluck(:uid) %>
+<% states = ['NY','CA'] %>
+<% uid = EmpireMember.where.not(uid: @match_table).where.not(uid: @no_match_table).where.not(uid: @double_account_table).where(state: states).order(created_at: :desc).limit(1).pluck(:uid) %>
 <% empire = EmpireCustomer.find_by(uid: uid) %>
 
 <div class="m-5">
@@ -48,17 +48,19 @@
   </table>
 
 <% if params['lname'].present? || params['lic_search'] %>
-  <p><a class="btn btn-sm btn-secondary bg-gradient text-light fw-bold w200" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">Edit Last Name</a> <a class="btn btn-sm btn-secondary bg-gradient text-light fw-bold w200" data-bs-toggle="collapse" href="#collapseLic" role="button" aria-expanded="false" aria-controls="collapseExample">Enter Lic Number</a></p>
+<% lic = EmpireCustomer.find_by(uid: params['uid']) %>
+<% lic.lic_state == 'NY' ? table = EmpireMasterNyList : lic.lic_state == 'CA' ? table = EmpireMasterCaList : '' %>
+  <p><a class="btn btn-sm btn-secondary bg-gradient text-light fw-bold w200" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">Edit Last Name</a> <a class="btn btn-sm btn-secondary bg-gradient text-light fw-bold w200" data-bs-toggle="collapse" href="#collapseLic" role="button" aria-expanded="false" aria-controls="collapseExample">License Number</a></p>
   <div class="collapse" id="collapseExample">
     <div class="w300">
       <%= text_field_tag "id", '', class: "lname_field form-control", value: params['lname'] %>
-      <%= link_to 'Search', matching_empire_master_matches_path(uid: params['uid']), class: 'search_link' %>
+      <%= link_to 'Search', matching_empire_master_matches_path(uid: params['uid']), class: 'search_link btn btn-sm btn-primary bg-gradient text-light mt-2 w100' %>
     </div>
   </div>
   <div class="collapse" id="collapseLic">
     <div class="w300">
-      <%= text_field_tag "id", '', class: "lic_field form-control", value: params['lic'] %>
-      <%= link_to 'Search', matching_empire_master_matches_path(lic_search: 'yes', uid: params['uid'], lname: params['lname']), class: 'search_link_lic' %>
+      <%= text_field_tag "id", '', class: "lic_field form-control", value: lic.lic_num %>
+      <%= link_to 'Search', matching_empire_master_matches_path(lic_search: 'yes', uid: params['uid'], lname: params['lname']), class: 'search_link_lic btn btn-sm btn-primary bg-gradient text-light mt-2 w100' %>
     </div>
   </div>
     <div class="w300 mb-3 mt-4"><input class="form-control" id="myInput" type="text" placeholder="Filter Table"></div>
@@ -78,12 +80,14 @@
           <th>City</th>
           <th>State</th>
           <th>Zip</th>
+          <th>Lic Type</th>
+          <th>Lic EXP</th>
           <th></th>
         </tr>
       </thead>
       <% if params['lic_search'].present? %>
       <tbody id="myTable">
-          <% EmpireMasterNyList.where('upper(lic) = ?', params['lic'].upcase).order(lid: :asc).all.each do |i| %>
+          <% table.where('upper(lic) = ?', params['lic'].upcase).order(lid: :asc).all.each do |i| %>
         <tr>
           <td><%= i.lid %></td>
           <td><%= i.list %></td>
@@ -98,13 +102,19 @@
           <td><%= i.city %></td>
           <td><%= i.st %></td>
           <td><%= i.zip %></td>
-          <td><%= link_to 'Match', matching_empire_master_matches_path(match: 'yes', lid: i.lid, uid: empire.uid), class: 'btn btn-sm btn-success bg-gradient text-light text-light fw-bold w100' %></td>
+          <td><%= i.record_type %></td>
+          <td><%= i.exp_date %></td>
+          <% if @match_table_lid.include? i.lid %>
+            <td><%= link_to 'Double', matching_empire_master_matches_path(double_account: 'yes', lid: i.lid, uid: empire.uid), class: 'btn btn-sm btn-warning bg-gradient text-light text-light fw-bold w100' %></td>
+          <% else %>
+            <td><%= link_to 'Match', matching_empire_master_matches_path(match: 'yes', lid: i.lid, uid: empire.uid), class: 'btn btn-sm btn-success bg-gradient text-light text-light fw-bold w100' %></td>
+          <% end %>
         </tr>
         <% end %>
       </tbody>
       <% else %>
       <tbody id="myTable">
-          <% EmpireMasterNyList.where('upper(lname) = ?', params['lname'].upcase).order(lid: :asc).all.each do |i| %>
+          <% table.where('upper(lname) = ?', params['lname'].upcase).order(lid: :asc).all.each do |i| %>
         <tr>
           <td><%= i.lid %></td>
           <td><%= i.list %></td>
@@ -119,7 +129,13 @@
           <td><%= i.city %></td>
           <td><%= i.st %></td>
           <td><%= i.zip %></td>
-          <td><%= link_to 'Match', matching_empire_master_matches_path(match: 'yes', lid: i.lid, uid: empire.uid), class: 'btn btn-sm btn-success bg-gradient text-light text-light fw-bold w100' %></td>
+          <td><%= i.record_type %></td>
+          <td><%= i.exp_date %></td>
+          <% if @match_table_lid.include? i.lid %>
+            <td><%= link_to 'Double', matching_empire_master_matches_path(double_account: 'yes', lid: i.lid, uid: empire.uid), class: 'btn btn-sm btn-warning bg-gradient text-light text-light fw-bold w100' %></td>
+          <% else %>
+            <td><%= link_to 'Match', matching_empire_master_matches_path(match: 'yes', lid: i.lid, uid: empire.uid), class: 'btn btn-sm btn-success bg-gradient text-light text-light fw-bold w100' %></td>
+          <% end %>
         </tr>
         <% end %>
       </tbody>

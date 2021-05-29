@@ -19,41 +19,53 @@ class EmpireMasterMatchesController < ApplicationController
   end
 
   def matching
+    states = ['CA', 'NY']
     @match_table = EmpireMasterMatch.pluck(:uid)
+    @match_table_lid = EmpireMasterMatch.pluck(:lid)
     @no_match_table = EmpireMasterNoMatch.pluck(:uid)
+    @double_account_table = EmpireMasterDoubleAccount.pluck(:uid)
     @number_storage = IdNumberStorage.pluck(:empire_auto_match_id)[0]
 
     if params['auto_match'] == 'yes' #RUN AUTO MATCH
-      EmpireMember.where('id > ?', @number_storage).where.not(uid: @match_table).where.not(uid: @no_match_table).where(state: 'NY').order(created_at: :ASC).each do |i|
+      EmpireMember.where('id > ?', @number_storage).where.not(uid: @match_table).where.not(uid: @no_match_table).where(state: states).order(created_at: :ASC).each do |i|
+        i.state == 'CA' ? table = EmpireMasterCaList : i.state == 'NY' ? table = EmpireMasterNyList : ''
+        # i.state == 'CA' ? list = EmpireMasterCaList.last(1).pluck(:list)[0] : i.state == 'NY' ? list = EmpireMasterNyList.last(1).pluck(:list)[0] : ''
         empire = EmpireCustomer.find_by(uid: i.uid)
-          if empire.lic_state == 'NY' && empire.lname.present? && empire.lic_num.present?
-            list = EmpireMasterNyList.last(1).pluck(:list)[0]
-            lid = EmpireMasterNyList.where('upper(lic) = ?', empire.lic_num.upcase).where('upper(lname) = ?', empire.lname.upcase).pluck(:lid)[0]
-            EmpireMasterMatch.create(lid: lid, uid: empire.uid, list: list, lic_st: empire.state, lname: empire.lname, search_date: Date.today).save
+          if empire.lname.present? && empire.lic_num.present?
+            lid = table.where('upper(lic) = ?', empire.lic_num.upcase).where('upper(lname) = ?', empire.lname.upcase).pluck(:lid)[0]
+            master = table.find_by(lid: lid)
+            unless lid.blank?
+              EmpireMasterMatch.create(lid: master.lid, uid: empire.uid, list: master.list, exp: master.exp_date, lic_st: master.lic_state, lname: empire.lname, search_date: Date.today).save
+            end
           end
-        IdNumberStorage.update_all empire_auto_match_id: i.id
-        @match_table = EmpireMasterMatch.pluck(:uid)
-        @no_match_table = EmpireMasterNoMatch.pluck(:uid)
       end
+      uid = EmpireMasterMatch.order(created_at: :DESC).first(1).pluck(:uid)[0]
+      id = EmpireMember.find_by(uid: uid)
+      IdNumberStorage.update_all empire_auto_match_id: id.id
       redirect_to matching_empire_master_matches_path(), notice: 'Auto Match Complete'
     end #END AUTO MATCH
 
-    if params['no_match'] == 'yes' #MATCH
+    if params['no_match'] == 'yes' #NO MATCH
       empire = EmpireMember.find_by(uid: params['uid'])
-      if empire.state == 'NY'
-        list = EmpireMasterNyList.last(1).pluck(:list)[0]
-      end
+      empire.state == 'CA' ? list = EmpireMasterCaList.last(1).pluck(:list)[0] : empire.state == 'NY' ? list = EmpireMasterNyList.last(1).pluck(:list)[0] : ''
       EmpireMasterNoMatch.create(uid: empire.uid, list: list, lic_st: empire.state, lname: empire.lname, search_date: Date.today).save
       redirect_to matching_empire_master_matches_path(), notice: 'No Match Added'
-    end
-    if params['match'] == 'yes' #NO MATCH
+    end #END NO MATCH
+
+    if params['match'] == 'yes' #MATCH
       empire = EmpireMember.find_by(uid: params['uid'])
-      if empire.state == 'NY'
-        list = EmpireMasterNyList.last(1).pluck(:list)[0]
-      end
-      EmpireMasterMatch.create(lid: params['lid'], uid: empire.uid, list: list, lic_st: empire.state, lname: empire.lname, search_date: Date.today).save
+      empire.state == 'CA' ? table = EmpireMasterCaList : empire.state == 'NY' ? table = EmpireMasterNyList : ''
+      master = table.find_by(lid: params['lid'])
+      EmpireMasterMatch.create(lid: master.lid, uid: empire.uid, list: master.list, lic_st: empire.state, lname: empire.lname, exp: master.exp_date, search_date: Date.today).save
       redirect_to matching_empire_master_matches_path(), notice: 'Match Added'
-    end
+    end #END MATCH
+
+    if params['double_account'] == 'yes' #Double Account
+      empire = EmpireMember.find_by(uid: params['uid'])
+      empire.state == 'CA' ? list = EmpireMasterCaList.last(1).pluck(:list)[0] : empire.state == 'NY' ? list = EmpireMasterNyList.last(1).pluck(:list)[0] : ''
+      EmpireMasterDoubleAccount.create(uid: params['uid'], list: list, lic_st: empire.state, lname: empire.lname, search_date: Date.today).save
+      redirect_to matching_empire_master_matches_path(), notice: 'Double Account Added'
+    end # END Double Account
 
   end
 
@@ -120,6 +132,6 @@ class EmpireMasterMatchesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def empire_master_match_params
-      params.require(:empire_master_match).permit(:lid, :list, :lic_st, :uid, :search_date, :lname)
+      params.require(:empire_master_match).permit(:lid, :list, :lic_st, :uid, :search_date, :lname, :exp)
     end
 end

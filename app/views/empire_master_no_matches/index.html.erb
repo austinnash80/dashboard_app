@@ -33,7 +33,7 @@
   </thead>
 
   <tbody>
-    <% @empire_master_no_matches.limit(250).each do |empire_master_no_match| %>
+    <% @empire_master_no_matches.order(created_at: :DESC).limit(250).each do |empire_master_no_match| %>
       <tr>
         <td><%= empire_master_no_match.uid %></td>
         <td><%= empire_master_no_match.list %></td>

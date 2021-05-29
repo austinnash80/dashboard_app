@@ -81,6 +81,6 @@ class EmpireMasterNyListsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def empire_master_ny_list_params
-      params.require(:empire_master_ny_list).permit(:lid, :list, :lic, :record_type, :lic_status, :iss_date_s, :iss_date, :exp_date_s, :exp_date, :fname, :mi, :lname, :suf, :co, :add, :add2, :city, :st, :zip, :email, :phone)
+      params.require(:empire_master_ny_list).permit(:lid, :list, :lic, :lic_state, :record_type, :lic_status, :iss_date_s, :iss_date, :exp_date_s, :exp_date, :fname, :mi, :lname, :suf, :co, :add, :add2, :city, :st, :zip, :email, :phone)
     end
 end

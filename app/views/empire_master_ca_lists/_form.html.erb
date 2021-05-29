@@ -1,0 +1,33 @@
+
+<%= simple_form_for(@empire_master_ca_list) do |f| %>
+  <%= f.error_notification %>
+  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+  <div class="form-inputs">
+    <%= f.input :lid %>
+    <%= f.input :list %>
+    <%= f.input :lic %>
+    <%= f.input :record_type %>
+    <%= f.input :lic_status %>
+    <%= f.input :iss_date_s %>
+    <%= f.input :iss_date %>
+    <%= f.input :exp_date_s %>
+    <%= f.input :exp_date %>
+    <%= f.input :fname %>
+    <%= f.input :mi %>
+    <%= f.input :lname %>
+    <%= f.input :suf %>
+    <%= f.input :co %>
+    <%= f.input :add %>
+    <%= f.input :add2 %>
+    <%= f.input :city %>
+    <%= f.input :st %>
+    <%= f.input :zip %>
+    <%= f.input :email %>
+    <%= f.input :phone %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

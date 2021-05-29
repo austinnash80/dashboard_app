@@ -91,15 +91,26 @@ class MktgExportsController < ApplicationController
   end
   def empire
     if params['campaign'] == 'New Customer'
-      EmpireMember.where(first_purchase: @dates).where(state: params['empire_st']).all.each do |i|
+      EmpireMember.where(first_purchase: @dates).where(state: params['empire_st'].upcase).all.each do |i|
         MktgExport.create(uid: i.uid, exp: i.first_purchase, campaign: params['campaign'], des: i.state).save
       end
     end
+
+    if params['campaign'] == 'Return Customer'
+      EmpireMasterMatch.where(exp: @dates).where(lic_st: params['empire_st'].upcase).all.each do |i|
+        member = EmpireMember.find_by(uid: i.uid)
+        if member.last_purchase < Date.today - 18.months
+          MktgExport.create(uid: i.uid, exp: i.exp, campaign: params['campaign'], des: i.lic_st).save
+        end
+      end
+    end
+
+
     MktgExport.all.each do |i| #Add the remaining customer infomation
       customer_data = EmpireCustomer.find_by(uid: i.uid)
       MktgExport.where(uid: i.uid).update_all email: customer_data.email, fname: customer_data.fname, lname: (customer_data.lname), street_1: customer_data.street_1, street_2: customer_data.street_2, city: customer_data.city, state: customer_data.state, zip: customer_data.zip
     end
-    MktgExport.update_all text_1: 'Add_Text_1',text_2: 'Add_Text_2',text_3: 'Add_Text_3'
+    MktgExport.update_all text_1: '22.5-Hour New York CE Package',text_2: '$59.99',text_3: 'Take an additional 10% off - Use Code:', text_4: 'ReturningStudent21'
   end
 
   def print

@@ -80,9 +80,9 @@ class MktgExportsController < ApplicationController
 
     #Add the Marketing TEXT (do with a table in the future?)
     if params['campaign'] == 'Return Customer' && params['des'] == 'cpa'
-      MktgExport.update_all text_1: 'RC_CPA_Text_1',text_2: 'RC_CPA_Text_2',text_3: 'RC_CPA_Text_3'
+      MktgExport.update_all text_1: 'Membership Expires',text_2: '',text_3: ''
     elsif params['campaign'] == 'Return Customer' && params['des'] == 'ea'
-      MktgExport.update_all text_1: 'RC_EA_Text_1',text_2: 'RC_EA_Text_2',text_3: 'RC_EA_Text_3'
+      MktgExport.update_all text_1: 'Membership Expires',text_2: '',text_3: ''
     elsif params['campaign'] == 'New Customer' && params['des'] == 'cpa'
       MktgExport.update_all text_1: 'NC_CPA_Text_1',text_2: 'NC_CPA_Text_2',text_3: 'NC_CPA_Text_3'
     elsif params['campaign'] == 'New Customer' && params['des'] == 'ea'

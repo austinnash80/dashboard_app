@@ -32,6 +32,7 @@ Rails.application.routes.draw do
   resources :daily_sales do collection {post :import}
     collection do
       get 'run_update'
+      get 'monthly'
     end
   end
   resources :sequoia_product_lists do collection {post :import} end

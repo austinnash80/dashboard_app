@@ -18,6 +18,12 @@ class DailySalesController < ApplicationController
     end
   end
 
+  def monthly
+    @daily_sales = DailySale.all
+    
+
+  end
+
   def run_update
       if params['update'] == 'run'
         cpa_new = SequoiaProductList.where(who: 'cpa').where(group: 'membership').where(full_price: true).pluck(:product)

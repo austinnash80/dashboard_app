@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_15_034314) do
+ActiveRecord::Schema.define(version: 2021_06_15_172523) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -222,6 +222,7 @@ ActiveRecord::Schema.define(version: 2021_06_15_034314) do
     t.string "zip"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["lid"], name: "index_master_cpas_on_lid", unique: true
   end
 
   create_table "master_ea_double_accounts", force: :cascade do |t|
@@ -279,6 +280,7 @@ ActiveRecord::Schema.define(version: 2021_06_15_034314) do
     t.string "zip"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["lid"], name: "index_master_eas_on_lid", unique: true
   end
 
   create_table "mktg_exports", force: :cascade do |t|
@@ -373,6 +375,7 @@ ActiveRecord::Schema.define(version: 2021_06_15_034314) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "other"
+    t.index ["uid"], name: "index_sequoia_members_on_uid", unique: true
   end
 
   create_table "sequoia_product_lists", force: :cascade do |t|

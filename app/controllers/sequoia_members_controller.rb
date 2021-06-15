@@ -40,7 +40,7 @@ class SequoiaMembersController < ApplicationController
       ethics = SequoiaProductList.where(group: 'ethics').pluck(:product)
       other = SequoiaProductList.where(group: 'upgrade').pluck(:product)
 
-      SequoiaCustomer.where('order_id > ?', @order_id).order(id: :asc).each do |i|
+      SequoiaCustomer.order(order_id: :asc).where('order_id > ?', @order_id).each do |i|
         member = SequoiaMember.find_by(uid: i.uid)
         if cpa_membership.include? i.product_1
           SequoiaMember.where(uid: i.uid).update_all cpa: true, cpa_memberships: (member.cpa_memberships + 1), last_purchase: i.purchase

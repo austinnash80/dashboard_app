@@ -22,9 +22,9 @@ class SequoiaCustomersController < ApplicationController
   def run_update
     @id = SequoiaCustomer.pluck(:s_id).max
     # WHEN DONE THE REDIRECT TO OTHER UPDATES
-    unless params['s_id'].present?
-      redirect_to run_update_sequoia_members_path()
-    end
+    # unless params['s_id'].present?
+    #   redirect_to run_update_sequoia_members_path()
+    # end
   end
 
   def run_data

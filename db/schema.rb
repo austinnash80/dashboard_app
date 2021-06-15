@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_29_014741) do
+ActiveRecord::Schema.define(version: 2021_06_09_230612) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -306,6 +306,18 @@ ActiveRecord::Schema.define(version: 2021_05_29_014741) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "email"
+  end
+
+  create_table "mktg_materials", force: :cascade do |t|
+    t.string "co"
+    t.string "campaign"
+    t.string "name"
+    t.date "land_date"
+    t.string "delivered_to"
+    t.integer "quantity"
+    t.string "link_name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "sequoia_customers", force: :cascade do |t|

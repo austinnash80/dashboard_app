@@ -1,0 +1,38 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Co:</strong>
+  <%= @mktg_material.co %>
+</p>
+
+<p>
+  <strong>Campaign:</strong>
+  <%= @mktg_material.campaign %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @mktg_material.name %>
+</p>
+
+<p>
+  <strong>Land date:</strong>
+  <%= @mktg_material.land_date %>
+</p>
+
+<p>
+  <strong>Delivered to:</strong>
+  <%= @mktg_material.delivered_to %>
+</p>
+
+<p>
+  <strong>Quantity:</strong>
+  <%= @mktg_material.quantity.present? ? number_with_delimiter(@mktg_material.quantity) :'' %>
+</p>
+
+<div class="text-center">
+  <iframe src=<%= @mktg_material.link_name %> width="1100" height="1200" style="border: none;"> </iframe>
+</div>
+
+<%= link_to 'Edit', edit_mktg_material_path(@mktg_material) %> |
+<%= link_to 'Back', mktg_materials_path %>

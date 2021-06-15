@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :mktg_materials do collection {post :import} end
   resources :empire_master_ca_lists do collection {post :import} end
   resources :empire_master_double_accounts do collection {post :import} end
   resources :empire_master_no_matches do collection {post :import} end

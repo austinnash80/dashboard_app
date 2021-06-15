@@ -20,7 +20,6 @@ class DailySalesController < ApplicationController
 
   def monthly
     @daily_sales = DailySale.all
-    
 
   end
 

@@ -29,6 +29,7 @@
 
 <div class="m-5">
 <!-- INPUT FIELDS -->
+<% if params['co'].present? %>
   <div class="row">
     <p>Date Range 1</p>
     <div class="col-2">
@@ -63,6 +64,7 @@
       <% end %>
     </div>
   </div>
+  <% end %>
 <!-- END INPUT FIELDS -->
 <!-- CAMPAIGN BUTTONS SEQUOIA-->
   <% if params['co'] == 'sequoia' %>
@@ -71,7 +73,7 @@
     <%= link_to 'CPA NM', mktg_exports_path(co: 'sequoia', campaign: 'New Customer', des: 'cpa'), class: 'w100 search_link btn btn-sm btn-primary text-light bg-gradient' %>
     <%= link_to 'EA NM', mktg_exports_path(co: 'sequoia', campaign: 'New Customer', des: 'ea'), class: 'w100 search_link btn btn-sm btn-primary text-light bg-gradient' %>
   <% elsif params['co'] == 'empire' %>
-    <%= text_field_tag "id", '', class: "empire_st_field form-control w150", placeholder: 'State', value: params['empire_st'] %><br>
+    <%= text_field_tag "id", '', class: "empire_st_field form-control w150", placeholder: 'State', value: params['empire_st']  %> Add multiple states - no common between. Active states: CA NY<br> <br>
     <%= link_to 'New Customer', mktg_exports_path(co: 'empire', campaign: 'New Customer', des: 'ny'), class: 'w150 search_link btn btn-sm btn-primary text-light bg-gradient' %>
     <%= link_to 'Return Customer', mktg_exports_path(co: 'empire', campaign: 'Return Customer', des: 'ny'), class: 'w150 search_link btn btn-sm btn-primary text-light bg-gradient' %>
   <% end %>
@@ -87,6 +89,7 @@
       <th>Campaign</th>
       <th><%= params['co'].present? && params['co'] == 'empire' ? 'Lic St' : params['co'].present? && params['co'] == 'sequoia' ? 'DES' : '' %></th>
       <th><%= params['campaign'].present? && params['campaign'] == 'New Customer' ? 'Purchase' : params['campaign'].present? && params['campaign'] == 'Return Customer' ? 'EXP' : 'Date' %></th>
+      <% if params['co'] == 'sequoia' && params['campaign'] == 'New Customer' %><th>EXP</th><% end %>
       <th>Email</th>
       <th>Fname</th>
       <th>Lname</th>
@@ -112,10 +115,12 @@
   <tbody>
     <% @mktg_exports.order(exp: :asc).order(uid: :asc).limit(250).each do |mktg_export| %>
       <tr>
-        <td><%= mktg_export.uid %></td>
+        <% if params['co'] == 'sequoia' %><td><a target="_blank" href="https://www.sequoiacpe.com/admin/user-profile?u=<%= mktg_export.uid %>"><%= mktg_export.uid %></a></td><% end %>
+        <% if params['co'] == 'empire' %><td><a target="_blank" href="https://www.empirelearning.com/admin/user-profile?u=<%= mktg_export.uid %>"><%= mktg_export.uid %></a></td><% end %>
         <td><%= mktg_export.campaign %></td>
         <td><%= mktg_export.des %></td>
         <td><%= mktg_export.exp %></td>
+        <% if params['co'] == 'sequoia' && params['campaign'] == 'New Customer' %><td><%= mktg_export.exp + 1.year %></td><% end %>
         <td><%= mktg_export.email %></td>
         <td><%= mktg_export.fname %></td>
         <td><%= mktg_export.lname %></td>

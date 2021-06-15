@@ -82,7 +82,7 @@
   <tbody>
     <% @sequoia_members.order(last_purchase: :desc).order(first_purchase: :desc).limit(250).each do |sequoia_member| %>
       <tr>
-        <td><%= sequoia_member.uid %></td>
+        <td><a target="_blank" href="https://www.sequoiacpe.com/admin/user-profile?u=<%= mktg_export.uid %>"><%= sequoia_member.uid %></a></td>
         <td><%= sequoia_member.lname %></td>
         <td><%= sequoia_member.first_purchase %></td>
         <td><%= sequoia_member.last_purchase %></td>

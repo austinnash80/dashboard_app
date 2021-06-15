@@ -4,7 +4,7 @@ class SequoiaCustomersController < ApplicationController
   # GET /sequoia_customers or /sequoia_customers.json
   def index
     run_data
-    @sequoia_customers = SequoiaCustomer.order(id: :desc).all
+    @sequoia_customers = SequoiaCustomer.all
 
     # DELETE ALL
     if params['remove_all'] == 'yes' && params['confirm'] == 'yes'

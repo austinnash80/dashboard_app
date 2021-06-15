@@ -53,7 +53,7 @@
   </thead>
 
   <tbody>
-    <% @sequoia_customers.order(s_id: :ASC).limit(10).each do |sequoia_customer| %>
+    <% @sequoia_customers.order(s_id: :DESC).limit(250).each do |sequoia_customer| %>
       <tr>
         <td><%= sequoia_customer.s_id %></td>
         <td><%= sequoia_customer.order_id %></td>

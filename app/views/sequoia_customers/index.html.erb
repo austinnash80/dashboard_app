@@ -25,7 +25,7 @@
 
 <table class="table table-striped">
   <thead>
-    <caption class="caption-top">Total Records: <%= number_with_delimiter(SequoiaCustomer.count) %> | Display Limit: 100</caption>
+    <caption class="caption-top">Total Records: <%= number_with_delimiter(SequoiaCustomer.count) %> | Display Limit: 250</caption>
     <tr class="bg-secondary bg-gradient text-light">
       <th>SID</th>
       <th>Order ID</th>
@@ -53,7 +53,7 @@
   </thead>
 
   <tbody>
-    <% @sequoia_customers.limit(100).each do |sequoia_customer| %>
+    <% @sequoia_customers.order(s_id: :ASC).limit(10).each do |sequoia_customer| %>
       <tr>
         <td><%= sequoia_customer.s_id %></td>
         <td><%= sequoia_customer.order_id %></td>

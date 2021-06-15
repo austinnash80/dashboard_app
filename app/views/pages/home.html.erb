@@ -1,6 +1,6 @@
 <%= link_to 'login', login_path %> | <%= link_to 'logout', session_path(session), method: :delete %>  | <%= link_to 'sign up', session_path(session), method: :create, method: :create %>
-<h3 class="text-center">Morning Updates</h3>
-<table class="table table-striped">
+<!-- <h3 class="text-center">Morning Updates</h3>
+   <table class="table table-striped">
   <thead>
     <tr class="bg-secondary bg-gradient text-light">
       <th></th>
@@ -9,15 +9,15 @@
   </thead>
   <tbody>
     <tr>
-      <td><%= link_to 'Run Sequoia', run_update_sequoia_customers_path, target: "_blank", class: 'btn btn-sm btn-primary text-light w150' %></td>
+      <td><%#= link_to 'Run Sequoia', run_update_sequoia_customers_path, target: "_blank", class: 'btn btn-sm btn-primary text-light w150' %></td>
       <td>Run all Sequoia updates - Customer data -> New Member update -> purchase type update -> EXP update</td>
     </tr>
     <tr>
-      <td><%= link_to 'Run Empire', run_update_empire_customers_path, target: "_blank", class: 'btn btn-sm btn-primary text-light w150' %></td>
+      <td><%#= link_to 'Run Empire', run_update_empire_customers_path, target: "_blank", class: 'btn btn-sm btn-primary text-light w150' %></td>
       <td>Run all Sequoia updates - Customer data -> New Member update -> purchase type update</td>
     </tr>
   </tbody>
-</table>
+</table> -->
 
 <h1 class="text-center">Sequoia</h1>
 <br>
@@ -134,6 +134,10 @@
     <tr>
       <td><%= link_to 'MKTG Exports', mktg_exports_path %></td>
       <td>Staging table for MKTG Export files - add the customer data needed view date search fields. Data is deleted after each search</td>
+    </tr>
+    <tr>
+      <td><%= link_to 'MKTG Materials', mktg_materials_path %></td>
+      <td>Archive of past mailed marketing materials - referance for customer service team -> current upload through AWS</td>
     </tr>
   </tbody>
 </table>

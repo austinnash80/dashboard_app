@@ -4,7 +4,7 @@
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
   <div class="form-inputs">
-    <%= f.input :co, label: 'Company', as: :select, collection: ['Sequoia','Empire'] %>
+    <%= f.input :co, label: 'Company', as: :select, collection: ['Sequoia','Empire', 'Pacific', 'Other'] %>
     <%= f.input :campaign, as: :select, collection: ['Direct Mail','Return Customer', 'New Customer', 'Other'] %>
     <%= f.input :name, hint: 'ex: 2021.6 - CPA' %>
     <%= f.input :land_date %>

@@ -26,6 +26,15 @@ class MktgExportsController < ApplicationController
       end
     end
 
+    # buttons
+    params['campaign'] == 'Return Customer' && params['co'] == 'sequoia' && params['des'] == 'cpa'? @sequoia_rc_cpa = 'btn-secondary' : @sequoia_rc_cpa = 'btn-primary'
+    params['campaign'] == 'Return Customer' && params['co'] == 'sequoia' && params['des'] == 'ea'? @sequoia_rc_ea = 'btn-secondary' : @sequoia_rc_ea = 'btn-primary'
+    params['campaign'] == 'New Customer' && params['co'] == 'sequoia' && params['des'] == 'cpa'? @sequoia_nc_cpa = 'btn-secondary' : @sequoia_nc_cpa = 'btn-primary'
+    params['campaign'] == 'New Customer' && params['co'] == 'sequoia' && params['des'] == 'ea'? @sequoia_nc_ea = 'btn-secondary' : @sequoia_nc_ea = 'btn-primary'
+
+    params['campaign'] == 'Return Customer' && params['co'] == 'empire' ? @empire_rc = 'btn-secondary' : @empire_rc = 'btn-primary'
+    params['campaign'] == 'New Customer' && params['co'] == 'empire' ? @empire_nc = 'btn-secondary' : @empire_nc = 'btn-primary'
+
     if params['campaign'].present? && params['range_1_date_1'].present?
       MktgExport.delete_all
 

@@ -1,5 +1,5 @@
 <h1 class="text-center">CPA Customer Matching Search</h1>
-<p class="text-center"><%= link_to 'Match List', master_cpa_matches_path, class: 'text-light m-1 w150 btn-sm btn btn-primary' %> <%= link_to 'No Match List', master_cpa_no_matches_path, class: 'm-1 text-light w150 btn-sm btn btn-primary' %></p>
+<p class="text-center"><%= link_to 'Match List', master_cpa_matches_path, class: 'text-light m-1 w200 btn-sm btn btn-primary' %> <%= link_to 'No Match List', master_cpa_no_matches_path, class: 'm-1 text-light w200 btn-sm btn btn-primary' %> <%= link_to 'Double Account List', master_cpa_double_accounts_path, class: 'm-1 text-light w200 btn-sm btn btn-primary' %></p>
 <% if params['uid'].present? %>
   <% sequoia = SequoiaCustomer.find_by(uid: params['uid']) %>
 <% else %>

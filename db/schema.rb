@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_15_174828) do
+ActiveRecord::Schema.define(version: 2021_06_16_171023) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -53,6 +53,7 @@ ActiveRecord::Schema.define(version: 2021_06_15_174828) do
     t.string "zip"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["e_id"], name: "index_empire_customers_on_e_id", unique: true
   end
 
   create_table "empire_master_ca_lists", force: :cascade do |t|
@@ -151,6 +152,7 @@ ActiveRecord::Schema.define(version: 2021_06_15_174828) do
     t.integer "purchases"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["uid"], name: "index_empire_members_on_uid", unique: true
   end
 
   create_table "id_number_storages", force: :cascade do |t|

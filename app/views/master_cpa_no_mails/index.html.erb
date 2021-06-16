@@ -1,7 +1,7 @@
 <p id="notice"><%= notice %></p>
 
 <h1 class="text-center">Master CPA No Mails List</h1>
-<p class="text-center"><%= link_to 'Search to add new', sequoia_matchings_no_mail_search_path() %></p>
+<p class="text-center"><%= link_to 'Search to add new', sequoia_matchings_no_mail_search_path(), class: 'btn btn-sm btn-secondary text-light bg-gradient' %></p>
 
 <p class="fs-4">Upload New List</p>
   <%= form_tag import_master_cpa_no_mails_path, multipart: true do %>

@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :canned_responses do collection {post :import} end
   resources :mktg_materials do collection {post :import} end
   resources :empire_master_ca_lists do collection {post :import} end
   resources :empire_master_double_accounts do collection {post :import} end
@@ -67,6 +68,7 @@ Rails.application.routes.draw do
   get 'sequoia_matchings/ea_customer_matching'
   get 'pages/admin_page'
   get 'pages/home'
+  get 'pages/customer_service'
   get 'pages/master_lists'
   get 'pages/customer_matching_cpa'
   root :to => 'pages#home'              # Replace this with whatever you want your root_path to be.

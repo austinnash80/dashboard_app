@@ -1,0 +1,18 @@
+
+<%= simple_form_for(@canned_response) do |f| %>
+  <%= f.error_notification %>
+  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+  <div class="form-inputs">
+    <%= f.input :company, as: :select, collection: ['Sequoia', 'Empire', 'Tax Preparers', 'Pacific'] %>
+    <%= f.input :des %>
+    <%= f.input :state %>
+    <%= f.input :questions, label: 'Question' %>
+    <%= f.input :answer %>
+    <%= f.input :notes %>
+  </div>
+<br>
+  <div class="form-actions">
+    <%= f.button :submit, 'Submit', class: 'btn btn-lg btn-primary gb-gradient text-light' %>
+  </div>
+<% end %>

@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Company:</strong>
+  <%= @canned_response.company %>
+</p>
+
+<p>
+  <strong>Des:</strong>
+  <%= @canned_response.des %>
+</p>
+
+<p>
+  <strong>State:</strong>
+  <%= @canned_response.state %>
+</p>
+
+<p>
+  <strong>Questions:</strong>
+  <%= @canned_response.questions %>
+</p>
+
+<p>
+  <strong>Answer:</strong>
+  <%= @canned_response.answer %>
+</p>
+
+<p>
+  <strong>Notes:</strong>
+  <%= @canned_response.notes %>
+</p>
+
+<%= link_to 'Edit', edit_canned_response_path(@canned_response) %> |
+<%= link_to 'Back', canned_responses_path %>

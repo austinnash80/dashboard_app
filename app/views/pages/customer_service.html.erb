@@ -1,0 +1,40 @@
+<h1 class="text-center">Customer Service</h1>
+<div class="m-5">
+  <div class="card w400 bg-light bg-gradient">
+    <div class="card-body">
+      <h5 class="card-title">Customer Matching</h5>
+      <p class="card-text">Matching customers (UID) to master state lists (LID)</p>
+      <p class=""><%= link_to 'CPA Customer Matching', sequoia_matchings_cpa_customer_matching_path, class: 'btn btn-sm btn-secondary text-light bg-gradient w200' %></p>
+      <p class=""><%= link_to 'EA Customer Matching', sequoia_matchings_ea_customer_matching_path, class: 'btn btn-sm btn-secondary text-light bg-gradient w200' %></p>
+    </div>
+  </div>
+</div>
+<div class="m-5">
+  <div class="card w400 bg-light bg-gradient">
+    <div class="card-body">
+      <h5 class="card-title">No Mail Requests</h5>
+      <p class="card-text">Search for licensees that request removal from direct mail marketing campaigns</p>
+      <p class=""><%= link_to 'CPA No Mail', sequoia_matchings_no_mail_search_path(), class: 'btn btn-sm btn-secondary text-light bg-gradient w150' %></p>
+      <p class=""><%= link_to 'EA No Mail', sequoia_matchings_ea_no_mail_search_path(), class: 'btn btn-sm btn-secondary text-light bg-gradient w150' %></p>
+    </div>
+  </div>
+</div>
+<div class="m-5">
+  <div class="card w400 bg-light bg-gradient">
+    <div class="card-body">
+      <h5 class="card-title">Canned Responses</h5>
+      <p class="card-text">Answers to frequently asked questions </p>
+
+      <div class="row">
+        <div class="col-lg-6">
+          <p class=""><%= link_to 'Sequoia', canned_responses_path(company: 'sequoia'), class: 'btn btn-sm btn-secondary text-light bg-gradient w150' %></p>
+          <p class=""><%= link_to 'Empire', canned_responses_path(company: 'empire'), class: 'btn btn-sm btn-secondary text-light bg-gradient w150' %></p>
+        </div>
+        <div class="col-lg-6">
+          <p class=""><%= link_to 'Tax Preparers', canned_responses_path(company: 'tax-preparers'), class: 'btn btn-sm btn-secondary text-light bg-gradient w150' %></p>
+          <p class=""><%= link_to 'Pacific', canned_responses_path(company: 'pacific'), class: 'btn btn-sm btn-secondary text-light bg-gradient w150' %></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

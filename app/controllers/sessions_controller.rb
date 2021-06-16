@@ -10,7 +10,11 @@ class SessionsController < ApplicationController
       # If a user record with the entered in the form is present AND the user is authenticated (using bcrypt's authenticate method and the password entered in the form), store their id in the session hash and redirect them to the root path.
       session[:user_id] = user.id
       flash[:notice] = "User created!"
-      redirect_to root_path
+      if current_user.present? && current_user.admin?
+        redirect_to root_path
+      else
+        redirect_to pages_customer_service_path()
+      end
     else
       # If the user cannot be authenticated, redirect them to the login_path.
       flash[:error] = "User could not be created!"

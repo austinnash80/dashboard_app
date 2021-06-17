@@ -1,4 +1,8 @@
-<%= link_to 'Print', print_mktg_exports_path(), onclick: "document.title='#{params['co'].titlecase} - #{params['des'].upcase} #{params['campaign']} - #{Date.today}'; window.print();return false;", class: 'btn btn-sm btn-success text-light w100 no_print'%>
+<% if params['co'].present? && params['co'] == 'sequoia' %>
+  <%= link_to 'Print', print_mktg_exports_path(), onclick: "document.title='#{params['co'].titlecase} - #{params['des'].upcase} #{params['campaign']} - #{Date.today}'; window.print();return false;", class: 'btn btn-sm btn-success text-light w100 no_print'%>
+<% else %>
+  <%= link_to 'Print', print_mktg_exports_path(), onclick: "document.title='#{params['co'].titlecase} - #{params['campaign']} - #{Date.today}'; window.print();return false;", class: 'btn btn-sm btn-success text-light w100 no_print'%>
+<% end %>
 <div class="mktg_print_page_top">
   <% count = 0 %>
   <% MktgExport.order(exp: :asc).order(uid: :asc).all.each do |i| %>

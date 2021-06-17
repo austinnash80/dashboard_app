@@ -35,9 +35,9 @@
   </thead>
 
   <tbody>
-    <% @empire_members.order(last_purchase: :DESC).order(first_purchase: :DESC).limit(250).each do |empire_member| %>
+    <% @empire_members.order(last_purchase: :DESC).order(first_purchase: :DESC).order(uid: :DESC).limit(250).each do |empire_member| %>
       <tr>
-        <td><%= empire_member.uid %></td>
+        <td><a target="_blank" href="https://www.empirelearning.com/admin/user-profile?u=<%= empire_member.uid %>"><%= empire_member.uid %></a></td>
         <td><%= empire_member.lname %></td>
         <td><%= empire_member.first_purchase %></td>
         <td><%= empire_member.last_purchase %></td>

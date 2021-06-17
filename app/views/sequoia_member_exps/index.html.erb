@@ -36,7 +36,7 @@
   <tbody>
     <% @sequoia_member_exps.where.not(membership: nil).where('membership_exp > ?', Date.today).order(membership_exp: :asc).limit(250).each do |sequoia_member_exp| %>
       <tr>
-        <td><%= sequoia_member_exp.uid %></td>
+        <td><a target="_blank" href="https://www.sequoiacpe.com/admin/user-profile?u=<%= sequoia_member_exp.uid %>"><%= sequoia_member_exp.uid %></a></td>
         <td><%= sequoia_member_exp.membership %></td>
         <td><%= sequoia_member_exp.last_membership %></td>
         <td><%= sequoia_member_exp.membership_exp %></td>

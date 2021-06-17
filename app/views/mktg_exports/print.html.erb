@@ -8,20 +8,21 @@
   <% MktgExport.order(exp: :asc).order(uid: :asc).all.each do |i| %>
     <% count = count + 1 %>
   <p>
-<% if params['co'] == 'empire' %>
-    <p class="text-center"><span class="mktg_export_text_1"><%= i.text_1 %> - <strong><%= i.text_2 %></strong></span></p>
+<% if params['co'] == 'empire' %> <!-- EMPIRE RC -->
+    <p class="text-center"><span class="mktg_export_text_1"><%= i.text_1 %> - <%= i.text_2 %></span></p>
     <p class="mktg_export_text_addess"><%= i.fname.present? ? i.fname.titlecase : "" %> <%= i.lname.present? ? i.lname.titlecase : ''%>
       <br> <%= i.street_1.present? ? i.street_1.titlecase : '' %> <%= i.street_2.present? && i.street_2 == 'XX' ? '' : i.street_2.present? ? i.street_2.titlecase : '' %>
       <br> <%= i.city.present? ? i.city.titlecase : ''%> <%= i.state.present? ? i.state.upcase : ''%> <%= i.zip %></p>
     <p class="mktg_export_text_3 <% unless count == MktgExport.count %> mktg_print_padding <% end %>"><%= i.text_3 %> <span class="fw-bold"><%= i.text_4 %></span></p>
 <% end %>
-<% if params['co'] == 'sequoia' && params['campaign'] == 'Return Customer' %>
+
+<% if params['co'] == 'sequoia' && params['campaign'] == 'Return Customer' %> <!-- SEQUOIA RC -->
     <p class="text-center"><span class="mktg_export_text_1_sequoia_rc"><%= i.text_1 %>
     <br><strong><%= i.exp.strftime('%B %-d, %Y') %></strong></span></p>
     <p class="mktg_export_text_addess <% unless count == MktgExport.count %>mktg_print_padding_sequoia_rc <% end %>"><%= i.fname.present? ? i.fname.titlecase : "" %> <%= i.lname.present? ? i.lname.titlecase : ''%>
     <br> <%= i.street_1.present? ? i.street_1.titlecase : '' %> <%= i.street_2.present? && i.street_2 == 'XX' ? '' : i.street_2.present? ? i.street_2.titlecase : '' %>
     <br> <%= i.city.present? ? i.city.titlecase : ''%> <%= i.state.present? ? i.state.upcase : ''%> <%= i.zip %></p>
-<% elsif params['co'] == 'sequoia' && params['campaign'] == 'New Customer' %>
+<% elsif params['co'] == 'sequoia' && params['campaign'] == 'New Customer' %> <!-- SEQUOIA NC -->
     <p class="text-center"><span class="mktg_export_text_1_sequoia_rc"><%= i.text_1 %>
     <br><strong><%= (i.exp + 1.year).strftime('%B %-d, %Y') %></strong></span></p>
     <p class="mktg_export_text_addess <% unless count == MktgExport.count %>mktg_print_padding_sequoia_rc <% end %>"><%= i.fname.present? ? i.fname.titlecase : "" %> <%= i.lname.present? ? i.lname.titlecase : ''%>

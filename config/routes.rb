@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :no_mail_not_founds do collection {post :import} end
   resources :canned_responses do collection {post :import} end
   resources :mktg_materials do collection {post :import} end
   resources :empire_master_ca_lists do collection {post :import} end

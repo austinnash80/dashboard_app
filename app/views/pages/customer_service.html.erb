@@ -4,38 +4,38 @@
     <div class="m-5">
       <div class="card w500 bg-light bg-gradient">
         <div class="card-body">
-          <h5 class="card-title">Canned Responses</h5>
+          <h5 class="card-title fw-bold">Canned Responses</h5>
           <p class="card-text">Answers to frequently asked questions </p>
-          <div class="row">
-            <div class="col-lg-6">
-              <p class=""><%= link_to 'Sequoia', canned_responses_path(company: 'sequoia'), class: 'btn btn-sm btn-secondary text-light bg-gradient w150' %></p>
-              <p class=""><%= link_to 'Empire', canned_responses_path(company: 'empire'), class: 'btn btn-sm btn-secondary text-light bg-gradient w150' %></p>
+            <div class="btn-group" role="group" aria-label="">
+              <%= link_to 'Sequoia', canned_responses_path(company: 'sequoia'), class: 'btn btn-sm btn-secondary text-light bg-gradient w100' %>
+              <%= link_to 'Empire', canned_responses_path(company: 'empire'), class: 'btn btn-sm btn-secondary text-light bg-gradient w100' %>
+              <%= link_to 'Pacific', canned_responses_path(company: 'pacific'), class: 'btn btn-sm btn-secondary text-light bg-gradient w100' %>
+              <%= link_to 'TPCE', canned_responses_path(company: 'tax-preparers'), class: 'btn btn-sm btn-secondary text-light bg-gradient w100' %>
             </div>
-            <div class="col-lg-6">
-              <p class=""><%= link_to 'Tax Preparers', canned_responses_path(company: 'tax-preparers'), class: 'btn btn-sm btn-secondary text-light bg-gradient w150' %></p>
-              <p class=""><%= link_to 'Pacific', canned_responses_path(company: 'pacific'), class: 'btn btn-sm btn-secondary text-light bg-gradient w150' %></p>
-            </div>
-          </div>
         </div>
       </div>
     </div>
     <div class="m-5">
       <div class="card w500 bg-light bg-gradient">
         <div class="card-body">
-          <h5 class="card-title">No Mail Requests</h5>
+          <h5 class="card-title fw-bold">No Mail Requests - Sequoia</h5>
           <p class="card-text">Search for licensees that request removal from direct mail marketing campaigns</p>
-          <p class=""><%= link_to 'CPA No Mail', sequoia_matchings_no_mail_search_path(), class: 'btn btn-sm btn-secondary text-light bg-gradient w150' %></p>
-          <p class=""><%= link_to 'EA No Mail', sequoia_matchings_ea_no_mail_search_path(), class: 'btn btn-sm btn-secondary text-light bg-gradient w150' %></p>
+            <div class="btn-group" role="group" aria-label="">
+              <%= link_to 'CPA', sequoia_matchings_no_mail_search_path(), class: 'btn btn-sm btn-secondary text-light bg-gradient w100' %>
+              <%= link_to 'EA', sequoia_matchings_ea_no_mail_search_path(), class: 'btn btn-sm btn-secondary text-light bg-gradient w100' %>
+            </div>
         </div>
       </div>
     </div>
     <div class="m-5">
       <div class="card w500 bg-light bg-gradient">
         <div class="card-body">
-          <h5 class="card-title">Customer Matching</h5>
+          <h5 class="card-title fw-bold">Customer Matching - Sequoia</h5>
           <p class="card-text">Matching customers (UID) to master state lists (LID)</p>
-          <p class=""><%= link_to 'CPA Customer Matching', sequoia_matchings_cpa_customer_matching_path, class: 'btn btn-sm btn-secondary text-light bg-gradient w200' %></p>
-          <p class=""><%= link_to 'EA Customer Matching', sequoia_matchings_ea_customer_matching_path, class: 'btn btn-sm btn-secondary text-light bg-gradient w200' %></p>
+          <div class="btn-group" role="group" aria-label="">
+            <%= link_to 'CPA', sequoia_matchings_cpa_customer_matching_path, class: 'btn btn-sm btn-secondary text-light bg-gradient w100' %>
+            <%= link_to 'EA', sequoia_matchings_ea_customer_matching_path, class: 'btn btn-sm btn-secondary text-light bg-gradient w100' %>
+          </div>
         </div>
       </div>
     </div>
@@ -44,16 +44,12 @@
     <div class="m-5">
       <div class="card w500 bg-light bg-gradient">
         <div class="card-body">
-          <h5 class="card-title">Marketing Materials</h5>
+          <h5 class="card-title fw-bold">Marketing Materials</h5>
           <p class="card-text">Archive of past mailed marketing postcards</p>
-          <div class="row">
-            <div class="col-lg-6">
-              <p class=""><%= link_to 'Sequoia', mktg_materials_path(co: 'sequoia'), class: 'btn btn-sm btn-secondary text-light bg-gradient w150' %></p>
-              <p class=""><%= link_to 'Empire', mktg_materials_path(co: 'empire'), class: 'btn btn-sm btn-secondary text-light bg-gradient w150' %></p>
-            </div>
-            <div class="col-lg-6">
-              <p class=""><%= link_to 'Pacific', mktg_materials_path(co: 'pacific'), class: 'btn btn-sm btn-secondary text-light bg-gradient w150' %></p>
-            </div>
+          <div class="btn-group" role="group" aria-label="">
+            <%= link_to 'Sequoia', mktg_materials_path(co: 'sequoia'), class: 'btn btn-sm btn-secondary text-light bg-gradient w100' %>
+            <%= link_to 'Empire', mktg_materials_path(co: 'empire'), class: 'btn btn-sm btn-secondary text-light bg-gradient w100' %>
+            <%= link_to 'Pacific', mktg_materials_path(co: 'pacific'), class: 'btn btn-sm btn-secondary text-light bg-gradient w100' %>
           </div>
         </div>
       </div>
@@ -61,10 +57,12 @@
     <div class="m-5">
       <div class="card w500 bg-light bg-gradient">
         <div class="card-body">
-          <h5 class="card-title">Postcard Data Exports</h5>
+          <h5 class="card-title fw-bold">Postcard Data Exports</h5>
           <p class="card-text">Returning customer in-house postcard mailing data - Generate list and PDFs for printing</p>
-          <p class=""><%= link_to 'Sequoia Postcards', mktg_exports_path(co: 'sequoia'), class: 'btn btn-sm btn-secondary text-light bg-gradient w200' %></p>
-          <p class=""><%= link_to 'Empire Postcards', mktg_exports_path(co: 'empire'), class: 'btn btn-sm btn-secondary text-light bg-gradient w200' %></p>
+          <div class="btn-group" role="group" aria-label="">
+            <%= link_to 'Sequoia', mktg_exports_path(co: 'sequoia'), class: 'btn btn-sm btn-secondary text-light bg-gradient w100' %>
+            <%= link_to 'Empire', mktg_exports_path(co: 'empire'), class: 'btn btn-sm btn-secondary text-light bg-gradient w100' %>
+          </div>
         </div>
       </div>
     </div>

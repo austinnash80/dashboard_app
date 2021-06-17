@@ -1,0 +1,55 @@
+
+<%= simple_form_for(@no_mail_not_found) do |f| %>
+  <%= f.error_notification %>
+  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+<div class="row">
+  <div class="col-lg-4">
+    <%= f.input :company, as: :select, collection: ['Sequoia', 'Empire', 'Pacific', 'TPCE'] %>
+  </div>
+  <div class="col-lg-4">
+    <%= f.input :des, label: 'Designation', as: :select, collection: ['CPA', 'EA', 'Other'], hint: 'Only for Sequoia' %>
+  </div>
+  <div class="col-lg-4">
+    <%= f.input :lic_state, label: 'License State', hint: 'Only for Empire' %>
+  </div>
+</div>
+<br>
+  <div class="form-inputs">
+    <div class="row">
+      <div class="col-lg-4">
+        <%= f.input :fname %>
+      </div>
+      <div class="col-lg-2">
+        <%= f.input :mi %>
+      </div>
+      <div class="col-lg-4">
+        <%= f.input :lname %>
+      </div>
+      <div class="col-lg-2">
+        <%= f.input :suf %>
+      </div>
+    </div>
+    <%= f.input :co, label: 'Company' %>
+    <%= f.input :add, label: 'Address' %>
+    <%= f.input :add2, label: 'Address 2' %>
+    <div class="row">
+      <div class="col-lg-4">
+        <%= f.input :city %>
+      </div>
+      <div class="col-lg-4">
+        <%= f.input :state %>
+      </div>
+      <div class="col-lg-4">
+        <%= f.input :zip %>
+      </div>
+    </div>
+    <br>
+    <%= f.input :note, label: 'Add Notes' %>
+  </div>
+
+  <div class="form-actions">
+    <br>
+    <%= f.button :submit, 'Submit', class: 'btn btn-primary text-light w150' %>
+  </div>
+<% end %>

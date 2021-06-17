@@ -2,7 +2,7 @@
 
 <div class="text-center">
   <h1>MKTG Materials</h1>
-  <p><%= link_to 'Add New', new_mktg_material_path, class: 'btn btn-sm btn-primary text-light bg-gradient text-light w150 m-2' %></p>
+  <p><%= link_to 'Add New', new_mktg_material_path, class: 'btn btn-sm btn-secondary text-light bg-gradient text-light w150 m-2' %></p>
 </div>
 
 <a class="btn btn-sm btn-light text-secondary bg-gradient border" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">Upload/Export</a>
@@ -59,7 +59,7 @@
       <tbody id="myTable">
         <% display.order(land_date: :DESC).each do |mktg_material| %>
           <tr>
-            <td><%= link_to 'View', mktg_material, class: 'btn btn-sm btn-info bg-gradient w100 text-secondary fw-bold' %></td>
+            <td><%= link_to 'View', mktg_material, class: 'btn btn-sm btn-primary bg-gradient w100 text-light' %></td>
             <td><%= mktg_material.co %></td>
             <td><%= mktg_material.campaign %></td>
             <td><%= mktg_material.name %></td>

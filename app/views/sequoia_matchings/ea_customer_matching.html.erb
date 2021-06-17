@@ -1,5 +1,11 @@
 <h1 class="text-center">EA Customer Matching Search</h1>
-<p class="text-center"><%= link_to 'Match List', master_ea_matches_path, class: 'text-light m-1 w150 btn-sm btn btn-primary' %> <%= link_to 'No Match List', master_ea_no_matches_path, class: 'm-1 text-light w150 btn-sm btn btn-primary' %> <%= link_to 'Double Accounts', master_ea_double_accounts_path, class: 'm-1 text-light w150 btn-sm btn btn-primary' %></p>
+<div class="text-center">
+  <div class="btn-group" role="group" aria-label="Basic example">
+    <%= link_to 'Match List', master_ea_matches_path, class: 'text-light w150 btn-sm btn btn-primary bg-gradient' %>
+    <%= link_to 'No Match List', master_ea_no_matches_path, class: 'text-light w150 btn-sm btn btn-primary bg-gradient' %>
+    <%= link_to 'Double Accounts', master_ea_double_accounts_path, class: 'text-light w150 btn-sm btn btn-primary bg-gradient' %>
+  </div>
+</div>
 <% if params['uid'].present? %>
   <% sequoia = SequoiaCustomer.find_by(uid: params['uid']) %>
 <% else %>
@@ -40,9 +46,9 @@
         <td><%= sequoia.state %></td>
         <td><%= sequoia.zip %></td>
         <% if params['lname'].present? %>
-          <td><%= link_to 'No Match', sequoia_matchings_ea_customer_matching_path(no_match: 'yes', uid: sequoia.uid), class: 'btn btn-sm btn-danger text-light' %></td>
+          <td><%= link_to 'No Match', sequoia_matchings_ea_customer_matching_path(no_match: 'yes', uid: sequoia.uid), class: 'btn btn-sm btn-danger text-light bg-gradient' %></td>
         <% else %>
-          <td><%= link_to 'Search', sequoia_matchings_ea_customer_matching_path(lname: sequoia.lname, uid: sequoia.uid), class: 'btn btn-sm btn-info text-light' %></td>
+          <td><%= link_to 'Search', sequoia_matchings_ea_customer_matching_path(lname: sequoia.lname, uid: sequoia.uid), class: 'btn btn-sm btn-info text-light bg-gradient' %></td>
         <% end %>
       </tr>
     </tbody>
@@ -99,9 +105,9 @@
         <td><%= i.st %></td>
         <td><%= i.zip %></td>
         <% if @ea_matches_lid.include? i.lid %>
-          <td><%= link_to 'Double', sequoia_matchings_ea_customer_matching_path(double: 'yes', lid: i.lid, uid: sequoia.uid), class: 'btn btn-sm btn-warning text-light' %></td>
+          <td><%= link_to 'Double', sequoia_matchings_ea_customer_matching_path(double: 'yes', lid: i.lid, uid: sequoia.uid), class: 'btn btn-sm btn-warning text-light bg-gradient' %></td>
         <% else %>
-          <td><%= link_to 'Match', sequoia_matchings_ea_customer_matching_path(match: 'yes', lid: i.lid, uid: sequoia.uid), class: 'btn btn-sm btn-primary text-light text-light' %></td>
+          <td><%= link_to 'Match', sequoia_matchings_ea_customer_matching_path(match: 'yes', lid: i.lid, uid: sequoia.uid), class: 'btn btn-sm btn-primary text-light text-light bg-gradient' %></td>
         <% end %>
       </tr>
       <% end %>

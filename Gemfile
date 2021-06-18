@@ -61,3 +61,5 @@ gem 'simple_form'
 gem 'bcrypt'
 
 gem 'activerecord-import'
+
+gem 'rack-cors'

@@ -2,11 +2,17 @@
 </div>
 <script type="text/javascript">
   function get_the_data(){
-    $.post("https://www.pacificcpe.com/students/1.json", function(data) {
+    $.post("http://localhost:3000/users.json", function(data) {
+      if(data != ""){
+        var d = JSON.parse(data)
+        document.getElementById("demo").innerHTML = d
 
-    document.getElementById("demo").innerHTML = data
-    // window.open('https://www.pacificcpe.com/students/1.json')
+      } else {
+          window.alert("no data");
+      }
   });
+  // window.open('http://localhost:3001/students/350.json')
+
 }
   get_the_data();
   </script>

@@ -14,7 +14,7 @@
   <body>
 
       <% if current_user.present? %>
-          <% unless controller_name == 'mktg_export' && page_name == 'print' %>
+          <% unless current_page?(controller: 'mktg_exports', action: 'print') %>
             <div class="text-end">
               Logged In: <span class="fw-bold"><%= current_user.name.titlecase %></span><br>
               <%= link_to 'Customer Service', pages_customer_service_path(), class: 'text-primary link_style' %>

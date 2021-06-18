@@ -1,12 +1,12 @@
-<ul>
-  <li><%= link_to 'Master CPA', master_cpas_path %></li>
-  <li><%= link_to 'Master CPA Match', master_cpa_matches_path %></li>
-  <li><%= link_to 'Master CPA No Match', master_cpa_no_matches_path %></li>
-  <li><%= link_to 'Master CPA No Mail', master_cpa_no_mails_path %></li>
-  <li><%= link_to 'Master CPA Double Account', master_cpa_double_accounts_path %></li>
-  <li><%= link_to 'Master EA', master_eas_path %></li>
-  <li><%= link_to 'Master EA Match', master_ea_matches_path %></li>
-  <li><%= link_to 'Master EA No Match', master_ea_no_matches_path %></li>
-  <li><%= link_to 'Master EA No Mail', master_ea_no_mails_path %></li>
-  <li><%= link_to 'Master EA Double Account', master_ea_double_accounts_path %></li>
-</ul>
+<div class="" id="demo">
+</div>
+<script type="text/javascript">
+  function get_the_data(){
+    $.post("https://www.pacificcpe.com/students/1.json", function(data) {
+
+    document.getElementById("demo").innerHTML = data
+    // window.open('https://www.pacificcpe.com/students/1.json')
+  });
+}
+  get_the_data();
+  </script>

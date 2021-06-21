@@ -22,7 +22,7 @@
               | <%= link_to("Log Out", login_path, :method => :delete, class: 'text-primary link_style') %>
             </div>
           <% end %>
-          <%= yield %>
+            <%= yield %>
       <% else %>
         <p class="">You are not logged in.</p>
         <h1>Login</h1>

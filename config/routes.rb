@@ -63,6 +63,8 @@ Rails.application.routes.draw do
   resources :master_cpa_matches do collection {post :import} end
   resources :sessions, :only => [:create, :destroy]
   resources :users
+  get 'empire_matchings/no_mail'
+  get 'empire_matchings/lic_match'
   get 'sequoia_matchings/no_mail_search'
   get 'sequoia_matchings/ea_no_mail_search'
   get 'sequoia_matchings/cpa_customer_matching'

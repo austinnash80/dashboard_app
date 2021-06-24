@@ -18,7 +18,7 @@
             <div class="text-end">
               Logged In: <span class="fw-bold"><%= current_user.name.titlecase %></span><br>
               <%= link_to 'Customer Service', pages_customer_service_path(), class: 'text-primary link_style' %>
-              <% if current_user.super_admin? %>| <%= link_to 'Master', pages_home_path(), class: 'text-primary link_style' %><% end %>
+              <% if current_user.super_admin? %>| <%= link_to 'Admin', pages_admin_path(), class: 'text-primary link_style' %> | <%= link_to 'Master', pages_home_path(), class: 'text-primary link_style' %><% end %>
               | <%= link_to("Log Out", login_path, :method => :delete, class: 'text-primary link_style') %>
             </div>
           <% end %>

@@ -72,6 +72,7 @@ Rails.application.routes.draw do
   get 'pages/admin_page'
   get 'pages/home'
   get 'pages/customer_service'
+  get 'pages/admin'
   get 'pages/master_lists'
   get 'pages/customer_matching_cpa'
   root :to => 'pages#home'              # Replace this with whatever you want your root_path to be.

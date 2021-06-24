@@ -7,6 +7,5 @@ class PagesController < ApplicationController
     @master_cpa_no_match_total = MasterCpaNoMatch.count
     sequoia_customers_uid = SequoiaCustomer.pluck(:uid)
     @sequoia_customers = (sequoia_customers_uid.uniq).count
-
   end
 end

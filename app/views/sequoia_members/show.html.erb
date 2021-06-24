@@ -1,5 +1,5 @@
 <p id="notice"><%= notice %></p>
-<p><%= link_to 'Back to Sequoia Members Page', sequoia_members_path, class: 'btn btn-sm btn-info text-light bg-gradient' %></p>
+<p><%= link_to 'Back to Sequoia Members Page', sequoia_members_path, class: 'btn btn-sm btn-primary text-light bg-gradient' %></p>
 
 <% sequoia_customer = SequoiaCustomer.find_by(uid: @sequoia_member.uid) %>
 <br>
@@ -27,7 +27,7 @@
       </tr>
     </thead>
     <tbody>
-      <% SequoiaCustomer.where(uid: @sequoia_member.uid).all.each do  |i| %>
+      <% SequoiaCustomer.order(purchase: :DESC).where(uid: @sequoia_member.uid).all.each do  |i| %>
         <tr>
           <td><%= i.purchase %></td>
           <td><%= i.product_1 %></td>
@@ -39,27 +39,37 @@
   </table>
 <br>
 <!-- MASTER LIST MATCHES TABLE-->
-  <% master_cpa_list = MasterCpaMatch.find_by(uid: @sequoia_member.uid) %>
-  <% master_ea_list = MasterEaMatch.find_by(uid: @sequoia_member.uid) %>
-  <% if master_cpa_list.present? %>
+  <% cpa_lid = MasterCpaMatch.find_by(uid: @sequoia_member.uid) %>
+  <% ea_lid = MasterEaMatch.find_by(uid: @sequoia_member.uid) %>
+  <% if cpa_lid.present? %>
+    <% master_cpa = MasterCpa.find_by(lid: cpa_lid.lid) %>
+
   <table class="table table-striped">
     <caption class="caption-top fw-bold">Master CPA List Match</caption>
     <thead>
       <tr class="bg-secondary bg-gradient text-light">
         <th>LID</th>
         <th>List</th>
+        <th>Lic St</th>
+        <th>Lic</th>
         <th>Search Date</th>
       </tr>
       </thead>
       <tbody>
         <tr>
-          <td><%= master_cpa_list.lid %></td>
-          <td><%= master_cpa_list.list %></td>
-          <td><%= master_cpa_list.search_date %></td>
+          <td><%= cpa_lid.lid %></td>
+          <td><%= cpa_lid.list %></td>
+          <td><%= master_cpa.lic_st %></td>
+          <% if master_cpa.lic_st == 'CA' %>
+            <td><%= link_to "#{master_cpa.lic}", "https://search.dca.ca.gov/details/300/CPA/#{master_cpa.lic}/1acc18be3eef313fe5cdda8994663cc8", target: '_blank' %></td>
+          <% else %>
+            <td><%= master_cpa.lic %></td>
+          <% end %>
+          <td><%= cpa_lid.search_date %></td>
         </tr>
       </tbody>
   </table>
-  <% elsif master_ea_list.present? %>
+  <% elsif ea_lid.present? %>
   <table class="table table-striped">
     <caption class="caption-top fw-bold">Master CPA List Match</caption>
     <thead>
@@ -71,9 +81,9 @@
       </thead>
       <tbody>
         <tr>
-          <td><%= master_cpa_list.lid %></td>
-          <td><%= master_cpa_list.list %></td>
-          <td><%= master_cpa_list.search_date %></td>
+          <td><%= ea_lid.lid %></td>
+          <td><%= ea_lid.list %></td>
+          <td><%= ea_lid.search_date %></td>
         </tr>
       </tbody>
   </table>

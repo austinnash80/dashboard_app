@@ -1,6 +1,9 @@
-<h1>Editing Sequoia Member</h1>
 
-<%= render 'form', sequoia_member: @sequoia_member %>
-
-<%= link_to 'Show', @sequoia_member %> |
-<%= link_to 'Back', sequoia_members_path %>
+<div class="w700 border border-secondary bg-light">
+  <div class="m-5">
+    <h1>Edit Sequoia Member</h1>
+    <%= render 'form', sequoia_member: @sequoia_member %>
+    <%= link_to 'Show', @sequoia_member %> |
+    <%= link_to 'Index', sequoia_members_path %>
+  </div>
+</div>

@@ -60,12 +60,14 @@
 <table class="table table-striped">
 
 <thead>
-<caption class="caption-top">Total Records: <%= number_with_delimiter(SequoiaMember.count) %> | Display Limit: 250</caption>
+<caption class="caption-top">Total Records: <%= number_with_delimiter(SequoiaMember.count) %> | Display Limit: 500</caption>
 <tr class="bg-secondary bg-gradient text-light">
       <th>Uid</th>
       <th>Lname</th>
       <th>First purchase</th>
       <th>Last purchase</th>
+      <th>Memebership EXP</th>
+      <th>Discount EXP</th>
       <th>Cpa</th>
       <th>Cpa memberships</th>
       <th>Ea</th>
@@ -80,12 +82,14 @@
   </thead>
 
   <tbody>
-    <% @sequoia_members.order(last_purchase: :desc).order(first_purchase: :desc).limit(250).each do |sequoia_member| %>
+    <% @sequoia_members.order(last_purchase: :desc).order(first_purchase: :desc).order(uid: :desc).limit(500).each do |sequoia_member| %>
       <tr>
         <td><a target="_blank" href="https://www.sequoiacpe.com/admin/user-profile?u=<%= sequoia_member.uid %>"><%= sequoia_member.uid %></a></td>
         <td><%= sequoia_member.lname %></td>
         <td><%= sequoia_member.first_purchase %></td>
         <td><%= sequoia_member.last_purchase %></td>
+        <td><%= sequoia_member.membership_exp %></td>
+        <td><%= sequoia_member.discount_exp %></td>
         <td><%= sequoia_member.cpa %></td>
         <td><%= sequoia_member.cpa_memberships %></td>
         <td><%= sequoia_member.ea %></td>

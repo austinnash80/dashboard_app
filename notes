@@ -1,0 +1,24 @@
+## Membership EXP
+new = ['Unlimited CPE Membership', 'Unlimited CPA CPE Membership Auto-Renew', 'Unlimited CPA CPE Membership (Auto-Renew)', 'Unlimited CPA CPE Membership', 'Unlimited EA Membership (Auto-Renew)', 'Unlimited EA CPE Membership', 'Unlimited EA CE Membership']
+renewal = ['1-Year CPA Membership Renewal', '1-Year EA Membership Renewal (Auto-Renew)', '1-Year EA Membership Renewal (Auto-Renew)', '1-Year EA Membership Renewal']
+restart = ['1-Year CPA Membership Discounted Re-Activation', '1-Year CPA Membership Re-Activation', '1-Year EA Membership Re-Activation', '1-Year EA Membership Discounted Re-Activation']
+
+  SequoiaCustomer.order(purchase: :asc).all.each do |i|
+    if new.include? i.product_1
+      SequoiaMember.where(uid: i.uid).update_all membership_exp: i.purchase + 1.year
+    elsif renewal.include? i.product_1
+      member = SequoiaMember.find_by(uid: i.uid)
+      unless member.membership_exp.blank?
+        SequoiaMember.where(uid: i.uid).update_all membership_exp: member.membership_exp + 1.year
+      end
+    elsif restart.include? i.product_1
+      SequoiaMember.where(uid: i.uid).update_all membership_exp: i.purchase + 1.year
+    end
+  end
+
+## Discount EXP
+  SequoiaMember.all.each do |i|
+    unless i.membership_exp.blank?
+      SequoiaMember.where(uid: i.uid).update_all discount_exp: i.membership_exp + 14.days
+    end
+  end

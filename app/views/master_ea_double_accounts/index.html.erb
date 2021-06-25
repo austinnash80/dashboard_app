@@ -25,9 +25,10 @@
   <thead>
     <caption class="caption-top">Total Records: <%= number_with_delimiter(MasterEaDoubleAccount.count) %> | Display Limit: 100</caption>
     <tr class="bg-secondary bg-gradient text-light">
-      <th>Lid</th>
+      <th>LID</th>
       <th>List</th>
-      <th>Uid</th>
+      <th>UID 1</th>
+      <th>UID 2</th>
       <th>Lname</th>
       <th>Search date</th>
       <th colspan="3"></th>
@@ -40,6 +41,8 @@
         <td><%= master_ea_double_account.lid %></td>
         <td><%= master_ea_double_account.list %></td>
         <td><%= master_ea_double_account.uid %></td>
+        <% match_list = MasterEaMatch.find_by(lid: master_ea_double_account.lid) %>
+        <td><%= match_list.uid %></td>
         <td><%= master_ea_double_account.lname %></td>
         <td><%= master_ea_double_account.search_date %></td>
         <td><%= link_to 'Show', master_ea_double_account %></td>

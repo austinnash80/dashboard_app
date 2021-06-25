@@ -59,7 +59,7 @@
 
 <% if params['lname'].present? %>
 
-<p><a class="btn btn-sm btn-light text-dark" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">Edit Last Name</a></p>
+<p><a class="btn btn-sm btn-primary bg-gradient text-light" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">Edit Last Name</a></p>
 <div class="collapse" id="collapseExample">
   <div class="w300">
     <%= text_field_tag "id", '', class: "lname_field form-control", value: params['lname'] %>

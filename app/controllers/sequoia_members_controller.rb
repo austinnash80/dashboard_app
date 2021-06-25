@@ -39,6 +39,10 @@ class SequoiaMembersController < ApplicationController
       afsp = SequoiaProductList.where(who: 'afsp').pluck(:product)
       ethics = SequoiaProductList.where(group: 'ethics').pluck(:product)
       other = SequoiaProductList.where(group: 'upgrade').pluck(:product)
+    # FOR MEMBERSHIP EXP UPDATING
+      new = SequoiaProductList.where(group: 'membership').where(full_price: true).pluck(:product)
+      renewal = ['1-Year CPA Membership Renewal', '1-Year EA Membership Renewal (Auto-Renew)', '1-Year EA Membership Renewal (Auto-Renew)', '1-Year EA Membership Renewal']
+      restart = ['1-Year CPA Membership Discounted Re-Activation', '1-Year CPA Membership Re-Activation', '1-Year EA Membership Re-Activation', '1-Year EA Membership Discounted Re-Activation']
 
       SequoiaCustomer.order(order_id: :asc).where('order_id > ?', @order_id).each do |i|
         member = SequoiaMember.find_by(uid: i.uid)
@@ -60,10 +64,20 @@ class SequoiaMembersController < ApplicationController
           SequoiaMember.where(uid: i.uid).update_all ethics: true, ethics_purchases: (member.ethics_purchases + 1), last_purchase: i.purchase
         end
 
+    # Updating EXP Date
+        if new.include? i.product_1
+          SequoiaMember.where(uid: i.uid).update_all membership_exp: i.purchase + 1.year, discount_exp: i.purchase + 379.days
+        elsif renewal.include? i.product_1
+          unless member.membership_exp.blank?
+            SequoiaMember.where(uid: i.uid).update_all membership_exp: member.membership_exp + 1.year, discount_exp: member.discount_exp + 1.year
+          end
+        elsif restart.include? i.product_1
+          SequoiaMember.where(uid: i.uid).update_all membership_exp: i.purchase + 1.year, discount_exp: i.purchase + 379.days
+        end
+
         IdNumberStorage.update_all sequoia_members_order_id: i.order_id
       end
     end
-
 
 
   end

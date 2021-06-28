@@ -23,7 +23,7 @@
 <table class="table table-striped">
 
   <thead>
-    <caption class="caption-top">Total Records: <%= number_with_delimiter(MasterEaDoubleAccount.count) %> | Display Limit: 100</caption>
+    <caption class="caption-top">Total Records: <%= number_with_delimiter(MasterEaDoubleAccount.count) %></caption>
     <tr class="bg-secondary bg-gradient text-light">
       <th>LID</th>
       <th>List</th>
@@ -36,7 +36,7 @@
   </thead>
 
   <tbody>
-    <% @master_ea_double_accounts.limit(100).each do |master_ea_double_account| %>
+    <% @master_ea_double_accounts.order(search_date: :desc).each do |master_ea_double_account| %>
       <tr>
         <td><%= master_ea_double_account.lid %></td>
         <td><%= master_ea_double_account.list %></td>

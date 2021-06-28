@@ -68,10 +68,12 @@ class SequoiaMembersController < ApplicationController
       # Updating EXP Date
         # If new purchase order is (membership only) happens when exp is still active then add 1.year to the exp. If membership purchase is after exp then 1.year from that purchase.
           if (ea_membership + cpa_membership).include? i.product_1
-            if member.membership_exp > i.purchase
-              SequoiaMember.where(uid: member.uid).update_all membership_exp: member.membership_exp + 1.year, discount_exp: member.discount_exp + 1.year
-            else
+            if member.membership_exp.blank?
               SequoiaMember.where(uid: member.uid).update_all membership_exp: i.purchase + 1.year, discount_exp: i.purchase + 379.days
+            elsif member.membership_exp <= i.purchase
+              SequoiaMember.where(uid: member.uid).update_all membership_exp: i.purchase + 1.year, discount_exp: i.purchase + 379.days
+            elsif member.membership_exp > i.purchase
+              SequoiaMember.where(uid: member.uid).update_all membership_exp: member.membership_exp + 1.year, discount_exp: member.discount_exp + 1.year
             end
           end
 

@@ -1,0 +1,55 @@
+<h1 class="text-center">Postcard Mailing Schedule</h1>
+<h5 class="text-center"><%= @day.strftime('%A, %b %-d, %Y') %></h5>
+<div class="m-5">
+  <div class="btn-group" role="group">
+    <%= link_to 'Yesterday', day_mktg_postcards_path(day: @day - 1.day), class: 'btn btn-sm btn-primary text-light bg-gradient w150' %>
+    <%= link_to 'Tomorrow', day_mktg_postcards_path(day: @day + 1.day), class: 'btn btn-sm btn-primary text-light bg-gradient w150' %>
+  </div>
+  <br><br>
+<table class="table table-striped">
+  <thead>
+    <tr class="bg-secondary bg-gradient text-light">
+      <th width="10%">Company</th>
+      <th width="10%">Segment</th>
+      <th width="10%">Campaign</th>
+      <th width="10%">Range 1A</th>
+      <th width="10%">Range 1B</th>
+      <th width="10%">Range 2A</th>
+      <th width="10%">Range 2B</th>
+      <th width="10%"></th>
+      <th width="10%"></th>
+      <th width="10%"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% MktgPostcard.order(campaign: :asc).order(segment: :asc).where(mail_day: @day).all.each do |i| %>
+      <tr>
+        <td><%= i.company %></td>
+        <td><%= i.segment %></td>
+        <td><%= i.campaign %></td>
+        <td><%= i.range_1_a %></td>
+        <td><%= i.range_1_b %></td>
+        <td><%= i.range_2_a %></td>
+        <td><%= i.range_2_b %></td>
+        <% if i.done? %>
+          <td class="text-success fw-bold">Done</td>
+          <td class="fw-bold"><%= number_with_delimiter(i.sent) %></td>
+        <% else %>
+          <td><%= text_field_tag "id", '', class: "sent_field form-control w150", value: i.sent, placeholder: '' %></td>
+          <td><%= link_to 'Done', day_mktg_postcards_path(day: @day, campaign_id: i.id), class: 'sent_link btn btn-sm btn-primary gb-gradient w100 text-light' %></td>
+        <% end %>
+        <td><%= link_to 'Edit', mktg_postcard_path(i.id) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+
+</table>
+</div>
+
+<script type="text/javascript">
+  $(".sent_link").click(function() {
+    $(this).attr("href", function() {
+      return this.href + "&sent=" + $('.sent_field').val().toUpperCase();
+    });
+  });
+</script>

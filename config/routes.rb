@@ -1,4 +1,9 @@
 Rails.application.routes.draw do
+  resources :mktg_postcards do collection {post :import}
+    collection do
+      get 'day'
+    end
+   end
   resources :no_mail_not_founds do collection {post :import} end
   resources :canned_responses do collection {post :import} end
   resources :mktg_materials do collection {post :import} end
@@ -72,6 +77,7 @@ Rails.application.routes.draw do
   get 'pages/admin_page'
   get 'pages/home'
   get 'pages/customer_service'
+  get 'pages/marketing'
   get 'pages/admin'
   get 'pages/master_lists'
   get 'pages/customer_matching_cpa'

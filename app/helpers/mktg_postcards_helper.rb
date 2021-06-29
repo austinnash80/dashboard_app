@@ -1,0 +1,2 @@
+module MktgPostcardsHelper
+end

@@ -8,4 +8,7 @@ class PagesController < ApplicationController
     sequoia_customers_uid = SequoiaCustomer.pluck(:uid)
     @sequoia_customers = (sequoia_customers_uid.uniq).count
   end
+  def marketing
+
+  end
 end

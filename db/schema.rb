@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_24_225105) do
+ActiveRecord::Schema.define(version: 2021_06_29_000625) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -335,6 +335,24 @@ ActiveRecord::Schema.define(version: 2021_06_24_225105) do
     t.string "link_name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "mktg_postcards", force: :cascade do |t|
+    t.string "campaign"
+    t.string "company"
+    t.date "mail_day"
+    t.date "range_1_a"
+    t.date "range_1_b"
+    t.date "range_2_a"
+    t.date "range_2_b"
+    t.boolean "done"
+    t.integer "cpa_sent"
+    t.integer "ea_sent"
+    t.text "notes"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "segment"
+    t.integer "sent"
   end
 
   create_table "no_mail_not_founds", force: :cascade do |t|

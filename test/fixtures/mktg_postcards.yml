@@ -1,0 +1,27 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  campaign: MyString
+  company: MyString
+  mail_day: 2021-06-28
+  range_1_a: 2021-06-28
+  range_1_b: 2021-06-28
+  range_2_a: 2021-06-28
+  range_2_b: 2021-06-28
+  done: false
+  cpa_sent: 1
+  ea_sent: 1
+  notes: MyText
+
+two:
+  campaign: MyString
+  company: MyString
+  mail_day: 2021-06-28
+  range_1_a: 2021-06-28
+  range_1_b: 2021-06-28
+  range_2_a: 2021-06-28
+  range_2_b: 2021-06-28
+  done: false
+  cpa_sent: 1
+  ea_sent: 1
+  notes: MyText

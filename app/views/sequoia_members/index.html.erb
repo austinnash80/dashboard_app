@@ -64,61 +64,60 @@
 </table>
 
 <table class="table table-striped">
-
-<thead>
-<caption class="caption-top">Total Records: <%= number_with_delimiter(SequoiaMember.count) %> | Display Limit: 500</caption>
-<tr class="bg-secondary bg-gradient text-light">
-      <th>Uid</th>
-      <th>Lname</th>
-      <th>First purchase</th>
-      <th>Last purchase</th>
-      <th>Memebership EXP</th>
-      <th>Discount EXP</th>
-      <th>Cpa</th>
-      <th>Cpa memberships</th>
-      <th>Ea</th>
-      <th>EA Memberships</th>
-      <th>Afsp</th>
-      <th>Afsp purchases</th>
-      <th>Ethics</th>
-      <th>Ethics purchases</th>
-      <th>Other</th>
-      <th colspan="1"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% if params['lname'].present? %>
-      <% if params['lname'].match(/^(\d)+$/).present? %>
-        <% sequoia_member = SequoiaMember.where(uid: params['lname'].to_i).all %>
-      <% else %>
-        <% sequoia_member = SequoiaMember.where(lname: params['lname'].titlecase).all %>
-      <% end %>
-    <% else %>
-      <% sequoia_member = SequoiaMember.all %>
-    <% end %>
-
-    <% sequoia_member.order(last_purchase: :desc).order(first_purchase: :desc).order(uid: :desc).limit(500).each do |sequoia_member| %>
-      <tr>
-        <td><a target="_blank" href="https://www.sequoiacpe.com/admin/user-profile?u=<%= sequoia_member.uid %>"><%= sequoia_member.uid %></a></td>
-        <td><%= sequoia_member.lname %></td>
-        <td><%= sequoia_member.first_purchase %></td>
-        <td><%= sequoia_member.last_purchase %></td>
-        <td><%= sequoia_member.membership_exp %></td>
-        <td><%= sequoia_member.discount_exp %></td>
-        <td><%= sequoia_member.cpa %></td>
-        <td><%= sequoia_member.cpa_memberships %></td>
-        <td><%= sequoia_member.ea %></td>
-        <td><%= sequoia_member.ea_memberships %></td>
-        <td><%= sequoia_member.afsp %></td>
-        <td><%= sequoia_member.afsp_purchases %></td>
-        <td><%= sequoia_member.ethics %></td>
-        <td><%= sequoia_member.ethics_purchases %></td>
-        <td><%= sequoia_member.other %></td>
-        <td><%= link_to 'Info', sequoia_member, class: 'btn btn-xs btn-info bg-gradient text-light' %></td>
+  <thead>
+  <caption class="caption-top">Total Records: <%= number_with_delimiter(SequoiaMember.count) %> | Display Limit: 500</caption>
+  <tr class="bg-secondary bg-gradient text-light">
+        <th>Uid</th>
+        <th>Lname</th>
+        <th>First purchase</th>
+        <th>Last purchase</th>
+        <th>Memebership EXP</th>
+        <th>Discount EXP</th>
+        <th>Cpa</th>
+        <th>Cpa memberships</th>
+        <th>Ea</th>
+        <th>EA Memberships</th>
+        <th>Afsp</th>
+        <th>Afsp purchases</th>
+        <th>Ethics</th>
+        <th>Ethics purchases</th>
+        <th>Other</th>
+        <th colspan="1"></th>
       </tr>
-    <% end %>
-  </tbody>
+    </thead>
+
+    <tbody id="">
+      <% if params['lname'].present? %>
+        <% if params['lname'].match(/^(\d)+$/).present? %>
+          <% sequoia_member = SequoiaMember.where(uid: params['lname'].to_i).all %>
+        <% else %>
+          <% sequoia_member = SequoiaMember.where(lname: params['lname'].titlecase).all %>
+        <% end %>
+      <% else %>
+        <% sequoia_member = SequoiaMember.all %>
+      <% end %>
+
+      <% sequoia_member.order(last_purchase: :desc).order(first_purchase: :desc).order(uid: :desc).limit(500).each do |sequoia_member| %>
+        <tr>
+          <td><a target="_blank" href="https://www.sequoiacpe.com/admin/user-profile?u=<%= sequoia_member.uid %>"><%= sequoia_member.uid %></a></td>
+          <td><%= sequoia_member.lname %></td>
+          <td><%= sequoia_member.first_purchase %></td>
+          <td><%= sequoia_member.last_purchase %></td>
+          <td><%= sequoia_member.membership_exp %></td>
+          <td><%= sequoia_member.discount_exp %></td>
+          <td><%= sequoia_member.cpa %></td>
+          <td><%= sequoia_member.cpa_memberships %></td>
+          <td><%= sequoia_member.ea %></td>
+          <td><%= sequoia_member.ea_memberships %></td>
+          <td><%= sequoia_member.afsp %></td>
+          <td><%= sequoia_member.afsp_purchases %></td>
+          <td><%= sequoia_member.ethics %></td>
+          <td><%= sequoia_member.ethics_purchases %></td>
+          <td><%= sequoia_member.other %></td>
+          <td><%= link_to 'Info', sequoia_member, class: 'btn btn-xs btn-info bg-gradient text-light' %></td>
+        </tr>
+      <% end %>
+    </tbody>
 </table>
 </div>
 
@@ -128,5 +127,4 @@
       return this.href + "?lname=" + $('.lname_field').val().toUpperCase();
     });
   });
-
 </script>

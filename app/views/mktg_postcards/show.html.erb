@@ -1,0 +1,58 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Campaign:</strong>
+  <%= @mktg_postcard.campaign %>
+</p>
+<p>
+  <strong>Segment:</strong>
+  <%= @mktg_postcard.segment %>
+</p>
+
+<p>
+  <strong>Company:</strong>
+  <%= @mktg_postcard.company %>
+</p>
+
+<p>
+  <strong>Mail day:</strong>
+  <%= @mktg_postcard.mail_day %>
+</p>
+
+<p>
+  <strong>Range 1 a:</strong>
+  <%= @mktg_postcard.range_1_a %>
+</p>
+
+<p>
+  <strong>Range 1 b:</strong>
+  <%= @mktg_postcard.range_1_b %>
+</p>
+
+<p>
+  <strong>Range 2 a:</strong>
+  <%= @mktg_postcard.range_2_a %>
+</p>
+
+<p>
+  <strong>Range 2 b:</strong>
+  <%= @mktg_postcard.range_2_b %>
+</p>
+
+<p>
+  <strong>Done:</strong>
+  <%= @mktg_postcard.done %>
+</p>
+
+<p>
+  <strong>Sent:</strong>
+  <%= @mktg_postcard.sent %>
+</p>
+
+<p>
+  <strong>Notes:</strong>
+  <%= @mktg_postcard.notes %>
+</p>
+
+<%= link_to 'Edit', edit_mktg_postcard_path(@mktg_postcard) %> |
+<%= link_to 'Back', mktg_postcards_path %>

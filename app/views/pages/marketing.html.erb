@@ -1,0 +1,29 @@
+<h1 class="text-center">Marketing</h1>
+<div class="row">
+  <div class="col-lg-4"> <!-- Start column 1 -->
+    <div class="m-5">
+      <div class="card w500 bg-light bg-gradient">
+        <div class="card-body">
+          <h5 class="card-title fw-bold">Postcard Mailing Schedule</h5>
+          <p class="card-text">Schedule for different postcard campaigns with expiration dates</p>
+            <div class="btn-group" role="group" aria-label="">
+              <%= link_to 'View Today', day_mktg_postcards_path(day: Date.today.strftime('%Y-%m-%d')), class: 'btn btn-sm btn-secondary text-light bg-gradient w150' %>
+              <%= link_to 'View Index', mktg_postcards_path(), class: 'btn btn-sm btn-secondary text-light bg-gradient w150' %>
+            </div>
+        </div>
+      </div>
+    </div>
+    <div class="m-5">
+      <div class="card w500 bg-light bg-gradient">
+        <div class="card-body">
+          <h5 class="card-title fw-bold">No Mail Requests - Sequoia</h5>
+          <p class="card-text">Search for licensees that request removal from direct mail marketing campaigns</p>
+            <div class="btn-group" role="group" aria-label="">
+              <%= link_to 'CPA', sequoia_matchings_no_mail_search_path(), class: 'btn btn-sm btn-secondary text-light bg-gradient w100' %>
+              <%= link_to 'EA', sequoia_matchings_ea_no_mail_search_path(), class: 'btn btn-sm btn-secondary text-light bg-gradient w100' %>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

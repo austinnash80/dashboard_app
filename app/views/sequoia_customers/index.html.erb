@@ -5,7 +5,9 @@
   <%= link_to 'Run Customer Update', run_update_sequoia_customers_path, target: "_blank", class: 'btn btn-primary text-light mt-2 text-light' %>
 </div>
 
-
+<a class="btn btn-sm btn-light text-secondary bg-gradient border" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">Upload/Export</a>
+<div class="collapse" id="collapseExample">
+  <br>
     <p class="fs-4">Upload New List</p>
       <%= form_tag import_sequoia_customers_path, multipart: true do %>
       <%= file_field_tag :file, class: 'btn btn-sm btn-light' %>
@@ -19,7 +21,7 @@
     <% end %>
 
     <p><%= link_to 'Export List (csv)', sequoia_customers_path('csv'), class: 'btn btn-sm btn-secondary text-light mt-2' %></p>
-
+</div>
 
 <div class="m-5">
 

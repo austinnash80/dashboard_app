@@ -21,7 +21,7 @@
 
 <table class="table table-striped">
   <thead>
-    <caption class="caption-top">Total Records: <%= number_with_delimiter(MasterCpaNoMatch.count) %> | Display Limit: 100</caption>
+    <caption class="caption-top">Total Records: <%= number_with_delimiter(MasterCpaNoMatch.count) %> | Display Limit: 500</caption>
     <tr class="bg-secondary bg-gradient text-light">
       <th>Uid</th>
       <th>List</th>
@@ -32,7 +32,7 @@
   </thead>
 
   <tbody>
-    <% @master_cpa_no_matches.limit(100).order(created_at: :desc).each do |master_cpa_no_match| %>
+    <% @master_cpa_no_matches.limit(500).order(created_at: :desc).each do |master_cpa_no_match| %>
       <tr>
         <td><%= master_cpa_no_match.uid %></td>
         <td><%= master_cpa_no_match.list %></td>

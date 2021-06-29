@@ -2,7 +2,7 @@
 <div class="row">
   <div class="col-lg-4"> <!-- Start column 1 -->
     <div class="m-5">
-      <div class="card w500 bg-light bg-gradient">
+      <div class="card bg-light bg-gradient">
         <div class="card-body">
           <h5 class="card-title fw-bold">Postcard Mailing Schedule</h5>
           <p class="card-text">Schedule for different postcard campaigns with expiration dates</p>
@@ -14,13 +14,52 @@
       </div>
     </div>
     <div class="m-5">
-      <div class="card w500 bg-light bg-gradient">
+      <div class="card bg-light bg-gradient">
         <div class="card-body">
-          <h5 class="card-title fw-bold">No Mail Requests - Sequoia</h5>
-          <p class="card-text">Search for licensees that request removal from direct mail marketing campaigns</p>
+          <h5 class="card-title fw-bold">Postcard Data Exports</h5>
+          <p class="card-text">Returning customer in-house postcard mailing data - Generate list and PDFs for printing</p>
+          <div class="btn-group" role="group" aria-label="">
+            <%= link_to 'Sequoia', mktg_exports_path(co: 'sequoia', delete: 'yes'), class: 'btn btn-sm btn-secondary text-light bg-gradient w100' %>
+            <%= link_to 'Empire', mktg_exports_path(co: 'empire', delete: 'yes'), class: 'btn btn-sm btn-secondary text-light bg-gradient w100' %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="m-5">
+      <div class="card bg-light bg-gradient">
+        <div class="card-body">
+          <h5 class="card-title fw-bold">Marketing Materials</h5>
+          <p class="card-text">Archive of past mailed marketing postcards</p>
+          <div class="btn-group" role="group" aria-label="">
+            <%= link_to 'Sequoia', mktg_materials_path(co: 'sequoia'), class: 'btn btn-sm btn-secondary text-light bg-gradient w100' %>
+            <%= link_to 'Empire', mktg_materials_path(co: 'empire'), class: 'btn btn-sm btn-secondary text-light bg-gradient w100' %>
+            <%= link_to 'Pacific', mktg_materials_path(co: 'pacific'), class: 'btn btn-sm btn-secondary text-light bg-gradient w100' %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-4">
+    <div class="m-5">
+      <div class="card bg-light bg-gradient">
+        <div class="card-body">
+          <h5 class="card-title fw-bold">Daily Updates - Sequoia</h5>
+          <p class="card-text">Add new purchases from SequoiaCPE.com and update corresponding member records</p>
             <div class="btn-group" role="group" aria-label="">
-              <%= link_to 'CPA', sequoia_matchings_no_mail_search_path(), class: 'btn btn-sm btn-secondary text-light bg-gradient w100' %>
-              <%= link_to 'EA', sequoia_matchings_ea_no_mail_search_path(), class: 'btn btn-sm btn-secondary text-light bg-gradient w100' %>
+              <%= link_to  'Purchases', sequoia_customers_path(), class: 'btn btn-sm btn-secondary text-light bg-gradient w150' %>
+              <%= link_to  'Members', sequoia_members_path(), class: 'btn btn-sm btn-secondary text-light bg-gradient w150' %>
+            </div>
+        </div>
+      </div>
+    </div>
+    <div class="m-5">
+      <div class="card bg-light bg-gradient">
+        <div class="card-body">
+          <h5 class="card-title fw-bold">Daily Updates - Empire</h5>
+          <p class="card-text">Add new purchases from EmpireLearning.com and update corresponding member records</p>
+            <div class="btn-group" role="group" aria-label="">
+              <%= link_to  'Purchases', empire_customers_path(), class: 'btn btn-sm btn-secondary text-light bg-gradient w150' %>
+              <%= link_to  'Members', empire_members_path(), class: 'btn btn-sm btn-secondary text-light bg-gradient w150' %>
             </div>
         </div>
       </div>

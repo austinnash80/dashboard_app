@@ -40,10 +40,10 @@ class MktgExportsController < ApplicationController
 
       @dates = [].uniq
       #Input box dates
-      r1d1 = params['range_1_date_1'].to_date
-      r1d2 = params['range_1_date_2'].to_date
-      r2d1 = params['range_2_date_1'].to_date
-      r2d2 = params['range_2_date_2'].to_date
+      r1d1 = params['range_1_date_1'].present? ? params['range_1_date_1'].to_date : ''
+      r1d2 = params['range_1_date_2'].present? ? params['range_1_date_2'].to_date : ''
+      r2d1 = params['range_2_date_1'].present? ? params['range_2_date_1'].to_date : ''
+      r2d2 = params['range_2_date_2'].present? ? params['range_2_date_2'].to_date : ''
       # Dealing with blank input boxes
       if r1d2.blank?
         r1d2 = r1d1

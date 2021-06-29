@@ -43,9 +43,9 @@
     <% @mktg_postcards.order(mail_day: :asc).order(campaign: :asc).order(segment: :asc).each do |mktg_postcard| %>
       <tr>
         <td><%= mktg_postcard.id %></td>
-        <td><%= mktg_postcard.company %></td>
-        <td><%= mktg_postcard.campaign %></td>
-        <td><%= mktg_postcard.segment %></td>
+        <td><%= mktg_postcard.company.titlecase %></td>
+        <td><%= mktg_postcard.campaign.upcase %></td>
+        <td><%= mktg_postcard.segment.upcase %></td>
         <td class="fw-bold"><%= mktg_postcard.mail_day %></td>
         <td><%= mktg_postcard.range_1_a %></td>
         <td><%= mktg_postcard.range_1_b %></td>

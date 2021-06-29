@@ -10,7 +10,7 @@
   <thead>
     <tr class="bg-secondary bg-gradient text-light">
       <th width="10%">Company</th>
-      <th width="10%">Segment</th>
+      <th width="5%">Segment</th>
       <th width="10%">Campaign</th>
       <th width="10%">Range 1A</th>
       <th width="10%">Range 1B</th>
@@ -19,6 +19,7 @@
       <th width="10%"></th>
       <th width="10%"></th>
       <th width="10%"></th>
+      <th width="5%"></th>
     </tr>
   </thead>
   <tbody>
@@ -34,11 +35,13 @@
         <% if i.done? %>
           <td class="text-success fw-bold">Done</td>
           <td class="fw-bold"><%= number_with_delimiter(i.sent) %></td>
+          <td></td>
         <% else %>
+          <td><%= link_to 'Run', mktg_exports_path(campaign: i.campaign.titlecase, co: i.company.downcase, des: i.segment, range_1_date_1: i.range_1_a, range_1_date_2: i.range_1_b, range_2_date_1: i.range_2_a, range_2_date_2: i.range_2_b), target: '_blank', class: 'btn btn-sm btn-primary gb-gradient w100 text-light' %></td>
           <td><%= text_field_tag "id", '', class: "sent_field form-control w150", value: i.sent, placeholder: '' %></td>
-          <td><%= link_to 'Done', day_mktg_postcards_path(day: @day, campaign_id: i.id), class: 'sent_link btn btn-sm btn-primary gb-gradient w100 text-light' %></td>
+          <td><%= link_to 'Done', day_mktg_postcards_path(day: @day, campaign_id: i.id), class: "sent_link btn btn-sm btn-primary gb-gradient w100 text-light" %></td>
         <% end %>
-        <td><%= link_to 'Edit', mktg_postcard_path(i.id) %></td>
+        <td><%= link_to 'Edit', edit_mktg_postcard_path(i.id, day: @day) %></td>
       </tr>
     <% end %>
   </tbody>

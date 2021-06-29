@@ -76,10 +76,10 @@
 <!-- CAMPAIGN BUTTONS SEQUOIA-->
   <% if params['co'] == 'sequoia' %>
   <div class="btn-group" role="group" aria-label="Basic example">
+    <%= link_to 'CPA NC', mktg_exports_path(co: 'sequoia', campaign: 'New Customer', des: 'cpa'), class: "#{@sequoia_nc_cpa} w100 search_link btn btn-sm btn-primary text-light bg-gradient" %>
+    <%= link_to 'EA NC', mktg_exports_path(co: 'sequoia', campaign: 'New Customer', des: 'ea'), class: "#{@sequoia_nc_ea} w100 search_link btn btn-sm btn-primary text-light bg-gradient" %>
     <%= link_to 'CPA RC', mktg_exports_path(co: 'sequoia', campaign: 'Return Customer', des: 'cpa'), class: "#{@sequoia_rc_cpa} w100 search_link btn btn-sm btn-primary text-light bg-gradient" %>
     <%= link_to 'EA RC', mktg_exports_path(co: 'sequoia', campaign: 'Return Customer', des: 'ea'), class: "#{@sequoia_rc_ea} w100 search_link btn btn-sm btn-primary text-light bg-gradient" %>
-    <%= link_to 'CPA NM', mktg_exports_path(co: 'sequoia', campaign: 'New Customer', des: 'cpa'), class: "#{@sequoia_nc_cpa} w100 search_link btn btn-sm btn-primary text-light bg-gradient" %>
-    <%= link_to 'EA NM', mktg_exports_path(co: 'sequoia', campaign: 'New Customer', des: 'ea'), class: "#{@sequoia_nc_ea} w100 search_link btn btn-sm btn-primary text-light bg-gradient" %>
   </div>
   <% elsif params['co'] == 'empire' %>
     <%= text_field_tag "id", '', class: "empire_st_field form-control w150", placeholder: 'State', value: params['empire_st']  %> Add multiple states - no common between. Active states: CA NY<br> <br>

@@ -4,20 +4,20 @@
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
   <div class="form-inputs">
-    <%= f.input :campaign %>
     <%= f.input :company %>
+    <%= f.input :campaign %>
+    <%= f.input :segment %>
     <%= f.input :mail_day %>
-    <%= f.input :range_1_a %>
-    <%= f.input :range_1_b %>
-    <%= f.input :range_2_a %>
-    <%= f.input :range_2_b %>
+    <%= f.input :range_1_a, include_blank: true %>
+    <%= f.input :range_1_b, include_blank: true %>
+    <%= f.input :range_2_a, include_blank: true  %>
+    <%= f.input :range_2_b, include_blank: true %>
     <%= f.input :done %>
-    <%= f.input :cpa_sent %>
-    <%= f.input :ea_sent %>
+    <%= f.input :sent %>
     <%= f.input :notes %>
   </div>
-
-  <div class="form-actions">
-    <%= f.button :submit %>
+<br>
+  <div class="form-actions ">
+    <%= f.button :submit, 'Submit', class: 'btn btn-primary bg-gradient text-light' %>
   </div>
 <% end %>

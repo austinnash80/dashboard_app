@@ -54,5 +54,7 @@
   <%= @mktg_postcard.notes %>
 </p>
 
+<%= link_to 'Go to Postcard Mailing Schedule', day_mktg_postcards_path(day: @mktg_postcard.mail_day), class: 'btn btn-sm btn-primary bg-gradient text-light' %>
+<br><br>
 <%= link_to 'Edit', edit_mktg_postcard_path(@mktg_postcard) %> |
 <%= link_to 'Back', mktg_postcards_path %>

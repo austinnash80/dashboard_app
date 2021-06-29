@@ -68,9 +68,13 @@ class MktgExportsController < ApplicationController
   end
 
   def sequoia
-    if params['campaign'] == 'Return Customer' #CREATE the record just with UID
-      SequoiaMemberExp.where(membership_exp: @dates).where(membership: params['des']).all.each do |i|
-        MktgExport.create(uid: i.uid, exp: i.membership_exp, campaign: 'Return Customer', des: params['des'])
+    if params['campaign'] == 'Return Customer' && params['des'] == 'cpa'#CREATE the record just with UID
+      SequoiaMember.where(membership_exp: @dates).where(cpa: true).all.each do |i|
+        MktgExport.create(uid: i.uid, exp: i.membership_exp, campaign: 'Return Customer', des: 'cpa')
+      end
+    elsif params['campaign'] == 'Return Customer' && params['des'] == 'ea'#CREATE the record just with UID
+      SequoiaMember.where(membership_exp: @dates).where(ea: true).all.each do |i|
+        MktgExport.create(uid: i.uid, exp: i.membership_exp, campaign: 'Return Customer', des: 'ea')
       end
     elsif params['campaign'] == 'New Customer' && params['des'] == 'cpa'
       SequoiaMember.where(first_purchase: @dates).where(cpa: true).where(cpa_memberships: 1).all.each do |i|

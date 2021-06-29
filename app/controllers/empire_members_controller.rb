@@ -25,6 +25,7 @@ class EmpireMembersController < ApplicationController
       EmpireCustomer.where('e_id > ?', @e_id).where.not(uid: uid).order(id: :ASC).all.each do |i|
         EmpireMember.create(uid: i.uid, lname: i.lname, first_purchase: i.purchase, last_purchase: i.purchase, purchases: 0).save
       end
+      redirect_to empire_members_path(), notice: 'New Member Update Complete'
   end
 
   def run_update_2 #Purchases
@@ -34,6 +35,7 @@ class EmpireMembersController < ApplicationController
         EmpireMember.where(uid: i.uid).update_all state: i.lic_state, last_purchase: i.purchase, purchases: (member.purchases + 1)
         IdNumberStorage.update_all empire_member_e_id: i.e_id
       end
+      redirect_to empire_members_path(), notice: 'Purchase Update Complete'
   end
 
   # GET /empire_members/1 or /empire_members/1.json

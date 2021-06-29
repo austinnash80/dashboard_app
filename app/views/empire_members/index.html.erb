@@ -1,8 +1,7 @@
-<p id="notice"><%= notice %></p>
 
 <h1 class="text-center">Empire Members</h1>
 <p class="text-center"><%= link_to 'Run Member Update', run_update_empire_members_path(), target: "_blank", class: 'btn btn-primary text-light m-2 text-light' %><%= link_to 'Run Purchase Update', run_update_2_empire_members_path(), target: "_blank", class: 'btn btn-primary text-light m-2 text-light' %></p>
-
+<p id="notice"><%= notice %></p>
 
 <p class="fs-4">Upload New List</p>
   <%= form_tag import_empire_members_path, multipart: true do %>

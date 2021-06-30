@@ -28,6 +28,7 @@ class SequoiaMembersController < ApplicationController
       SequoiaCustomer.where('order_id > ?', @order_id).where.not(uid: uid).order(id: :ASC).all.each do |i|
         SequoiaMember.create(uid: i.uid, lname: i.lname, first_purchase: i.purchase, last_purchase: i.purchase, cpa_memberships: 0, ea_memberships: 0, ethics_purchases: 0, afsp_purchases: 0, other: 0).save
       end
+      redirect_to sequoia_members_path(), notice: 'Member Update Complete'
   end
 
   def run_update_2
@@ -89,6 +90,7 @@ class SequoiaMembersController < ApplicationController
 
           IdNumberStorage.update_all sequoia_members_order_id: i.order_id
         end
+        redirect_to sequoia_members_path(), notice: 'EXP/Purchase Update Complete'
       end
     end
 

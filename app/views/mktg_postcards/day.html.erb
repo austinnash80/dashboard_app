@@ -37,7 +37,7 @@
           <td class="fw-bold"><%= number_with_delimiter(i.sent) %></td>
           <td></td>
         <% else %>
-          <td><%= link_to 'Run', mktg_exports_path(campaign: i.campaign.titlecase, co: i.company.downcase, des: i.segment, range_1_date_1: i.range_1_a, range_1_date_2: i.range_1_b, range_2_date_1: i.range_2_a, range_2_date_2: i.range_2_b, empire_st: 'CA NY'), target: '_blank', class: 'btn btn-sm btn-primary gb-gradient w100 text-light' %></td>
+          <td><%= link_to 'Run', mktg_exports_path(campaign: i.campaign.titlecase, co: i.company.downcase, des: i.segment, range_1_date_1: i.range_1_a, range_1_date_2: i.range_1_b, range_2_date_1: i.range_2_a, range_2_date_2: i.range_2_b, empire_st: i.segment), target: '_blank', class: 'btn btn-sm btn-primary gb-gradient w100 text-light' %></td>
           <td><%= text_field_tag "id", '', class: "sent_field form-control w150", value: i.sent, placeholder: '' %></td>
           <td><%= link_to 'Done', day_mktg_postcards_path(day: @day, campaign_id: i.id), class: "sent_link btn btn-sm btn-primary gb-gradient w100 text-light" %></td>
         <% end %>

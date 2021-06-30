@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Day:</strong>
+  <%= @daily_sales_empire.day %>
+</p>
+
+<p>
+  <strong>Year:</strong>
+  <%= @daily_sales_empire.year %>
+</p>
+
+<p>
+  <strong>Month:</strong>
+  <%= @daily_sales_empire.month %>
+</p>
+
+<p>
+  <strong>Day of week:</strong>
+  <%= @daily_sales_empire.day_of_week %>
+</p>
+
+<p>
+  <strong>Sales:</strong>
+  <%= @daily_sales_empire.sales %>
+</p>
+
+<p>
+  <strong>Orders:</strong>
+  <%= @daily_sales_empire.orders %>
+</p>
+
+<%= link_to 'Edit', edit_daily_sales_empire_path(@daily_sales_empire) %> |
+<%= link_to 'Back', daily_sales_empires_path %>

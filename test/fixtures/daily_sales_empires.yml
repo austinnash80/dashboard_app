@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  day: 2021-06-30
+  year: MyString
+  month: MyString
+  day_of_week: MyString
+  sales: 1
+  orders: 1
+
+two:
+  day: 2021-06-30
+  year: MyString
+  month: MyString
+  day_of_week: MyString
+  sales: 1
+  orders: 1

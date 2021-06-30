@@ -1,4 +1,10 @@
 Rails.application.routes.draw do
+  resources :daily_sales_empires do collection {post :import}
+    collection do
+      get 'run_update'
+      get 'monthly'
+    end
+  end
   resources :mktg_postcards do collection {post :import}
     collection do
       get 'day'
@@ -81,6 +87,7 @@ Rails.application.routes.draw do
   get 'pages/admin'
   get 'pages/master_lists'
   get 'pages/customer_matching_cpa'
+
   root :to => 'pages#home'              # Replace this with whatever you want your root_path to be.
                                         # This path is where unauthorized users will be redirected_to.
   get '/login' => 'sessions#new'         # This will be our sign-in page.

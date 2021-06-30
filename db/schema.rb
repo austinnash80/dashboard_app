@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_29_000625) do
+ActiveRecord::Schema.define(version: 2021_06_30_230150) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -39,6 +39,17 @@ ActiveRecord::Schema.define(version: 2021_06_29_000625) do
     t.integer "ethics"
     t.integer "afsp"
     t.integer "other"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "daily_sales_empires", force: :cascade do |t|
+    t.date "day"
+    t.string "year"
+    t.string "month"
+    t.string "day_of_week"
+    t.integer "sales"
+    t.integer "orders"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -179,6 +190,7 @@ ActiveRecord::Schema.define(version: 2021_06_29_000625) do
     t.integer "sequoia_member_exps_order_id"
     t.integer "empire_member_e_id"
     t.integer "empire_auto_match_id"
+    t.integer "empire_daily_sales_id"
   end
 
   create_table "master_cpa_double_accounts", force: :cascade do |t|

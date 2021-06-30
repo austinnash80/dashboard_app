@@ -2,8 +2,8 @@
 <h1 class="text-center">Sequoia Members</h1>
 <div class="text-center">
   <div class="btn-group" role="group">
-    <%= link_to 'New Member Update', run_update_sequoia_members_path(), target: "_blank", class: 'btn btn-primary  bg-gradient text-light mt-2 text-light w300' %>
-    <%= link_to 'EXP/Purchase Type Update', run_update_2_sequoia_members_path(run: 'yes'), target: "_blank", class: 'btn btn-primary bg-gradient text-light mt-2 text-light w300' %>
+    <%= link_to 'New Member Update', run_update_sequoia_members_path(), class: 'btn btn-primary  bg-gradient text-light mt-2 text-light w300' %>
+    <%= link_to 'EXP/Purchase Type Update', run_update_2_sequoia_members_path(run: 'yes'), class: 'btn btn-primary bg-gradient text-light mt-2 text-light w300' %>
   </div>
 </div>
 <p id="notice" class="text-center fw-bold mt-2"><%= notice %></p>
@@ -100,7 +100,7 @@
         <% sequoia_member = SequoiaMember.all %>
       <% end %>
 
-      <% sequoia_member.order(last_purchase: :desc).order(first_purchase: :desc).order(uid: :desc).limit(500).each do |sequoia_member| %>
+      <% sequoia_member.order(last_purchase: :desc, first_purchase: :desc, uid: :desc).limit(500).each do |sequoia_member| %>
         <tr>
           <td><a target="_blank" href="https://www.sequoiacpe.com/admin/user-profile?u=<%= sequoia_member.uid %>"><%= sequoia_member.uid %></a></td>
           <td><%= sequoia_member.lname %></td>

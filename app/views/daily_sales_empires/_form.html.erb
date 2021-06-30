@@ -1,0 +1,18 @@
+
+<%= simple_form_for(@daily_sales_empire) do |f| %>
+  <%= f.error_notification %>
+  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+  <div class="form-inputs">
+    <%= f.input :day %>
+    <%= f.input :year %>
+    <%= f.input :month %>
+    <%= f.input :day_of_week %>
+    <%= f.input :sales %>
+    <%= f.input :orders %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

@@ -1,0 +1,439 @@
+<h1 class="text-center">Sales Breakdown - Empire</h1>
+<div class="text-center m-3">
+  <%= link_to 'Back to Daily Sales', daily_sales_empires_path(), class: 'btn btn-sm btn-primary gb-gradient text-light w200' %>
+
+</div>
+<div class="row">
+  <div class="col-lg-3">
+    <table class="table table-striped">
+      <caption class="caption-top">Yearly</caption>
+      <thead>
+        <tr class="bg-secondary bg-gradient text-light">
+          <th class="">Year</th>
+          <th class="">Sales</th>
+          <th class="">YOY</th>
+        <tr>
+      </thead>
+      <tbody class="">
+        <tr>
+          <td>2014</td>
+          <td><%= number_to_currency((DailySalesEmpire.where(year: '2014').sum(:sales)/100), precision: 0) %></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>2015</td>
+          <td><%= number_to_currency((DailySalesEmpire.where(year: '2015').sum(:sales)/100), precision: 0) %></td>
+          <td><%= number_to_percentage(((DailySalesEmpire.where(year: '2015').sum(:sales).to_d - DailySalesEmpire.where(year: '2014').sum(:sales).to_d ) / DailySalesEmpire.where(year: '2014').sum(:sales).to_d) * 100, precision: 0) %></td>
+        </tr>
+        <tr>
+          <td>2016</td>
+          <td><%= number_to_currency((DailySalesEmpire.where(year: '2016').sum(:sales)/100), precision: 0) %></td>
+          <td><%= number_to_percentage(((DailySalesEmpire.where(year: '2016').sum(:sales).to_d - DailySalesEmpire.where(year: '2015').sum(:sales).to_d ) / DailySalesEmpire.where(year: '2015').sum(:sales).to_d) * 100, precision: 0) %></td>
+        </tr>
+        <tr>
+          <td>2017</td>
+          <td><%= number_to_currency((DailySalesEmpire.where(year: '2017').sum(:sales)/100), precision: 0) %></td>
+          <td><%= number_to_percentage(((DailySalesEmpire.where(year: '2017').sum(:sales).to_d - DailySalesEmpire.where(year: '2016').sum(:sales).to_d ) / DailySalesEmpire.where(year: '2016').sum(:sales).to_d) * 100, precision: 0) %></td>
+        </tr>
+        <tr>
+          <td>2018</td>
+          <td><%= number_to_currency((DailySalesEmpire.where(year: '2018').sum(:sales)/100), precision: 0) %></td>
+          <td><%= number_to_percentage(((DailySalesEmpire.where(year: '2018').sum(:sales).to_d - DailySalesEmpire.where(year: '2017').sum(:sales).to_d ) / DailySalesEmpire.where(year: '2017').sum(:sales).to_d) * 100, precision: 0) %></td>
+        </tr>
+        <tr>
+          <td>2019</td>
+          <td><%= number_to_currency((DailySalesEmpire.where(year: '2019').sum(:sales)/100), precision: 0) %></td>
+          <td><%= number_to_percentage(((DailySalesEmpire.where(year: '2019').sum(:sales).to_d - DailySalesEmpire.where(year: '2018').sum(:sales).to_d ) / DailySalesEmpire.where(year: '2018').sum(:sales).to_d) * 100, precision: 0) %></td>
+        </tr>
+        <tr>
+          <td>2020</td>
+          <td><%= number_to_currency((DailySalesEmpire.where(year: '2020').sum(:sales)/100), precision: 0) %></td>
+          <td><%= number_to_percentage(((DailySalesEmpire.where(year: '2020').sum(:sales).to_d - DailySalesEmpire.where(year: '2019').sum(:sales).to_d ) / DailySalesEmpire.where(year: '2019').sum(:sales).to_d) * 100, precision: 0) %></td>
+        </tr>
+        <tr>
+          <td>2021</td>
+          <td><%= number_to_currency((DailySalesEmpire.where(year: '2021').sum(:sales)/100), precision: 0) %></td>
+          <td><%= number_to_percentage(((DailySalesEmpire.where(year: '2021').sum(:sales).to_d - DailySalesEmpire.where(year: '2020').sum(:sales).to_d ) / DailySalesEmpire.where(year: '2020').sum(:sales).to_d) * 100, precision: 0) %></td>
+        </tr>
+        <tr>
+          <% if Date.today >= '2022-01-01'.to_date %>
+            <td>2022</td>
+            <td><%= number_to_currency((DailySalesEmpire.where(year: '2022').sum(:sales)/100), precision: 0) %></td>
+            <td><%= number_to_percentage(((DailySalesEmpire.where(year: '2022').sum(:sales).to_d - DailySalesEmpire.where(year: '2021').sum(:sales).to_d ) / DailySalesEmpire.where(year: '2021').sum(:sales).to_d) * 100, precision: 0) %></td>
+          <% end %>
+        </tr>
+        <tr>
+          <% if Date.today >= '2023-01-01'.to_date %>
+            <td>2023</td>
+            <td><%= number_to_currency((DailySalesEmpire.where(year: '2023').sum(:sales)/100), precision: 0) %></td>
+            <td><%= number_to_percentage(((DailySalesEmpire.where(year: '2023').sum(:sales).to_d - DailySalesEmpire.where(year: '2022').sum(:sales).to_d ) / DailySalesEmpire.where(year: '2022').sum(:sales).to_d) * 100, precision: 0) %></td>
+          <% end %>
+        </tr>
+        <tr>
+          <% if Date.today >= '2024-01-01'.to_date %>
+            <td>2024</td>
+            <td><%= number_to_currency((DailySalesEmpire.where(year: '2024').sum(:sales)/100), precision: 0) %></td>
+            <td><%= number_to_percentage(((DailySalesEmpire.where(year: '2024').sum(:sales).to_d - DailySalesEmpire.where(year: '2023').sum(:sales).to_d ) / DailySalesEmpire.where(year: '2023').sum(:sales).to_d) * 100, precision: 0) %></td>
+          <% end %>
+        </tr>
+        <tr>
+          <% if Date.today >= '2025-01-01'.to_date %>
+            <td>2025</td>
+            <td><%= number_to_currency((DailySalesEmpire.where(year: '2025').sum(:sales)/100), precision: 0) %></td>
+            <td><%= number_to_percentage(((DailySalesEmpire.where(year: '2025').sum(:sales).to_d - DailySalesEmpire.where(year: '2024').sum(:sales).to_d ) / DailySalesEmpire.where(year: '2024').sum(:sales).to_d) * 100, precision: 0) %></td>
+          <% end %>
+        </tr>
+        <tr>
+          <% if Date.today >= '2026-01-01'.to_date %>
+            <td>2026</td>
+            <td><%= number_to_currency((DailySalesEmpire.where(year: '2026').sum(:sales)/100), precision: 0) %></td>
+            <td><%= number_to_percentage(((DailySalesEmpire.where(year: '2026').sum(:sales).to_d - DailySalesEmpire.where(year: '2025').sum(:sales).to_d ) / DailySalesEmpire.where(year: '2025').sum(:sales).to_d) * 100, precision: 0) %></td>
+          <% end %>
+        </tr>
+        <tr>
+          <% if Date.today >= '2027-01-01'.to_date %>
+            <td>2027</td>
+            <td><%= number_to_currency((DailySalesEmpire.where(year: '2027').sum(:sales)/100), precision: 0) %></td>            <td><%= number_to_percentage(((DailySalesEmpire.where(year: '2026').sum(:sales).to_d - DailySalesEmpire.where(year: '2025').sum(:sales).to_d ) / DailySalesEmpire.where(year: '2025').sum(:sales).to_d) * 100, precision: 0) %></td>
+            <td><%= number_to_percentage(((DailySalesEmpire.where(year: '2027').sum(:sales).to_d - DailySalesEmpire.where(year: '2026').sum(:sales).to_d ) / DailySalesEmpire.where(year: '2026').sum(:sales).to_d) * 100, precision: 0) %></td>
+          <% end %>
+        </tr>
+        <tr>
+          <% if Date.today >= '2028-01-01'.to_date %>
+            <td>2028</td>
+            <td><%= number_to_currency((DailySalesEmpire.where(year: '2028').sum(:sales)/100), precision: 0) %></td>
+            <td><%= number_to_percentage(((DailySalesEmpire.where(year: '2028').sum(:sales).to_d - DailySalesEmpire.where(year: '2027').sum(:sales).to_d ) / DailySalesEmpire.where(year: '2027').sum(:sales).to_d) * 100, precision: 0) %></td>
+          <% end %>
+        </tr>
+        <tr>
+          <% if Date.today >= '2029-01-01'.to_date %>
+            <td>2029</td>
+            <td><%= number_to_currency((DailySalesEmpire.where(year: '2029').sum(:sales)/100), precision: 0) %></td>
+            <td><%= number_to_percentage(((DailySalesEmpire.where(year: '2029').sum(:sales).to_d - DailySalesEmpire.where(year: '2028').sum(:sales).to_d ) / DailySalesEmpire.where(year: '2028').sum(:sales).to_d) * 100, precision: 0) %></td>
+          <% end %>
+        </tr>
+        <tr>
+          <% if Date.today >= '2030-01-01'.to_date %>
+            <td>2030</td>
+            <td><%= number_to_currency((DailySalesEmpire.where(year: '2030').sum(:sales)/100), precision: 0) %></td>
+            <td><%= number_to_percentage(((DailySalesEmpire.where(year: '2030').sum(:sales).to_d - DailySalesEmpire.where(year: '2029').sum(:sales).to_d ) / DailySalesEmpire.where(year: '2029').sum(:sales).to_d) * 100, precision: 0) %></td>
+          <% end %>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+  <div class="col-lg-3">
+    <table class="table table-striped">
+      <caption class="caption-top">2019 Monthly</caption>
+      <thead>
+        <tr class="bg-secondary bg-gradient text-light">
+          <th class="">Month</th>
+          <th class="">Sales</th>
+          <th>YOY</th>
+        <tr>
+      </thead>
+      <tbody class="">
+        <tr>
+          <td>January</td>
+          <td><%= number_to_currency((DailySalesEmpire.where(year: '2019').where(month: 'January').sum(:sales)/100), precision: 0) %></td>
+          <td><%= number_to_percentage(((DailySalesEmpire.where(year: '2019').where(month: 'January').sum(:sales).to_d - DailySalesEmpire.where(year: '2018').where(month: 'January').sum(:sales).to_d ) / DailySalesEmpire.where(year: '2018').where(month: 'January').sum(:sales).to_d) * 100, precision: 0) %></td>
+        </tr>
+        <tr>
+          <td>February</td>
+          <td><%= number_to_currency((DailySalesEmpire.where(year: '2019').where(month: 'February').sum(:sales)/100), precision: 0) %></td>
+          <td><%= number_to_percentage(((DailySalesEmpire.where(year: '2019').where(month: 'February').sum(:sales).to_d - DailySalesEmpire.where(year: '2018').where(month: 'February').sum(:sales).to_d ) / DailySalesEmpire.where(year: '2018').where(month: 'February').sum(:sales).to_d) * 100, precision: 0) %></td>
+        </tr>
+        <tr>
+          <td>March</td>
+          <td><%= number_to_currency((DailySalesEmpire.where(year: '2019').where(month: 'March').sum(:sales)/100), precision: 0) %></td>
+          <td><%= number_to_percentage(((DailySalesEmpire.where(year: '2019').where(month: 'March').sum(:sales).to_d - DailySalesEmpire.where(year: '2018').where(month: 'March').sum(:sales).to_d ) / DailySalesEmpire.where(year: '2018').where(month: 'March').sum(:sales).to_d) * 100, precision: 0) %></td>
+        </tr>
+        <tr>
+          <td>April</td>
+          <td><%= number_to_currency((DailySalesEmpire.where(year: '2019').where(month: 'April').sum(:sales)/100), precision: 0) %></td>
+          <td><%= number_to_percentage(((DailySalesEmpire.where(year: '2019').where(month: 'April').sum(:sales).to_d - DailySalesEmpire.where(year: '2018').where(month: 'April').sum(:sales).to_d ) / DailySalesEmpire.where(year: '2018').where(month: 'April').sum(:sales).to_d) * 100, precision: 0) %></td>
+        </tr>
+        <tr>
+          <td>May</td>
+          <td><%= number_to_currency((DailySalesEmpire.where(year: '2019').where(month: 'May').sum(:sales)/100), precision: 0) %></td>
+          <td><%= number_to_percentage(((DailySalesEmpire.where(year: '2019').where(month: 'May').sum(:sales).to_d - DailySalesEmpire.where(year: '2018').where(month: 'May').sum(:sales).to_d ) / DailySalesEmpire.where(year: '2018').where(month: 'May').sum(:sales).to_d) * 100, precision: 0) %></td>
+        </tr>
+        <tr>
+          <td>June</td>
+          <td><%= number_to_currency((DailySalesEmpire.where(year: '2019').where(month: 'June').sum(:sales)/100), precision: 0) %></td>
+          <td><%= number_to_percentage(((DailySalesEmpire.where(year: '2019').where(month: 'June').sum(:sales).to_d - DailySalesEmpire.where(year: '2018').where(month: 'June').sum(:sales).to_d ) / DailySalesEmpire.where(year: '2018').where(month: 'June').sum(:sales).to_d) * 100, precision: 0) %></td>
+        </tr>
+        <tr>
+          <td>July</td>
+          <td><%= number_to_currency((DailySalesEmpire.where(year: '2019').where(month: 'July').sum(:sales)/100), precision: 0) %></td>
+          <td><%= number_to_percentage(((DailySalesEmpire.where(year: '2019').where(month: 'July').sum(:sales).to_d - DailySalesEmpire.where(year: '2018').where(month: 'July').sum(:sales).to_d ) / DailySalesEmpire.where(year: '2018').where(month: 'July').sum(:sales).to_d) * 100, precision: 0) %></td>
+        </tr>
+        <tr>
+          <td>August</td>
+          <td><%= number_to_currency((DailySalesEmpire.where(year: '2019').where(month: 'August').sum(:sales)/100), precision: 0) %></td>
+          <td><%= number_to_percentage(((DailySalesEmpire.where(year: '2019').where(month: 'August').sum(:sales).to_d - DailySalesEmpire.where(year: '2018').where(month: 'August').sum(:sales).to_d ) / DailySalesEmpire.where(year: '2018').where(month: 'August').sum(:sales).to_d) * 100, precision: 0) %></td>
+        </tr>
+        <tr>
+          <td>September</td>
+          <td><%= number_to_currency((DailySalesEmpire.where(year: '2019').where(month: 'September').sum(:sales)/100), precision: 0) %></td>
+          <td><%= number_to_percentage(((DailySalesEmpire.where(year: '2019').where(month: 'September').sum(:sales).to_d - DailySalesEmpire.where(year: '2018').where(month: 'September').sum(:sales).to_d ) / DailySalesEmpire.where(year: '2018').where(month: 'September').sum(:sales).to_d) * 100, precision: 0) %></td>
+        </tr>
+        <tr>
+          <td>October</td>
+          <td><%= number_to_currency((DailySalesEmpire.where(year: '2019').where(month: 'October').sum(:sales)/100), precision: 0) %></td>
+          <td><%= number_to_percentage(((DailySalesEmpire.where(year: '2019').where(month: 'October').sum(:sales).to_d - DailySalesEmpire.where(year: '2018').where(month: 'October').sum(:sales).to_d ) / DailySalesEmpire.where(year: '2018').where(month: 'October').sum(:sales).to_d) * 100, precision: 0) %></td>
+        </tr>
+        <tr>
+          <td>November</td>
+          <td><%= number_to_currency((DailySalesEmpire.where(year: '2019').where(month: 'November').sum(:sales)/100), precision: 0) %></td>
+          <td><%= number_to_percentage(((DailySalesEmpire.where(year: '2019').where(month: 'November').sum(:sales).to_d - DailySalesEmpire.where(year: '2018').where(month: 'November').sum(:sales).to_d ) / DailySalesEmpire.where(year: '2018').where(month: 'November').sum(:sales).to_d) * 100, precision: 0) %></td>
+        </tr>
+        <tr>
+          <td>December</td>
+          <td><%= number_to_currency((DailySalesEmpire.where(year: '2019').where(month: 'December').sum(:sales)/100), precision: 0) %></td>
+          <td><%= number_to_percentage(((DailySalesEmpire.where(year: '2019').where(month: 'December').sum(:sales).to_d - DailySalesEmpire.where(year: '2018').where(month: 'December').sum(:sales).to_d ) / DailySalesEmpire.where(year: '2018').where(month: 'December').sum(:sales).to_d) * 100, precision: 0) %></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="col-lg-3">
+    <table class="table table-striped">
+      <caption class="caption-top">2020 Monthly</caption>
+      <thead>
+        <tr class="bg-secondary bg-gradient text-light">
+          <th class="">Month</th>
+          <th class="">Sales</th>
+          <th>YOY</th>
+        <tr>
+      </thead>
+      <tbody class="">
+        <tr>
+          <td>January</td>
+          <td><%= number_to_currency((DailySalesEmpire.where(year: '2020').where(month: 'January').sum(:sales)/100), precision: 0) %></td>
+          <td><%= number_to_percentage(((DailySalesEmpire.where(year: '2020').where(month: 'January').sum(:sales).to_d - DailySalesEmpire.where(year: '2019').where(month: 'January').sum(:sales).to_d ) / DailySalesEmpire.where(year: '2019').where(month: 'January').sum(:sales).to_d) * 100, precision: 0) %></td>
+        </tr>
+        <tr>
+          <td>February</td>
+          <td><%= number_to_currency((DailySalesEmpire.where(year: '2020').where(month: 'February').sum(:sales)/100), precision: 0) %></td>
+          <td><%= number_to_percentage(((DailySalesEmpire.where(year: '2020').where(month: 'February').sum(:sales).to_d - DailySalesEmpire.where(year: '2019').where(month: 'February').sum(:sales).to_d ) / DailySalesEmpire.where(year: '2019').where(month: 'February').sum(:sales).to_d) * 100, precision: 0) %></td>
+
+        </tr>
+        <tr>
+          <td>March</td>
+          <td><%= number_to_currency((DailySalesEmpire.where(year: '2020').where(month: 'March').sum(:sales)/100), precision: 0) %></td>
+          <td><%= number_to_percentage(((DailySalesEmpire.where(year: '2020').where(month: 'March').sum(:sales).to_d - DailySalesEmpire.where(year: '2019').where(month: 'March').sum(:sales).to_d ) / DailySalesEmpire.where(year: '2019').where(month: 'March').sum(:sales).to_d) * 100, precision: 0) %></td>
+
+        </tr>
+        <tr>
+          <td>April</td>
+          <td><%= number_to_currency((DailySalesEmpire.where(year: '2020').where(month: 'April').sum(:sales)/100), precision: 0) %></td>
+          <td><%= number_to_percentage(((DailySalesEmpire.where(year: '2020').where(month: 'April').sum(:sales).to_d - DailySalesEmpire.where(year: '2019').where(month: 'April').sum(:sales).to_d ) / DailySalesEmpire.where(year: '2019').where(month: 'April').sum(:sales).to_d) * 100, precision: 0) %></td>
+
+        </tr>
+        <tr>
+          <td>May</td>
+          <td><%= number_to_currency((DailySalesEmpire.where(year: '2020').where(month: 'May').sum(:sales)/100), precision: 0) %></td>
+          <td><%= number_to_percentage(((DailySalesEmpire.where(year: '2020').where(month: 'May').sum(:sales).to_d - DailySalesEmpire.where(year: '2019').where(month: 'May').sum(:sales).to_d ) / DailySalesEmpire.where(year: '2019').where(month: 'May').sum(:sales).to_d) * 100, precision: 0) %></td>
+
+        </tr>
+        <tr>
+          <td>June</td>
+          <td><%= number_to_currency((DailySalesEmpire.where(year: '2020').where(month: 'June').sum(:sales)/100), precision: 0) %></td>
+          <td><%= number_to_percentage(((DailySalesEmpire.where(year: '2020').where(month: 'June').sum(:sales).to_d - DailySalesEmpire.where(year: '2019').where(month: 'June').sum(:sales).to_d ) / DailySalesEmpire.where(year: '2019').where(month: 'June').sum(:sales).to_d) * 100, precision: 0) %></td>
+
+        </tr>
+        <tr>
+          <td>July</td>
+          <td><%= number_to_currency((DailySalesEmpire.where(year: '2020').where(month: 'July').sum(:sales)/100), precision: 0) %></td>
+          <td><%= number_to_percentage(((DailySalesEmpire.where(year: '2020').where(month: 'July').sum(:sales).to_d - DailySalesEmpire.where(year: '2019').where(month: 'July').sum(:sales).to_d ) / DailySalesEmpire.where(year: '2019').where(month: 'July').sum(:sales).to_d) * 100, precision: 0) %></td>
+        </tr>
+        <tr>
+          <td>August</td>
+          <td><%= number_to_currency((DailySalesEmpire.where(year: '2020').where(month: 'August').sum(:sales)/100), precision: 0) %></td>
+          <td><%= number_to_percentage(((DailySalesEmpire.where(year: '2020').where(month: 'August').sum(:sales).to_d - DailySalesEmpire.where(year: '2019').where(month: 'August').sum(:sales).to_d ) / DailySalesEmpire.where(year: '2019').where(month: 'August').sum(:sales).to_d) * 100, precision: 0) %></td>
+        </tr>
+        <tr>
+          <td>September</td>
+          <td><%= number_to_currency((DailySalesEmpire.where(year: '2020').where(month: 'September').sum(:sales)/100), precision: 0) %></td>
+          <td><%= number_to_percentage(((DailySalesEmpire.where(year: '2020').where(month: 'September').sum(:sales).to_d - DailySalesEmpire.where(year: '2019').where(month: 'September').sum(:sales).to_d ) / DailySalesEmpire.where(year: '2019').where(month: 'September').sum(:sales).to_d) * 100, precision: 0) %></td>
+        </tr>
+        <tr>
+          <td>October</td>
+          <td><%= number_to_currency((DailySalesEmpire.where(year: '2020').where(month: 'October').sum(:sales)/100), precision: 0) %></td>
+          <td><%= number_to_percentage(((DailySalesEmpire.where(year: '2020').where(month: 'October').sum(:sales).to_d - DailySalesEmpire.where(year: '2019').where(month: 'October').sum(:sales).to_d ) / DailySalesEmpire.where(year: '2019').where(month: 'October').sum(:sales).to_d) * 100, precision: 0) %></td>
+        </tr>
+        <tr>
+          <td>November</td>
+          <td><%= number_to_currency((DailySalesEmpire.where(year: '2020').where(month: 'November').sum(:sales)/100), precision: 0) %></td>
+          <td><%= number_to_percentage(((DailySalesEmpire.where(year: '2020').where(month: 'November').sum(:sales).to_d - DailySalesEmpire.where(year: '2019').where(month: 'November').sum(:sales).to_d ) / DailySalesEmpire.where(year: '2019').where(month: 'November').sum(:sales).to_d) * 100, precision: 0) %></td>
+        </tr>
+        <tr>
+          <td>December</td>
+          <td><%= number_to_currency((DailySalesEmpire.where(year: '2020').where(month: 'December').sum(:sales)/100), precision: 0) %></td>
+          <td><%= number_to_percentage(((DailySalesEmpire.where(year: '2020').where(month: 'December').sum(:sales).to_d - DailySalesEmpire.where(year: '2019').where(month: 'December').sum(:sales).to_d ) / DailySalesEmpire.where(year: '2019').where(month: 'December').sum(:sales).to_d) * 100, precision: 0) %></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="col-lg-3">
+    <table class="table table-striped">
+      <caption class="caption-top">2021 Monthly</caption>
+      <thead>
+        <tr class="bg-secondary bg-gradient text-light">
+          <th class="">Month</th>
+          <th class="">Sales</th>
+          <th>YOY</th>
+        <tr>
+      </thead>
+      <tbody class="">
+        <tr>
+          <td>January</td>
+          <td><%= number_to_currency((DailySalesEmpire.where(year: '2021').where(month: 'January').sum(:sales)/100), precision: 0) %></td>
+          <td><%= number_to_percentage(((DailySalesEmpire.where(year: '2021').where(month: 'January').sum(:sales).to_d - DailySalesEmpire.where(year: '2020').where(month: 'January').sum(:sales).to_d ) / DailySalesEmpire.where(year: '2020').where(month: 'January').sum(:sales).to_d) * 100, precision: 0) %></td>
+        </tr>
+        <tr>
+          <td>February</td>
+          <td><%= number_to_currency((DailySalesEmpire.where(year: '2021').where(month: 'February').sum(:sales)/100), precision: 0) %></td>
+          <td><%= number_to_percentage(((DailySalesEmpire.where(year: '2021').where(month: 'February').sum(:sales).to_d - DailySalesEmpire.where(year: '2020').where(month: 'February').sum(:sales).to_d ) / DailySalesEmpire.where(year: '2020').where(month: 'February').sum(:sales).to_d) * 100, precision: 0) %></td>
+
+        </tr>
+        <tr>
+          <td>March</td>
+          <td><%= number_to_currency((DailySalesEmpire.where(year: '2021').where(month: 'March').sum(:sales)/100), precision: 0) %></td>
+          <td><%= number_to_percentage(((DailySalesEmpire.where(year: '2021').where(month: 'March').sum(:sales).to_d - DailySalesEmpire.where(year: '2020').where(month: 'March').sum(:sales).to_d ) / DailySalesEmpire.where(year: '2020').where(month: 'March').sum(:sales).to_d) * 100, precision: 0) %></td>
+
+        </tr>
+        <tr>
+          <td>April</td>
+          <td><%= number_to_currency((DailySalesEmpire.where(year: '2021').where(month: 'April').sum(:sales)/100), precision: 0) %></td>
+          <td><%= number_to_percentage(((DailySalesEmpire.where(year: '2021').where(month: 'April').sum(:sales).to_d - DailySalesEmpire.where(year: '2020').where(month: 'April').sum(:sales).to_d ) / DailySalesEmpire.where(year: '2020').where(month: 'April').sum(:sales).to_d) * 100, precision: 0) %></td>
+
+        </tr>
+        <tr>
+          <td>May</td>
+          <td><%= number_to_currency((DailySalesEmpire.where(year: '2021').where(month: 'May').sum(:sales)/100), precision: 0) %></td>
+          <td><%= number_to_percentage(((DailySalesEmpire.where(year: '2021').where(month: 'May').sum(:sales).to_d - DailySalesEmpire.where(year: '2020').where(month: 'May').sum(:sales).to_d ) / DailySalesEmpire.where(year: '2020').where(month: 'May').sum(:sales).to_d) * 100, precision: 0) %></td>
+
+        </tr>
+        <tr>
+          <td>June</td>
+          <td><%= number_to_currency((DailySalesEmpire.where(year: '2021').where(month: 'June').sum(:sales)/100), precision: 0) %></td>
+          <td><%= number_to_percentage(((DailySalesEmpire.where(year: '2021').where(month: 'June').sum(:sales).to_d - DailySalesEmpire.where(year: '2020').where(month: 'June').sum(:sales).to_d ) / DailySalesEmpire.where(year: '2020').where(month: 'June').sum(:sales).to_d) * 100, precision: 0) %></td>
+
+        </tr>
+        <tr>
+          <td>July</td>
+          <% if Date.today >= '2021-07-01'.to_date %>
+            <td><%= number_to_currency((DailySalesEmpire.where(year: '2021').where(month: 'July').sum(:sales)/100), precision: 0) %></td>
+            <td><%= number_to_percentage(((DailySalesEmpire.where(year: '2021').where(month: 'July').sum(:sales).to_d - DailySalesEmpire.where(year: '2020').where(month: 'July').sum(:sales).to_d ) / DailySalesEmpire.where(year: '2020').where(month: 'July').sum(:sales).to_d) * 100, precision: 0) %></td>
+          <% else %> <td></td><td></td><% end %>
+        </tr>
+        <tr>
+          <td>August</td>
+          <% if Date.today >= '2021-08-01'.to_date %>
+            <td><%= number_to_currency((DailySalesEmpire.where(year: '2021').where(month: 'August').sum(:sales)/100), precision: 0) %></td>
+            <td><%= number_to_percentage(((DailySalesEmpire.where(year: '2021').where(month: 'August').sum(:sales).to_d - DailySalesEmpire.where(year: '2020').where(month: 'August').sum(:sales).to_d ) / DailySalesEmpire.where(year: '2020').where(month: 'August').sum(:sales).to_d) * 100, precision: 0) %></td>
+          <% else %> <td></td><td></td><% end %>
+        </tr>
+        <tr>
+          <td>September</td>
+          <% if Date.today >= '2021-09-01'.to_date %>
+            <td><%= number_to_currency((DailySalesEmpire.where(year: '2021').where(month: 'September').sum(:sales)/100), precision: 0) %></td>
+            <td><%= number_to_percentage(((DailySalesEmpire.where(year: '2021').where(month: 'September').sum(:sales).to_d - DailySalesEmpire.where(year: '2020').where(month: 'September').sum(:sales).to_d ) / DailySalesEmpire.where(year: '2020').where(month: 'September').sum(:sales).to_d) * 100, precision: 0) %></td>
+          <% else %> <td></td><td></td><% end %>
+        </tr>
+        <tr>
+          <td>October</td>
+          <% if Date.today >= '2021-10-01'.to_date %>
+            <td><%= number_to_currency((DailySalesEmpire.where(year: '2021').where(month: 'October').sum(:sales)/100), precision: 0) %></td>
+            <td><%= number_to_percentage(((DailySalesEmpire.where(year: '2021').where(month: 'October').sum(:sales).to_d - DailySalesEmpire.where(year: '2020').where(month: 'October').sum(:sales).to_d ) / DailySalesEmpire.where(year: '2020').where(month: 'October').sum(:sales).to_d) * 100, precision: 0) %></td>
+          <% else %> <td></td><td></td><% end %>
+        </tr>
+        <tr>
+          <td>November</td>
+          <% if Date.today >= '2021-11-01'.to_date %>
+            <td><%= number_to_currency((DailySalesEmpire.where(year: '2021').where(month: 'November').sum(:sales)/100), precision: 0) %></td>
+            <td><%= number_to_percentage(((DailySalesEmpire.where(year: '2021').where(month: 'November').sum(:sales).to_d - DailySalesEmpire.where(year: '2020').where(month: 'November').sum(:sales).to_d ) / DailySalesEmpire.where(year: '2020').where(month: 'November').sum(:sales).to_d) * 100, precision: 0) %></td>
+          <% else %> <td></td><td></td><% end %>
+        </tr>
+        <tr>
+          <td>December</td>
+          <% if Date.today >= '2021-12-01'.to_date %>
+            <td><%= number_to_currency((DailySalesEmpire.where(year: '2021').where(month: 'December').sum(:sales)/100), precision: 0) %></td>
+            <td><%= number_to_percentage(((DailySalesEmpire.where(year: '2021').where(month: 'December').sum(:sales).to_d - DailySalesEmpire.where(year: '2020').where(month: 'December').sum(:sales).to_d ) / DailySalesEmpire.where(year: '2020').where(month: 'December').sum(:sales).to_d) * 100, precision: 0) %></td>
+          <% else %> <td></td><td></td><% end %>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="row">
+  <% data =  DailySalesEmpire.order(day: :asc).group_by{|u| u.day.beginning_of_week} %>
+  <div class="col-lg-3">
+  </div>
+  <div class="col-lg-3">
+    <% data =  DailySalesEmpire.order(day: :asc).group_by{|u| u.day.beginning_of_week} %>
+    <table class="table table-striped">
+      <caption class="caption-top">2019 Weekly</caption>
+      <thead>
+        <tr class="bg-secondary bg-gradient text-light">
+          <th class="">Week Start</th>
+          <th class="">Sales</th>
+        <tr>
+      </thead>
+      <tbody class="">
+        <% data.each do |k,v| %>
+          <% if k > '2018-12-30'.to_date && k < '2020-01-06'.to_date %>
+        <tr>
+          <td><%= k %></td>
+          <td><%= number_to_currency(v.pluck(:sales).sum / 100, precision: 0) %></td>
+        </tr>
+        <% end %>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+  <div class="col-lg-3">
+    <% data =  DailySalesEmpire.order(day: :asc).group_by{|u| u.day.beginning_of_week} %>
+    <table class="table table-striped">
+      <caption class="caption-top">2020 Weekly</caption>
+      <thead>
+        <tr class="bg-secondary bg-gradient text-light">
+          <th class="">Week Start</th>
+          <th class="">Sales</th>
+        <tr>
+      </thead>
+      <tbody class="">
+        <% data.each do |k,v| %>
+          <% if k > '2019-12-29'.to_date && k < '2021-01-04'.to_date %>
+        <tr>
+          <td><%= k %></td>
+          <td><%= number_to_currency(v.pluck(:sales).sum / 100, precision: 0) %></td>
+        </tr>
+        <% end %>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+  <div class="col-lg-3">
+    <% data =  DailySalesEmpire.order(day: :asc).group_by{|u| u.day.beginning_of_week} %>
+    <table class="table table-striped">
+      <caption class="caption-top">2021 Weekly</caption>
+      <thead>
+        <tr class="bg-secondary bg-gradient text-light">
+          <th class="">Week Start</th>
+          <th class="">Sales</th>
+        <tr>
+      </thead>
+      <tbody class="">
+        <% data.each do |k,v| %>
+          <% if k > '2020-12-27'.to_date && k < '2022-01-03'.to_date %>
+        <tr>
+          <td><%= k %></td>
+          <td><%= number_to_currency(v.pluck(:sales).sum / 100, precision: 0) %></td>
+        </tr>
+        <% end %>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

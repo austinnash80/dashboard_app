@@ -90,8 +90,8 @@ class SequoiaMembersController < ApplicationController
 
           IdNumberStorage.update_all sequoia_members_order_id: i.order_id
         end
-        redirect_to sequoia_members_path(), notice: 'EXP/Purchase Update Complete'
       end
+      redirect_to sequoia_members_path(), notice: 'EXP/Purchase Update Complete'
     end
 
 

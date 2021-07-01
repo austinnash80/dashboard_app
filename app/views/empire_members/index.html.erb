@@ -2,8 +2,8 @@
 <h1 class="text-center">Empire Members</h1>
 <div class="text-center">
   <div class="btn-group" role="group">
-    <%= link_to 'Run Member Update', run_update_empire_members_path(), target: "_blank", class: 'btn btn-primary bg-gradient ext-light mt-2 text-light' %>
-    <%= link_to 'Run Purchase Update', run_update_2_empire_members_path(), target: "_blank", class: 'btn btn-primary bg-gradient text-light mt-2 text-light' %>
+    <%= link_to 'Run Member Update', run_update_empire_members_path(), class: 'btn btn-primary bg-gradient ext-light mt-2 text-light' %>
+    <%= link_to 'Run Purchase Update', run_update_2_empire_members_path(), class: 'btn btn-primary bg-gradient text-light mt-2 text-light' %>
   </div>
 </div>
 <p id="notice" class="text-center fw-bold"><%= notice %></p>
@@ -27,6 +27,14 @@
 </div>
 
 <div class="m-5">
+
+  <div class="w300">
+    <%= text_field_tag "id", '', class: "lname_field form-control", value: params['lname'], placeholder: 'Search by Last Name or UID' %>
+    <br>
+    <%= link_to 'Search Member', empire_members_path(), class: 'search_link btn btn-sm btn-primary gb-gradient w150 text-light' %>
+  </div>
+  <br><br>
+
   <table class="table table-striped">
   <thead>
   <caption class="caption-top">Total Records: <%= number_with_delimiter(EmpireMember.count) %> | Display Limit: 250</caption>
@@ -42,7 +50,17 @@
   </thead>
 
   <tbody>
-    <% @empire_members.order(last_purchase: :DESC).order(first_purchase: :DESC).order(uid: :DESC).limit(250).each do |empire_member| %>
+    <% if params['lname'].present? %>
+      <% if params['lname'].match(/^(\d)+$/).present? %>
+        <% empire_member = EmpireMember.where(uid: params['lname'].to_i).all %>
+      <% else %>
+        <% empire_member = EmpireMember.where(lname: params['lname'].titlecase).all %>
+      <% end %>
+    <% else %>
+      <% empire_member = EmpireMember.all %>
+    <% end %>
+
+    <% empire_member.order(last_purchase: :DESC).order(first_purchase: :DESC).order(uid: :DESC).limit(250).each do |empire_member| %>
       <tr>
         <td><a target="_blank" href="https://www.empirelearning.com/admin/user-profile?u=<%= empire_member.uid %>"><%= empire_member.uid %></a></td>
         <td><%= empire_member.lname %></td>
@@ -59,3 +77,11 @@
 </table>
 
 </div>
+
+<script type="text/javascript">
+  $(".search_link").click(function() {
+    $(this).attr("href", function() {
+      return this.href + "?lname=" + $('.lname_field').val().toUpperCase();
+    });
+  });
+</script>

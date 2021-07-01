@@ -24,6 +24,12 @@
 </div>
 
 <div class="m-5">
+  <div class="w300">
+    <%= text_field_tag "id", '', class: "lname_field form-control", value: params['lname'], placeholder: 'Search by Last Name or UID' %>
+    <br>
+    <%= link_to 'Search Purchase', sequoia_customers_path(), class: 'search_link btn btn-sm btn-primary gb-gradient w150 text-light' %>
+  </div>
+  <br><br>
 
 <table class="table table-striped">
   <thead>
@@ -55,7 +61,17 @@
   </thead>
 
   <tbody>
-    <% @sequoia_customers.order(s_id: :DESC).limit(250).each do |sequoia_customer| %>
+    <% if params['lname'].present? %>
+      <% if params['lname'].match(/^(\d)+$/).present? %>
+        <% sequoia_customer = SequoiaCustomer.where(uid: params['lname'].to_i).all %>
+      <% else %>
+        <% sequoia_customer = SequoiaCustomer.where(lname: params['lname'].titlecase).all %>
+      <% end %>
+    <% else %>
+      <% sequoia_customer = SequoiaCustomer.all %>
+    <% end %>
+
+    <% sequoia_customer.order(s_id: :DESC).limit(250).each do |sequoia_customer| %>
       <tr>
         <td><%= sequoia_customer.s_id %></td>
         <td><%= sequoia_customer.order_id %></td>
@@ -85,3 +101,11 @@
     <% end %>
   </tbody>
 </table>
+
+<script type="text/javascript">
+  $(".search_link").click(function() {
+    $(this).attr("href", function() {
+      return this.href + "?lname=" + $('.lname_field').val().toUpperCase();
+    });
+  });
+</script>

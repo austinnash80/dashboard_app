@@ -25,6 +25,13 @@
 
 
 <div class="m-5">
+  <div class="w300">
+    <%= text_field_tag "id", '', class: "lname_field form-control", value: params['lname'], placeholder: 'Search by Last Name or UID' %>
+    <br>
+    <%= link_to 'Search Purchase', empire_customers_path(), class: 'search_link btn btn-sm btn-primary gb-gradient w150 text-light' %>
+  </div>
+  <br><br>
+
 <table class="table table-striped">
   <caption class="caption-top">Total Records: <%= number_with_delimiter(EmpireCustomer.count) %> | Display Limit: 250</caption>
   <thead>
@@ -52,7 +59,17 @@
   </thead>
 
   <tbody>
-    <% @empire_customers.order(e_id: :DESC).limit(250).each do |empire_customer| %>
+    <% if params['lname'].present? %>
+      <% if params['lname'].match(/^(\d)+$/).present? %>
+        <% empire_customer = EmpireCustomer.where(uid: params['lname'].to_i).all %>
+      <% else %>
+        <% empire_customer = EmpireCustomer.where(lname: params['lname'].titlecase).all %>
+      <% end %>
+    <% else %>
+      <% empire_customer = EmpireCustomer.all %>
+    <% end %>
+
+    <% empire_customer.order(e_id: :DESC).limit(250).each do |empire_customer| %>
       <tr>
         <td><%= empire_customer.e_id %></td>
         <td><a target="_blank" href="https://www.empirelearning.com/admin/user-profile?u=<%= empire_customer.uid %>"><%= empire_customer.uid %></a></td>
@@ -80,3 +97,11 @@
   </tbody>
 </table>
 </div>
+
+<script type="text/javascript">
+  $(".search_link").click(function() {
+    $(this).attr("href", function() {
+      return this.href + "?lname=" + $('.lname_field').val().toUpperCase();
+    });
+  });
+</script>

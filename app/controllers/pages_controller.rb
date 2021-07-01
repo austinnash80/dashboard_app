@@ -1,6 +1,8 @@
 class PagesController < ApplicationController
   def home
-
+    if current_user.present? && current_user.admin? == false
+      redirect_to pages_customer_service_path()
+    end
   end
   def customer_matching_cpa
     @master_cpa_total = MasterCpa.count

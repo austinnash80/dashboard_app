@@ -2,8 +2,8 @@
 <h1 class="text-center">Empire Members</h1>
 <div class="text-center">
   <div class="btn-group" role="group">
-    <%= link_to 'Run Member Update', run_update_empire_members_path(), class: 'btn btn-primary bg-gradient ext-light mt-2 text-light' %>
-    <%= link_to 'Run Purchase Update', run_update_2_empire_members_path(), class: 'btn btn-primary bg-gradient text-light mt-2 text-light' %>
+    <%= link_to 'Run Member Update', run_update_empire_members_path(), class: 'btn btn-primary bg-gradient ext-light mt-2 text-light w250' %>
+    <%= link_to 'Run Purchase Update', run_update_2_empire_members_path(), class: 'btn btn-primary bg-gradient text-light mt-2 text-light w250' %>
   </div>
 </div>
 <p id="notice" class="text-center fw-bold"><%= notice %></p>
@@ -45,7 +45,7 @@
       <th>Last purchase</th>
       <th>State</th>
       <th>Purchases</th>
-      <th colspan="3"></th>
+      <th colspan="1"></th>
     </tr>
   </thead>
 
@@ -68,9 +68,9 @@
         <td><%= empire_member.last_purchase %></td>
         <td><%= empire_member.state %></td>
         <td><%= empire_member.purchases %></td>
-        <td><%= link_to 'Show', empire_member %></td>
-        <td><%= link_to 'Edit', edit_empire_member_path(empire_member) %></td>
-        <td><%= link_to 'Destroy', empire_member, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Info', empire_member, class: 'btn btn-sm btn-info bg-gradient text-dark w100' %></td>
+        <!-- <td><%= link_to 'Edit', edit_empire_member_path(empire_member) %></td> -->
+        <!-- <td><%= link_to 'Destroy', empire_member, method: :delete, data: { confirm: 'Are you sure?' } %></td> -->
       </tr>
     <% end %>
   </tbody>

@@ -16,7 +16,7 @@ class MasterCpa < ApplicationRecord
 
   # EXPORT
     def self.to_csv # Export to csv function
-      attributes = %w{lid list lic_st lic fname mi lname suf co add add2 city st zip}
+      attributes = %w{lid list lic_st lic fname mi lname suf co add add2 city st zip exp_s exp iss_s iss}
       CSV.generate(headers: true) do |csv|
         csv << attributes
           all.each do |i|

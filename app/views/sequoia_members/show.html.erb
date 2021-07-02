@@ -52,22 +52,22 @@
     <thead>
       <tr class="bg-secondary bg-gradient text-light">
         <th>LID</th>
+        <th>Lic Number</th>
         <th>List</th>
         <th>Lic St</th>
-        <th>Lic</th>
+        <th>EXP</th>
+        <th>ISS</th>
         <th>Search Date</th>
       </tr>
       </thead>
       <tbody>
         <tr>
-          <td><%= cpa_lid.lid %></td>
+          <td><%= link_to cpa_lid.lid, master_cpa_path(id: master_cpa.id) %></td>
+          <td><%= master_cpa.lic %></td>
           <td><%= cpa_lid.list %></td>
           <td><%= master_cpa.lic_st %></td>
-          <% if master_cpa.lic_st == 'CA' %>
-            <td><%= link_to "#{master_cpa.lic}", "https://search.dca.ca.gov/?BD=19&TP=DC&lic=#{master_cpa.lic}", target: '_blank' %></td>
-          <% else %>
-            <td><%= master_cpa.lic %></td>
-          <% end %>
+          <td><%= master_cpa.exp %></td>
+          <td><%= master_cpa.iss %></td>
           <td><%= cpa_lid.search_date %></td>
         </tr>
       </tbody>

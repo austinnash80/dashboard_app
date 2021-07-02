@@ -1,0 +1,119 @@
+<p id="notice"><%= notice %></p>
+
+<h1 class="text-center">Sequoia States</h1>
+<div class="text-center">
+  <div class="btn-group">
+    <%= link_to 'List Update', sequoia_states_path(list_quantity: 'run'), class: 'btn btn-sm btn-primary gb-gradient text-light w200' %>
+    <%= link_to 'Matched Update', sequoia_states_path(matched: 'run'), class: 'btn btn-sm btn-primary gb-gradient text-light w200' %>
+  </div>
+</div>
+
+<a class="btn btn-sm btn-light text-secondary bg-gradient border" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">Upload/Export</a>
+<div class="collapse" id="collapseExample">
+  <br>
+    <p class="fs-4">Upload New List</p>
+      <%= form_tag import_sequoia_states_path, multipart: true do %>
+      <%= file_field_tag :file, class: 'btn btn-sm btn-light' %>
+      <%= submit_tag 'Upload', class: 'btn btn-sm btn-primary text-light' %>
+    <% end %>
+
+    <% if params['remove_all'] == 'yes' %>
+      <p><%= link_to "Confirm Delete", sequoia_states_path(remove_all: 'yes', confirm: 'yes'), class: 'btn btn-sm btn-danger mt-4' %></p>
+    <% else %>
+      <p><%= link_to "Remove All Records", sequoia_states_path(remove_all: 'yes'), class: 'btn btn-sm btn-warning mt-4' %></p>
+    <% end %>
+
+    <p><%= link_to 'Export List (csv)', sequoia_states_path('csv'), class: 'btn btn-sm btn-secondary text-light mt-2 text-light' %></p>
+</div>
+
+<div class="w300 m-5"><input class="form-control" id="myInput" type="text" placeholder="Filter Table"></div>
+
+<div class="m-5">
+
+<table class="table table-striped">
+  <thead>
+    <tr class="bg-secondary bg-gradient text-light">
+      <th>State</th>
+      <th>St</th>
+      <th>List</th>
+      <th>List Quantity</th>
+      <th>Matched</th>
+      <th>Market Share</th>
+      <th>CE Cycle</th>
+      <th>Hours Per Cycle</th>
+      <th>CE Due</th>
+      <th>EXP Date</th>
+      <th>EXP Cycle</th>
+      <th>Self Study</th>
+      <th>Has Year Minimum</th>
+      <th>Year Minimum</th>
+      <th colspan="1"></th>
+    </tr>
+  </thead>
+
+  <tbody id="myTable">
+    <% @sequoia_states.where.not(state: 'EA').order(state: :asc).each do |sequoia_state| %>
+      <tr>
+        <td><%= sequoia_state.state %></td>
+        <td><%= sequoia_state.st %></td>
+        <td><%= sequoia_state.list %></td>
+        <td><%= sequoia_state.list_quantity.present? ? number_with_delimiter(sequoia_state.list_quantity) : '' %></td>
+        <td><%= sequoia_state.matched.present? ? number_with_delimiter(sequoia_state.matched) : '' %></td>
+        <td><%= sequoia_state.market_share.present? ? number_to_percentage(sequoia_state.market_share, precision: 2) : '' %></td>
+        <td><%= sequoia_state.ce_cycle %></td>
+        <td><%= sequoia_state.hours_per_cycle %></td>
+        <td><%= sequoia_state.ce_due %></td>
+        <td><%= sequoia_state.exp_date %></td>
+        <td><%= sequoia_state.exp_cycle %></td>
+        <td><%= sequoia_state.self_study %></td>
+        <td><%= sequoia_state.has_year_minimum %></td>
+        <td><%= sequoia_state.year_minimum %></td>
+        <!-- <td><%= link_to 'Show', sequoia_state %></td> -->
+        <td><%= link_to 'Edit', edit_sequoia_state_path(sequoia_state), class: 'btn btn-sm btn-secondary bg-gradient text-light w100' %></td>
+        <!-- <td><%= link_to 'Destroy', sequoia_state, method: :delete, data: { confirm: 'Are you sure?' } %></td> -->
+      </tr>
+    <% end %>
+      <tr class="fw-bold">
+        <td>CPA Totals</td>
+        <td colspan="2"></td>
+        <td><%= number_with_delimiter(SequoiaState.where.not(state: 'EA').sum(:list_quantity)) %></td>
+        <td><%= number_with_delimiter(SequoiaState.where.not(state: 'EA').sum(:matched)) %></td>
+        <td><%= number_to_percentage((SequoiaState.where.not(state: 'EA').sum(:matched).to_f / SequoiaState.where.not(state: 'EA').sum(:list_quantity).to_f) * 100, precision: 2) %></td>
+        <td colspan="9"></td>
+      </tr>
+      <% @sequoia_states.where(state: 'EA').order(state: :asc).each do |sequoia_state| %>
+      <tr>
+        <td><%= sequoia_state.state %></td>
+        <td><%= sequoia_state.st %></td>
+        <td><%= sequoia_state.list %></td>
+        <td><%= sequoia_state.list_quantity.present? ? number_with_delimiter(sequoia_state.list_quantity) : '' %></td>
+        <td><%= sequoia_state.matched.present? ? number_with_delimiter(sequoia_state.matched) : '' %></td>
+        <td><%= sequoia_state.market_share.present? ? number_to_percentage(sequoia_state.market_share, precision: 2) : '' %></td>
+        <td><%= sequoia_state.ce_cycle %></td>
+        <td><%= sequoia_state.hours_per_cycle %></td>
+        <td><%= sequoia_state.ce_due %></td>
+        <td><%= sequoia_state.exp_date %></td>
+        <td><%= sequoia_state.exp_cycle %></td>
+        <td><%= sequoia_state.self_study %></td>
+        <td><%= sequoia_state.has_year_minimum %></td>
+        <td><%= sequoia_state.year_minimum %></td>
+        <!-- <td><%= link_to 'Show', sequoia_state %></td> -->
+        <td><%= link_to 'Edit', edit_sequoia_state_path(sequoia_state), class: 'btn btn-sm btn-secondary bg-gradient text-light w100' %></td>
+        <!-- <td><%= link_to 'Destroy', sequoia_state, method: :delete, data: { confirm: 'Are you sure?' } %></td> -->
+      </tr>
+      <% end %>
+  </tbody>
+</table>
+
+<%#= link_to 'New Sequoia State', new_sequoia_state_path %>
+</div>
+<script type="text/javascript">
+  $(document).ready(function(){
+    $("#myInput").on("keyup", function() {
+      var value = $(this).val().toLowerCase();
+      $("#myTable tr").filter(function() {
+        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+      });
+    });
+  });
+</script>

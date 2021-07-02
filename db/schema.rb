@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_02_001611) do
+ActiveRecord::Schema.define(version: 2021_07_02_213805) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -457,6 +457,25 @@ ActiveRecord::Schema.define(version: 2021_07_02_001611) do
     t.datetime "updated_at", precision: 6, null: false
     t.boolean "full_price"
     t.boolean "renewal_price"
+  end
+
+  create_table "sequoia_states", force: :cascade do |t|
+    t.string "state"
+    t.string "st"
+    t.string "list"
+    t.integer "list_quantity"
+    t.integer "matched"
+    t.decimal "market_share"
+    t.string "ce_cycle"
+    t.integer "hours_per_cycle"
+    t.string "ce_due"
+    t.string "exp_date"
+    t.string "exp_cycle"
+    t.string "self_study"
+    t.boolean "has_year_minimum"
+    t.integer "year_minimum"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "users", force: :cascade do |t|

@@ -1,0 +1,26 @@
+
+<%= simple_form_for(@sequoia_state) do |f| %>
+  <%= f.error_notification %>
+  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+  <div class="form-inputs">
+    <%= f.input :state %>
+    <%= f.input :st %>
+    <%= f.input :list %>
+    <%= f.input :list_quantity %>
+    <%= f.input :matched %>
+    <%= f.input :market_share %>
+    <%= f.input :ce_cycle, label: 'CE Cycle', as: :select, collection: ['One Year', 'Two Year', 'Three Year'] %>
+    <%= f.input :hours_per_cycle, label: 'Hours Per Cycle' %>
+    <%= f.input :ce_due, label: 'CE Due', as: :select, collection: ['All Together', 'Split By Year', 'Individual/Monthly']%>
+    <%= f.input :exp_date, label: 'EXP Date', hint: 'ex: 6/30, 12/31' %>
+    <%= f.input :exp_cycle, label: 'EXP Cycle', as: :select, collection: ['Every Year','Odd Years', 'Even Years', 'Rolling', 'N/A']%>
+    <%= f.input :self_study, hint: 'Percent of hours that can be done through self-study CE' %>
+    <%= f.input :has_year_minimum %>
+    <%= f.input :year_minimum %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

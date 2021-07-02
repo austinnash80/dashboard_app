@@ -1,0 +1,33 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  state: MyString
+  st: MyString
+  list: MyString
+  list_quantity: 1
+  matched: 1
+  market_share: 9.99
+  ce_cycle: MyString
+  hours_per_cycle: 1
+  ce_due: MyString
+  exp_date: MyString
+  exp_cycle: MyString
+  self_study: MyString
+  has_year_minimum: false
+  year_minimum: 1
+
+two:
+  state: MyString
+  st: MyString
+  list: MyString
+  list_quantity: 1
+  matched: 1
+  market_share: 9.99
+  ce_cycle: MyString
+  hours_per_cycle: 1
+  ce_due: MyString
+  exp_date: MyString
+  exp_cycle: MyString
+  self_study: MyString
+  has_year_minimum: false
+  year_minimum: 1

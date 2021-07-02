@@ -1,0 +1,2 @@
+module SequoiaStatesHelper
+end

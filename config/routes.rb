@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :sequoia_states do collection {post :import} end
   resources :daily_sales_empires do collection {post :import}
     collection do
       get 'run_update'

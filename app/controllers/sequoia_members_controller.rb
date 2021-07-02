@@ -18,6 +18,7 @@ class SequoiaMembersController < ApplicationController
       format.html
       format.csv { send_data @sequoia_members.to_csv, filename: "Sequoia-Members-#{Date.today}.csv" }
     end
+
   end
 
   def run_update

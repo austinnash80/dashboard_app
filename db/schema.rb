@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_30_230150) do
+ActiveRecord::Schema.define(version: 2021_07_02_001611) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -249,6 +249,10 @@ ActiveRecord::Schema.define(version: 2021_06_30_230150) do
     t.string "zip"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "exp_s"
+    t.date "exp"
+    t.string "iss_s"
+    t.date "iss"
     t.index ["lid"], name: "index_master_cpas_on_lid", unique: true
   end
 

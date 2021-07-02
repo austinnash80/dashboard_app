@@ -82,6 +82,6 @@ class MasterCpasController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def master_cpa_params
-      params.require(:master_cpa).permit(:lid, :list, :lic_st, :lic, :fname, :mi, :lname, :suf, :co, :add, :add2, :city, :st, :zip)
+      params.require(:master_cpa).permit(:lid, :list, :lic_st, :lic, :fname, :mi, :lname, :suf, :co, :add, :add2, :city, :st, :zip, :exp_s, :exp, :iss_s, :iss)
     end
 end

@@ -1,6 +1,9 @@
-<h1>Editing Empire Customer</h1>
+<div class="w700 border border-secondary bg-light">
+  <div class="m-5">
+    <h2 class="text-center">Edit Empire Customer - <a target="_blank" href="https://www.empirelearning.com/admin/user-profile?u=<%= @empire_customer.uid %>"><%= @empire_customer.uid %></a></td></h2>
+    <%= render 'form', empire_customer: @empire_customer %>
 
-<%= render 'form', empire_customer: @empire_customer %>
-
-<%= link_to 'Show', @empire_customer %> |
-<%= link_to 'Back', empire_customers_path %>
+    <%= link_to 'Show', @empire_customer %> |
+    <%= link_to 'Back', empire_customers_path %>
+    </div>
+</div>

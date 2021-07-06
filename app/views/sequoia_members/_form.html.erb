@@ -6,10 +6,10 @@
   <div class="form-inputs">
     <%= f.input :uid %>
     <%= f.input :lname %>
-    <%= f.input :first_purchase %>
-    <%= f.input :last_purchase %>
-    <%= f.input :membership_exp %>
-    <%= f.input :discount_exp %>
+    <%= f.input :first_purchase, include_blank: true %>
+    <%= f.input :last_purchase, include_blank: true %>
+    <%= f.input :membership_exp, include_blank: true %>
+    <%= f.input :discount_exp, include_blank: true %>
     <%= f.input :cpa %>
     <%= f.input :cpa_memberships %>
     <%= f.input :ea %>

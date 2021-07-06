@@ -6,8 +6,8 @@
   <div class="form-inputs">
     <%= f.input :uid %>
     <%= f.input :lname %>
-    <%= f.input :first_purchase %>
-    <%= f.input :last_purchase %>
+    <%= f.input :first_purchase, include_blank: true %>
+    <%= f.input :last_purchase, include_blank: true %>
     <%= f.input :state %>
     <%= f.input :purchases %>
   </div>

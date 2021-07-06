@@ -1,6 +1,10 @@
-<h1>Editing Sequoia Customer</h1>
+<div class="w700 border border-secondary bg-light">
+  <div class="m-5">
+    <h2 class="text-center">Edit Sequoia Customer - <a target="_blank" class="link_style text-primary" href="https://www.sequoiacpe.com/admin/user-profile?u=<%= @sequoia_customer.uid %>"><%= @sequoia_customer.uid %></a></h2>
 
-<%= render 'form', sequoia_customer: @sequoia_customer %>
+    <%= render 'form', sequoia_customer: @sequoia_customer %>
 
-<%= link_to 'Show', @sequoia_customer %> |
-<%= link_to 'Back', sequoia_customers_path %>
+    <%= link_to 'Show', @sequoia_customer %> |
+    <%= link_to 'Back', sequoia_customers_path %>
+  </div>
+</div>

@@ -22,12 +22,13 @@ class DailySalesEmpiresController < ApplicationController
 
     empire_daily_sales_id = IdNumberStorage.pluck(:empire_daily_sales_id)[0]
 
-    DailySalesEmpire.where("day < ?", Date.today).where("id > ?", empire_daily_sales_id).order(id: :asc).each do |i|
+    DailySalesEmpire.where("id > ?", empire_daily_sales_id).order(id: :asc).each do |i|
       sales = EmpireCustomer.where(purchase: i.day).sum(:price)
       orders = EmpireCustomer.where(purchase: i.day).count(:price)
       DailySalesEmpire.where(id: i.id).update_all sales: sales, orders: orders
-
-      IdNumberStorage.update_all empire_daily_sales_id: i.id
+      unless i.sales == 0
+        IdNumberStorage.update_all empire_daily_sales_id: i.id
+      end
     end
 
     redirect_to daily_sales_empires_path(), notice: 'Update Complete'

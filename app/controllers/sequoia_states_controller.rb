@@ -38,7 +38,7 @@ class SequoiaStatesController < ApplicationController
       end
       matched_lid_ea = MasterEaMatch.pluck(:lid) ##EA
       SequoiaState.where(state: 'EA').all.each do |i|
-        matched_ea = MasterCpa.where(lid: matched_lid_ea).count
+        matched_ea = MasterEa.where(lid: matched_lid_ea).count
         SequoiaState.where(id: i.id).update_all matched: matched_ea
       end
       SequoiaState.all.each do |i| ##Both

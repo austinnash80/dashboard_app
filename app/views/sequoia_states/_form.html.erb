@@ -14,10 +14,11 @@
     <%= f.input :hours_per_cycle, label: 'Hours Per Cycle' %>
     <%= f.input :ce_due, label: 'CE Due', as: :select, collection: ['All Together', 'Split By Year', 'Individual/Monthly']%>
     <%= f.input :exp_date, label: 'EXP Date', hint: 'ex: 6/30, 12/31' %>
-    <%= f.input :exp_cycle, label: 'EXP Cycle', as: :select, collection: ['Every Year','Odd Years', 'Even Years', 'Rolling', 'N/A']%>
+    <%= f.input :exp_cycle, label: 'EXP Cycle', as: :select, collection: ['Every Year','Odd Years', 'Even Years', 'Every Third Year','Rolling', 'N/A']%>
     <%= f.input :self_study, hint: 'Percent of hours that can be done through self-study CE' %>
     <%= f.input :has_year_minimum %>
     <%= f.input :year_minimum %>
+    <%= f.input :note %>
   </div>
 
   <div class="form-actions">

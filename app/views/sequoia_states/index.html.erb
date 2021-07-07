@@ -42,11 +42,12 @@
       <th>CE Cycle</th>
       <th>Hours Per Cycle</th>
       <th>CE Due</th>
-      <th>EXP Date</th>
+      <th>CE Date Date</th>
       <th>EXP Cycle</th>
-      <th>Self Study</th>
+      <th>Self Study (%)</th>
       <th>Has Year Minimum</th>
       <th>Year Minimum</th>
+      <th>Notes</th>
       <th colspan="1"></th>
     </tr>
   </thead>
@@ -66,8 +67,9 @@
         <td><%= sequoia_state.exp_date %></td>
         <td><%= sequoia_state.exp_cycle %></td>
         <td><%= sequoia_state.self_study %></td>
-        <td><%= sequoia_state.has_year_minimum %></td>
+        <td><%= sequoia_state.has_year_minimum? ? 'YES' : '' %></td>
         <td><%= sequoia_state.year_minimum %></td>
+        <td><%= sequoia_state.note %></td>
         <!-- <td><%= link_to 'Show', sequoia_state %></td> -->
         <td><%= link_to 'Edit', edit_sequoia_state_path(sequoia_state), class: 'btn btn-sm btn-secondary bg-gradient text-light w100' %></td>
         <!-- <td><%= link_to 'Destroy', sequoia_state, method: :delete, data: { confirm: 'Are you sure?' } %></td> -->

@@ -1,4 +1,20 @@
 class SequoiaMatchingsController < ApplicationController
+  def info
+    @cpa_members = SequoiaMember.where(cpa: true).count
+    @cpa_matches_uid = MasterCpaMatch.pluck(:uid)
+    @cpa_double_uid = MasterCpaDoubleAccount.pluck(:uid)
+    @cpa_no_matches_uid = MasterCpaNoMatch.pluck(:uid)
+
+    @ea_members = SequoiaMember.where(ea: true).count
+    @ea_matches_uid = MasterEaMatch.pluck(:uid)
+    @ea_double_uid = MasterEaDoubleAccount.pluck(:uid)
+    @ea_no_matches_uid = MasterEaNoMatch.pluck(:uid)
+
+    @cpa_remaining = SequoiaMember.where(cpa: true).where.not(uid: @cpa_matches_uid).where.not(uid: @cpa_no_matches_uid).where.not(uid: @cpa_double_uid).count
+    @ea_remaining = SequoiaMember.where(ea: true).where.not(uid: @ea_matches_uid).where.not(uid: @ea_no_matches_uid).where.not(uid: @ea_double_uid).count
+
+  end
+
 
   def cpa_customer_matching
     @cpa_matches_uid = MasterCpaMatch.pluck(:uid)

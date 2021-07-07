@@ -81,6 +81,7 @@ Rails.application.routes.draw do
   get 'sequoia_matchings/ea_no_mail_search'
   get 'sequoia_matchings/cpa_customer_matching'
   get 'sequoia_matchings/ea_customer_matching'
+  get 'sequoia_matchings/info'
   get 'pages/admin_page'
   get 'pages/home'
   get 'pages/customer_service'

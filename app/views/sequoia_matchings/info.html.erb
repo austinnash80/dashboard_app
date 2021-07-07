@@ -1,0 +1,71 @@
+<h1 class="text-center">Customer Matching Info</h1>
+
+<div class="m-5">
+  <div class="row">
+    <div class="col-md-3">
+    </div>
+    <div class="col-md-3">
+      <table class="table table-striped">
+        <thead>
+          <tr class="bg-secondary bg-gradient text-light">
+            <th colspan="2" class="text-center">CPA</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="fw-bold">Members</td>
+            <td><%= number_with_delimiter(@cpa_members) %></td>
+          </tr>
+          <tr>
+            <td class="fw-bold">Match Found</td>
+            <td><%= number_with_delimiter(@cpa_matches_uid.count) %></td>
+          </tr>
+          <tr>
+            <td class="fw-bold">No Match Found</td>
+            <td><%= number_with_delimiter(@cpa_no_matches_uid.count) %></td>
+          </tr>
+          <tr>
+            <td class="fw-bold">Double Account Found</td>
+            <td><%= number_with_delimiter(@cpa_double_uid.count) %></td>
+          </tr>
+          <tr>
+            <td class="fw-bold">Remaining</td>
+            <td class="fw-bold"><%= number_with_delimiter(@cpa_remaining) %></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-md-3">
+      <table class="table table-striped">
+        <thead>
+          <tr class="bg-secondary bg-gradient text-light">
+            <th colspan="2" class="text-center">EA</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="fw-bold">Members</td>
+            <td><%= number_with_delimiter(@ea_members) %></td>
+          </tr>
+          <tr>
+            <td class="fw-bold">Match Found</td>
+            <td><%= number_with_delimiter(@ea_matches_uid.count) %></td>
+          </tr>
+          <tr>
+            <td class="fw-bold">No Match Found</td>
+            <td><%= number_with_delimiter(@ea_no_matches_uid.count) %></td>
+          </tr>
+          <tr>
+            <td class="fw-bold">Double Account Found</td>
+            <td><%= number_with_delimiter(@ea_double_uid.count) %></td>
+          </tr>
+          <tr>
+            <td class="fw-bold">Remaining</td>
+            <td class="fw-bold"><%= number_with_delimiter(@ea_remaining) %></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>

@@ -81,7 +81,7 @@
         <td><%= number_with_delimiter(SequoiaState.where.not(state: 'EA').sum(:list_quantity)) %></td>
         <td><%= number_with_delimiter(SequoiaState.where.not(state: 'EA').sum(:matched)) %></td>
         <td><%= number_to_percentage((SequoiaState.where.not(state: 'EA').sum(:matched).to_f / SequoiaState.where.not(state: 'EA').sum(:list_quantity).to_f) * 100, precision: 2) %></td>
-        <td colspan="9"></td>
+        <td colspan="10"></td>
       </tr>
       <% @sequoia_states.where(state: 'EA').order(state: :asc).each do |sequoia_state| %>
       <tr>
@@ -99,6 +99,7 @@
         <td><%= sequoia_state.self_study %></td>
         <td><%= sequoia_state.has_year_minimum %></td>
         <td><%= sequoia_state.year_minimum %></td>
+        <td><%= sequoia_state.note %></td>
         <!-- <td><%= link_to 'Show', sequoia_state %></td> -->
         <td><%= link_to 'Edit', edit_sequoia_state_path(sequoia_state), class: 'btn btn-sm btn-secondary bg-gradient text-light w100' %></td>
         <!-- <td><%= link_to 'Destroy', sequoia_state, method: :delete, data: { confirm: 'Are you sure?' } %></td> -->

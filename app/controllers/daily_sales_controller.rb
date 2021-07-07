@@ -159,6 +159,6 @@ class DailySalesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def daily_sale_params
-      params.require(:daily_sale).permit(:day, :year, :month, :day_of_week, :sales, :cpa_full_price, :cpa_renewal_price, :ea_full_price, :ea_renewal_price, :ethics, :afsp, :other)
+      params.require(:daily_sale).permit(:day, :year, :month, :day_of_week, :sales, :cpa_full_price, :cpa_renewal_price, :ea_full_price, :ea_renewal_price, :ethics, :afsp, :other, :renewal_price, :full_price)
     end
 end

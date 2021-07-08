@@ -33,7 +33,7 @@
   </thead>
 
   <tbody>
-    <% @sequoia_product_lists.each do |sequoia_product_list| %>
+    <% @sequoia_product_lists.order(product: :asc).each do |sequoia_product_list| %>
       <tr>
         <td><%= sequoia_product_list.product %></td>
         <td><%= sequoia_product_list.who %></td>

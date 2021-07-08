@@ -1,64 +1,35 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Day:</strong>
-  <%= @daily_sale.day %>
-</p>
+<h1 class="text-center">All Purchases</h1>
+<h3 class="text-center"><%= @daily_sale.day.strftime('%A, %B %e, %Y') %></h3>
+<div class="m-5">
+<table class="table table-striped">
+  <thead>
+    <tr class="bg-secondary bg-gradient text-light">
+      <th>Order ID</th>
+      <th>UID</th>
+      <th>Lic St</th>
+      <th>Price</th>
+      <th>Product 1</th>
+      <th>Product 2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% SequoiaCustomer.where(purchase: @daily_sale.day).order(price: :desc).all.each do |i| %>
+      <tr>
+        <td><a target="_blank" href="https://www.sequoiacpe.com/admin/store/orders/<%= i.order_id %>"><%= i.order_id %></a></td>
+        <td><a target="_blank" href="https://www.sequoiacpe.com/admin/user-profile?u=<%= i.uid %>"><%= i.uid %></a></td>
+        <td><%= i.lic_state %></td>
+        <td><%= i.price.present? ? number_to_currency(i.price / 100 ) : ''%></td>
+        <td><%= i.product_1 %></td>
+        <td><%= i.product_2 %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+</div>
 
-<p>
-  <strong>Year:</strong>
-  <%= @daily_sale.year %>
-</p>
 
-<p>
-  <strong>Month:</strong>
-  <%= @daily_sale.month %>
-</p>
-
-<p>
-  <strong>Day of week:</strong>
-  <%= @daily_sale.day_of_week %>
-</p>
-
-<p>
-  <strong>Sales:</strong>
-  <%= @daily_sale.sales %>
-</p>
-
-<p>
-  <strong>Cpa full price:</strong>
-  <%= @daily_sale.cpa_full_price %>
-</p>
-
-<p>
-  <strong>Cpa renewal price:</strong>
-  <%= @daily_sale.cpa_renewal_price %>
-</p>
-
-<p>
-  <strong>Ea full price:</strong>
-  <%= @daily_sale.ea_full_price %>
-</p>
-
-<p>
-  <strong>Ea renewal price:</strong>
-  <%= @daily_sale.ea_renewal_price %>
-</p>
-
-<p>
-  <strong>Ethics:</strong>
-  <%= @daily_sale.ethics %>
-</p>
-
-<p>
-  <strong>Afsp:</strong>
-  <%= @daily_sale.afsp %>
-</p>
-
-<p>
-  <strong>Other:</strong>
-  <%= @daily_sale.other %>
-</p>
 
 <%= link_to 'Edit', edit_daily_sale_path(@daily_sale) %> |
 <%= link_to 'Back', daily_sales_path %>

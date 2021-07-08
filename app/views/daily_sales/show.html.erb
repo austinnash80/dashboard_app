@@ -12,6 +12,8 @@
       <th>Price</th>
       <th>Product 1</th>
       <th>Product 2</th>
+      <th>Email</th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
@@ -23,6 +25,8 @@
         <td><%= i.price.present? ? number_to_currency(i.price / 100 ) : ''%></td>
         <td><%= i.product_1 %></td>
         <td><%= i.product_2 %></td>
+        <td><%= i.email %></td>
+        <td><%= link_to 'View/Edit', sequoia_customer_path(i.id)%></td>
       </tr>
     <% end %>
   </tbody>

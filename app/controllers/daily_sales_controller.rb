@@ -39,7 +39,9 @@ class DailySalesController < ApplicationController
         # date_range = (Date.parse('2014-09-04')..Date.parse('2015-12-31'))
         # date_range = (Date.parse('2014-05-30')..Date.parse('2014-09-03'))
 
-        DailySale.where("id > ?", daily_sales_id).order(id: :asc).each do |i|
+        today = Date.today.strftime("%Y-%m-%d")
+
+        DailySale.where("day < ?", today.to_date).where("id > ?", daily_sales_id).order(id: :asc).each do |i|
 
           price = SequoiaCustomer.where(purchase: i.day).sum(:price)
           if i.day.present?

@@ -22,7 +22,9 @@ class DailySalesEmpiresController < ApplicationController
 
     empire_daily_sales_id = IdNumberStorage.pluck(:empire_daily_sales_id)[0]
 
-    DailySalesEmpire.where("id > ?", empire_daily_sales_id).order(id: :asc).each do |i|
+    today = Date.today.strftime("%Y-%m-%d")
+
+    DailySalesEmpire.where("day < ?", today.to_date ).where("id > ?", empire_daily_sales_id).order(id: :asc).each do |i|
       sales = EmpireCustomer.where(purchase: i.day).sum(:price)
       orders = EmpireCustomer.where(purchase: i.day).count(:price)
       DailySalesEmpire.where(id: i.id).update_all sales: sales, orders: orders

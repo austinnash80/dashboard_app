@@ -24,10 +24,10 @@ class DailySalesController < ApplicationController
 
   def run_update
       if params['update'] == 'run'
-        cpa_new = SequoiaProductList.where(who: 'cpa').where(group: 'membership').where(full_price: true).pluck(:product)
-        cpa_renewal = SequoiaProductList.where(who: 'cpa').where(group: 'membership').where(renewal_price: true).pluck(:product)
-        ea_new = SequoiaProductList.where(who: 'ea').where(group: 'membership').where(full_price: true).pluck(:product)
-        ea_renewal = SequoiaProductList.where(who: 'ea').where(group: 'membership').where(renewal_price: true).pluck(:product)
+        cpa_new = SequoiaProductList.where(who: 'cpa').where(group: 'membership').where(new: true).pluck(:product)
+        cpa_renewal = SequoiaProductList.where(who: 'cpa').where(group: 'membership').where(reterning: true).pluck(:product)
+        ea_new = SequoiaProductList.where(who: 'ea').where(group: 'membership').where(new: true).pluck(:product)
+        ea_renewal = SequoiaProductList.where(who: 'ea').where(group: 'membership').where(reterning: true).pluck(:product)
         afsp = SequoiaProductList.where(who: 'afsp').pluck(:product)
         ethics = SequoiaProductList.where(group: 'ethics').pluck(:product)
         other = SequoiaProductList.where(group: 'upgrade').pluck(:product)

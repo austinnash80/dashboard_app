@@ -50,7 +50,7 @@ class SequoiaProductListsController < ApplicationController
   def update
     respond_to do |format|
       if @sequoia_product_list.update(sequoia_product_list_params)
-        format.html { redirect_to @sequoia_product_list, notice: "Sequoia product list was successfully updated." }
+        format.html { redirect_to sequoia_product_lists_path, notice: "Sequoia product list was successfully updated." }
         format.json { render :show, status: :ok, location: @sequoia_product_list }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -81,6 +81,6 @@ class SequoiaProductListsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def sequoia_product_list_params
-      params.require(:sequoia_product_list).permit(:product, :who, :group, :full_price, :renewal_price)
+      params.require(:sequoia_product_list).permit(:product, :who, :group, :full_price, :renewal_price, :new, :reterning)
     end
 end

@@ -1,34 +1,58 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Day:</strong>
-  <%= @daily_sales_empire.day %>
-</p>
+<p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Year:</strong>
-  <%= @daily_sales_empire.year %>
-</p>
-
-<p>
-  <strong>Month:</strong>
-  <%= @daily_sales_empire.month %>
-</p>
-
-<p>
-  <strong>Day of week:</strong>
-  <%= @daily_sales_empire.day_of_week %>
-</p>
-
-<p>
-  <strong>Sales:</strong>
-  <%= @daily_sales_empire.sales %>
-</p>
-
-<p>
-  <strong>Orders:</strong>
-  <%= @daily_sales_empire.orders %>
-</p>
+<h1 class="text-center">All Purchases</h1>
+<h3 class="text-center"><%= @daily_sales_empire.day.strftime('%A, %B %e, %Y') %></h3>
+<div class="m-5">
+  <div class="row">
+    <div class="col-lg-8">
+      <table class="table table-striped">
+        <thead>
+          <tr class="bg-secondary bg-gradient text-light">
+            <th>UID</th>
+            <th>Lic St</th>
+            <th>Price</th>
+            <th>Product</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% EmpireCustomer.where(purchase: @daily_sales_empire.day).order(lic_state: :asc).all.each do |i| %>
+            <tr>
+              <td><a target="_blank" href="https://www.empirelearning.com/user/<%= i.uid %>"><%= i.uid %></a></td>
+              <td><%= i.lic_state %></td>
+              <td><%= i.price.present? ? number_to_currency(i.price / 100 ) : ''%></td>
+              <td><%= i.product %></td>
+              <td><%= link_to 'View/Edit', empire_customer_path(i.id)%></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-lg-4">
+      <table class="table table-striped">
+        <thead>
+          <tr class="bg-secondary bg-gradient text-light">
+            <th>State</th>
+            <th>Purchases</th>
+            <th>Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% data =  EmpireCustomer.where(purchase: @daily_sales_empire.day).order(purchase: :asc).group_by{|u| u.lic_state} %>
+          <% data.each do |k,v| %>
+            <tr>
+              <td><%= k %></td>
+              <td><%= number_with_delimiter(v.pluck(:product).count) %></td>
+              <td><%= number_to_currency(v.pluck(:price).sum / 100, precision: 0) %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
 
 <%= link_to 'Edit', edit_daily_sales_empire_path(@daily_sales_empire) %> |
 <%= link_to 'Back', daily_sales_empires_path %>

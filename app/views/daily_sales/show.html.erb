@@ -3,34 +3,74 @@
 <h1 class="text-center">All Purchases</h1>
 <h3 class="text-center"><%= @daily_sale.day.strftime('%A, %B %e, %Y') %></h3>
 <div class="m-5">
-<table class="table table-striped">
-  <thead>
-    <tr class="bg-secondary bg-gradient text-light">
-      <th>Order ID</th>
-      <th>UID</th>
-      <th>Lic St</th>
-      <th>Price</th>
-      <th>Product 1</th>
-      <th>Product 2</th>
-      <th>Email</th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <% SequoiaCustomer.where(purchase: @daily_sale.day).order(price: :desc).all.each do |i| %>
-      <tr>
-        <td><a target="_blank" href="https://www.sequoiacpe.com/admin/store/orders/<%= i.order_id %>"><%= i.order_id %></a></td>
-        <td><a target="_blank" href="https://www.sequoiacpe.com/admin/user-profile?u=<%= i.uid %>"><%= i.uid %></a></td>
-        <td><%= i.lic_state %></td>
-        <td><%= i.price.present? ? number_to_currency(i.price / 100 ) : ''%></td>
-        <td><%= i.product_1 %></td>
-        <td><%= i.product_2 %></td>
-        <td><%= i.email %></td>
-        <td><%= link_to 'View/Edit', sequoia_customer_path(i.id)%></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+  <div class="row">
+    <div class="col-lg-8">
+      <table class="table table-striped">
+        <thead>
+          <tr class="bg-secondary bg-gradient text-light">
+            <th>Order ID</th>
+            <th>UID</th>
+            <th>Lic St</th>
+            <th>Price</th>
+            <th>Product 1</th>
+            <th>Product 2</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% SequoiaCustomer.where(purchase: @daily_sale.day).order(product_1: :desc).all.each do |i| %>
+            <tr>
+              <td><a target="_blank" href="https://www.sequoiacpe.com/admin/store/orders/<%= i.order_id %>"><%= i.order_id %></a></td>
+              <td><a target="_blank" href="https://www.sequoiacpe.com/admin/user-profile?u=<%= i.uid %>"><%= i.uid %></a></td>
+              <td><%= i.lic_state %></td>
+              <td><%= i.price.present? ? number_to_currency(i.price / 100, precision: 0 ) : ''%></td>
+              <td><%= i.product_1 %></td>
+              <td><%= i.product_2 == 'null' ? '' :  i.product_2 %></td>
+              <td><%= link_to 'View/Edit', sequoia_customer_path(i.id)%></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-lg-4">
+      <% cpa = SequoiaProductList.where(who: 'cpa').pluck(:product) %>
+      <% ea = SequoiaProductList.where(who: 'ea').pluck(:product) %>
+      <% cpa_data =  SequoiaCustomer.where(product_1: cpa).where(purchase: @daily_sale.day).order(purchase: :asc).group_by{|u| u.lic_state} %>
+      <% ea_data =  SequoiaCustomer.where(product_1: ea).where(purchase: @daily_sale.day).order(purchase: :asc).group_by{|u| u.price} %>
+      <table class="table table-striped">
+        <thead>
+          <tr class="bg-secondary bg-gradient text-light">
+            <th>State</th>
+            <th>Purchases</th>
+            <th>Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td colspan="3" class="fw-bold text-center">CPA</td>
+          </tr>
+          <% cpa_data.each do |k,v| %>
+          <tr>
+            <td><%= k %></td>
+            <td><%= number_with_delimiter(v.pluck(:product).count) %></td>
+            <td><%= number_to_currency(v.pluck(:price).sum / 100, precision: 0) %></td>
+          </tr>
+          <% end %>
+          <tr>
+            <td colspan="3" class="fw-bold text-center">EA</td>
+          </tr>
+          <% ea_data.each do |k, v| %>
+          <tr>
+            <td><%= number_to_currency(k / 100, precision: 0) %></td>
+            <td><%= number_with_delimiter(v.pluck(:product).count) %></td>
+            <td><%= number_to_currency(v.pluck(:price).sum / 100, precision: 0) %></td>
+          </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
 </div>
 
 

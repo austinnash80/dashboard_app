@@ -25,7 +25,7 @@ class IdNumberStoragesController < ApplicationController
 
     respond_to do |format|
       if @id_number_storage.save
-        format.html { redirect_to @id_number_storage, notice: "Id number storage was successfully created." }
+        format.html { redirect_to id_number_storages_path, notice: "Id number storage was successfully created." }
         format.json { render :show, status: :created, location: @id_number_storage }
       else
         format.html { render :new, status: :unprocessable_entity }

@@ -48,9 +48,9 @@
         <td><%= daily_sales_empire.day_of_week %></td>
         <td><%= number_to_currency(daily_sales_empire.sales/100, precision: 0) %></td>
         <td><%= daily_sales_empire.orders %></td>
-        <td><%= link_to 'Show', daily_sales_empire %></td>
-        <td><%= link_to 'Edit', edit_daily_sales_empire_path(daily_sales_empire) %></td>
-        <td><%= link_to 'Destroy', daily_sales_empire, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'View', daily_sales_empire, class: 'btn btn-sm btn-info bg-gradient w100 text-light' %></td>
+        <!-- <td><%= link_to 'Edit', edit_daily_sales_empire_path(daily_sales_empire) %></td> -->
+        <!-- <td><%= link_to 'Destroy', daily_sales_empire, method: :delete, data: { confirm: 'Are you sure?' } %></td> -->
       </tr>
     <% end %>
   </tbody>

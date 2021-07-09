@@ -80,10 +80,10 @@
         <th>Cpa memberships</th>
         <th>Ea</th>
         <th>EA Memberships</th>
-        <th>Afsp</th>
-        <th>Afsp purchases</th>
         <th>Ethics</th>
         <th>Ethics purchases</th>
+        <th>Afsp</th>
+        <th>Afsp purchases</th>
         <th>Other</th>
         <th colspan="1"></th>
       </tr>
@@ -108,16 +108,16 @@
           <td><%= sequoia_member.last_purchase %></td>
           <td><%= sequoia_member.membership_exp %></td>
           <td><%= sequoia_member.discount_exp %></td>
-          <td><%= sequoia_member.cpa %></td>
+          <% if sequoia_member.cpa? %><td class="text-success">true</td><% else %><td>false</td><% end %>
           <td><%= sequoia_member.cpa_memberships %></td>
-          <td><%= sequoia_member.ea %></td>
+          <% if sequoia_member.ea? %><td class="text-success">true</td><% else %><td>false</td><% end %>
           <td><%= sequoia_member.ea_memberships %></td>
-          <td><%= sequoia_member.afsp %></td>
-          <td><%= sequoia_member.afsp_purchases %></td>
-          <td><%= sequoia_member.ethics %></td>
+          <% if sequoia_member.ethics? %><td class="text-success">true</td><% else %><td>false</td><% end %>
           <td><%= sequoia_member.ethics_purchases %></td>
+          <% if sequoia_member.afsp? %><td class="text-success">true</td><% else %><td>false</td><% end %>
+          <td><%= sequoia_member.afsp_purchases %></td>
           <td><%= sequoia_member.other %></td>
-          <td><%= link_to 'Info', sequoia_member, class: 'btn btn-xs btn-info bg-gradient text-light' %></td>
+          <td><%= link_to 'Info', sequoia_member, class: 'btn btn-xs btn-info bg-gradient text-light w75' %></td>
         </tr>
       <% end %>
     </tbody>

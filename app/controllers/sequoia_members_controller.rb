@@ -27,7 +27,7 @@ class SequoiaMembersController < ApplicationController
     uid = SequoiaMember.pluck(:uid)
 
       SequoiaCustomer.where('order_id > ?', @order_id).where.not(uid: uid).order(id: :ASC).all.each do |i|
-        SequoiaMember.create(uid: i.uid, lname: i.lname, first_purchase: i.purchase, last_purchase: i.purchase, cpa_memberships: 0, ea_memberships: 0, ethics_purchases: 0, afsp_purchases: 0, other: 0).save
+        SequoiaMember.create(uid: i.uid, lname: i.lname, first_purchase: i.purchase, last_purchase: i.purchase, cpa: false, cpa_memberships: 0, ea: false, ea_memberships: 0, ethics: false, ethics_purchases: 0, afsp: false, afsp_purchases: 0, other: 0).save
       end
       redirect_to sequoia_members_path(), notice: 'Member Update Complete'
   end
@@ -66,6 +66,8 @@ class SequoiaMembersController < ApplicationController
           if ethics.include? i.product_2
             SequoiaMember.where(uid: i.uid).update_all ethics: true, ethics_purchases: (member.ethics_purchases + 1), last_purchase: i.purchase
           end
+
+
 
       # Updating EXP Date
         # If new purchase order is (membership only) happens when exp is still active then add 1.year to the exp. If membership purchase is after exp then 1.year from that purchase.

@@ -35,6 +35,8 @@ class EmpireMembersController < ApplicationController
         EmpireMember.where(uid: i.uid).update_all state: i.lic_state, last_purchase: i.purchase, purchases: (member.purchases + 1)
         IdNumberStorage.update_all empire_member_e_id: i.e_id
       end
+      EmpireCustomer.where(product_1: 'XX').update_all product_1: '9245 - A CPAs Guidebook to Ethical Behavior: A CPE Ethics Course for Texas CPAs'
+      EmpireCustomer.where(product_2: 'XX').update_all product_2: '9245 - A CPAs Guidebook to Ethical Behavior: A CPE Ethics Course for Texas CPAs'
       redirect_to empire_members_path(), notice: 'Purchase Update Complete'
   end
 

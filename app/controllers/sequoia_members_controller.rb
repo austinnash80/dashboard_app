@@ -93,7 +93,12 @@ class SequoiaMembersController < ApplicationController
 
           IdNumberStorage.update_all sequoia_members_order_id: i.order_id
         end
+
+        ## FIX TEXAS ETHICS ISSUE -
+        SequoiaMember.where(product_1: 'XX').update_all product_1: '9245 - A CPAs Guidebook to Ethical Behavior: A CPE Ethics Course for Texas CPAs'
+        SequoiaMember.where(product_2: 'XX').update_all product_2: '9245 - A CPAs Guidebook to Ethical Behavior: A CPE Ethics Course for Texas CPAs'
       end
+
       redirect_to sequoia_members_path(), notice: 'EXP/Purchase Update Complete'
     end
 

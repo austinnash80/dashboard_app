@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_08_162606) do
+ActiveRecord::Schema.define(version: 2021_07_13_031238) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -447,6 +447,20 @@ ActiveRecord::Schema.define(version: 2021_07_08_162606) do
     t.date "membership_exp"
     t.date "discount_exp"
     t.index ["uid"], name: "index_sequoia_members_on_uid", unique: true
+  end
+
+  create_table "sequoia_ncoas", force: :cascade do |t|
+    t.integer "uid"
+    t.string "ncoa_list"
+    t.string "stree_1"
+    t.string "street_2"
+    t.string "city"
+    t.string "state"
+    t.string "zip"
+    t.boolean "good"
+    t.boolean "bad"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "sequoia_product_lists", force: :cascade do |t|

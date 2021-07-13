@@ -1,0 +1,23 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  uid: 1
+  ncoa_list: MyString
+  stree_1: MyString
+  street_2: MyString
+  city: MyString
+  state: MyString
+  zip: MyString
+  good: false
+  bad: false
+
+two:
+  uid: 1
+  ncoa_list: MyString
+  stree_1: MyString
+  street_2: MyString
+  city: MyString
+  state: MyString
+  zip: MyString
+  good: false
+  bad: false

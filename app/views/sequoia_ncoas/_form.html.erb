@@ -1,0 +1,21 @@
+
+<%= simple_form_for(@sequoia_ncoa) do |f| %>
+  <%= f.error_notification %>
+  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+  <div class="form-inputs">
+    <%= f.input :uid %>
+    <%= f.input :ncoa_list %>
+    <%= f.input :stree_1 %>
+    <%= f.input :street_2 %>
+    <%= f.input :city %>
+    <%= f.input :state %>
+    <%= f.input :zip %>
+    <%= f.input :good %>
+    <%= f.input :bad %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

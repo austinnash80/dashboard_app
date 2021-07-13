@@ -22,3 +22,5 @@ restart = ['1-Year CPA Membership Discounted Re-Activation', '1-Year CPA Members
       SequoiaMember.where(uid: i.uid).update_all discount_exp: i.membership_exp + 14.days
     end
   end
+
+  rvm use ruby 2.7.1

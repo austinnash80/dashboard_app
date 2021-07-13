@@ -23,4 +23,14 @@ class SequoiaCustomer < ApplicationRecord
           end
       end
     end
+    
+    def self.ncoa_to_csv # Export to csv function
+      attributes = %w{uid fname lname street_1 street_2 city state zip}
+      CSV.generate(headers: true) do |csv|
+        csv << attributes
+          all.each do |i|
+            csv << attributes.map{ |attr| i.send(attr) }
+          end
+      end
+    end
 end

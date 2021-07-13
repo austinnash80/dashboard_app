@@ -57,6 +57,18 @@ class SequoiaCustomersController < ApplicationController
     end
   end
 
+  def ncoa_download
+
+    ids = SequoiaCustomer.group('uid').pluck('MAX(id)')
+    @sequoia_customers_ncoa = SequoiaCustomer.where(id: ids).all
+
+    respond_to do |format|
+      format.html
+      format.csv { send_data @sequoia_customers_ncoa.ncoa_to_csv, filename: "Sequoia-Customers-NCOA-#{Date.today}.csv" }
+    end
+
+  end
+
   # GET /sequoia_customers/1 or /sequoia_customers/1.json
   def show
   end

@@ -1,49 +1,51 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Uid:</strong>
-  <%= @sequoia_ncoa.uid %>
-</p>
+<div class="m-5">
 
-<p>
-  <strong>Ncoa list:</strong>
-  <%= @sequoia_ncoa.ncoa_list %>
-</p>
-
-<p>
-  <strong>Stree 1:</strong>
-  <%= @sequoia_ncoa.stree_1 %>
-</p>
-
-<p>
-  <strong>Street 2:</strong>
-  <%= @sequoia_ncoa.street_2 %>
-</p>
-
-<p>
-  <strong>City:</strong>
-  <%= @sequoia_ncoa.city %>
-</p>
-
-<p>
-  <strong>State:</strong>
-  <%= @sequoia_ncoa.state %>
-</p>
-
-<p>
-  <strong>Zip:</strong>
-  <%= @sequoia_ncoa.zip %>
-</p>
-
-<p>
-  <strong>Good:</strong>
-  <%= @sequoia_ncoa.good %>
-</p>
-
-<p>
-  <strong>Bad:</strong>
-  <%= @sequoia_ncoa.bad %>
-</p>
-
+  <h1 class="text-center">UID: <%= @sequoia_ncoa.uid %></h1>
+  <h4 class="text-center">Address Change: <% if @sequoia_ncoa.new? %> <span class="fw-bold text-success">YES</span><% else %> NO <% end %> | Bad Address: <% if @sequoia_ncoa.bad? %> <span class="fw-bold text-danger">YES</span><% else %> NO <% end %></h4>
+  <h4 class="text-center">NCOA List: <%= @sequoia_ncoa.ncoa_list %></h4>
+<br> <br>
+<table class="table table-striped ">
+  <thead>
+    <tr class="bg-secondary bg-gradient text-light">
+      <th></th>
+      <th>Fname</th>
+      <th>Lname</th>
+      <th>Street 1</th>
+      <th>Street 2</th>
+      <th>City</th>
+      <th>State</th>
+      <th>Zip</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="fw-bold">Current</td>
+      <td><%= @sequoia_ncoa.fname %></td>
+      <td><%= @sequoia_ncoa.lname %></td>
+      <td><%= @sequoia_ncoa.street_1 %></td>
+      <td><%= @sequoia_ncoa.street_2 %></td>
+      <td><%= @sequoia_ncoa.city %></td>
+      <td><%= @sequoia_ncoa.state %></td>
+      <td><%= @sequoia_ncoa.zip %></td>
+    </tr>
+    <% if @sequoia_ncoa.new? %>
+      <% sequoia_customer = SequoiaCustomer.order(purchase: :DESC).find_by(uid: @sequoia_ncoa.uid) %>
+      <tr>
+        <td class="fw-bold">Original</td>
+        <td><%= sequoia_customer.fname %></td>
+        <td><%= sequoia_customer.lname %></td>
+        <td><%= sequoia_customer.street_1 %></td>
+        <td><%= sequoia_customer.street_2 %></td>
+        <td><%= sequoia_customer.city %></td>
+        <td><%= sequoia_customer.state %></td>
+        <td><%= sequoia_customer.zip %></td>
+      </tr>
+      <% end %>
+  </tbody>
+</table>
+<br><br>
 <%= link_to 'Edit', edit_sequoia_ncoa_path(@sequoia_ncoa) %> |
 <%= link_to 'Back', sequoia_ncoas_path %>
+</div>

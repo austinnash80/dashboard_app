@@ -1,6 +1,6 @@
 <p id="notice"><%= notice %></p>
 
-<h1 class="text-center">Sequoia NCOA List</h1>
+<h1 class="text-center">Sequoia NCOA List (mailable)</h1>
 <div class="text-center">
   <%= link_to 'New List', ncoa_download_sequoia_customers_path(), class: 'btn btn-primary gb-gradient text-light w150' %>
 
@@ -33,36 +33,56 @@
   <br><br>
 
 <table class="table table-striped">
+  <caption class="caption-top">Total Records: <%= number_with_delimiter(SequoiaNcoa.count) %> | Display Limit: 500</caption>
   <thead>
     <tr class="bg-secondary bg-gradient text-light">
       <th>Uid</th>
       <th>Ncoa list</th>
-      <th>Stree 1</th>
+      <th>Fname</th>
+      <th>Lname</th>
+      <th>Street 1</th>
       <th>Street 2</th>
       <th>City</th>
       <th>State</th>
       <th>Zip</th>
-      <th>Good</th>
+      <th>New</th>
       <th>Bad</th>
-      <th colspan="3"></th>
+      <th colspan="1"></th>
     </tr>
   </thead>
 
   <tbody>
-    <% @sequoia_ncoas.each do |sequoia_ncoa| %>
+    <% if params['lname'].present? %>
+      <% if params['lname'].match(/^(\d)+$/).present? %>
+        <% sequoia_ncoas = SequoiaNcoa.where(uid: params['lname'].to_i).all %>
+      <% end %>
+    <% else %>
+      <% sequoia_ncoas = SequoiaNcoa.all %>
+    <% end %>
+    <% sequoia_ncoas.limit(500).each do |sequoia_ncoa| %>
       <tr>
         <td><%= sequoia_ncoa.uid %></td>
         <td><%= sequoia_ncoa.ncoa_list %></td>
-        <td><%= sequoia_ncoa.stree_1 %></td>
+        <td><%= sequoia_ncoa.fname %></td>
+        <td><%= sequoia_ncoa.lname %></td>
+        <td><%= sequoia_ncoa.street_1 %></td>
         <td><%= sequoia_ncoa.street_2 %></td>
         <td><%= sequoia_ncoa.city %></td>
         <td><%= sequoia_ncoa.state %></td>
         <td><%= sequoia_ncoa.zip %></td>
-        <td><%= sequoia_ncoa.good %></td>
-        <td><%= sequoia_ncoa.bad %></td>
+        <% if sequoia_ncoa.new? %>
+          <td class="fw-bold text-success">YES</td>
+        <% else %>
+          <td class="">NO</td>
+        <% end %>
+        <% if sequoia_ncoa.bad? %>
+          <td class="fw-bold text-danger">YES</td>
+        <% else %>
+          <td class="">NO</td>
+        <% end %>
         <td><%= link_to 'Show', sequoia_ncoa %></td>
-        <td><%= link_to 'Edit', edit_sequoia_ncoa_path(sequoia_ncoa) %></td>
-        <td><%= link_to 'Destroy', sequoia_ncoa, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <!-- <td><%= link_to 'Edit', edit_sequoia_ncoa_path(sequoia_ncoa) %></td> -->
+        <!-- <td><%= link_to 'Destroy', sequoia_ncoa, method: :delete, data: { confirm: 'Are you sure?' } %></td> -->
       </tr>
     <% end %>
   </tbody>

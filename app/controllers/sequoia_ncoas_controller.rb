@@ -81,6 +81,6 @@ class SequoiaNcoasController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def sequoia_ncoa_params
-      params.require(:sequoia_ncoa).permit(:uid, :ncoa_list, :stree_1, :street_2, :city, :state, :zip, :good, :bad)
+      params.require(:sequoia_ncoa).permit(:uid, :ncoa_list, :fname, :lname, :street_1, :street_2, :city, :state, :zip, :new, :bad)
     end
 end

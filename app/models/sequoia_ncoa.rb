@@ -15,7 +15,7 @@ class SequoiaNcoa < ApplicationRecord
 
   # EXPORT
     def self.to_csv # Export to csv function
-      attributes = %w{uid street_1 street_2 city state zip good bad}
+      attributes = %w{uid fname lname street_1 street_2 city state zip new bad}
       CSV.generate(headers: true) do |csv|
         csv << attributes
           all.each do |i|

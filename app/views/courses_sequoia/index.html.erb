@@ -41,7 +41,7 @@
   <div class="w300 mb-3 mt-4"><input class="form-control" id="myInput" type="text" placeholder="Filter Table"></div>
 
 <table class="table table-striped">
-  <caption class="caption-top">Total Records: <%= number_with_delimiter(CoursesSequoium.count) %> | Default Display Active Only</caption>
+  <caption class="caption-top">Total Records: <%= number_with_delimiter(CoursesSequoium.count) %> | Active: <%= number_with_delimiter(CoursesSequoium.where(active: true).all.count) %> | Displaying Active Only</caption>
   <thead>
     <tr class="bg-secondary bg-gradient text-light">
       <th>Number</th>

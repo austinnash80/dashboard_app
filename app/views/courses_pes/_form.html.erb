@@ -22,11 +22,22 @@
     <br>
     <%= f.input :sub_category, label: 'Sub Category', as: :select, collection: ['Personnel/Human Resources', 'Personal Development', 'Management Services', 'Finance', 'Computer Software & Applications', 'Communications and Marketing', 'Business Management & Organization', 'Business Law'], hint: 'Only Business courses will have a Sub Category' %>
     <br>
-    <%= f.input :pub_date, label: 'Pub Date' %>
+    <%= f.input :pub_date, label: 'Pub Date', include_blank: true %>
     <br>
     <%= f.input :version_update, label: 'Course Update' %>
     <%= f.input :new, label: 'New Course' %>
     <br>
+    <a class="btn btn-sm btn-light text-secondary bg-gradient border" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">PES Number Change</a>
+    <div class="collapse" id="collapseExample">
+      <br>
+      <div class="row">
+        <div class="col-lg-4">
+          <%= f.input :pes_number_change, label: false, placeholder: 'old PES number' %>
+        </div>
+      </div>
+      <p class="text-secondary m-2">An update where PES changed their course number but Sequoia will keep our same course number. (Still check the 'Course Update' box)</p>
+    </div>
+    <br><br>
     <%= f.input :notes %>
   </div>
 <br>

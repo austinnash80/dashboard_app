@@ -66,7 +66,7 @@ class CoursesSequoiaController < ApplicationController
   def update
     respond_to do |format|
       if @courses_sequoium.update(courses_sequoium_params)
-        format.html { redirect_to courses_sequoia, notice: "Courses sequoium was successfully updated." }
+        format.html { redirect_to courses_sequoia_path(), notice: "Courses sequoium was successfully updated." }
         format.json { render :show, status: :ok, location: @courses_sequoium }
       else
         format.html { render :edit, status: :unprocessable_entity }

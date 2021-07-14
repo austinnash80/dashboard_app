@@ -39,6 +39,12 @@ class CoursesPesController < ApplicationController
         # Create new entry in 'CoursesSequoia' -> ready for new update to be completed
         sequoia_course = CoursesSequoium.find_by(pes_number: @courses_pe.number)
         sequoia_course_version = CoursesSequoium.where(pes_number: @courses_pe.number).pluck(:version).sort
+
+        if @courses_pe.pes_number_change.present? #IF PES CHANGED THEIR COURSE NUMBER AND SEQUOIA DID NOT - USE 'PES_NUMBER_CHANGE' FOR THIS PART
+          sequoia_course = CoursesSequoium.find_by(pes_number: @courses_pe.pes_number_change)
+          sequoia_course_version = CoursesSequoium.where(pes_number: @courses_pe.pes_number_change).pluck(:version).sort
+        end
+        
         if sequoia_course.present? && @courses_pe.version_update? == true
           CoursesSequoium.create(
             version_update: true,
@@ -101,6 +107,6 @@ class CoursesPesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def courses_pe_params
-      params.require(:courses_pe).permit(:number, :version, :title, :category, :sub_category, :hours, :pub_date, :version_update, :new, :notes)
+      params.require(:courses_pe).permit(:number, :version, :title, :category, :sub_category, :hours, :pub_date, :version_update, :new, :pes_number_change, :notes)
     end
 end

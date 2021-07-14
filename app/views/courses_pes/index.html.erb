@@ -45,6 +45,7 @@
     <tr class="bg-secondary bg-gradient text-light">
       <th>Number</th>
       <th>Version</th>
+      <th>Title</th>
       <th>Category</th>
       <th>Sub category</th>
       <th>Hours</th>
@@ -52,7 +53,7 @@
       <th>Update</th>
       <th>New</th>
       <th>Notes</th>
-      <th colspan="3"></th>
+      <th colspan="2"></th>
     </tr>
   </thead>
 
@@ -66,17 +67,17 @@
       <tr>
         <td><%= courses_pe.number %></td>
         <td><%= courses_pe.version %></td>
-        <!-- <td><%= courses_pe.title %></td> -->
+        <td><%= courses_pe.title %></td>
         <td><%= courses_pe.category %></td>
         <td><%= courses_pe.sub_category %></td>
         <td><%= courses_pe.hours %></td>
         <td><%= courses_pe.pub_date %></td>
         <td><%= courses_pe.version_update %></td>
         <td><%= courses_pe.new %></td>
-        <td><%= courses_pe.notes %></td>
-        <td><%= link_to 'Show', courses_pe %></td>
+        <td><%= courses_pe.pes_number_change? ? "Pes number change from: #{courses_pe.pes_number_change}" : '' %><%= courses_pe.notes %></td>
+        <!-- <td><%= link_to 'Show', courses_pe %></td> -->
         <td><%= link_to 'Edit', edit_courses_pe_path(courses_pe) %></td>
-        <td><%= link_to 'Destroy', courses_pe, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Delete', courses_pe, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>

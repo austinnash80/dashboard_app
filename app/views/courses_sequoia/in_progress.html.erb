@@ -1,0 +1,74 @@
+<p id="notice"><%= notice %></p>
+
+<h1 class="text-center">Sequoia Courses In Progress</h1>
+<div class="text-center m-3">
+  <%= link_to "View Sequoia Courses (Active)", courses_sequoia_path(), class: 'btn btn-primary text-light bg-gradient' %>
+</div>
+
+<div class="m-5">
+
+<div class="w300 mb-3 mt-4"><input class="form-control" id="myInput" type="text" placeholder="Filter Table"></div>
+
+<table class="table table-striped">
+  <thead>
+    <tr class="bg-secondary bg-gradient text-light">
+      <th>Type</th>
+      <th>Number</th>
+      <th>Version</th>
+      <th>Title</th>
+      <th>Category</th>
+      <th>Sub category</th>
+      <th>Hours</th>
+      <th>Pub date</th>
+      <th>Pes number</th>
+      <th>Pes version</th>
+      <th>Text Complete</th>
+      <th>Exam Complete</th>
+      <th>Active Listed</th>
+      <th>Notes</th>
+      <th colspan="1"></th>
+    </tr>
+  </thead>
+
+  <tbody id="myTable">
+    <% CoursesSequoium.where(update_sheet: true).order(created_at: :ASC).each do |courses_sequoium| %>
+      <tr>
+        <td class=""><%= courses_sequoium.version_update? ? 'Update' : courses_sequoium.new? ? 'New' : '' %></td>
+        <td class="fw-bold"><%= link_to courses_sequoium.number, courses_sequoium, class: 'text-dark' %></td>
+        <td><%= courses_sequoium.version %></td>
+        <td><%= courses_sequoium.title %></td>
+        <td><%= courses_sequoium.category %></td>
+        <td><%= courses_sequoium.sub_category %></td>
+        <td><%= courses_sequoium.hours %></td>
+        <td><%= courses_sequoium.pub_date %></td>
+        <td><%= courses_sequoium.pes_number %></td>
+        <td><%= courses_sequoium.pes_version %></td>
+        <% if courses_sequoium.text? %>
+          <td><i class="fas fa-check-circle text-success fa-2x"></td>
+        <% else %>
+          <td><%= link_to 'NO', in_progress_courses_sequoia_path(course_id: courses_sequoium.id, update: 'text'), class: 'btn btn-danger btn-sm bg-gradient w50 text-light' %></td>
+        <% end %>
+        <% if courses_sequoium.exam? %>
+          <td><i class="fas fa-check-circle text-success fa-2x"></td>
+        <% else %>
+          <td><%= link_to 'NO', in_progress_courses_sequoia_path(course_id: courses_sequoium.id, update: 'exam'), class: 'btn btn-danger btn-sm bg-gradient w50 text-light' %></td>
+        <% end %>
+        <% if courses_sequoium.active? %>
+          <td><i class="fas fa-check-circle text-success fa-2x"></td>
+        <% else %>
+          <td><%= link_to 'NO', in_progress_courses_sequoia_path(course_id: courses_sequoium.id, update: 'active'), class: 'btn btn-danger btn-sm bg-gradient w50 text-light' %></td>
+        <% end %>
+        <% if courses_sequoium.active? &&  courses_sequoium.exam? && courses_sequoium.text? %>
+          <td><%= link_to 'Remove', in_progress_courses_sequoia_path(course_id: courses_sequoium.id, update: 'update_sheet'), class: 'btn btn-sm btn-secondary text-light w100' %></td>
+        <% else %>
+          <td></td>
+        <% end %>
+        <td><%= courses_sequoium.notes %></td>
+        <!-- <td><%= link_to 'Edit', edit_courses_sequoium_path(courses_sequoium) %></td> -->
+        <!-- <td><%= link_to 'Destroy', courses_sequoium, method: :delete, data: { confirm: 'Are you sure?' } %></td> -->
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+</div>

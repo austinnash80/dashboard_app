@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_13_060354) do
+ActiveRecord::Schema.define(version: 2021_07_14_052416) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,6 +24,42 @@ ActiveRecord::Schema.define(version: 2021_07_13_060354) do
     t.text "notes"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "courses_pes", force: :cascade do |t|
+    t.integer "number"
+    t.string "version"
+    t.string "title"
+    t.string "category"
+    t.string "sub_category"
+    t.integer "hours"
+    t.date "pub_date"
+    t.boolean "version_update"
+    t.boolean "new"
+    t.text "notes"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "courses_sequoia", force: :cascade do |t|
+    t.integer "number"
+    t.string "version"
+    t.string "title"
+    t.string "category"
+    t.string "sub_category"
+    t.integer "hours"
+    t.date "pub_date"
+    t.integer "pes_number"
+    t.string "pes_version"
+    t.boolean "text"
+    t.boolean "exam"
+    t.boolean "active"
+    t.text "notes"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.boolean "update_sheet"
+    t.boolean "version_update"
+    t.boolean "new"
   end
 
   create_table "daily_sales", force: :cascade do |t|

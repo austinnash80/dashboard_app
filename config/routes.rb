@@ -1,4 +1,10 @@
 Rails.application.routes.draw do
+  resources :courses_pes do collection {post :import} end
+  resources :courses_sequoia do collection {post :import}
+    collection do
+      get 'in_progress'
+    end
+  end
   resources :sequoia_ncoas do collection {post :import} end
   resources :sequoia_states do collection {post :import} end
   resources :daily_sales_empires do collection {post :import}

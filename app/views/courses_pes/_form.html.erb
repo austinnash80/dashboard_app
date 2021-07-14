@@ -1,0 +1,36 @@
+
+<%= simple_form_for(@courses_pe) do |f| %>
+  <%= f.error_notification %>
+  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+  <div class="form-inputs">
+    <div class="row">
+      <div class="col-lg-4">
+        <%= f.input :number %>
+      </div>
+      <div class="col-lg-4">
+        <%= f.input :version %>
+      </div>
+      <div class="col-lg-4">
+        <%= f.input :hours %>
+      </div>
+    </div>
+    <br>
+    <%= f.input :title %>
+    <br>
+    <%= f.input :category, as: :select, collection: ['Accounting', 'Auditing', 'Tax', 'Business', 'Ethics'] %>
+    <br>
+    <%= f.input :sub_category, label: 'Sub Category', as: :select, collection: ['Personnel/Human Resources', 'Personal Development', 'Management Services', 'Finance', 'Computer Software & Applications', 'Communications and Marketing', 'Business Management & Organization', 'Business Law'], hint: 'Only Business courses will have a Sub Category' %>
+    <br>
+    <%= f.input :pub_date, label: 'Pub Date' %>
+    <br>
+    <%= f.input :version_update, label: 'Course Update' %>
+    <%= f.input :new, label: 'New Course' %>
+    <br>
+    <%= f.input :notes %>
+  </div>
+<br>
+  <div class="form-actions">
+    <%= f.button :submit, 'Submit', class: 'btn btn-primary text-light bg-gradient w100' %>
+  </div>
+<% end %>

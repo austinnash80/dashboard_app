@@ -65,9 +65,9 @@
     <% if params['course_number'].present? %>
       <% courses_sequoia = CoursesSequoium.where(number: params['course_number'].to_i).all %>
     <% else %>
-      <% courses_sequoia = CoursesSequoium.all %>
+      <% courses_sequoia = CoursesSequoium.where(active: true).all %>
     <% end %>
-    <% courses_sequoia.where(active: true).order(number: :ASC).order(version: :DESC).each do |courses_sequoium| %>
+    <% courses_sequoia.order(number: :ASC).order(version: :DESC).each do |courses_sequoium| %>
       <tr>
         <td><%= courses_sequoium.number %></td>
         <td><%= courses_sequoium.version %></td>

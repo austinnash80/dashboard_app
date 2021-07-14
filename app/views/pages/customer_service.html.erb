@@ -80,4 +80,19 @@
       </div>
     </div>
   </div><!-- END column -->
+  <div class="col-lg-4">
+    <div class="m-5">
+      <div class="card w500 bg-light bg-gradient">
+        <div class="card-body">
+          <h5 class="card-title fw-bold">Courses</h5>
+          <p class="card-text">Course tables - for course updates and new courses</p>
+          <div class="btn-group" role="group" aria-label="">
+            <%= link_to 'PES', courses_pes_path(), class: 'btn btn-sm btn-secondary text-light bg-gradient w100' %>
+            <%= link_to 'Sequoia', courses_sequoia_path(), class: 'btn btn-sm btn-secondary text-light bg-gradient w100' %>
+            <%= link_to 'In Progress', in_progress_courses_sequoia_path(), class: 'btn btn-sm btn-secondary text-light bg-gradient w150' %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

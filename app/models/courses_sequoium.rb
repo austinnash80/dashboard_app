@@ -13,7 +13,7 @@ class CoursesSequoium < ApplicationRecord
 
   # EXPORT
     def self.to_csv # Export to csv function
-      attributes = %w{number version title category sub_category hours pub_date pes_version text exam active notes}
+      attributes = %w{number version title category sub_category hours pub_date pes_number pes_version text exam active notes}
       CSV.generate(headers: true) do |csv|
         csv << attributes
           all.each do |i|

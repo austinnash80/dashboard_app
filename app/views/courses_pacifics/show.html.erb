@@ -22,7 +22,8 @@
         <th style="width: 10%">Pub Date</th>
         <th style="width: 5%">Active</th>
         <th style="width: 10%"></th>
-        <th style="width: 15%">Notes</th>
+        <th style="width: 10%">Notes</th>
+        <th style="width: 5%"></th>
       </tr>
     </thead>
     <tbody>
@@ -39,6 +40,7 @@
         <% end %>
         <td></td>
         <td><%= sequoia.notes %></td>
+        <td></td>
       </tr>
       <% end %>
     </tbody>
@@ -47,7 +49,7 @@
   <br>
 
   <table class="table table-striped">
-    <caption class="caption-top fw-bold"> Pacific Courses</caption>
+    <caption class="caption-top fw-bold">Pacific Courses</caption>
     <thead>
       <tr class="bg-secondary bg-gradient text-light">
         <th style="width: 5%">Course</th>
@@ -58,7 +60,8 @@
         <th style="width: 10%">Pub Date</th>
         <th style="width: 5%">Active</th>
         <th style="width: 10%">Development</th>
-        <th style="width: 15%">Notes</th>
+        <th style="width: 10%">Notes</th>
+        <th style="width: 5%"></th>
       </tr>
     </thead>
     <tbody>
@@ -77,6 +80,7 @@
           <td class="fw-bold text-success">In Progress</td><% else %><td class="fw-bold">Done</td>
         <% end %>
         <td><%= pacific.notes %></td>
+        <td><%= link_to 'Edit', edit_courses_pacific_path(pacific.id) %></td>
       </tr>
       <% end %>
     </tbody>
@@ -84,5 +88,4 @@
 
 </div>
 
-<%#= link_to 'Edit', edit_courses_pacific_path(@courses_pacific) %>
 <%#= link_to 'Back', courses_pacifics_path %>

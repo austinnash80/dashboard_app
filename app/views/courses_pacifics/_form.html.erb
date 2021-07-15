@@ -1,28 +1,48 @@
+  <%= simple_form_for(@courses_pacific) do |f| %>
+    <%= f.error_notification %>
+    <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
-<%= simple_form_for(@courses_pacific) do |f| %>
-  <%= f.error_notification %>
-  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
-
-  <div class="form-inputs">
-    <%= f.input :number %>
-    <%= f.input :version %>
-    <%= f.input :title %>
-    <%= f.input :hours %>
-    <%= f.input :category %>
-    <%= f.input :sub_category %>
-    <%= f.input :pub_date %>
-    <%= f.input :sequoia_number %>
-    <%= f.input :sequoia_version %>
-    <%= f.input :text %>
-    <%= f.input :exam %>
-    <%= f.input :active %>
-    <%= f.input :new %>
-    <%= f.input :version_update %>
-    <%= f.input :update_sheet %>
-    <%= f.input :notes %>
-  </div>
-
-  <div class="form-actions">
-    <%= f.button :submit %>
-  </div>
-<% end %>
+    <div class="form-inputs">
+      <div class="row">
+        <div class="col-4">
+          <%= f.input :number %>
+        </div>
+        <div class="col-3">
+          <%= f.input :version %>
+        </div>
+        <div class="col-3">
+          <%= f.input :hours %>
+        </div>
+      </div>
+      <br>
+      <%= f.input :title %>
+      <br>
+      <%= f.input :category, as: :select, collection: ['Accounting', 'Auditing', 'Tax', 'Business', 'Ethics'] %>
+      <br>
+      <%= f.input :sub_category, label: 'Sub Category', as: :select, collection: ['Personnel/Human Resources', 'Personal Development', 'Management Services', 'Finance', 'Computer Software & Applications', 'Communications and Marketing', 'Business Management & Organization', 'Business Law'], hint: 'Only Business courses will have a Sub Category' %>
+      <br>
+      <%= f.input :pub_date, include_blank: true %>
+      <br>
+      <div class="row">
+        <div class="col-lg-4">
+          <%= f.input :sequoia_number %>
+        </div>
+        <div class="col-lg-3">
+          <%= f.input :sequoia_version %>
+        </div>
+      </div>
+      <br>
+      <%= f.input :text %>
+      <%= f.input :exam %>
+      <%= f.input :active %>
+      <%= f.input :new %>
+      <%= f.input :version_update %>
+      <%= f.input :update_sheet %>
+      <br>
+      <%= f.input :notes %>
+    </div>
+<br>
+    <div class="form-actions">
+      <%= f.button :submit, 'Submit', class: 'btn btn-primary text-light bg-gradient' %>
+    </div>
+  <% end %>

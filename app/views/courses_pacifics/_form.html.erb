@@ -1,0 +1,28 @@
+
+<%= simple_form_for(@courses_pacific) do |f| %>
+  <%= f.error_notification %>
+  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+  <div class="form-inputs">
+    <%= f.input :number %>
+    <%= f.input :version %>
+    <%= f.input :title %>
+    <%= f.input :hours %>
+    <%= f.input :category %>
+    <%= f.input :sub_category %>
+    <%= f.input :pub_date %>
+    <%= f.input :sequoia_number %>
+    <%= f.input :sequoia_version %>
+    <%= f.input :text %>
+    <%= f.input :exam %>
+    <%= f.input :active %>
+    <%= f.input :new %>
+    <%= f.input :version_update %>
+    <%= f.input :update_sheet %>
+    <%= f.input :notes %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

@@ -44,7 +44,7 @@ class CoursesPesController < ApplicationController
           sequoia_course = CoursesSequoium.find_by(pes_number: @courses_pe.pes_number_change)
           sequoia_course_version = CoursesSequoium.where(pes_number: @courses_pe.pes_number_change).pluck(:version).sort
         end
-        
+
         if sequoia_course.present? && @courses_pe.version_update? == true
           CoursesSequoium.create(
             version_update: true,
@@ -62,7 +62,26 @@ class CoursesPesController < ApplicationController
             active: false,
             update_sheet: true
           ).save
+        elsif @courses_pe.new? == true
+          CoursesSequoium.create(
+            new: true,
+            number: 0,
+            # version: sequoia_course_version.last.next,
+            hours: @courses_pe.hours,
+            pes_number: @courses_pe.number,
+            pes_version: @courses_pe.version,
+            pub_date: @courses_pe.pub_date,
+            # title: sequoia_course.title,
+            category: @courses_pe.category,
+            sub_category: @courses_pe.sub_category,
+            text: false,
+            exam: false,
+            active: false,
+            update_sheet: true
+          ).save
         end
+
+
         format.html { redirect_to courses_pes_path(), notice: "Courses pe was successfully created." }
         format.json { render :show, status: :created, location: @courses_pe }
       else

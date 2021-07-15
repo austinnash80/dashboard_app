@@ -1,0 +1,88 @@
+<p id="notice"><%= notice %></p>
+<div class="mx-5">
+
+<div class="text-center">
+  <h2 class="text-center">Master Course: <span class="fw-bold"><%= @courses_pacific.number.to_s.first(3) %></span></h2>
+  <div class="m-2 btn-group">
+    <%= link_to 'Master Courses', courses_pacifics_path(), class: 'btn btn-sm btn-primary text-light bg-gradient w150' %>
+    <%= link_to 'Pacific Courses', courses_pacifics_path(display: 'pacific_courses'), class: 'btn btn-sm btn-primary text-light bg-gradient w150' %>
+    <%= link_to 'In Progress', courses_pacifics_path(display: 'in_progress'), class: 'btn btn-sm btn-primary text-light bg-gradient w150' %>
+  </div>
+</div>
+
+  <table class="table table-striped">
+    <caption class="caption-top fw-bold"> Sequoia Course</caption>
+    <thead>
+      <tr class="bg-secondary bg-gradient text-light">
+        <th style="width: 5%">Course</th>
+        <th style="width: 30%">Title</th>
+        <th style="width: 5%">Hours</th>
+        <th style="width: 10%">Category</th>
+        <th style="width: 10%">Sub Category</th>
+        <th style="width: 10%">Pub Date</th>
+        <th style="width: 5%">Active</th>
+        <th style="width: 10%"></th>
+        <th style="width: 15%">Notes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% CoursesSequoium.where(number: @courses_pacific.sequoia_number).where(version: @courses_pacific.sequoia_version).all.each do |sequoia| %>
+      <tr>
+        <td class="fw-bold"><%= sequoia.number %><%= sequoia.version %></td>
+        <td><%= sequoia.title %></td>
+        <td><%= sequoia.hours %></td>
+        <td><%= sequoia.category %></td>
+        <td><%= sequoia.sub_category %></td>
+        <td><%= sequoia.pub_date %></td>
+        <% if sequoia.active? %>
+          <td class="fw-bold text-success">YES</td><% else %><td class="fw-bold text-danger">NO</td>
+        <% end %>
+        <td></td>
+        <td><%= sequoia.notes %></td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <br>
+
+  <table class="table table-striped">
+    <caption class="caption-top fw-bold"> Pacific Courses</caption>
+    <thead>
+      <tr class="bg-secondary bg-gradient text-light">
+        <th style="width: 5%">Course</th>
+        <th style="width: 30%">Title</th>
+        <th style="width: 5%">Hours</th>
+        <th style="width: 10%">Category</th>
+        <th style="width: 10%">Sub Category</th>
+        <th style="width: 10%">Pub Date</th>
+        <th style="width: 5%">Active</th>
+        <th style="width: 10%">Development</th>
+        <th style="width: 15%">Notes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% CoursesPacific.where(sequoia_number: @courses_pacific.sequoia_number).where(sequoia_version: @courses_pacific.sequoia_version).all.each do |pacific| %>
+      <tr>
+        <td class="fw-bold"><%= pacific.number %><%= pacific.version %></td>
+        <td><%= pacific.title %></td>
+        <td><%= pacific.hours %></td>
+        <td><%= pacific.category %></td>
+        <td><%= pacific.sub_category %></td>
+        <td><%= pacific.pub_date %></td>
+        <% if pacific.active? %>
+          <td class="fw-bold text-success">YES</td><% else %><td class="fw-bold text-danger">NO</td>
+        <% end %>
+        <% if pacific.text? == false || pacific.exam? == false%>
+          <td class="fw-bold text-success">In Progress</td><% else %><td class="fw-bold">Done</td>
+        <% end %>
+        <td><%= pacific.notes %></td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+</div>
+
+<%#= link_to 'Edit', edit_courses_pacific_path(@courses_pacific) %>
+<%#= link_to 'Back', courses_pacifics_path %>

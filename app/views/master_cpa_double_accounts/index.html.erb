@@ -41,7 +41,9 @@
         <td><%= master_cpa_double_account.list %></td>
         <td><%= master_cpa_double_account.uid %></td>
           <% match_list = MasterCpaMatch.find_by(lid: master_cpa_double_account.lid) %>
-        <td><%= match_list.uid %></td>
+          <% if match_list.present? %>
+            <td><%= match_list.uid %></td>
+          <% end %>
         <td><%= master_cpa_double_account.lname %></td>
         <td><%= master_cpa_double_account.search_date %></td>
         <td><%= link_to 'Show', master_cpa_double_account %></td>

@@ -34,6 +34,9 @@
     </thead>
     <tbody>
       <tr>
+      <% if sequoia.blank? %>
+        <td colspan="12">No More Records</td>
+      <% else %>
         <td><%= sequoia.uid %></td>
         <td><%= sequoia.lic_state %></td>
         <td><%= sequoia.lic_num %></td>
@@ -50,11 +53,10 @@
         <% else %>
           <td><%= link_to 'Search', sequoia_matchings_ea_customer_matching_path(lname: sequoia.lname, uid: sequoia.uid), class: 'btn btn-sm btn-info text-light bg-gradient' %></td>
         <% end %>
+      <% end %>
       </tr>
     </tbody>
   </table>
-
-
 
 
 <% if params['lname'].present? %>

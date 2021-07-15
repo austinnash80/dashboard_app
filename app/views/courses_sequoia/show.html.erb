@@ -1,69 +1,56 @@
 <p id="notice"><%= notice %></p>
+<div class="mx-5">
+  <div class="btn-group">
+    <%= link_to 'Course Updates', in_progress_courses_sequoia_path(), class: 'btn btn-sm btn-secondary bg-gradient text-light w150' %>
+    <%= link_to 'Course Index', courses_sequoia_path(), class: 'btn btn-sm btn-secondary bg-gradient text-light w150' %>
+  </div>
 
-<p>
-  <strong>Number:</strong>
-  <%= @courses_sequoium.number %>
-</p>
+<div class="text-center">
+  <h1>Sequoia Course</h1>
+  <h3>Course: <%= @courses_sequoium.number %><%= @courses_sequoium.version %> - <%= @courses_sequoium.title %></h3>
+  <%= link_to 'Edit Course', edit_courses_sequoium_path(@courses_sequoium), class: 'btn btn-sm btn-primary m-2 bg-gradient text-light w150' %>
+</div>
+  <h4 class="fw-bold">Course Info:</h4>
+  <p><strong>Number:</strong> <%= @courses_sequoium.number %></p>
+  <p><strong>Version:</strong> <%= @courses_sequoium.version %></p>
+  <p><strong>Title:</strong> <%= @courses_sequoium.title %></p>
+  <p><strong>Category:</strong> <%= @courses_sequoium.category %></p>
+  <p><strong>Sub category:</strong> <%= @courses_sequoium.sub_category %></p>
+  <p><strong>Hours:</strong> <%= @courses_sequoium.hours %></p>
+  <p><strong>Pub date:</strong> <%= @courses_sequoium.pub_date %></p>
+  <p><strong>Pes number:</strong> <%= @courses_sequoium.pes_number %></p>
+  <p><strong>Pes version:</strong> <%= @courses_sequoium.pes_version %></p>
+  <p><strong>Text:</strong> <%= @courses_sequoium.text %></p>
+  <p><strong>Exam:</strong> <%= @courses_sequoium.exam %></p>
+  <p><strong>Active:</strong> <%= @courses_sequoium.active %></p>
+  <p><strong>Notes:</strong> <%= @courses_sequoium.notes %></p>
+  <br>
+  <h3 class="fw-bold">Pacific Courses</h3>
+    <% pacific = CoursesPacific.where(sequoia_number: @courses_sequoium.number).all %>
+    <% if pacific.present?%>
+      <table>
+        <thead>
+          <tr>
+            <th>Number</th>
+            <th>Version</th>
+            <th>Title</th>
+            <th>Hours</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+        <% pacific.each do |pacific| %>
+        <tr>
+          <td><%= pacific.number %></td>
+          <td><%= pacific.version %></td>
+          <td><%= pacific.title %></td>
+          <td><%= pacific.hours %></td>
+        </tr>
+        <% end %>
+        </tbody>
+      </table>
+    <% else %>
+      <p>No Courses</p>
+    <% end %>
 
-<p>
-  <strong>Version:</strong>
-  <%= @courses_sequoium.version %>
-</p>
-
-<p>
-  <strong>Title:</strong>
-  <%= @courses_sequoium.title %>
-</p>
-
-<p>
-  <strong>Category:</strong>
-  <%= @courses_sequoium.category %>
-</p>
-
-<p>
-  <strong>Sub category:</strong>
-  <%= @courses_sequoium.sub_category %>
-</p>
-
-<p>
-  <strong>Hours:</strong>
-  <%= @courses_sequoium.hours %>
-</p>
-
-<p>
-  <strong>Pub date:</strong>
-  <%= @courses_sequoium.pub_date %>
-</p>
-
-<p>
-  <strong>Pes number:</strong>
-  <%= @courses_sequoium.pes_number %>
-</p>
-
-<p>
-  <strong>Pes version:</strong>
-  <%= @courses_sequoium.pes_version %>
-</p>
-
-<p>
-  <strong>Text:</strong>
-  <%= @courses_sequoium.text %>
-</p>
-
-<p>
-  <strong>Exam:</strong>
-  <%= @courses_sequoium.exam %>
-</p>
-
-<p>
-  <strong>Active:</strong>
-  <%= @courses_sequoium.active %>
-</p>
-
-<p>
-  <strong>Notes:</strong>
-  <%= @courses_sequoium.notes %>
-</p>
-
-<%= link_to 'Edit', edit_courses_sequoium_path(@courses_sequoium) %> |
-<%= link_to 'Back', courses_sequoia_path %>
+</div>

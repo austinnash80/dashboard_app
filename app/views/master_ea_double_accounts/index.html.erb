@@ -34,7 +34,6 @@
       <th colspan="3"></th>
     </tr>
   </thead>
-
   <tbody>
     <% @master_ea_double_accounts.order(search_date: :desc).each do |master_ea_double_account| %>
       <tr>
@@ -42,7 +41,9 @@
         <td><%= master_ea_double_account.list %></td>
         <td><%= master_ea_double_account.uid %></td>
         <% match_list = MasterEaMatch.find_by(lid: master_ea_double_account.lid) %>
-        <td><%= match_list.uid %></td>
+        <% if match_list.present? %>
+          <td><%= match_list.uid %></td>
+        <% end %>
         <td><%= master_ea_double_account.lname %></td>
         <td><%= master_ea_double_account.search_date %></td>
         <td><%= link_to 'Show', master_ea_double_account %></td>

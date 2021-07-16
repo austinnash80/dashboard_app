@@ -180,8 +180,8 @@
     <tbody id="myTable">
       <% pacific_course_sequoia_number = CoursesPacific.all.pluck(:sequoia_number) %>
       <% master_courses = CoursesSequoium.where(number: pacific_course_sequoia_number).all %>
-      <% master_courses.order(number: :asc).each do |master_course| %>
-        <% unless master_courses.blank? %>
+      <% unless master_courses.present? == false %>
+        <% master_courses.order(number: :asc).each do |master_course| %>
           <% pacific_course_count = CoursesPacific.where(sequoia_number: master_course.number).where(sequoia_version: master_course.version).count %>
           <% pacific_course_master = CoursesPacific.where(sequoia_number: master_course.number).where(sequoia_version: master_course.version).pluck(:number) %>
           <% master_link_id = CoursesPacific.find_by(number: pacific_course_master[0]) %>

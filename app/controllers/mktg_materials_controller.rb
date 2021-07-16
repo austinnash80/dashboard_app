@@ -38,7 +38,7 @@ class MktgMaterialsController < ApplicationController
 
     respond_to do |format|
       if @mktg_material.save
-        format.html { redirect_to mktg_materials, notice: "Mktg material was successfully created." }
+        format.html { redirect_to mktg_materials_path(), notice: "Mktg material was successfully created." }
         format.json { render :show, status: :created, location: @mktg_material }
       else
         format.html { render :new, status: :unprocessable_entity }

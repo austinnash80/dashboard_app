@@ -5,14 +5,22 @@
 
   <div class="form-inputs">
     <%= f.input :co, label: 'Company', as: :select, collection: ['Sequoia','Empire', 'Pacific', 'Other'] %>
-    <%= f.input :campaign, as: :select, collection: ['Direct Mail','Return Customer', 'New Customer', 'Other'] %>
-    <%= f.input :name, hint: 'ex: 2021.6 - CPA' %>
-    <%= f.input :land_date %>
-    <%= f.input :delivered_to %>
+    <br>
+    <%= f.input :campaign, label: 'Campaign Type', as: :select, collection: ['Direct Mail - Prospective','Return Customer', 'New Customer', 'Other'] %>
+    <br>
+    <%= f.input :name, label: 'Campaign Name', hint: 'ex: 2021.6 - CPA' %>
+    <br>
+    <%= f.input :land_date, label: 'Expected Landing Date', include_blank: true, hint: 'If ongoing, select an approximate start date and check box below' %>
+    <br>
+    <%= f.input :ongoing %>
+    <br>
+    <%= f.input :delivered_to, hint: 'ex: New customers - CPA only' %>
+    <br>
     <%= f.input :quantity %>
+    <br>
     <%= f.input :link_name, label: 'Link to Material', hint: 'ex: https://mktg-materials.s3.amazonaws.com/2021.5+-+CPA.pdf' %>
   </div>
-
+<br>
   <div class="form-actions mt-3">
     <%= f.button :submit, 'Submit', class: 'btn btn-primary text-light bg-gradient'  %>
   </div>

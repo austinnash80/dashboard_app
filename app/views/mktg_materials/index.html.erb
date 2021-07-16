@@ -44,8 +44,9 @@
           <th>Campaign</th>
           <th>Name</th>
           <th>Land date</th>
-          <!-- <th>Delivered to</th> -->
+          <th>Ongoing</th>
           <th>Quantity</th>
+          <th>Delivered to</th>
           <th></th>
         </tr>
       </thead>
@@ -64,8 +65,9 @@
             <td><%= mktg_material.campaign %></td>
             <td><%= mktg_material.name %></td>
             <td><%= mktg_material.land_date.present? ? mktg_material.land_date.strftime('%-m/%d/%Y') : ''%></td>
-            <!-- <td><%= mktg_material.delivered_to %></td> -->
+            <td><%= mktg_material.ongoing? ? 'YES' : 'NO' %></td>
             <td><%= mktg_material.quantity.present? ? number_with_delimiter(mktg_material.quantity) : ''%></td>
+            <td><%= mktg_material.delivered_to %></td>
             <!-- <td><%#= link_to 'Link', mktg_material.link_name, target: '_blank' %></td> -->
             <td><%= link_to 'Delete', mktg_material, method: :delete, data: { confirm: 'Are you sure?' } %></td>
           </tr>

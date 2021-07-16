@@ -38,7 +38,7 @@ class MktgMaterialsController < ApplicationController
 
     respond_to do |format|
       if @mktg_material.save
-        format.html { redirect_to @mktg_material, notice: "Mktg material was successfully created." }
+        format.html { redirect_to mktg_materials, notice: "Mktg material was successfully created." }
         format.json { render :show, status: :created, location: @mktg_material }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -83,6 +83,6 @@ class MktgMaterialsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def mktg_material_params
-      params.require(:mktg_material).permit(:co, :campaign, :name, :land_date, :delivered_to, :quantity, :link_name)
+      params.require(:mktg_material).permit(:co, :campaign, :name, :land_date, :delivered_to, :quantity, :link_name, :ongoing)
     end
 end

@@ -181,26 +181,28 @@
       <% pacific_course_sequoia_number = CoursesPacific.all.pluck(:sequoia_number) %>
       <% master_courses = CoursesSequoium.where(number: pacific_course_sequoia_number).all %>
       <% master_courses.order(number: :asc).each do |master_course| %>
-        <% pacific_course_count = CoursesPacific.where(sequoia_number: master_course.number).where(sequoia_version: master_course.version).count %>
-        <% pacific_course_master = CoursesPacific.where(sequoia_number: master_course.number).where(sequoia_version: master_course.version).pluck(:number) %>
-        <% master_link_id = CoursesPacific.find_by(number: pacific_course_master[0]) %>
-        <tr>
-          <td class="fw-bold"><%= link_to pacific_course_master[0].to_s.first(3), courses_pacific_path(id: master_link_id.id), class: 'link_style text-primary' %></td>
-          <td><%= pacific_course_count %></td>
-          <td><%= master_course.number %><%= master_course.version %> - <%= master_course.title %></td>
-          <td><%= master_course.hours %></td>
-          <td><%= master_course.category %></td>
-          <td><%= master_course.sub_category %></td>
-          <td><%= master_course.pub_date %></td>
-          <td><%= master_course.pes_number %><%= master_course.pes_version %></td>
-          <% if master_course.active? %>
-            <td class="fw-bold text-success">YES</td><% else %><td class="fw-bold text-danger">NO</td>
-          <% end %>
-          <td><%= master_course.notes %></td>
-          <td><%#= link_to 'Show', courses_pacific %></td>
-          <td><%#= link_to 'Edit', edit_courses_pacific_path(courses_pacific) %></td>
-          <td><%#= link_to 'Destroy', courses_pacific, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-        </tr>
+        <% unless master_courses.blank? %>
+          <% pacific_course_count = CoursesPacific.where(sequoia_number: master_course.number).where(sequoia_version: master_course.version).count %>
+          <% pacific_course_master = CoursesPacific.where(sequoia_number: master_course.number).where(sequoia_version: master_course.version).pluck(:number) %>
+          <% master_link_id = CoursesPacific.find_by(number: pacific_course_master[0]) %>
+          <tr>
+            <td class="fw-bold"><%= link_to pacific_course_master[0].to_s.first(3), courses_pacific_path(id: master_link_id.id), class: 'link_style text-primary' %></td>
+            <td><%= pacific_course_count %></td>
+            <td><%= master_course.number %><%= master_course.version %> - <%= master_course.title %></td>
+            <td><%= master_course.hours %></td>
+            <td><%= master_course.category %></td>
+            <td><%= master_course.sub_category %></td>
+            <td><%= master_course.pub_date %></td>
+            <td><%= master_course.pes_number %><%= master_course.pes_version %></td>
+            <% if master_course.active? %>
+              <td class="fw-bold text-success">YES</td><% else %><td class="fw-bold text-danger">NO</td>
+            <% end %>
+            <td><%= master_course.notes %></td>
+            <td><%#= link_to 'Show', courses_pacific %></td>
+            <td><%#= link_to 'Edit', edit_courses_pacific_path(courses_pacific) %></td>
+            <td><%#= link_to 'Destroy', courses_pacific, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          </tr>
+        <% end %>
       <% end %>
     </tbody>
   </table>

@@ -183,9 +183,6 @@
           <% sequoia_courses_id.push(sequoia.id) %>
         <% end %>
       <% end %>
-
-      <%# pacific_course_sequoia_number = CoursesPacific.all.pluck(:sequoia_number) %>
-      <%# master_courses = CoursesSequoium.where(id: sequoia_courses_id).all %>
         <% CoursesSequoium.where(id: sequoia_courses_id).order(number: :asc).all.each do |master_course| %>
           <% pacific_course_count = CoursesPacific.where(sequoia_number: master_course.number).where(sequoia_version: master_course.version).count %>
           <% pacific_course_master = CoursesPacific.where(sequoia_number: master_course.number).where(sequoia_version: master_course.version).pluck(:number) %>

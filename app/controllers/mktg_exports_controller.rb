@@ -176,8 +176,8 @@ class MktgExportsController < ApplicationController
   end
 
   def import #Uploading CSV function
-    SequoiaCustomer.my_import(params[:file])
-    redirect_to sequoia_customers_path, notice: "Upload Complete"
+    MktgExport.my_import(params[:file])
+    redirect_to mktg_exports_path, notice: "Upload Complete"
   end
 
 

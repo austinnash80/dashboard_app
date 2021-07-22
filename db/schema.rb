@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_16_164937) do
+ActiveRecord::Schema.define(version: 2021_07_20_233327) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -428,6 +428,8 @@ ActiveRecord::Schema.define(version: 2021_07_16_164937) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "segment"
     t.integer "sent"
+    t.date "drop_day"
+    t.date "land_day"
   end
 
   create_table "no_mail_not_founds", force: :cascade do |t|

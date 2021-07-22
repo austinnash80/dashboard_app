@@ -126,8 +126,13 @@
   <tbody>
     <% @mktg_exports.order(exp: :asc).order(uid: :asc).limit(250).each do |mktg_export| %>
       <tr>
-        <% if params['co'] == 'sequoia' %><td><a target="_blank" href="https://www.sequoiacpe.com/admin/user-profile?u=<%= mktg_export.uid %>"><%= mktg_export.uid %></a></td><% end %>
-        <% if params['co'] == 'empire' %><td><a target="_blank" href="https://www.empirelearning.com/admin/user-profile?u=<%= mktg_export.uid %>"><%= mktg_export.uid %></a></td><% end %>
+        <% if params['co'] == 'sequoia' %>
+          <td><a target="_blank" href="https://www.sequoiacpe.com/admin/user-profile?u=<%= mktg_export.uid %>"><%= mktg_export.uid %></a></td>
+        <% elsif params['co'] == 'empire' %>
+          <td><a target="_blank" href="https://www.empirelearning.com/admin/user-profile?u=<%= mktg_export.uid %>"><%= mktg_export.uid %></a></td>
+        <% else %>
+          <td><%= mktg_export.uid %></td>
+        <% end %>
         <td><%= mktg_export.campaign %></td>
         <td><%= mktg_export.des %></td>
         <td><%= mktg_export.exp %></td>

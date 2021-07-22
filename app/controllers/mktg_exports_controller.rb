@@ -86,9 +86,22 @@ class MktgExportsController < ApplicationController
       end
     end
 
-    MktgExport.all.each do |i| #Add the remaining customer infomation
+    # MktgExport.all.each do |i| #Add the remaining customer infomation
+    #   customer_data = SequoiaCustomer.find_by(uid: i.uid)
+    #   MktgExport.where(uid: i.uid).update_all email: customer_data.email, fname: customer_data.fname, lname: (customer_data.lname), street_1: customer_data.street_1, street_2: customer_data.street_2, city: customer_data.city, state: customer_data.state, zip: customer_data.zip
+    # end
+    MktgExport.all.each do |i| #Add the remaining customer infomation, USE NCOA WHEN AVAILIABLE
+      ncoa_customer_data = SequoiaNcoa.find_by(uid: i.uid)
       customer_data = SequoiaCustomer.find_by(uid: i.uid)
-      MktgExport.where(uid: i.uid).update_all email: customer_data.email, fname: customer_data.fname, lname: (customer_data.lname), street_1: customer_data.street_1, street_2: customer_data.street_2, city: customer_data.city, state: customer_data.state, zip: customer_data.zip
+      if ncoa_customer_data.present?
+        unless ncoa_customer_data.bad?
+          MktgExport.where(uid: i.uid).update_all fname: ncoa_customer_data.fname, lname: ncoa_customer_data.lname, street_1: ncoa_customer_data.street_1, street_2: ncoa_customer_data.street_2, city: ncoa_customer_data.city, state: ncoa_customer_data.state, zip: ncoa_customer_data.zip
+          MktgExport.where(uid: i.uid).update_all email: customer_data.email
+        end
+      else
+        MktgExport.where(uid: i.uid).update_all email: customer_data.email,  fname: customer_data.fname, lname: (customer_data.lname), street_1: customer_data.street_1, street_2: customer_data.street_2, city: customer_data.city, state: customer_data.state, zip: customer_data.zip
+      end
+        MktgExport.where(uid: i.uid).where(zip: nil).delete_all ##DELETE RECORDS THAT DID HOT NCOA OR HAVE full address
     end
 
     #Add the Marketing TEXT (do with a table in the future?)

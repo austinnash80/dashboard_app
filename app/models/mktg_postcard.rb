@@ -14,7 +14,7 @@ class MktgPostcard < ApplicationRecord
 
   # EXPORT
     def self.to_csv # Export to csv function
-      attributes = %w{campaign company segment mail_day range_1_a range_1_b range_2_a range_2_b done sent notes}
+      attributes = %w{campaign company segment mail_day drop_day land_day range_1_a range_1_b range_2_a range_2_b done sent notes}
       CSV.generate(headers: true) do |csv|
         csv << attributes
           all.each do |i|

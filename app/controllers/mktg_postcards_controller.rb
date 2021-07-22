@@ -93,6 +93,6 @@ class MktgPostcardsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def mktg_postcard_params
-      params.require(:mktg_postcard).permit(:campaign, :company, :mail_day, :range_1_a, :range_1_b, :range_2_a, :range_2_b, :done, :cpa_sent, :ea_sent, :notes, :segment, :sent)
+      params.require(:mktg_postcard).permit(:campaign, :company, :mail_day, :range_1_a, :range_1_b, :range_2_a, :range_2_b, :done, :cpa_sent, :ea_sent, :notes, :segment, :sent, :drop_day, :land_day)
     end
 end

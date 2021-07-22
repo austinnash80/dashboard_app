@@ -8,10 +8,12 @@
           <%= f.input :number %>
         </div>
         <div class="col-3">
-          <%= f.input :version, input_html: {value: params['version']} %>
+          <% if params['version'].present? %><%= f.input :version, input_html: {value: params['version']} %>
+          <% else %><%= f.input :version %><% end %>
         </div>
         <div class="col-3">
-          <%= f.input :hours, input_html: {value: params['hours']} %>
+          <% if params['hours'].present? %><%= f.input :hours, input_html: {value: params['hours']} %>
+          <% else %><%= f.input :hours %><% end %>
         </div>
       </div>
       <br>
@@ -37,10 +39,12 @@
       <br>
       <div class="row">
         <div class="col-lg-4">
-          <%= f.input :sequoia_number, input_html: {value: params['sequoia_number']} %>
+          <% if params['sequoia_number'].present? %><%= f.input :sequoia_number, input_html: {value: params['sequoia_number']} %>
+          <% else %><%= f.input :sequoia_number %><% end %>
         </div>
         <div class="col-lg-3">
-          <%= f.input :sequoia_version, input_html: {value: params['sequoia_version']} %>
+          <% if params['sequoia_version'].present? %><%= f.input :sequoia_version, input_html: {value: params['sequoia_version']} %>
+          <% else %><%= f.input :sequoia_version %><% end %>
         </div>
       </div>
       <br>

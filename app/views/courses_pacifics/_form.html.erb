@@ -8,27 +8,39 @@
           <%= f.input :number %>
         </div>
         <div class="col-3">
-          <%= f.input :version %>
+          <%= f.input :version, input_html: {value: params['version']} %>
         </div>
         <div class="col-3">
-          <%= f.input :hours %>
+          <%= f.input :hours, input_html: {value: params['hours']} %>
         </div>
       </div>
       <br>
       <%= f.input :title %>
       <br>
-      <%= f.input :category, as: :select, collection: ['Accounting', 'Auditing', 'Tax', 'Business', 'Ethics'] %>
+      <% if params['category'].present? %>
+        <%= f.input :category, input_html: {value: params['category']} %>
+      <% else %>
+        <%= f.input :category, as: :select, collection: ['Accounting', 'Auditing', 'Tax', 'Business', 'Ethics'] %>
+      <% end %>
       <br>
-      <%= f.input :sub_category, label: 'Sub Category', as: :select, collection: ['Personnel/Human Resources', 'Personal Development', 'Management Services', 'Finance', 'Computer Software & Applications', 'Communications and Marketing', 'Business Management & Organization', 'Business Law'], hint: 'Only Business courses will have a Sub Category' %>
+      <% if params['sub_category'].present? %>
+        <%= f.input :sub_category, label: 'Sub Category', hint: 'Only Business courses will have a Sub Category', input_html: {value: params['sub_category']} %>
+      <% else %>
+        <%= f.input :sub_category, label: 'Sub Category', as: :select, collection: ['Personnel/Human Resources', 'Personal Development', 'Management Services', 'Finance', 'Computer Software & Applications', 'Communications and Marketing', 'Business Management & Organization', 'Business Law'], hint: 'Only Business courses will have a Sub Category' %>
+      <% end %>
       <br>
-      <%= f.input :pub_date, include_blank: true %>
+      <% if params['pub_date'].present? %>
+        <%= f.input :pub_date, input_html: {value: params['pub_date'].to_date} %>
+      <% else %>
+        <%= f.input :pub_date, include_blank: true %>
+      <% end %>
       <br>
       <div class="row">
         <div class="col-lg-4">
-          <%= f.input :sequoia_number %>
+          <%= f.input :sequoia_number, input_html: {value: params['sequoia_number']} %>
         </div>
         <div class="col-lg-3">
-          <%= f.input :sequoia_version %>
+          <%= f.input :sequoia_version, input_html: {value: params['sequoia_version']} %>
         </div>
       </div>
       <br>

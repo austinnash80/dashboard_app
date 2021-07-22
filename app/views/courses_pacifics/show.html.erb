@@ -48,6 +48,7 @@
 
   <br>
 
+
   <table class="table table-striped">
     <caption class="caption-top fw-bold">Pacific Courses</caption>
     <thead>
@@ -65,7 +66,7 @@
       </tr>
     </thead>
     <tbody>
-      <% CoursesPacific.where(sequoia_number: @courses_pacific.sequoia_number).where(sequoia_version: @courses_pacific.sequoia_version).all.each do |pacific| %>
+      <% CoursesPacific.where(sequoia_number: @courses_pacific.sequoia_number).where(sequoia_version: @courses_pacific.sequoia_version).order(number: :ASC).all.each do |pacific| %>
       <tr>
         <td class="fw-bold"><%= pacific.number %><%= pacific.version %></td>
         <td><%= pacific.title %></td>
@@ -85,6 +86,9 @@
       <% end %>
     </tbody>
   </table>
+
+  <p><%= link_to 'Add New', new_courses_pacific_path(category: @courses_pacific.category, sub_category: @courses_pacific.sub_category, hours: @courses_pacific.hours, version: @courses_pacific.version, pub_date: @courses_pacific.pub_date, sequoia_number: @courses_pacific.sequoia_number, sequoia_version: @courses_pacific.sequoia_version), class: 'btn btn-sm btn-primary bg-gradient w100 text-light' %></p>
+
 
 </div>
 

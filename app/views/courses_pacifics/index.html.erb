@@ -185,10 +185,10 @@
       <% end %>
         <% CoursesSequoium.where(id: sequoia_courses_id).order(number: :asc).all.each do |master_course| %>
           <% pacific_course_count = CoursesPacific.where(sequoia_number: master_course.number).where(sequoia_version: master_course.version).where(active: true).count %>
-          <% pacific_course_master = CoursesPacific.where(sequoia_number: master_course.number).where(sequoia_version: master_course.version).pluck(:number) %>
+          <% pacific_course_master = CoursesPacific.where(sequoia_number: master_course.number).where(sequoia_version: master_course.version).pluck(:number,:version) %>
           <% unless pacific_course_master.present? == false %><% master_link_id = CoursesPacific.find_by(number: pacific_course_master[0]) %><% end %>
           <tr>
-            <% unless pacific_course_master.present? == false %><td class="fw-bold"><%= link_to pacific_course_master[0].to_s.first(3), courses_pacific_path(id: master_link_id.id), class: 'link_style text-primary' %></td><% else %> <td></td><% end %>
+            <% unless pacific_course_master.present? == false %><td class="fw-bold"><%= link_to "#{pacific_course_master[0][0].to_s.first(3)}#{pacific_course_master[0][1]}", courses_pacific_path(id: master_link_id.id), class: 'link_style text-primary' %></td><% else %> <td></td><% end %>
             <% if pacific_course_count.present? && master_course.active? == false %>
               <td class="text-danger fw-bold"><%= pacific_course_count %></td>
             <% elsif pacific_course_count.present? %>

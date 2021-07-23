@@ -36,7 +36,7 @@
           <td class="text-success fw-bold">Done</td>
           <td class="fw-bold"><%= number_with_delimiter(i.sent) %></td>
           <td></td>
-        <% elsif i.campaign = 'Direct Mail' %>
+        <% elsif i.campaign == 'Direct Mail' %>
           <td class="fw-bold">MSI</td>
           <td><strong>Drop:</strong> <%= i.drop_day.present? ? i.drop_day.strftime('%-m/%d/%y') : '' %></td>
           <td><strong>Land:</strong> <%= i.land_day.present? ? i.land_day.strftime('%-m/%d/%y') : ''  %></td>

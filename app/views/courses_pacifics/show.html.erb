@@ -2,7 +2,7 @@
 <div class="mx-5">
 
 <div class="text-center">
-  <h2 class="text-center">Master Course: <span class="fw-bold"><%= @courses_pacific.number.to_s.first(3) %></span></h2>
+  <h2 class="text-center">Master Course: <span class="fw-bold"><%= @courses_pacific.number.to_s.first(3) %><%= @courses_pacific.version %></span></h2>
   <div class="m-2 btn-group">
     <%= link_to 'Master Courses', courses_pacifics_path(), class: 'btn btn-sm btn-primary text-light bg-gradient w150' %>
     <%= link_to 'Pacific Courses', courses_pacifics_path(display: 'pacific_courses'), class: 'btn btn-sm btn-primary text-light bg-gradient w150' %>

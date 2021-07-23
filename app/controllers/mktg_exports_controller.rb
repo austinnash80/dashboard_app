@@ -136,9 +136,21 @@ class MktgExportsController < ApplicationController
       end
     end
 
-    MktgExport.all.each do |i| #Add the remaining customer infomation
-      customer_data = EmpireCustomer.find_by(uid: i.uid)
-      MktgExport.where(uid: i.uid).update_all email: customer_data.email, fname: customer_data.fname, lname: (customer_data.lname), street_1: customer_data.street_1, street_2: customer_data.street_2, city: customer_data.city, state: customer_data.state, zip: customer_data.zip
+    if params['campaign'] == 'Nm Direct' ##### NEW MEXICO DIRECT MAIL - INHOUSE PROSPECTIVE CUSTOMERS
+      states = params['empire_st'].upcase.split()
+      # EmpireMasterMatch.where(lic_st: 'NM').pluck() ##Once i have matching done
+      customer_lic_number = EmpireCustomer.where(lic_state: 'NM').pluck(:lic_num)
+
+      EmpireMasterNmList.where(exp_date: @dates).where.not(lic: customer_lic_number).all.each do |i|
+        MktgExport.create(uid: i.lid, exp: i.exp_date, campaign: params['campaign'], des: i.lic_state, fname: i.fname, lname: i.lname, street_1: i.add, street_2: i.add2, city: i.city, state: i.st, zip: i.zip).save
+      end
+    end
+
+    unless params['campaign'] == 'Nm Direct'
+      MktgExport.all.each do |i| #Add the remaining customer infomation
+        customer_data = EmpireCustomer.find_by(uid: i.uid)
+        MktgExport.where(uid: i.uid).update_all email: customer_data.email, fname: customer_data.fname, lname: (customer_data.lname), street_1: customer_data.street_1, street_2: customer_data.street_2, city: customer_data.city, state: customer_data.state, zip: customer_data.zip
+      end
     end
     MktgExport.where(des: 'NY').update_all text_1: '22.5-Hour New York CE Package',text_2: '$59.99',text_3: 'Take an additional 10% off - Use Code:', text_4: 'ReturningStudent21'
     MktgExport.where(des: 'CA').update_all text_1: '45-Hour California CE Package',text_2: '$47.99',text_3: 'Take an additional 10% off - Use Code:', text_4: 'ReturningStudent21'

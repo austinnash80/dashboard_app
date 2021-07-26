@@ -141,7 +141,7 @@ class MktgExportsController < ApplicationController
       # EmpireMasterMatch.where(lic_st: 'NM').pluck() ##Once i have matching done
       customer_lic_number = EmpireCustomer.where(lic_state: 'NM').pluck(:lic_num)
 
-      EmpireMasterNmList.where(exp_date: @dates).where.not(lic: customer_lic_number).all.each do |i|
+      EmpireMasterNmList.where(exp_date: @dates).where.not(lic: customer_lic_number).where.not(bad: true).all.each do |i|
         MktgExport.create(uid: i.lid, exp: i.exp_date, campaign: params['campaign'], des: i.lic_state, fname: i.fname, lname: i.lname, street_1: i.add, street_2: i.add2, city: i.city, state: i.st, zip: i.zip).save
       end
     end

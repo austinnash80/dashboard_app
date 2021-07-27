@@ -10,10 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_23_192426) do
+ActiveRecord::Schema.define(version: 2021_07_27_170021) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "auto_renew_lists", force: :cascade do |t|
+    t.integer "uid"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
 
   create_table "canned_responses", force: :cascade do |t|
     t.string "company"

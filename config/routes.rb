@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :auto_renew_lists do collection {post :import} end
   resources :empire_master_nm_lists do collection {post :import} end
   resources :courses_pacifics do collection {post :import} end
   resources :courses_pes do collection {post :import} end

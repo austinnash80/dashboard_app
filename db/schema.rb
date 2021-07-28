@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_27_170021) do
+ActiveRecord::Schema.define(version: 2021_07_28_185604) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -190,6 +190,7 @@ ActiveRecord::Schema.define(version: 2021_07_27_170021) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "lname"
     t.date "exp"
+    t.string "lic"
     t.index ["uid"], name: "index_empire_master_matches_on_uid"
   end
 
@@ -466,6 +467,10 @@ ActiveRecord::Schema.define(version: 2021_07_27_170021) do
     t.integer "sent"
     t.date "drop_day"
     t.date "land_day"
+    t.integer "campaign_id"
+    t.string "delivery_type"
+    t.date "range_3_a"
+    t.date "range_3_b"
   end
 
   create_table "no_mail_not_founds", force: :cascade do |t|

@@ -24,3 +24,24 @@ restart = ['1-Year CPA Membership Discounted Re-Activation', '1-Year CPA Members
   end
 
   rvm use ruby 2.7.1
+
+## FIX AUTO RENEW EXPIRATION DATES
+  sequoia_member_uid = SequoiaMember.where(cpa: true).pluck(:uid)
+  auto_renew_cpa = AutoRenewList.where(uid: sequoia_member_uid).pluck(:uid)
+  cpa_membership = SequoiaProductList.where(who: 'cpa').where(group: 'membership').pluck(:product)
+  ea_membership = SequoiaProductList.where(who: 'ea').where(group: 'membership').pluck(:product)
+  SequoiaMember.where(uid: auto_renew_cpa).update_all membership_exp: nil
+
+   SequoiaMember.where(uid: auto_renew_cpa).all.each do |member|
+     SequoiaCustomer.where(uid: member.uid).order(purchase: :ASC).all.each do |i|
+       if (ea_membership + cpa_membership).include? i.product_1
+         if member.membership_exp.blank?
+           SequoiaMember.where(uid: member.uid).update_all membership_exp: i.purchase + 1.year, discount_exp: i.purchase + 379.days
+         elsif member.membership_exp <= i.purchase
+          SequoiaMember.where(uid: member.uid).update_all membership_exp: i.purchase + 1.year, discount_exp: i.purchase + 379.days
+        elsif member.membership_exp > i.purchase
+          SequoiaMember.where(uid: member.uid).update_all membership_exp: member.membership_exp + 1.year, discount_exp: member.discount_exp + 1.year
+         end
+      end
+    end
+  end

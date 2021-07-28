@@ -23,10 +23,11 @@
   <thead>
   <!-- <caption class="caption-top">Total Records: <%#= number_with_delimiter(SequoiaMember.count) %> | Display Limit: 500</caption> -->
   <tr class="bg-secondary bg-gradient text-light">
-      <th>ID</th>
+      <th>Campaign ID</th>
       <th>Company</th>
       <th>Campaign</th>
       <th>Segment</th>
+      <th>Delivery Type</th>
       <th>Mail day</th>
       <th>Drop day</th>
       <th>Land day</th>
@@ -34,6 +35,8 @@
       <th>Range 1 b</th>
       <th>Range 2 a</th>
       <th>Range 2 b</th>
+      <th>Range 3 a</th>
+      <th>Range 3 b</th>
       <th>Done</th>
       <th>Sent</th>
       <th>Notes</th>
@@ -44,10 +47,11 @@
   <tbody>
     <% @mktg_postcards.order(mail_day: :asc).order(campaign: :asc).order(segment: :asc).each do |mktg_postcard| %>
       <tr>
-        <td><%= mktg_postcard.id %></td>
+        <td><%= mktg_postcard.campaign_id %></td>
         <td><%= mktg_postcard.company.titlecase %></td>
         <td><%= mktg_postcard.campaign.upcase %></td>
         <td><%= mktg_postcard.segment.upcase %></td>
+        <td><%= mktg_postcard.delivery_type %></td>
         <td class="fw-bold"><%= mktg_postcard.mail_day %></td>
         <td><%= mktg_postcard.drop_day %></td>
         <td><%= mktg_postcard.land_day %></td>
@@ -55,6 +59,8 @@
         <td><%= mktg_postcard.range_1_b %></td>
         <td><%= mktg_postcard.range_2_a %></td>
         <td><%= mktg_postcard.range_2_b %></td>
+        <td><%= mktg_postcard.range_3_a %></td>
+        <td><%= mktg_postcard.range_3_b %></td>
         <td class="text-success fw-bold"><%= mktg_postcard.done? ? 'DONE' : '' %></td>
         <td class="fw-bold"><%= number_with_delimiter(mktg_postcard.sent) %></td>
         <td><%= mktg_postcard.notes %></td>

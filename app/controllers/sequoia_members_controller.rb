@@ -36,18 +36,17 @@ class SequoiaMembersController < ApplicationController
     @order_id = (IdNumberStorage.pluck(:sequoia_members_order_id))[0]
 
     if params['run'].present?
+
       cpa_membership = SequoiaProductList.where(who: 'cpa').where(group: 'membership').pluck(:product)
       ea_membership = SequoiaProductList.where(who: 'ea').where(group: 'membership').pluck(:product)
       afsp = SequoiaProductList.where(who: 'afsp').pluck(:product)
       ethics = SequoiaProductList.where(group: 'ethics').pluck(:product)
       other = SequoiaProductList.where(group: 'upgrade').pluck(:product)
-    # FOR MEMBERSHIP EXP UPDATING
-      # new = SequoiaProductList.where(group: 'membership').where(full_price: true).pluck(:product)
-      # renewal = ['1-Year CPA Membership Renewal', '1-Year EA Membership Renewal (Auto-Renew)', '1-Year EA Membership Renewal (Auto-Renew)', '1-Year EA Membership Renewal']
-      # restart = ['1-Year CPA Membership Discounted Re-Activation', '1-Year CPA Membership Re-Activation', '1-Year EA Membership Re-Activation', '1-Year EA Membership Discounted Re-Activation']
 
       SequoiaCustomer.order(order_id: :asc).where('order_id > ?', @order_id).each do |i|
         member = SequoiaMember.find_by(uid: i.uid)
+
+      #UPDATEING INFO ON THEIR Sequoia Member Record
         if member.present?
           if cpa_membership.include? i.product_1
             SequoiaMember.where(uid: i.uid).update_all cpa: true, cpa_memberships: (member.cpa_memberships + 1), last_purchase: i.purchase
@@ -67,8 +66,6 @@ class SequoiaMembersController < ApplicationController
             SequoiaMember.where(uid: i.uid).update_all ethics: true, ethics_purchases: (member.ethics_purchases + 1), last_purchase: i.purchase
           end
 
-
-
       # Updating EXP Date
         # If new purchase order is (membership only) happens when exp is still active then add 1.year to the exp. If membership purchase is after exp then 1.year from that purchase.
           if (ea_membership + cpa_membership).include? i.product_1
@@ -81,16 +78,7 @@ class SequoiaMembersController < ApplicationController
             end
           end
 
-        # if new.include? i.product_1
-        #   SequoiaMember.where(uid: i.uid).update_all membership_exp: i.purchase + 1.year, discount_exp: i.purchase + 379.days
-        # elsif renewal.include? i.product_1
-        #   unless member.membership_exp.blank?
-        #     SequoiaMember.where(uid: i.uid).update_all membership_exp: member.membership_exp + 1.year, discount_exp: member.discount_exp + 1.year
-        #   end
-        # elsif restart.include? i.product_1
-        #   SequoiaMember.where(uid: i.uid).update_all membership_exp: i.purchase + 1.year, discount_exp: i.purchase + 379.days
-        # end
-
+        #UPDATE NUMBER STORAGE FIELD SO NEXT TIME IT IS RUN IT STARTS ON ONLY NEW RECORDS
           IdNumberStorage.update_all sequoia_members_order_id: i.order_id
         end
 

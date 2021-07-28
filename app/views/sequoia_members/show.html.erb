@@ -2,12 +2,14 @@
 <p><%= link_to 'Back to Sequoia Members Page', sequoia_members_path, class: 'btn btn-sm btn-primary text-light bg-gradient' %></p>
 
 <% sequoia_customer = SequoiaCustomer.find_by(uid: @sequoia_member.uid) %>
+<% auto_renew = AutoRenewList.find_by(uid: @sequoia_member.uid) %>
 <br>
 
 <h1 class=""><%= sequoia_customer.fname %> <%= sequoia_customer.lname %> </h1>
 <h5 class=""><strong>UID:</strong> <a target="_blank" href="https://www.sequoiacpe.com/admin/user-profile?u=<%= @sequoia_member.uid %>"><%= @sequoia_member.uid %></a></h5>
 <br><br>
 <p><strong>Membership Type:</strong> <%= @sequoia_member.cpa? ? 'CPA' : @sequoia_member.ea? ? 'EA' : '' %></p>
+<p><strong>Auto-Renew Active:</strong> <%= auto_renew.present? ? 'YES' : 'NO' %></p>
 <p><strong>Membership EXP:</strong> <%= @sequoia_member.membership_exp %> <% if @sequoia_member.membership_exp.present? && @sequoia_member.membership_exp >= Date.today %> <i class="fas fa-check-circle text-success"></i><% else %> <i class="fas fa-times-circle text-danger"></i> <% end %></p>
 <p><strong>Discount EXP:</strong> <%= @sequoia_member.discount_exp %> <% if @sequoia_member.discount_exp.present? && @sequoia_member.discount_exp >= Date.today %> <i class="fas fa-check-circle text-success"></i><% else %> <i class="fas fa-times-circle text-danger"></i> <% end %></p>
 <p><strong>First purchase:</strong> <%= @sequoia_member.first_purchase %></p>

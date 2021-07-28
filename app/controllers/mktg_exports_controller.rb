@@ -44,6 +44,8 @@ class MktgExportsController < ApplicationController
       r1d2 = params['range_1_date_2'].present? ? params['range_1_date_2'].to_date : ''
       r2d1 = params['range_2_date_1'].present? ? params['range_2_date_1'].to_date : ''
       r2d2 = params['range_2_date_2'].present? ? params['range_2_date_2'].to_date : ''
+      r3d1 = params['range_3_date_1'].present? ? params['range_3_date_1'].to_date : ''
+      r3d2 = params['range_3_date_2'].present? ? params['range_3_date_2'].to_date : ''
       # Dealing with blank input boxes
       if r1d2.blank?
         r1d2 = r1d1
@@ -57,6 +59,7 @@ class MktgExportsController < ApplicationController
       # Push dates into @dates Array
       (r1d1..r1d2).each do |i| @dates.push(i) end
       (r2d1.to_date..r2d2).each do |i| @dates.push(i) end
+      (r3d1.to_date..r3d2).each do |i| @dates.push(i) end
 
       if params['co'] == 'sequoia'
         sequoia
@@ -68,12 +71,13 @@ class MktgExportsController < ApplicationController
   end
 
   def sequoia
+    active_auto_renew = AutoRenewList.pluck(:uid)
     if params['campaign'] == 'Return Customer' && params['des'] == 'cpa'#CREATE the record just with UID
-      SequoiaMember.where(membership_exp: @dates).where(cpa: true).all.each do |i|
+      SequoiaMember.where(membership_exp: @dates).where(cpa: true).where.not(uid: active_auto_renew).all.each do |i|
         MktgExport.create(uid: i.uid, exp: i.membership_exp, campaign: 'Return Customer', des: 'cpa')
       end
     elsif params['campaign'] == 'Return Customer' && params['des'] == 'ea'#CREATE the record just with UID
-      SequoiaMember.where(membership_exp: @dates).where(ea: true).all.each do |i|
+      SequoiaMember.where(membership_exp: @dates).where(ea: true).where.not(uid: active_auto_renew).all.each do |i|
         MktgExport.create(uid: i.uid, exp: i.membership_exp, campaign: 'Return Customer', des: 'ea')
       end
     elsif params['campaign'] == 'New Customer' && params['des'] == 'cpa'
@@ -86,11 +90,8 @@ class MktgExportsController < ApplicationController
       end
     end
 
-    # MktgExport.all.each do |i| #Add the remaining customer infomation
-    #   customer_data = SequoiaCustomer.find_by(uid: i.uid)
-    #   MktgExport.where(uid: i.uid).update_all email: customer_data.email, fname: customer_data.fname, lname: (customer_data.lname), street_1: customer_data.street_1, street_2: customer_data.street_2, city: customer_data.city, state: customer_data.state, zip: customer_data.zip
-    # end
-    MktgExport.all.each do |i| #Add the remaining customer infomation, USE NCOA WHEN AVAILIABLE
+    #Add the remaining customer infomation, USE NCOA WHEN AVAILIABLE
+    MktgExport.all.each do |i|
       ncoa_customer_data = SequoiaNcoa.find_by(uid: i.uid)
       customer_data = SequoiaCustomer.find_by(uid: i.uid)
       if ncoa_customer_data.present?
@@ -117,13 +118,14 @@ class MktgExportsController < ApplicationController
   end
 
   def empire
-    if params['campaign'] == 'New Customer' ##### EMPIRE NC (IF NEEDED IN FUTURE)
-      states = params['empire_st'].upcase.split()
-      EmpireMember.where(first_purchase: @dates).where(state: states).all.each do |i|
-        MktgExport.create(uid: i.uid, exp: i.first_purchase, campaign: params['campaign'], des: i.state).save
-      end
-    end
-
+    ##### EMPIRE NC (IF NEEDED IN FUTURE)
+    # if params['campaign'] == 'New Customer'
+    #   states = params['empire_st'].upcase.split()
+    #   EmpireMember.where(first_purchase: @dates).where(state: states).all.each do |i|
+    #     MktgExport.create(uid: i.uid, exp: i.first_purchase, campaign: params['campaign'], des: i.state).save
+    #   end
+    # end
+    ##### EMPIRE RC
     if params['campaign'] == 'Return Customer' ##### EMPIRE RC
       states = params['empire_st'].upcase.split()
       EmpireMasterMatch.where(exp: @dates).where(lic_st: states).all.each do |i|
@@ -136,24 +138,36 @@ class MktgExportsController < ApplicationController
       end
     end
 
-    if params['campaign'] == 'Nm Direct' ##### NEW MEXICO DIRECT MAIL - INHOUSE PROSPECTIVE CUSTOMERS
+    ##### NEW MEXICO DIRECT MAIL - INHOUSE PROSPECTIVE CUSTOMERS
+    if params['campaign'] == 'Nm Direct'
       states = params['empire_st'].upcase.split()
-      # EmpireMasterMatch.where(lic_st: 'NM').pluck() ##Once i have matching done
       customer_lic_number = EmpireCustomer.where(lic_state: 'NM').pluck(:lic_num)
 
       EmpireMasterNmList.where(exp_date: @dates).where.not(lic: customer_lic_number).where.not(bad: true).all.each do |i|
         MktgExport.create(uid: i.lid, exp: i.exp_date, campaign: params['campaign'], des: i.lic_state, fname: i.fname, lname: i.lname, street_1: i.add, street_2: i.add2, city: i.city, state: i.st, zip: i.zip).save
       end
     end
-
-    unless params['campaign'] == 'Nm Direct'
+    #Add the remaining customer infomation
+    if params['campaign'] == 'Return Customer'
       MktgExport.all.each do |i| #Add the remaining customer infomation
-        customer_data = EmpireCustomer.find_by(uid: i.uid)
+        customer_data = EmpireCustomer.order(purchase: :DESC).find_by(uid: i.uid)
         MktgExport.where(uid: i.uid).update_all email: customer_data.email, fname: customer_data.fname, lname: (customer_data.lname), street_1: customer_data.street_1, street_2: customer_data.street_2, city: customer_data.city, state: customer_data.state, zip: customer_data.zip
       end
     end
-    MktgExport.where(des: 'NY').update_all text_1: '22.5-Hour New York CE Package',text_2: '$59.99',text_3: 'Take an additional 10% off - Use Code:', text_4: 'ReturningStudent21'
-    MktgExport.where(des: 'CA').update_all text_1: '45-Hour California CE Package',text_2: '$47.99',text_3: 'Take an additional 10% off - Use Code:', text_4: 'ReturningStudent21'
+    # ADD TEXT FOR PRINT
+    if params['delivery_type'].present? && params['delivery_type'].upcase == 'postcard'.upcase
+      MktgExport.where(des: 'NY').update_all text_1: '22.5-Hour New York CE Package',text_2: '$59.99',text_3: 'Take an additional 10% off - Use Code:', text_4: 'ReturningStudent21'
+      MktgExport.where(des: 'CA').update_all text_1: '45-Hour California CE Package',text_2: '$47.99',text_3: 'Take an additional 10% off - Use Code:', text_4: 'ReturningStudent21'
+    elsif params['delivery_type'].present? && params['delivery_type'].upcase == 'email'.upcase
+      MktgExport.where(des: 'NY').update_all text_1: 'NY Email Text One Test'
+      MktgExport.where(des: 'CA').update_all text_1: 'CA Email Text One Test'
+    end
+
+    ## FOR EMAIL - REMOVE ANYONE WHO DOES NOT HAVE AN EMAIL ADDRESS (CA Has Old one without emails)
+    if params['delivery_type'].present? && params['delivery_type'].upcase == 'email'.upcase
+      MktgExport.where(email: nil).delete_all
+    end
+
   end
 
   def print

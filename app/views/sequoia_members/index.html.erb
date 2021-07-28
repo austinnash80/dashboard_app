@@ -72,6 +72,7 @@
   <tr class="bg-secondary bg-gradient text-light">
         <th>Uid</th>
         <th>Lname</th>
+        <th>Auto-Renew Active</th>
         <th>First purchase</th>
         <th>Last purchase</th>
         <th>Memebership EXP</th>
@@ -101,9 +102,11 @@
       <% end %>
 
       <% sequoia_member.order(last_purchase: :desc, first_purchase: :desc, uid: :desc).limit(500).each do |sequoia_member| %>
+        <% auto_renew = AutoRenewList.find_by(uid: sequoia_member.uid) %>
         <tr>
           <td><a target="_blank" href="https://www.sequoiacpe.com/admin/user-profile?u=<%= sequoia_member.uid %>"><%= sequoia_member.uid %></a></td>
           <td><%= sequoia_member.lname %></td>
+          <td><%= auto_renew.present? ? 'YES' : 'NO' %></td>
           <td><%= sequoia_member.first_purchase %></td>
           <td><%= sequoia_member.last_purchase %></td>
           <td><%= sequoia_member.membership_exp %></td>

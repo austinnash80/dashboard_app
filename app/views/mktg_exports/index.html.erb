@@ -1,15 +1,16 @@
 
-<h1 class="text-center"><%= params['co'].present? ? params['co'].titlecase : ''%> MKTG Exports</h1>
+<h1 class="text-center fw-bold">MKTG Exports</h1>
 
-<% params['co'] == 'sequoia' ? sequoia_active = 'btn-secondary' : sequoia_active = 'btn-primary' %>
-<% params['co'] == 'empire' ? empire_active = 'btn-secondary' : empire_active = 'btn-primary' %>
-
-<div class="text-center ">
-  <div class="btn-group" role="group" aria-label="Basic example">
-    <%= link_to 'Sequoia', mktg_exports_path(co: 'sequoia', delete: 'yes'), class: "#{sequoia_active} btn btn-primary text-light mt-2 w200" %>
-    <%= link_to 'Empire', mktg_exports_path(co: 'empire', delete: 'yes'), class: "#{empire_active} btn btn-primary text-light mt-2 w200" %>
+<% unless params['run'] == 'yes' %>
+  <% params['co'] == 'sequoia' ? sequoia_active = 'btn-secondary' : sequoia_active = 'btn-primary' %>
+  <% params['co'] == 'empire' ? empire_active = 'btn-secondary' : empire_active = 'btn-primary' %>
+  <div class="text-center ">
+    <div class="btn-group" role="group" aria-label="Basic example">
+      <%= link_to 'Sequoia', mktg_exports_path(co: 'sequoia', delete: 'yes'), class: "#{sequoia_active} btn btn-primary text-light mt-2 w200" %>
+      <%= link_to 'Empire', mktg_exports_path(co: 'empire', delete: 'yes'), class: "#{empire_active} btn btn-primary text-light mt-2 w200" %>
+    </div>
   </div>
-</div>
+<% end %>
 <p id="notice" class="text-center fw-bold"><%= notice %></p>
 
 <!-- UPLOAD, DELETE, EXPORT, PRINT -->
@@ -31,10 +32,11 @@
 <br>
 <br>
   <p><%= link_to 'Export List (csv)', mktg_exports_path('csv'), class: 'btn btn-sm btn-secondary text-light mt-2 w200' %></p>
-  <p><%= link_to 'Print View', print_mktg_exports_path(co: params['co'], campaign: params['campaign'], des: params['des']), class: 'btn btn-sm btn-success text-light mt-2 w200', target: '_blank' %> </p>
+  <% unless params['delivery_type'].present?  && params['delivery_type'].upcase == 'EMAIL' %><p><%= link_to 'Print View', print_mktg_exports_path(co: params['co'], campaign: params['campaign'], des: params['des']), class: 'btn btn-sm btn-success text-light mt-2 w200', target: '_blank' %></p><% end %>
 <!-- END UPLOAD, DELETE, EXPORT, PRINT -->
 
 <div class="m-5">
+<% unless params['run'] == 'yes' %>
 <!-- INPUT FIELDS -->
 <% if params['co'].present? %>
   <div class="row">
@@ -89,9 +91,23 @@
     </div>
   <% end %>
 <!-- END CAMPAIGN BUTTONS -->
+<% else %> <!-- RUN == YES -->
+<h4 class="fw-bold">Campaign Details</h4>
+<ul>
+  <li><strong>Mail Day:</strong> <%= params['mail_day'].present? ? params['mail_day'].to_date.strftime('%-m/%-d/%Y') : '' %></li>
+  <li><strong>Company:</strong> <%= params['co'].present? ? params['co'].titlecase : '' %></li>
+  <li><strong>Campaign Type:</strong> <%= params['campaign'].present? ? params['campaign'].titlecase : '' %></li>
+  <li><strong>Delivery:</strong> <%= params['delivery_type'].present? ? params['delivery_type'].titlecase : '' %></li>
+  <li><strong>Segment:</strong> <%= params['des'].present? ? params['des'].titlecase : '' %></li>
+  <% if params['range_1_date_1'].present? && params['range_1_date_2'].present? %><li><strong>Date Range 1:</strong> <%= params['range_1_date_1'].to_date.strftime('%-m/%-d/%Y') %> - <%= params['range_1_date_2'].to_date.strftime('%-m/%-d/%Y') %> <% unless params['campaign'].present? && params['campaign'].upcase == 'NEW CUSTOMER' %>(<strong><%= ((params['range_1_date_1'].to_date - params['mail_day'].to_date).to_i + (params['range_1_date_2'].to_date - params['mail_day'].to_date).to_i) / 2 %></strong> avg days between mail date and EXP)<% end %></li><% end %>
+  <% if params['range_2_date_1'].present? && params['range_2_date_2'].present? %><li><strong>Date Range 2:</strong> <%= params['range_2_date_1'].to_date.strftime('%-m/%-d/%Y') %> - <%= params['range_2_date_2'].to_date.strftime('%-m/%-d/%Y') %> <% unless params['campaign'].present? && params['campaign'].upcase == 'NEW CUSTOMER' %>(<strong><%= ((params['range_2_date_1'].to_date - params['mail_day'].to_date).to_i + (params['range_2_date_2'].to_date - params['mail_day'].to_date).to_i) / 2 %></strong> avg days between mail date and EXP)<% end %></li><% end %>
+  <% if params['range_3_date_1'].present? && params['range_3_date_2'].present? %><li><strong>Date Range 3:</strong> <%= params['range_3_date_1'].to_date.strftime('%-m/%-d/%Y') %> - <%= params['range_3_date_2'].to_date.strftime('%-m/%-d/%Y') %> <% unless params['campaign'].present? && params['campaign'].upcase == 'NEW CUSTOMER' %>(<strong><%= ((params['range_3_date_1'].to_date - params['mail_day'].to_date).to_i + (params['range_3_date_2'].to_date - params['mail_day'].to_date).to_i) / 2 %></strong> avg days between mail date and EXP)<% end %></li><% end %>
+  <li><strong>Campaign Description:</strong></li>
+</ul>
 
+<% end %>
 <br>
-<h6 class="text-center text-success fw-bold"><%= @dates.present? ? "New dates displayed: #{(@dates.uniq.map{ |date| date.strftime("%Y-%m-%d") }).join(', ')}" : '' %></h6>
+<!-- <h6 class="text-center text-success fw-bold"><%= @dates.present? ? "New dates displayed: #{(@dates.uniq.map{ |date| date.strftime("%Y-%m-%d") }).join(', ')}" : '' %></h6> -->
 <table class="table table-striped">
 <thead>
 <caption class="caption-top">Total Records: <%= number_with_delimiter(MktgExport.count) %> | Display Limit: 250</caption>

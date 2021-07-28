@@ -9,13 +9,16 @@
 <table class="table table-striped">
   <thead>
     <tr class="bg-secondary bg-gradient text-light">
-      <th width="10%">Company</th>
+      <th width="5%">Company</th>
       <th width="5%">Segment</th>
       <th width="10%">Campaign</th>
+      <th width="10%">Delivery</th>
       <th width="10%">Range 1A</th>
       <th width="10%">Range 1B</th>
       <th width="10%">Range 2A</th>
       <th width="10%">Range 2B</th>
+      <th width="10%">Range 3A</th>
+      <th width="10%">Range 3B</th>
       <th width="10%"></th>
       <th width="10%"></th>
       <th width="10%"></th>
@@ -28,10 +31,13 @@
         <td><%= i.company %></td>
         <td><%= i.segment %></td>
         <td><%= i.campaign %></td>
+        <td class="fw-bold"><%= i.delivery_type %></td>
         <td><%= i.range_1_a %></td>
         <td><%= i.range_1_b %></td>
         <td><%= i.range_2_a %></td>
         <td><%= i.range_2_b %></td>
+        <td><%= i.range_3_a %></td>
+        <td><%= i.range_3_b %></td>
         <% if i.done? %>
           <td class="text-success fw-bold">Done</td>
           <td class="fw-bold"><%= number_with_delimiter(i.sent) %></td>
@@ -41,7 +47,7 @@
           <td><strong>Drop:</strong> <%= i.drop_day.present? ? i.drop_day.strftime('%-m/%d/%y') : '' %></td>
           <td><strong>Land:</strong> <%= i.land_day.present? ? i.land_day.strftime('%-m/%d/%y') : ''  %></td>
         <% else %>
-          <td><%= link_to 'Run', mktg_exports_path(campaign: i.campaign.titlecase, co: i.company.downcase, des: i.segment, range_1_date_1: i.range_1_a, range_1_date_2: i.range_1_b, range_2_date_1: i.range_2_a, range_2_date_2: i.range_2_b, empire_st: i.segment), target: '_blank', class: 'btn btn-sm btn-primary gb-gradient w100 text-light' %></td>
+          <td><%= link_to 'Run', mktg_exports_path(run: 'yes', campaign_id: i.campaign_id,  mail_day: i.mail_day, campaign: i.campaign.titlecase, co: i.company.downcase, des: i.segment, delivery_type: i.delivery_type, range_1_date_1: i.range_1_a, range_1_date_2: i.range_1_b, range_2_date_1: i.range_2_a, range_2_date_2: i.range_2_b, range_3_date_1: i.range_3_a, range_3_date_2: i.range_3_b, empire_st: i.segment), target: '_blank', class: 'btn btn-sm btn-primary gb-gradient w100 text-light' %></td>
           <td><%= text_field_tag "id", '', class: "sent_field form-control w150", value: i.sent, placeholder: '' %></td>
           <td><%= link_to 'Done', day_mktg_postcards_path(day: @day, campaign_id: i.id), class: "sent_link btn btn-sm btn-primary gb-gradient w100 text-light" %></td>
         <% end %>

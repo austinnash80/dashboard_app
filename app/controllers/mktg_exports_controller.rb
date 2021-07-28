@@ -50,16 +50,22 @@ class MktgExportsController < ApplicationController
       if r1d2.blank?
         r1d2 = r1d1
       end
-      if r2d1.blank?
-        r2d1 = r1d1
-        r2d2 = r1d1
-      elsif r2d2.blank?
-        r2d2 = r2d1
-      end
+      # if r2d1.blank?
+      #   r2d1 = r1d1
+      #   r2d2 = r1d1
+      # elsif r2d2.blank?
+      #   r2d2 = r2d1
+      # end
       # Push dates into @dates Array
-      (r1d1..r1d2).each do |i| @dates.push(i) end
-      (r2d1.to_date..r2d2).each do |i| @dates.push(i) end
-      (r3d1.to_date..r3d2).each do |i| @dates.push(i) end
+      if r1d1.present? && r1d2.present?
+        (r1d1..r1d2).each do |i| @dates.push(i) end
+      end
+      if r2d1.present? && r2d2.present?
+        (r2d1.to_date..r2d2).each do |i| @dates.push(i) end
+      end
+      if r3d1.present? && r3d2.present?
+        (r3d1.to_date..r3d2).each do |i| @dates.push(i) end
+      end
 
       if params['co'] == 'sequoia'
         sequoia

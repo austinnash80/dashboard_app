@@ -155,6 +155,6 @@ class SequoiaMembersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def sequoia_member_params
-      params.require(:sequoia_member).permit(:uid, :lname, :first_purchase, :last_purchase, :cpa, :cpa_memberships, :ea, :ea_memberships, :afsp, :afsp_purchases, :ethics, :ethics_purchases, :other, :membership_exp, :discount_exp)
+      params.require(:sequoia_member).permit(:uid, :lname, :first_purchase, :last_purchase, :cpa, :cpa_memberships, :ea, :ea_memberships, :afsp, :afsp_purchases, :ethics, :ethics_purchases, :other, :membership_exp, :discount_exp, :email_unsubscribe)
     end
 end

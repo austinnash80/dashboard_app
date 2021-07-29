@@ -101,6 +101,6 @@ class EmpireMembersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def empire_member_params
-      params.require(:empire_member).permit(:uid, :lname, :first_purchase, :last_purchase, :state, :purchases)
+      params.require(:empire_member).permit(:uid, :lname, :first_purchase, :last_purchase, :state, :purchases, :email_unsubscribe)
     end
 end

@@ -32,7 +32,7 @@ class EmpireMembersController < ApplicationController
     @e_id = (IdNumberStorage.pluck(:empire_member_e_id))[0]
       EmpireCustomer.where('e_id > ?', @e_id).order(id: :asc).each do |i|
         member = EmpireMember.find_by(uid: i.uid)
-        EmpireMember.where(uid: i.uid).update_all state: i.lic_state, last_purchase: i.purchase, purchases: (member.purchases + 1)
+        EmpireMember.where(uid: i.uid).update_all state: i.lic_state, last_purchase: i.purchase, lic_num: i.lic_numb, email: i.email, purchases: (member.purchases + 1)
         IdNumberStorage.update_all empire_member_e_id: i.e_id
       end
       redirect_to empire_members_path(), notice: 'Purchase Update Complete'
@@ -101,6 +101,6 @@ class EmpireMembersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def empire_member_params
-      params.require(:empire_member).permit(:uid, :lname, :first_purchase, :last_purchase, :state, :purchases, :email_unsubscribe)
+      params.require(:empire_member).permit(:uid, :lname, :first_purchase, :last_purchase, :state, :purchases, :email_unsubscribe, :email, :lic_num)
     end
 end

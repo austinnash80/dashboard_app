@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_29_174736) do
+ActiveRecord::Schema.define(version: 2021_08_06_185317) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -272,6 +272,8 @@ ActiveRecord::Schema.define(version: 2021_07_29_174736) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.boolean "email_unsubscribe"
+    t.string "email"
+    t.string "lic_num"
     t.index ["uid"], name: "index_empire_members_on_uid", unique: true
   end
 
@@ -550,6 +552,7 @@ ActiveRecord::Schema.define(version: 2021_07_29_174736) do
     t.date "membership_exp"
     t.date "discount_exp"
     t.boolean "email_unsubscribe"
+    t.string "email"
     t.index ["uid"], name: "index_sequoia_members_on_uid", unique: true
   end
 

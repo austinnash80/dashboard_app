@@ -15,7 +15,7 @@ class SequoiaMember < ApplicationRecord
 
   # EXPORT
     def self.to_csv # Export to csv function
-      attributes = %w{uid lname first_purchase last_purchase membership_exp discount_exp cpa cpa_memberships ea ea_memberships afsp afsp_purchases ethics ethics_purchases other email_unsubscribe}
+      attributes = %w{uid lname email first_purchase last_purchase membership_exp discount_exp cpa cpa_memberships ea ea_memberships afsp afsp_purchases ethics ethics_purchases other email_unsubscribe}
       CSV.generate(headers: true) do |csv|
         csv << attributes
           all.each do |i|

@@ -42,12 +42,12 @@
           <td class="text-success fw-bold">Done</td>
           <td class="fw-bold"><%= number_with_delimiter(i.sent) %></td>
           <td></td>
-        <% elsif i.campaign == 'Direct Mail' %>
-          <td class="fw-bold">MSI</td>
-          <td><strong>Drop:</strong> <%= i.drop_day.present? ? i.drop_day.strftime('%-m/%d/%y') : '' %></td>
-          <td><strong>Land:</strong> <%= i.land_day.present? ? i.land_day.strftime('%-m/%d/%y') : ''  %></td>
         <% else %>
-          <td><%= link_to 'Run', mktg_exports_path(run: 'yes', campaign_id: i.campaign_id,  mail_day: i.mail_day, campaign: i.campaign.titlecase, co: i.company.downcase, des: i.segment, delivery_type: i.delivery_type, range_1_date_1: i.range_1_a, range_1_date_2: i.range_1_b, range_2_date_1: i.range_2_a, range_2_date_2: i.range_2_b, range_3_date_1: i.range_3_a, range_3_date_2: i.range_3_b, empire_st: i.segment), target: '_blank', class: 'btn btn-sm btn-primary gb-gradient w100 text-light' %></td>
+          <% if i.campaign == 'Direct Mail' %>
+            <td><strong>Drop:</strong> <%= i.drop_day.present? ? i.drop_day.strftime('%-m/%d/%y') : '' %></td>
+          <% else %>
+            <td><%= link_to 'Run', mktg_exports_path(run: 'yes', campaign_id: i.campaign_id,  mail_day: i.mail_day, campaign: i.campaign.titlecase, co: i.company.downcase, des: i.segment, delivery_type: i.delivery_type, range_1_date_1: i.range_1_a, range_1_date_2: i.range_1_b, range_2_date_1: i.range_2_a, range_2_date_2: i.range_2_b, range_3_date_1: i.range_3_a, range_3_date_2: i.range_3_b, empire_st: i.segment), target: '_blank', class: 'btn btn-sm btn-primary gb-gradient w100 text-light' %></td>
+          <% end %>
           <td><%= text_field_tag "id", '', class: "sent_field form-control w150", value: i.sent, placeholder: '' %></td>
           <td><%= link_to 'Done', day_mktg_postcards_path(day: @day, campaign_id: i.id), class: "sent_link btn btn-sm btn-primary gb-gradient w100 text-light" %></td>
         <% end %>

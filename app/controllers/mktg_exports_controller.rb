@@ -165,8 +165,8 @@ class MktgExportsController < ApplicationController
       MktgExport.where(des: 'NY').update_all text_1: '22.5-Hour New York CE Package',text_2: '$59.99',text_3: 'Take an additional 10% off - Use Code:', text_4: 'ReturningStudent21'
       MktgExport.where(des: 'CA').update_all text_1: '45-Hour California CE Package',text_2: '$47.99',text_3: 'Take an additional 10% off - Use Code:', text_4: 'ReturningStudent21'
     elsif params['delivery_type'].present? && params['delivery_type'].upcase == 'email'.upcase
-      MktgExport.where(des: 'NY').update_all text_1: 'NY Email Text One Test'
-      MktgExport.where(des: 'CA').update_all text_1: 'CA Email Text One Test'
+      MktgExport.where(des: 'NY').update_all text_1: 'NY 22.5hr packages only $59.99'
+      MktgExport.where(des: 'CA').update_all text_1: 'CA 45hr packages only $47.99'
     end
 
     ## FOR EMAIL - REMOVE ANYONE WHO DOES NOT HAVE AN EMAIL ADDRESS (CA Has Old one without emails)

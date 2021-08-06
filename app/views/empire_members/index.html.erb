@@ -41,9 +41,11 @@
     <tr class="bg-secondary bg-gradient text-light">
       <th>Uid</th>
       <th>Lname</th>
+      <th>Email</th>
       <th>First purchase</th>
       <th>Last purchase</th>
       <th>State</th>
+      <th>Lic Num</th>
       <th>Purchases</th>
       <th>Email Unsubscribe</th>
       <th colspan="1"></th>
@@ -65,9 +67,11 @@
       <tr>
         <td><a target="_blank" href="https://www.empirelearning.com/admin/user-profile?u=<%= empire_member.uid %>"><%= empire_member.uid %></a></td>
         <td><%= empire_member.lname %></td>
+        <td><%= empire_member.email %></td>
         <td><%= empire_member.first_purchase %></td>
         <td><%= empire_member.last_purchase %></td>
         <td><%= empire_member.state %></td>
+        <td><%= empire_member.lic_num %></td>
         <td><%= empire_member.purchases %></td>
         <% if empire_member.email_unsubscribe? %><td class="text-success">true</td><% else %><td>false</td><% end %>
         <td><%= link_to 'Info', empire_member, class: 'btn btn-sm btn-info bg-gradient text-dark w100' %></td>

@@ -45,3 +45,11 @@ restart = ['1-Year CPA Membership Discounted Re-Activation', '1-Year CPA Members
       end
     end
   end
+
+
+EmpireCustomer.order(purchase: :asc).each do |i|
+ member = EmpireMember.find_by(uid: i.uid)
+  if member.present?
+   EmpireMember.where(uid: i.uid).update_all email: i.email, lic_num: i.lic_num
+  end
+end

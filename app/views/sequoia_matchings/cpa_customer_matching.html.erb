@@ -34,21 +34,25 @@
     </thead>
     <tbody>
       <tr>
-        <td><%= sequoia.uid %></td>
-        <td><%= sequoia.lic_state %></td>
-        <td><%= sequoia.lic_num %></td>
-        <td><%= sequoia.purchase %></td>
-        <td><%= sequoia.fname %></td>
-        <td><%= sequoia.lname %></td>
-        <td><%= sequoia.street_1 %></td>
-        <td><%= sequoia.street_2 %></td>
-        <td><%= sequoia.city %></td>
-        <td><%= sequoia.state %></td>
-        <td><%= sequoia.zip %></td>
-        <% if params['lname'].present? %>
-          <td><%= link_to 'No Match', sequoia_matchings_cpa_customer_matching_path(no_match: 'yes', uid: sequoia.uid), class: 'btn btn-sm btn-danger text-light w100' %></td>
+        <% if sequoia.blank? %>
+          <td colspan="12">No More Records</td>
         <% else %>
-          <td><%= link_to 'Search', sequoia_matchings_cpa_customer_matching_path(lname: sequoia.lname, uid: sequoia.uid), class: 'btn btn-sm btn-info text-light w100' %></td>
+          <td><%= sequoia.uid %></td>
+          <td><%= sequoia.lic_state %></td>
+          <td><%= sequoia.lic_num %></td>
+          <td><%= sequoia.purchase %></td>
+          <td><%= sequoia.fname %></td>
+          <td><%= sequoia.lname %></td>
+          <td><%= sequoia.street_1 %></td>
+          <td><%= sequoia.street_2 %></td>
+          <td><%= sequoia.city %></td>
+          <td><%= sequoia.state %></td>
+          <td><%= sequoia.zip %></td>
+          <% if params['lname'].present? %>
+            <td><%= link_to 'No Match', sequoia_matchings_cpa_customer_matching_path(no_match: 'yes', uid: sequoia.uid), class: 'btn btn-sm btn-danger text-light w100' %></td>
+          <% else %>
+            <td><%= link_to 'Search', sequoia_matchings_cpa_customer_matching_path(lname: sequoia.lname, uid: sequoia.uid), class: 'btn btn-sm btn-info text-light w100' %></td>
+          <% end %>
         <% end %>
       </tr>
     </tbody>

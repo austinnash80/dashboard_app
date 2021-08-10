@@ -72,41 +72,36 @@
       </tr>
     </thead>
     <tbody id="myTable">
-      <% if params['course_number'].present? %>
-        <% courses_pacifics = CoursesPacific.where(number: params['course_number'].to_i).all %>
-      <% else %>
-        <% courses_pacifics = CoursesPacific.all %>
-      <% end %>
-      <% courses_pacifics.order(number: :ASC).each do |courses_pacific| %>
+      <!-- Search Course --><% if params['course_number'].present? %><% courses_pacifics = CoursesPacific.where(number: params['course_number'].to_i).all %><% else %><% courses_pacifics = CoursesPacific.all %><% end %>
+      <% courses_pacifics.order(number: :ASC).order(version: :ASC).each do |courses_pacific| %>
         <% sequoia_course_version = CoursesSequoium.find_by(number: courses_pacific.sequoia_number, version: courses_pacific.sequoia_version) %>
         <% if courses_pacific.active? && sequoia_course_version.active? == false %><% color = 'bg-warning bg-gradient'%><% end %>
-
-      <tr class="<%= color %>">
-          <% if courses_pacific.active?  %>
-            <td class="fw-bold text-success">Active</td>
-          <% elsif courses_pacific.update_sheet? %>
-            <td class="fw-bold">In Progess</td>
-          <% elsif courses_pacific.active? == false %>
-            <td class="fw-bold text-danger">Inactive</td>
-          <% end %>
-          <td class="fw-bold"><%= link_to courses_pacific.number , courses_pacific, class: 'link_style text-primary' %></td>
-          <td><%= courses_pacific.version %></td>
-          <td><%= courses_pacific.title %></td>
-          <td><%= courses_pacific.hours %></td>
-          <td><%= courses_pacific.category %></td>
-          <td><%= courses_pacific.sub_category %></td>
-          <td><%= courses_pacific.pub_date %></td>
-          <td><%= courses_pacific.sequoia_number %><%= courses_pacific.sequoia_version %></td>
-          <% if sequoia_course_version.active? %>
-            <td class="fw-bold text-success">YES</td>
-          <% else %>
-            <td class="fw-bold text-danger">NO</td>
-          <% end %>
-          <td><%= courses_pacific.notes %></td>
-          <td><%= link_to 'Master', courses_pacific %></td>
-          <td><%= link_to 'Edit', edit_courses_pacific_path(courses_pacific) %></td>
-          <td><%= link_to 'X', courses_pacific, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-        </tr>
+        <tr class="<%= color %>">
+            <% if courses_pacific.active?  %>
+              <td class="fw-bold text-success">Active</td>
+            <% elsif courses_pacific.update_sheet? %>
+              <td class="fw-bold">In Progess</td>
+            <% elsif courses_pacific.active? == false %>
+              <td class="fw-bold text-danger">Inactive</td>
+            <% end %>
+            <td class="fw-bold"><%= link_to courses_pacific.number , courses_pacific, class: 'link_style text-primary' %></td>
+            <td><%= courses_pacific.version %></td>
+            <td><%= courses_pacific.title %></td>
+            <td><%= courses_pacific.hours %></td>
+            <td><%= courses_pacific.category %></td>
+            <td><%= courses_pacific.sub_category %></td>
+            <td><%= courses_pacific.pub_date %></td>
+            <td><%= courses_pacific.sequoia_number %><%= courses_pacific.sequoia_version %></td>
+            <% if sequoia_course_version.active? %>
+              <td class="fw-bold text-success">YES</td>
+            <% else %>
+              <td class="fw-bold text-danger">NO</td>
+            <% end %>
+            <td><%= courses_pacific.notes %></td>
+            <td><%= link_to 'Master', courses_pacific %></td>
+            <td><%= link_to 'Edit', edit_courses_pacific_path(courses_pacific) %></td>
+            <td><%= link_to 'X', courses_pacific, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          </tr>
       <% end %>
     </tbody>
   </table>

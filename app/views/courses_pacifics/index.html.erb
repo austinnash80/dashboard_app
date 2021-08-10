@@ -66,7 +66,7 @@
         <th>Pub date</th>
         <th>Sequoia Course</th>
         <th>Sequoia Active</th>
-        <th>In Progess</th>
+        <!-- <th>In Progess</th> -->
         <th>Notes</th>
         <th colspan="3"></th>
       </tr>
@@ -79,12 +79,14 @@
       <% end %>
       <% courses_pacifics.order(number: :ASC).each do |courses_pacific| %>
         <% sequoia_course_version = CoursesSequoium.find_by(number: courses_pacific.sequoia_number, version: courses_pacific.sequoia_version) %>
-        <% if courses_pacific.active? && sequoia_course_version.active? == false %><% color = 'bg-warning'%><% end %>
+        <% if courses_pacific.active? && sequoia_course_version.active? == false %><% color = 'bg-warning bg-gradient'%><% end %>
 
       <tr class="<%= color %>">
           <% if courses_pacific.active?  %>
             <td class="fw-bold text-success">Active</td>
-          <% else %>
+          <% elsif courses_pacific.update_sheet? %>
+            <td class="fw-bold">In Progess</td>
+          <% elsif courses_pacific.active? == false %>
             <td class="fw-bold text-danger">Inactive</td>
           <% end %>
           <td class="fw-bold"><%= link_to courses_pacific.number , courses_pacific, class: 'link_style text-primary' %></td>
@@ -100,7 +102,6 @@
           <% else %>
             <td class="fw-bold text-danger">NO</td>
           <% end %>
-          <% if courses_pacific.update_sheet?  %><td class="fw-bold">YES</td><% else %><td></td><% end %>
           <td><%= courses_pacific.notes %></td>
           <td><%= link_to 'Master', courses_pacific %></td>
           <td><%= link_to 'Edit', edit_courses_pacific_path(courses_pacific) %></td>

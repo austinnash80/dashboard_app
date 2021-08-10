@@ -79,7 +79,9 @@
       <% end %>
       <% courses_pacifics.order(number: :ASC).each do |courses_pacific| %>
         <% sequoia_course_version = CoursesSequoium.find_by(number: courses_pacific.sequoia_number, version: courses_pacific.sequoia_version) %>
-        <tr>
+        <% if courses_pacific.active? && sequoia_course_version.active? == false %><% color = 'bg-warning'%><% end %>
+
+      <tr class="<%= color %>">
           <% if courses_pacific.active?  %>
             <td class="fw-bold text-success">Active</td>
           <% else %>
@@ -98,10 +100,10 @@
           <% else %>
             <td class="fw-bold text-danger">NO</td>
           <% end %>
-          <% if courses_pacific.update_sheet?  %><td class="fw-bold text-success">YES</td><% else %><td></td><% end %>
+          <% if courses_pacific.update_sheet?  %><td class="fw-bold">YES</td><% else %><td></td><% end %>
           <td><%= courses_pacific.notes %></td>
           <td><%= link_to 'Master', courses_pacific %></td>
-          <!-- <td><%#= link_to 'Edit', edit_courses_pacific_path(courses_pacific) %></td> -->
+          <td><%= link_to 'Edit', edit_courses_pacific_path(courses_pacific) %></td>
           <td><%= link_to 'X', courses_pacific, method: :delete, data: { confirm: 'Are you sure?' } %></td>
         </tr>
       <% end %>

@@ -1,11 +1,15 @@
 <p id="notice"><%= notice %></p>
 
 <div class="text-center">
-  <h1>Pacific Courses </h1>
+  <h1 class="">Pacific</h1>
+  <%# Button Colors %>
+    <% if params['display'] == 'pacific_courses' || params['display'].blank? %><% pacific_color = 'btn-secondary' %><% else %> <% pacific_color = 'btn-primary' %><% end %>
+    <% if params['display'] == 'master_courses' %><% master_color = 'btn-secondary' %><% else %> <% master_color = 'btn-primary' %><% end %>
+    <% if params['display'] == 'in_progress' %><% in_progress_color = 'btn-secondary' %><% else %> <% in_progress_color = 'btn-primary' %><% end %>
   <div class="m-2 btn-group">
-    <%= link_to 'Master Courses', courses_pacifics_path(), class: 'btn btn-sm btn-primary text-light bg-gradient w150' %>
-    <%= link_to 'Pacific Courses', courses_pacifics_path(display: 'pacific_courses'), class: 'btn btn-sm btn-primary text-light bg-gradient w150' %>
-    <%= link_to 'In Progress', courses_pacifics_path(display: 'in_progress'), class: 'btn btn-sm btn-primary text-light bg-gradient w150' %>
+    <%= link_to 'Master Courses', courses_pacifics_path(display: 'master_courses'), class: "btn btn-sm #{master_color} text-light bg-gradient w150" %>
+    <%= link_to 'Pacific Courses', courses_pacifics_path(display: 'pacific_courses'), class: "btn btn-sm #{pacific_color} text-light bg-gradient w150" %>
+    <%= link_to "In Progress (#{CoursesPacific.where(update_sheet: true).count})", courses_pacifics_path(display: 'in_progress'), class: "btn btn-sm #{in_progress_color} text-light bg-gradient w150" %>
   </div>
 </div>
 
@@ -29,21 +33,30 @@
 
 
 <div class="m-5">
-  <div class="w300">
-    <%= text_field_tag "id", '', class: "course_number_field form-control", value: params['course_number'], placeholder: 'Search All Pacific Courses' %>
-  <br>
-    <%= link_to 'Search', courses_pacifics_path(display: params['dispay']), class: 'search_link btn btn-sm btn-primary gb-gradient w150 text-light' %>
+
+
+<% if params['display'] == 'pacific_courses' || params['display'].blank? %>
+  <h2 class="text-center">Pacific Courses</h2>
+  <div class="row">
+    <div class="col-lg-2">
+        <%= text_field_tag "id", '', class: "course_number_field form-control", value: params['course_number'], placeholder: 'Search All (course number)' %>
+        <%= link_to 'Go', courses_pacifics_path(display: params['dispay']), class: 'search_link btn btn-sm btn-primary gb-gradient w100 text-light' %>
+    </div>
+    <div class="col-lg-2">
+      <input class="form-control" id="myInput" type="text" placeholder="Filter Table">
+    </div>
+    <div class="col-lg-4">
+      <div class="text-center">
+        <%= link_to 'Add New Course', new_courses_pacific_path, class: 'btn btn-sm btn-primary gb-gradient w200 text-light' %>
+      </div>
+    </div>
   </div>
   <br>
-  <p><%= link_to 'Add New Course', new_courses_pacific_path, class: 'btn btn-sm btn-primary gb-gradient w150 text-light' %></p>
-
-  <div class="w300 mb-3 mt-4"><input class="form-control" id="myInput" type="text" placeholder="Filter Table"></div>
-
-<% if params['display'] == 'pacific_courses' %>
   <table class="table table-striped">
-    <caption class="caption-top">Pacific Courses | Total Active: <%= number_with_delimiter(CoursesPacific.where(active: true).count) %> </caption>
+    <caption class="caption-top">Active Courses: <%= number_with_delimiter(CoursesPacific.where(active: true).count) %> | Active Hours: <%= number_with_delimiter(CoursesPacific.where(active: true).sum(:hours)) %> </caption>
     <thead>
       <tr class="bg-secondary bg-gradient text-light">
+        <th>Status</th>
         <th>Number</th>
         <th>Version</th>
         <th>Title</th>
@@ -51,14 +64,9 @@
         <th>Category</th>
         <th>Sub category</th>
         <th>Pub date</th>
-        <th>Sequoia number</th>
-        <th>Sequoia version</th>
-        <th>Text</th>
-        <th>Exam</th>
-        <th>Active</th>
-        <th>New</th>
-        <th>Version update</th>
-        <th>Update sheet</th>
+        <th>Sequoia Course</th>
+        <th>Sequoia Active</th>
+        <th>In Progess</th>
         <th>Notes</th>
         <th colspan="3"></th>
       </tr>
@@ -70,7 +78,13 @@
         <% courses_pacifics = CoursesPacific.all %>
       <% end %>
       <% courses_pacifics.order(number: :ASC).each do |courses_pacific| %>
+        <% sequoia_course_version = CoursesSequoium.find_by(number: courses_pacific.sequoia_number, version: courses_pacific.sequoia_version) %>
         <tr>
+          <% if courses_pacific.active?  %>
+            <td class="fw-bold text-success">Active</td>
+          <% else %>
+            <td class="fw-bold text-danger">Inactive</td>
+          <% end %>
           <td class="fw-bold"><%= link_to courses_pacific.number , courses_pacific, class: 'link_style text-primary' %></td>
           <td><%= courses_pacific.version %></td>
           <td><%= courses_pacific.title %></td>
@@ -78,25 +92,27 @@
           <td><%= courses_pacific.category %></td>
           <td><%= courses_pacific.sub_category %></td>
           <td><%= courses_pacific.pub_date %></td>
-          <td><%= courses_pacific.sequoia_number %></td>
-          <td><%= courses_pacific.sequoia_version %></td>
-          <td><%= courses_pacific.text %></td>
-          <td><%= courses_pacific.exam %></td>
-          <td><%= courses_pacific.active %></td>
-          <td><%= courses_pacific.new %></td>
-          <td><%= courses_pacific.version_update %></td>
-          <td><%= courses_pacific.update_sheet %></td>
+          <td><%= courses_pacific.sequoia_number %><%= courses_pacific.sequoia_version %></td>
+          <% if sequoia_course_version.active? %>
+            <td class="fw-bold text-success">YES</td>
+          <% else %>
+            <td class="fw-bold text-danger">NO</td>
+          <% end %>
+          <% if courses_pacific.update_sheet?  %><td class="fw-bold text-success">YES</td><% else %><td></td><% end %>
           <td><%= courses_pacific.notes %></td>
-          <td><%= link_to 'Show', courses_pacific %></td>
-          <td><%= link_to 'Edit', edit_courses_pacific_path(courses_pacific) %></td>
-          <td><%= link_to 'Destroy', courses_pacific, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          <td><%= link_to 'Master', courses_pacific %></td>
+          <!-- <td><%#= link_to 'Edit', edit_courses_pacific_path(courses_pacific) %></td> -->
+          <td><%= link_to 'X', courses_pacific, method: :delete, data: { confirm: 'Are you sure?' } %></td>
         </tr>
       <% end %>
     </tbody>
   </table>
-<% elsif params['display'] == 'in_progress' %> <!-- In Progress Courses -->
+
+<!-- In Progress Courses -->
+<% elsif params['display'] == 'in_progress' %>
+  <h2 class="text-center">In Progress Courses</h2>
+  <div class="col-lg-2"><input class="form-control" id="myInput" type="text" placeholder="Filter Table"></div><br>
     <table class="table table-striped">
-      <caption class="caption-top">Pacific Courses | Total Active: <%= number_with_delimiter(CoursesPacific.where(active: true).count) %> </caption>
       <thead>
         <tr class="bg-secondary bg-gradient text-light">
           <th>Type</th>
@@ -158,9 +174,12 @@
         <% end %>
       </tbody>
     </table>
-<% else %> <!-- Master Courses -->
+
+<!-- Master Courses -->
+<% else params['display'] == 'master_course' %>
+  <h2 class="text-center">Master Courses</h2>
+  <div class="col-lg-2"><input class="form-control" id="myInput" type="text" placeholder="Filter Table"></div><br>
   <table class="table table-striped">
-    <caption class="caption-top">Master Courses</caption>
     <thead>
       <tr class="bg-secondary bg-gradient text-light">
         <th>Master Number</th>

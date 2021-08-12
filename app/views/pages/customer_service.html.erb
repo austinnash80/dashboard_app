@@ -84,12 +84,24 @@
     <div class="m-4">
       <div class="card bg-light bg-gradient">
         <div class="card-body">
-          <h5 class="card-title fw-bold">Courses</h5>
+          <h5 class="card-title fw-bold">Sequoia Courses</h5>
           <p class="card-text">Course tables - for course updates and new courses</p>
           <div class="btn-group" role="group" aria-label="">
             <%= link_to 'PES', courses_pes_path(), class: 'btn btn-sm btn-secondary text-light bg-gradient w100' %>
             <%= link_to 'Sequoia', courses_sequoia_path(), class: 'btn btn-sm btn-secondary text-light bg-gradient w100' %>
             <%= link_to 'In Progress', in_progress_courses_sequoia_path(), class: 'btn btn-sm btn-secondary text-light bg-gradient w150' %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="m-4">
+      <div class="card bg-light bg-gradient">
+        <div class="card-body">
+          <h5 class="card-title fw-bold">Pacific Courses</h5>
+          <p class="card-text">Course tables - for course updates and new courses</p>
+          <div class="btn-group" role="group" aria-label="">
+            <%= link_to 'Courses', courses_pacifics_path(), class: 'btn btn-sm btn-secondary text-light bg-gradient w100' %>
+            <%= link_to "In Progress (#{CoursesPacific.where(update_sheet: true).count})", courses_pacifics_path(display: 'in_progress'), class: 'btn btn-sm btn-secondary text-light bg-gradient w150' %>
           </div>
         </div>
       </div>

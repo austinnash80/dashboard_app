@@ -1,0 +1,43 @@
+
+<%= simple_form_for(@empire_state) do |f| %>
+  <%= f.error_notification %>
+  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+  <div class="form-inputs">
+    <div class="row m-2">
+      <div class="col-lg-6"><%= f.input :state, placeholder: 'ex: New York' %></div>
+      <div class="col-lg-6"><%= f.input :st, placeholder: 'ex: NY' %></div>
+    </div>
+    <div class="row m-2">
+      <div class="col-lg-6"><%= f.input :customers %></div>
+      <div class="col-lg-6"><%= f.input :matched_customers %></div>
+    </div>
+    <div class="row m-2">
+      <div class="col-lg-6"><%= f.input :list_size %></div>
+      <div class="col-lg-6"><%= f.input :list_date, include_blank: true %></div>
+    </div>
+    <div class="row m-2">
+      <div class="col-lg-6"><%= f.input :list_cost %></div>
+    </div>
+    <div class="row m-2">
+      <div class="col-lg-12"><%= f.input :list_notes, placeholder: 'ex: How to find list, mail or email, how long it takes to recieve, ect.' %></div>
+    </div>
+    <div class="row m-2">
+      <div class="col-lg-12"><%= f.input :link, placeholder: '' %></div>
+    </div>
+    <div class="row m-2">
+      <div class="col-lg-6"><%= f.input :exp_type, as: :select, collection: ['Individual', 'Split', 'All Together'] %></div>
+      <div class="col-lg-6"><%= f.input :renewal_cycle, placeholder: 'ex: 2 years' %></div>
+    </div>
+    <div class="row m-2">
+      <div class="col-lg-6"><%= f.input :next_exp, include_blank: true, hint: 'Leave blank for type Individual' %></div>
+    </div>
+    <div class="row m-2">
+      <div class="col-lg-12"><%= f.input :exp_notes, placeholder: 'Anything unique or important about the state expiration, ex: salespersons and brokers different exp, etc.' %></div>
+    </div>
+  </div>
+
+  <div class="form-actions m-3">
+    <%= f.button :submit, 'Submit', class: 'btn btn-lg btn-primary gb-gradient text-light w150' %>
+  </div>
+<% end %>

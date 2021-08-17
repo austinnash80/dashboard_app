@@ -1,0 +1,29 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  state: MyString
+  st: MyString
+  customers: 1
+  matched_customers: 1
+  list_size: 1
+  list_date: 2021-08-17
+  list_cost: MyString
+  list_notes: MyText
+  exp_type: MyString
+  renewal_cycle: MyString
+  next_exp: 2021-08-17
+  exp_notes: MyText
+
+two:
+  state: MyString
+  st: MyString
+  customers: 1
+  matched_customers: 1
+  list_size: 1
+  list_date: 2021-08-17
+  list_cost: MyString
+  list_notes: MyText
+  exp_type: MyString
+  renewal_cycle: MyString
+  next_exp: 2021-08-17
+  exp_notes: MyText

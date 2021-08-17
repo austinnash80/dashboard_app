@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_06_185317) do
+ActiveRecord::Schema.define(version: 2021_08_17_180621) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -275,6 +275,24 @@ ActiveRecord::Schema.define(version: 2021_08_06_185317) do
     t.string "email"
     t.string "lic_num"
     t.index ["uid"], name: "index_empire_members_on_uid", unique: true
+  end
+
+  create_table "empire_states", force: :cascade do |t|
+    t.string "state"
+    t.string "st"
+    t.integer "customers"
+    t.integer "matched_customers"
+    t.integer "list_size"
+    t.date "list_date"
+    t.string "list_cost"
+    t.text "list_notes"
+    t.string "exp_type"
+    t.string "renewal_cycle"
+    t.date "next_exp"
+    t.text "exp_notes"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "link"
   end
 
   create_table "id_number_storages", force: :cascade do |t|

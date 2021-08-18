@@ -141,6 +141,37 @@ class EmpireStatesController < ApplicationController
       EmpireState.where(st: 'NJ').update_all customers: nj_total, matched_customers: nj_matched, list_size: nj_list
 
       redirect_to empire_states_path(), notice: "NJ Update Done"
+    elsif params['run'].present? && params['run'] == 'NM'
+      nm_total = EmpireMember.where(state: 'NM').count
+      nm_list = EmpireMasterNmList.count
+      nm_already_matched_uid = EmpireMasterMatch.where(lic_st: 'NM').pluck(:uid)
+      nm_master = EmpireMasterNmList.pluck(:lic, :lname)
+      nm_customer = EmpireMember.where.not(uid: nm_already_matched_uid).where(state: 'NM').pluck(:lic_num, :lname)
+      nm_match = (nm_customer & nm_master)
+      nm_lic = [].uniq
+
+      nm_match.each do |a,b|
+        nm_lic.push(a)
+      end
+
+      EmpireMember.where(state: 'NM').where(lic_num: nm_lic).each do |i|
+        master = EmpireMasterNmList.find_by(lic: i.lic_num)
+        EmpireMasterMatch.create(
+          lid: master.lid,
+          list: master.list,
+          exp: master.exp_date,
+          lic_st: master.lic_state,
+          lic: master.lic,
+          uid: i.uid,
+          lname: master.lname,
+          search_date: Time.now,
+        ).save
+      end
+
+      nm_matched = EmpireMasterMatch.where(lic_st: 'NM').count
+      EmpireState.where(st: 'NM').update_all customers: nm_total, matched_customers: nm_matched, list_size: nm_list
+
+      redirect_to empire_states_path(), notice: "NM Update Done"
     end
 
   end

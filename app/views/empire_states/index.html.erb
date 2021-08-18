@@ -54,9 +54,9 @@
         <td><%= empire_state.st %></td>
         <td><%= empire_state.customers.present? ? number_with_delimiter(empire_state.customers) : '' %></td>
         <td><%= empire_state.matched_customers.present? ? number_with_delimiter(empire_state.matched_customers) : '' %></td>
-        <td><%= empire_state.matched_customers.present? && empire_state.customers.present? ? number_to_percentage(empire_state.matched_customers.to_f / empire_state.customers.to_f) : ''%></td>
+        <td><%= empire_state.matched_customers.present? && empire_state.customers.present? ? number_to_percentage((empire_state.matched_customers.to_f / empire_state.customers.to_f)*100, precision: 0) : ''%></td>
         <td><%= empire_state.list_size.present? ? number_with_delimiter(empire_state.list_size) : '' %></td>
-        <td><%= empire_state.matched_customers.present? && empire_state.list_size.present? ? number_to_percentage(empire_state.matched_customers.to_f / empire_state.list_size.to_f) : ''%></td>
+        <td><%= empire_state.matched_customers.present? && empire_state.list_size.present? ? number_to_percentage((empire_state.matched_customers.to_f / empire_state.list_size.to_f)*100, precision: 0) : ''%></td>
         <td><%= empire_state.list_date %></td>
         <td><%= empire_state.exp_type %></td>
         <td><%= empire_state.renewal_cycle %></td>
@@ -68,10 +68,16 @@
       </tr>
     <% end %>
       <tr class="fw-bold">
-        <td></td>
-        <td></td>
-        <td></td>
-        <td><%= EmpireState.sum(:customers) %></td>
+        <% customers = EmpireState.sum(:customers) %>
+        <% matched = EmpireState.sum(:matched_customers) %>
+        <% list = EmpireState.sum(:list_size) %>
+        <td colspan="3"></td>
+        <td><%= number_with_delimiter(customers) %></td>
+        <td><%= number_with_delimiter(matched) %></td>
+        <td><%= number_to_percentage((matched.to_f/customers.to_f)*100, precision: 0) %></td>
+        <td><%= number_with_delimiter(list) %></td>
+        <td><%= number_to_percentage((customers.to_f/list.to_f)*100, precision: 0) %></td>
+        <td colspan="8"></td>
       </tr>
   </tbody>
 </table>

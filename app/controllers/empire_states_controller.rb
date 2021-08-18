@@ -176,7 +176,7 @@ class EmpireStatesController < ApplicationController
       tx_total = EmpireMember.where(state: 'TX').count
       tx_list = EmpireMasterTxList.count
       tx_already_matched_uid = EmpireMasterMatch.where(lic_st: 'TX').pluck(:uid)
-      tx_master = EmpireMasterNmList.pluck(:lic, :lname)
+      tx_master = EmpireMasterTxList.pluck(:lic, :lname)
       tx_customer = EmpireMember.where.not(uid: tx_already_matched_uid).where(state: 'TX').pluck(:lic_num, :lname)
       tx_match = (tx_customer & tx_master)
       tx_lic = [].uniq
@@ -185,7 +185,7 @@ class EmpireStatesController < ApplicationController
         tx_lic.push(a)
       end
 
-      EmpireMember.where(state: 'NM').where(lic_num: tx_lic).each do |i|
+      EmpireMember.where(state: 'TX').where(lic_num: tx_lic).each do |i|
         master = EmpireMasterTxList.find_by(lic: i.lic_num)
         EmpireMasterMatch.create(
           lid: master.lid,
@@ -203,6 +203,37 @@ class EmpireStatesController < ApplicationController
       EmpireState.where(st: 'TX').update_all customers: tx_total, matched_customers: tx_matched, list_size: tx_list
 
       redirect_to empire_states_path(), notice: "TX Update Done"
+    elsif params['run'].present? && params['run'] == 'PA'
+      pa_total = EmpireMember.where(state: 'PA').count
+      pa_list = EmpireMasterPaList.count
+      pa_already_matched_uid = EmpireMasterMatch.where(lic_st: 'PA').pluck(:uid)
+      pa_master = EmpireMasterPaList.pluck(:lic, :lname)
+      pa_customer = EmpireMember.where.not(uid: pa_already_matched_uid).where(state: 'PA').pluck(:lic_num, :lname)
+      pa_match = (pa_customer & pa_master)
+      pa_lic = [].uniq
+
+      pa_match.each do |a,b|
+        pa_lic.push(a)
+      end
+
+      EmpireMember.where(state: 'PA').where(lic_num: pa_lic).each do |i|
+        master = EmpireMasterPaList.find_by(lic: i.lic_num)
+        EmpireMasterMatch.create(
+          lid: master.lid,
+          list: master.list,
+          exp: master.exp_date,
+          lic_st: master.lic_state,
+          lic: master.lic,
+          uid: i.uid,
+          lname: master.lname,
+          search_date: Time.now,
+        ).save
+      end
+
+      pa_matched = EmpireMasterMatch.where(lic_st: 'PA').count
+      EmpireState.where(st: 'PA').update_all customers: pa_total, matched_customers: pa_matched, list_size: pa_list
+
+      redirect_to empire_states_path(), notice: "PA Update Done"
     end
 
   end

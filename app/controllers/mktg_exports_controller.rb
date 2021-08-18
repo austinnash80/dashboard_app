@@ -39,6 +39,12 @@ class MktgExportsController < ApplicationController
       MktgExport.delete_all
 
       @dates = [].uniq
+      ##FOR EMAIL SEGMENTS - > SEPERATE DATE RANGES
+        @seg_1 = [].uniq
+        @seg_2 = [].uniq
+        @seg_3 = [].uniq
+      ## END SEGEMENTS
+
       #Input box dates
       r1d1 = params['range_1_date_1'].present? ? params['range_1_date_1'].to_date : ''
       r1d2 = params['range_1_date_2'].present? ? params['range_1_date_2'].to_date : ''
@@ -46,25 +52,23 @@ class MktgExportsController < ApplicationController
       r2d2 = params['range_2_date_2'].present? ? params['range_2_date_2'].to_date : ''
       r3d1 = params['range_3_date_1'].present? ? params['range_3_date_1'].to_date : ''
       r3d2 = params['range_3_date_2'].present? ? params['range_3_date_2'].to_date : ''
-      # Dealing with blank input boxes
+    # Dealing with blank input boxes
       if r1d2.blank?
         r1d2 = r1d1
       end
-      # if r2d1.blank?
-      #   r2d1 = r1d1
-      #   r2d2 = r1d1
-      # elsif r2d2.blank?
-      #   r2d2 = r2d1
-      # end
-      # Push dates into @dates Array
+
+    ## APPEND DATES WANTED INTO ARRAYS
       if r1d1.present? && r1d2.present?
         (r1d1..r1d2).each do |i| @dates.push(i) end
+        (r1d1..r1d2).each do |i| @seg_1.push(i) end
       end
       if r2d1.present? && r2d2.present?
         (r2d1.to_date..r2d2).each do |i| @dates.push(i) end
+        (r2d1.to_date..r2d2).each do |i| @seg_2.push(i) end
       end
       if r3d1.present? && r3d2.present?
         (r3d1.to_date..r3d2).each do |i| @dates.push(i) end
+        (r3d1.to_date..r3d2).each do |i| @seg_3.push(i) end
       end
 
       if params['co'] == 'sequoia'
@@ -144,6 +148,8 @@ class MktgExportsController < ApplicationController
       end
     end
 
+
+
     ##### NEW MEXICO DIRECT MAIL - INHOUSE PROSPECTIVE CUSTOMERS
     if params['campaign'] == 'Nm Direct'
       states = params['empire_st'].upcase.split()
@@ -167,11 +173,12 @@ class MktgExportsController < ApplicationController
     elsif params['delivery_type'].present? && params['delivery_type'].upcase == 'email'.upcase
       MktgExport.where(des: 'NY').update_all text_1: 'NY 22.5hr packages only $59.99'
       MktgExport.where(des: 'CA').update_all text_1: 'CA 45hr packages only $47.99'
-    end
-
-    ## FOR EMAIL - REMOVE ANYONE WHO DOES NOT HAVE AN EMAIL ADDRESS (CA Has Old one without emails)
-    if params['delivery_type'].present? && params['delivery_type'].upcase == 'email'.upcase
-      MktgExport.where(email: nil).delete_all
+      ## ADDING SEGMENTS BASED ON EXP DATE - > DETERMINES WITCH EMAIL THEY WILL RECIEVE
+        MktgExport.where(exp: @seg_1).update_all text_10: '1'
+        MktgExport.where(exp: @seg_2).update_all text_10: '2'
+        MktgExport.where(exp: @seg_3).update_all text_10: '3'
+      #REMOVE ANYONE WHO DOES NOT HAVE AN EMAIL ADDRESS (CA Has Old one without emails)
+        MktgExport.where(email: 'null').delete_all
     end
 
   end

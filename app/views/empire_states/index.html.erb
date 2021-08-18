@@ -38,7 +38,6 @@
       <th>List Size</th>
       <th>Market Share</th>
       <th>List date</th>
-      <th>List cost</th>
       <th>Exp type</th>
       <th>Renewal cycle</th>
       <th>Next exp</th>
@@ -59,7 +58,6 @@
         <td><%= empire_state.list_size.present? ? number_with_delimiter(empire_state.list_size) : '' %></td>
         <td><%= empire_state.matched_customers.present? && empire_state.list_size.present? ? number_to_percentage(empire_state.matched_customers.to_f / empire_state.list_size.to_f) : ''%></td>
         <td><%= empire_state.list_date %></td>
-        <td><%= empire_state.list_cost %></td>
         <td><%= empire_state.exp_type %></td>
         <td><%= empire_state.renewal_cycle %></td>
         <td><%= empire_state.next_exp %></td>
@@ -69,6 +67,12 @@
         <td><%= link_to 'Delete', empire_state, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
+      <tr class="fw-bold">
+        <td></td>
+        <td></td>
+        <td></td>
+        <td><%= EmpireState.sum(:customers) %></td>
+      </tr>
   </tbody>
 </table>
 </div>

@@ -56,6 +56,6 @@ end
 
 
 ## EMPIRE MASTER
-rails g scaffold EmpireMasterPaList lid:integer list:string lic_state:string lic:string record_type:string lic_status:string iss_date_s:string iss_date:date exp_date_s:string exp_date:date fname:string mi:string lname:string suf:string co:string add:string add2:string city:string st:string zip:string email:string phone:string
+rails g scaffold EmpireMasterMoList lid:integer list:string lic_state:string lic:string record_type:string lic_status:string iss_date_s:string iss_date:date exp_date_s:string exp_date:date fname:string mi:string lname:string suf:string co:string add:string add2:string city:string st:string zip:string email:string phone:string
 
-rails g migration AddIndexToEmpireMasterPaList
+rails g migration AddIndexToEmpireMasterMoList

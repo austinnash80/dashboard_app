@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :empire_master_mo_lists do collection {post :import} end
   resources :empire_master_pa_lists do collection {post :import} end
   resources :empire_master_tx_lists do collection {post :import} end
   resources :empire_master_nj_lists do collection {post :import} end

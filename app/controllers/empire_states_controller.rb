@@ -234,6 +234,37 @@ class EmpireStatesController < ApplicationController
       EmpireState.where(st: 'PA').update_all customers: pa_total, matched_customers: pa_matched, list_size: pa_list
 
       redirect_to empire_states_path(), notice: "PA Update Done"
+    elsif params['run'].present? && params['run'] == 'MO'
+      mo_total = EmpireMember.where(state: 'MO').count
+      mo_list = EmpireMasterMoList.count
+      mo_already_matched_uid = EmpireMasterMatch.where(lic_st: 'MO').pluck(:uid)
+      mo_master = EmpireMasterMoList.pluck(:lic, :lname)
+      mo_customer = EmpireMember.where.not(uid: mo_already_matched_uid).where(state: 'MO').pluck(:lic_num, :lname)
+      mo_match = (mo_customer & mo_master)
+      mo_lic = [].uniq
+
+      mo_match.each do |a,b|
+        mo_lic.push(a)
+      end
+
+      EmpireMember.where(state: 'MO').where(lic_num: mo_lic).each do |i|
+        master = EmpireMasterMoList.find_by(lic: i.lic_num)
+        EmpireMasterMatch.create(
+          lid: master.lid,
+          list: master.list,
+          exp: master.exp_date,
+          lic_st: master.lic_state,
+          lic: master.lic,
+          uid: i.uid,
+          lname: master.lname,
+          search_date: Time.now,
+        ).save
+      end
+
+      mo_matched = EmpireMasterMatch.where(lic_st: 'MO').count
+      EmpireState.where(st: 'MO').update_all customers: mo_total, matched_customers: mo_matched, list_size: mo_list
+
+      redirect_to empire_states_path(), notice: "MO Update Done"
     end
 
   end

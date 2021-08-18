@@ -16,7 +16,7 @@ class EmpireCustomer < ApplicationRecord
 
   # EXPORT
     def self.to_csv # Export to csv function
-      attributes = %w{e_id uid lic_state lic_num existing purchase_s purchase price_s price product email fname lname street_1 street_2 city state zip}
+      attributes = %w{id e_id uid lic_state lic_num existing purchase_s purchase price_s price product email fname lname street_1 street_2 city state zip}
       CSV.generate(headers: true) do |csv|
         csv << attributes
           all.each do |i|

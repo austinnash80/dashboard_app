@@ -9,6 +9,10 @@
   <strong>Lname:</strong>
   <%= @empire_member.lname %>
 </p>
+<p>
+  <strong>Email:</strong>
+  <%= @empire_member.email %>
+</p>
 
 <p>
   <strong>First purchase:</strong>
@@ -28,6 +32,10 @@
 <p>
   <strong>Purchases:</strong>
   <%= @empire_member.purchases %>
+</p>
+<p>
+  <strong>Email Unsubscribe:</strong>
+  <%= @empire_member.email_unsubscribe %>
 </p>
 
 <%= link_to 'Edit', edit_empire_member_path(@empire_member) %> |

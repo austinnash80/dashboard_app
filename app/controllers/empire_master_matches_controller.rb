@@ -16,6 +16,36 @@ class EmpireMasterMatchesController < ApplicationController
       format.html
       format.csv { send_data @empire_master_matches.to_csv, filename: "Empire-Master-Match-#{Date.today}.csv" }
     end
+
+    # run update
+    if params['run'].present? && params['run'] == 'NY'
+      ny_already_matched_uid = EmpireMasterMatch.where(lic_st: 'NY').pluck(:uid)
+      ny_master = EmpireMasterNyList.pluck(:lic, :lname)
+      ny_customer = EmpireMember.where.not(uid: ny_already_matched_uid).where(state: 'NY').pluck(:lic_num, :lname)
+      ny_match = (ny_customer & ny_master)
+      ny_lic = [].uniq
+
+      ny_match.each do |a,b|
+        ny_lic.push(a)
+      end
+
+      EmpireMember.where(state: 'NY').where(lic_num: ny_lic).each do |i|
+        master = EmpireMasterNyList.find_by(lic: i.lic_num)
+        EmpireMasterMatch.create(
+          lid: master.lid,
+          list: master.list,
+          exp: master.exp_date,
+          lic_st: master.lic_state,
+          lic: master.lic,
+          uid: i.uid,
+          lname: master.lname,
+          search_date: Time.now,
+        ).save
+      end
+
+      redirect_to empire_states_path(), notice: "NY Matches Updated"
+    end
+
   end
 
   def matching

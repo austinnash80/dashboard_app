@@ -53,3 +53,7 @@ EmpireCustomer.order(purchase: :asc).each do |i|
    EmpireMember.where(uid: i.uid).update_all email: i.email, lic_num: i.lic_num
   end
 end
+
+
+## EMPIRE MASTER
+rails g scaffold EmpireMasterNcList lid:integer list:string lic_state:string lic:string record_type:string lic_status:string iss_date_s:string iss_date:date exp_date_s:string exp_date:date fname:string mi:string lname:string add:string add2:string city:string st:string zip:string email:string phone:string

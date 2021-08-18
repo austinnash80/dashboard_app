@@ -1,0 +1,2 @@
+module EmpireMasterNjListsHelper
+end

@@ -1,0 +1,2 @@
+module EmpireMasterNcListsHelper
+end

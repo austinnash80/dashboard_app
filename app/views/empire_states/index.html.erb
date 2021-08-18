@@ -1,4 +1,3 @@
-<p id="notice"><%= notice %></p>
 
 <h1 class="text-center">Empire States</h1>
 
@@ -22,19 +21,24 @@
 
 <div class="w300 m-5"><input class="form-control" id="myInput" type="text" placeholder="Filter Table"></div>
 <div class="m-5">
-  <%= link_to 'Add New State', new_empire_state_path, class: 'btn btn-primary text-light btn-sm w200' %>
+  <div class="">
+    <%= link_to 'Add New State', new_empire_state_path(), class: 'btn btn-primary text-light btn-sm w200' %>
+  </div>
   <br><br>
+  <p id="notice"><%= notice %></p>
 <table class="table table-striped">
   <thead>
     <tr class="bg-secondary bg-gradient text-light">
+      <th></th>
       <th>State</th>
       <th>St</th>
       <th>Customers</th>
-      <th>Matched customers</th>
-      <th>List size</th>
+      <th>Matched</th>
+      <th>% Matched</th>
+      <th>List Size</th>
+      <th>Market Share</th>
       <th>List date</th>
       <th>List cost</th>
-      <th>List notes</th>
       <th>Exp type</th>
       <th>Renewal cycle</th>
       <th>Next exp</th>
@@ -43,17 +47,19 @@
     </tr>
   </thead>
 
-  <tbody>
-    <% @empire_states.each do |empire_state| %>
+  <tbody id="myTable">
+    <% @empire_states.order(st: :ASC).each do |empire_state| %>
       <tr>
+        <td><%= link_to 'Run Match', empire_states_path(run: empire_state.st), class: 'btn btn-primary text-light btn-sm w100', data: {disable_with: "Loading..."} %></td>
         <td><%= empire_state.state %></td>
         <td><%= empire_state.st %></td>
         <td><%= empire_state.customers.present? ? number_with_delimiter(empire_state.customers) : '' %></td>
         <td><%= empire_state.matched_customers.present? ? number_with_delimiter(empire_state.matched_customers) : '' %></td>
+        <td><%= empire_state.matched_customers.present? && empire_state.customers.present? ? number_to_percentage(empire_state.matched_customers.to_f / empire_state.customers.to_f) : ''%></td>
         <td><%= empire_state.list_size.present? ? number_with_delimiter(empire_state.list_size) : '' %></td>
+        <td><%= empire_state.matched_customers.present? && empire_state.list_size.present? ? number_to_percentage(empire_state.matched_customers.to_f / empire_state.list_size.to_f) : ''%></td>
         <td><%= empire_state.list_date %></td>
         <td><%= empire_state.list_cost %></td>
-        <td><%= empire_state.list_notes %></td>
         <td><%= empire_state.exp_type %></td>
         <td><%= empire_state.renewal_cycle %></td>
         <td><%= empire_state.next_exp %></td>

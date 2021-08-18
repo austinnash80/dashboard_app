@@ -1,0 +1,19 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  uid: 1
+  lname: MyString
+  lic: MyString
+  state: MyString
+  lid: 1
+  list: MyString
+  match_date: 2021-08-17
+
+two:
+  uid: 1
+  lname: MyString
+  lic: MyString
+  state: MyString
+  lid: 1
+  list: MyString
+  match_date: 2021-08-17

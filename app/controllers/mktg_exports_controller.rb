@@ -166,7 +166,7 @@ class MktgExportsController < ApplicationController
         MktgExport.where(uid: i.uid).update_all email: customer_data.email, fname: customer_data.fname, lname: (customer_data.lname), street_1: customer_data.street_1, street_2: customer_data.street_2, city: customer_data.city, state: customer_data.state, zip: customer_data.zip
       end
     end
-    # ADD TEXT FOR PRINT
+    # ADD Additonal TEXT FOR PRINT and EMAIL
     if params['delivery_type'].present? && params['delivery_type'].upcase == 'postcard'.upcase
       MktgExport.where(des: 'NY').update_all text_1: '22.5-Hour New York CE Package',text_2: '$59.99',text_3: 'Take an additional 10% off - Use Code:', text_4: 'ReturningStudent21'
       MktgExport.where(des: 'CA').update_all text_1: '45-Hour California CE Package',text_2: '$47.99',text_3: 'Take an additional 10% off - Use Code:', text_4: 'ReturningStudent21'

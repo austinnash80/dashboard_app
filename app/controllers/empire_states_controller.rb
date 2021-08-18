@@ -172,6 +172,37 @@ class EmpireStatesController < ApplicationController
       EmpireState.where(st: 'NM').update_all customers: nm_total, matched_customers: nm_matched, list_size: nm_list
 
       redirect_to empire_states_path(), notice: "NM Update Done"
+    elsif params['run'].present? && params['run'] == 'TX'
+      tx_total = EmpireMember.where(state: 'TX').count
+      tx_list = EmpireMasterTxList.count
+      tx_already_matched_uid = EmpireMasterMatch.where(lic_st: 'TX').pluck(:uid)
+      tx_master = EmpireMasterNmList.pluck(:lic, :lname)
+      tx_customer = EmpireMember.where.not(uid: tx_already_matched_uid).where(state: 'TX').pluck(:lic_num, :lname)
+      tx_match = (tx_customer & tx_master)
+      tx_lic = [].uniq
+
+      tx_match.each do |a,b|
+        tx_lic.push(a)
+      end
+
+      EmpireMember.where(state: 'NM').where(lic_num: tx_lic).each do |i|
+        master = EmpireMasterTxList.find_by(lic: i.lic_num)
+        EmpireMasterMatch.create(
+          lid: master.lid,
+          list: master.list,
+          exp: master.exp_date,
+          lic_st: master.lic_state,
+          lic: master.lic,
+          uid: i.uid,
+          lname: master.lname,
+          search_date: Time.now,
+        ).save
+      end
+
+      tx_matched = EmpireMasterMatch.where(lic_st: 'TX').count
+      EmpireState.where(st: 'TX').update_all customers: tx_total, matched_customers: tx_matched, list_size: tx_list
+
+      redirect_to empire_states_path(), notice: "TX Update Done"
     end
 
   end

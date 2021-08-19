@@ -389,6 +389,37 @@ class EmpireStatesController < ApplicationController
       EmpireState.where(st: 'WA').update_all customers: wa_total, matched_customers: wa_matched, list_size: wa_list
 
       redirect_to empire_states_path(), notice: "WA Update Done"
+    elsif params['run'].present? && params['run'] == 'VA'
+      va_total = EmpireMember.where(state: 'VA').count
+      va_list = EmpireMasterVaList.count
+      va_already_matched_uid = EmpireMasterMatch.where(lic_st: 'VA').pluck(:uid)
+      va_master = EmpireMasterVaList.pluck(:lic, :lname)
+      va_customer = EmpireMember.where.not(uid: va_already_matched_uid).where(state: 'VA').pluck(:lic_num, :lname)
+      va_match = (va_customer & va_master)
+      va_lic = [].uniq
+
+      va_match.each do |a,b|
+        va_lic.push(a)
+      end
+
+      EmpireMember.where(state: 'VA').where(lic_num: va_lic).each do |i|
+        master = EmpireMasterVaList.find_by(lic: i.lic_num)
+        EmpireMasterMatch.create(
+          lid: master.lid,
+          list: master.list,
+          exp: master.exp_date,
+          lic_st: master.lic_state,
+          lic: master.lic,
+          uid: i.uid,
+          lname: master.lname,
+          search_date: Time.now,
+        ).save
+      end
+
+      va_matched = EmpireMasterMatch.where(lic_st: 'VA').count
+      EmpireState.where(st: 'VA').update_all customers: va_total, matched_customers: va_matched, list_size: va_list
+
+      redirect_to empire_states_path(), notice: "VA Update Done"
     end
 
   end

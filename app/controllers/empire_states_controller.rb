@@ -265,6 +265,37 @@ class EmpireStatesController < ApplicationController
       EmpireState.where(st: 'MO').update_all customers: mo_total, matched_customers: mo_matched, list_size: mo_list
 
       redirect_to empire_states_path(), notice: "MO Update Done"
+    elsif params['run'].present? && params['run'] == 'IND'
+      ind_total = EmpireMember.where(state: 'IND').count
+      ind_list = EmpireMasterIndList.count
+      ind_already_matched_uid = EmpireMasterMatch.where(lic_st: 'IND').pluck(:uid)
+      ind_master = EmpireMasterIndList.pluck(:lic, :lname)
+      ind_customer = EmpireMember.where.not(uid: ind_already_matched_uid).where(state: 'IND').pluck(:lic_num, :lname)
+      ind_match = (ind_customer & ind_master)
+      ind_lic = [].uniq
+
+      ind_match.each do |a,b|
+        ind_lic.push(a)
+      end
+
+      EmpireMember.where(state: 'IND').where(lic_num: ind_lic).each do |i|
+        master = EmpireMasterIndList.find_by(lic: i.lic_num)
+        EmpireMasterMatch.create(
+          lid: master.lid,
+          list: master.list,
+          exp: master.exp_date,
+          lic_st: master.lic_state,
+          lic: master.lic,
+          uid: i.uid,
+          lname: master.lname,
+          search_date: Time.now,
+        ).save
+      end
+
+      ind_matched = EmpireMasterMatch.where(lic_st: 'IND').count
+      EmpireState.where(st: 'IND').update_all customers: ind_total, matched_customers: ind_matched, list_size: ind_list
+
+      redirect_to empire_states_path(), notice: "IND Update Done"
     end
 
   end

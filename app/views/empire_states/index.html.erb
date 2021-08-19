@@ -41,7 +41,6 @@
       <th>Exp type</th>
       <th>Renewal cycle</th>
       <th>Next exp</th>
-      <th>Exp notes</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -61,8 +60,7 @@
         <td><%= empire_state.exp_type %></td>
         <td><%= empire_state.renewal_cycle %></td>
         <td><%= empire_state.next_exp %></td>
-        <td><%= empire_state.exp_notes %></td>
-        <td><%= link_to 'View', empire_state %></td>
+        <td><%= link_to 'More Info', empire_state %></td>
         <td><%= link_to 'Edit', edit_empire_state_path(empire_state) %></td>
         <td><%= link_to 'Delete', empire_state, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>

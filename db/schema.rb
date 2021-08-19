@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_19_004749) do
+ActiveRecord::Schema.define(version: 2021_08_19_011500) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -396,6 +396,34 @@ ActiveRecord::Schema.define(version: 2021_08_19_004749) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["lid"], name: "index_empire_master_pa_lists_on_lid", unique: true
+  end
+
+  create_table "empire_master_sc_lists", force: :cascade do |t|
+    t.integer "lid"
+    t.string "list"
+    t.string "lic_state"
+    t.string "lic"
+    t.string "record_type"
+    t.string "lic_status"
+    t.string "iss_date_s"
+    t.date "iss_date"
+    t.string "exp_date_s"
+    t.date "exp_date"
+    t.string "fname"
+    t.string "mi"
+    t.string "lname"
+    t.string "suf"
+    t.string "co"
+    t.string "add"
+    t.string "add2"
+    t.string "city"
+    t.string "st"
+    t.string "zip"
+    t.string "email"
+    t.string "phone"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["lid"], name: "index_empire_master_sc_lists_on_lid", unique: true
   end
 
   create_table "empire_master_tx_lists", force: :cascade do |t|

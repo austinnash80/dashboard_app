@@ -327,6 +327,37 @@ class EmpireStatesController < ApplicationController
       EmpireState.where(st: 'UT').update_all customers: ut_total, matched_customers: ut_matched, list_size: ut_list
 
       redirect_to empire_states_path(), notice: "UT Update Done"
+    elsif params['run'].present? && params['run'] == 'SC'
+      sc_total = EmpireMember.where(state: 'SC').count
+      sc_list = EmpireMasterScList.count
+      sc_already_matched_uid = EmpireMasterMatch.where(lic_st: 'SC').pluck(:uid)
+      sc_master = EmpireMasterScList.pluck(:lic, :lname)
+      sc_customer = EmpireMember.where.not(uid: sc_already_matched_uid).where(state: 'SC').pluck(:lic_num, :lname)
+      sc_match = (sc_customer & sc_master)
+      sc_lic = [].uniq
+
+      sc_match.each do |a,b|
+        sc_lic.push(a)
+      end
+
+      EmpireMember.where(state: 'SC').where(lic_num: sc_lic).each do |i|
+        master = EmpireMasterScList.find_by(lic: i.lic_num)
+        EmpireMasterMatch.create(
+          lid: master.lid,
+          list: master.list,
+          exp: master.exp_date,
+          lic_st: master.lic_state,
+          lic: master.lic,
+          uid: i.uid,
+          lname: master.lname,
+          search_date: Time.now,
+        ).save
+      end
+
+      sc_matched = EmpireMasterMatch.where(lic_st: 'SC').count
+      EmpireState.where(st: 'SC').update_all customers: sc_total, matched_customers: sc_matched, list_size: sc_list
+
+      redirect_to empire_states_path(), notice: "SC Update Done"
     end
 
   end

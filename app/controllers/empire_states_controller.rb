@@ -358,6 +358,37 @@ class EmpireStatesController < ApplicationController
       EmpireState.where(st: 'SC').update_all customers: sc_total, matched_customers: sc_matched, list_size: sc_list
 
       redirect_to empire_states_path(), notice: "SC Update Done"
+    elsif params['run'].present? && params['run'] == 'WA'
+      wa_total = EmpireMember.where(state: 'WA').count
+      wa_list = EmpireMasterWaList.count
+      wa_already_matched_uid = EmpireMasterMatch.where(lic_st: 'WA').pluck(:uid)
+      wa_master = EmpireMasterWaList.pluck(:lic, :lname)
+      wa_customer = EmpireMember.where.not(uid: wa_already_matched_uid).where(state: 'WA').pluck(:lic_num, :lname)
+      wa_match = (wa_customer & wa_master)
+      wa_lic = [].uniq
+
+      wa_match.each do |a,b|
+        wa_lic.push(a)
+      end
+
+      EmpireMember.where(state: 'WA').where(lic_num: wa_lic).each do |i|
+        master = EmpireMasterWaList.find_by(lic: i.lic_num)
+        EmpireMasterMatch.create(
+          lid: master.lid,
+          list: master.list,
+          exp: master.exp_date,
+          lic_st: master.lic_state,
+          lic: master.lic,
+          uid: i.uid,
+          lname: master.lname,
+          search_date: Time.now,
+        ).save
+      end
+
+      wa_matched = EmpireMasterMatch.where(lic_st: 'WA').count
+      EmpireState.where(st: 'WA').update_all customers: wa_total, matched_customers: wa_matched, list_size: wa_list
+
+      redirect_to empire_states_path(), notice: "WA Update Done"
     end
 
   end

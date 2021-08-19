@@ -1,0 +1,2 @@
+module EmpireMasterWaListsHelper
+end

@@ -296,6 +296,37 @@ class EmpireStatesController < ApplicationController
       EmpireState.where(st: 'IND').update_all customers: ind_total, matched_customers: ind_matched, list_size: ind_list
 
       redirect_to empire_states_path(), notice: "IND Update Done"
+    elsif params['run'].present? && params['run'] == 'UT'
+      ut_total = EmpireMember.where(state: 'UT').count
+      ut_list = EmpireMasterUtList.count
+      ut_already_matched_uid = EmpireMasterMatch.where(lic_st: 'UT').pluck(:uid)
+      ut_master = EmpireMasterUtList.pluck(:lic, :lname)
+      ut_customer = EmpireMember.where.not(uid: ut_already_matched_uid).where(state: 'UT').pluck(:lic_num, :lname)
+      ut_match = (ut_customer & ut_master)
+      ut_lic = [].uniq
+
+      ut_match.each do |a,b|
+        ut_lic.push(a)
+      end
+
+      EmpireMember.where(state: 'UT').where(lic_num: ut_lic).each do |i|
+        master = EmpireMasterUtList.find_by(lic: i.lic_num)
+        EmpireMasterMatch.create(
+          lid: master.lid,
+          list: master.list,
+          exp: master.exp_date,
+          lic_st: master.lic_state,
+          lic: master.lic,
+          uid: i.uid,
+          lname: master.lname,
+          search_date: Time.now,
+        ).save
+      end
+
+      ut_matched = EmpireMasterMatch.where(lic_st: 'UT').count
+      EmpireState.where(st: 'UT').update_all customers: ut_total, matched_customers: ut_matched, list_size: ut_list
+
+      redirect_to empire_states_path(), notice: "UT Update Done"
     end
 
   end

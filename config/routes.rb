@@ -9,7 +9,11 @@ Rails.application.routes.draw do
   resources :empire_master_tx_lists do collection {post :import} end
   resources :empire_master_nj_lists do collection {post :import} end
   resources :empire_master_nc_lists do collection {post :import} end
-  resources :empire_states do collection {post :import} end
+  resources :empire_states do collection {post :import}
+    collection do
+        get 'matching'
+      end
+    end
   resources :auto_renew_lists do collection {post :import} end
   resources :empire_master_nm_lists do collection {post :import} end
   resources :courses_pacifics do collection {post :import} end

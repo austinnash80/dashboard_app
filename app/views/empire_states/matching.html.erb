@@ -1,0 +1,138 @@
+<div class="m-5">
+
+<h1 class="text-center">Empire Customer Matching</h1>
+<div class="text-center ">
+  <div class="btn-group" role="group" aria-label="Basic example">
+    <%= link_to 'Match List', empire_master_matches_path, target: 'blank', class: 'text-light w150 btn-sm btn btn-primary bg-gradient' %>
+    <%= link_to 'No Match List',empire_master_no_matches_path,target: 'blank', class: 'text-light w150 btn-sm btn btn-primary bg-gradient' %>
+    <%= link_to 'Double Accounts', empire_master_double_accounts_path,target: 'blank', class: 'text-light w150 btn-sm btn btn-primary bg-gradient' %>
+  </div>
+</div>
+<br>
+  <table class="table table-striped">
+    <% matched_uid = EmpireMasterMatch.pluck(:uid) %>
+    <% not_matched_uid = EmpireMasterNoMatch.pluck(:uid) %>
+    <% double_account_uid = EmpireMasterDoubleAccount.pluck(:uid) %>
+    <% find = EmpireMember.where(state: 'NY').where.not(uid: matched_uid).where.not(uid: not_matched_uid).where.not(uid: double_account_uid) %>
+    <% member = find.order(uid: :DESC).first(1).pluck(:uid) %>
+    <% customer = EmpireCustomer.find_by(uid: member[0]) %>
+    <caption>NY Remaining: <%= find.count %></caption>
+  <thead>
+    <tr class="bg-secondary bg-gradient text-light">
+      <th>UID</th>
+      <th>State</th>
+      <th>Lic</th>
+      <th>Fname</th>
+      <th>Lname</th>
+      <th>Add</th>
+      <th>Add2</th>
+      <th>City</th>
+      <th>State</th>
+      <th>Zip</th>
+      <th colspan="2" width='20%'></th>
+    </tr>
+  </thead>
+  <tbody>
+
+    <tr>
+      <td><a target="_blank" href="https://www.empirelearning.com/admin/user-profile?u=<%= customer.uid %>"><%= customer.uid%></a></td>
+      <td><%= customer.lic_state %></td>
+      <td><%= customer.lic_num %></td>
+      <td><%= customer.fname %></td>
+      <td><%= customer.lname %></td>
+      <td><%= customer.street_1 %></td>
+      <td><%= customer.street_2 %></td>
+      <td><%= customer.city %></td>
+      <td><%= customer.state %></td>
+      <td><%= customer.zip %></td>
+      <% if params['search'].present?%>
+        <% list = EmpireMasterNyList.first(1).pluck(:list) %>
+        <td><%= link_to 'No Match', matching_empire_states_path(direct_matching: 'no_match', uid: customer.uid, list: list[0]), class: 'btn btn-sm btn-danger bg-gradient text-light w150' %></td>
+        <% if params['search'] == 'lname' %>
+          <td><%= link_to 'Search Lic', matching_empire_states_path(search: 'lic', lic: customer.lic_num, uid: customer.uid), class: 'btn btn-sm btn-primary bg-gradient text-light w150' %></td>
+        <% elsif params['search'] == 'lic' %>
+          <td><%= link_to 'Search Lname', matching_empire_states_path(search: 'lname', lname: customer.lname, uid: customer.uid), class: 'btn btn-sm btn-primary bg-gradient text-light w150' %></td>
+        <% end %>
+      <% else %>
+        <td><%= link_to 'Search Lname', matching_empire_states_path(search: 'lname', lname: customer.lname, uid: customer.uid), class: 'btn btn-sm btn-primary bg-gradient text-light w150' %></td>
+        <td><%= link_to 'Search Lic', matching_empire_states_path(search: 'lic', lic: customer.lic_num, uid: customer.uid), class: 'btn btn-sm btn-primary bg-gradient text-light w150' %></td>
+      <% end %>
+    </tr>
+  </tbody>
+</table>
+
+<% if params['search'].present? %>
+<!-- <a target="_blank" class="btn btn-sm btn-info text-light gb-gradient w200" href="https://appext20.dos.ny.gov/nydos/searchByLicNumber.do">State Board Search</a> -->
+<br><br>
+<div class="w300"><input class="form-control" id="myInput" type="text" placeholder="Filter Table"></div>
+<br>
+  <table class="table table-striped">
+  <thead>
+    <tr class="bg-secondary bg-gradient text-light">
+      <th>LID</th>
+      <th>State</th>
+      <th>Lic</th>
+      <th>Fname</th>
+      <th>Lname</th>
+      <th>Add</th>
+      <th>Add2</th>
+      <th>City</th>
+      <th>State</th>
+      <th>Zip</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody id="myTable">
+    <% if params['search'] == 'lname'%>
+      <% lname = params['lname'].upcase %>
+      <% EmpireMasterNyList.where(lname: lname).all.each do |master| %>
+      <tr>
+        <td><%= master.lid %></td>
+        <td><%= master.lic_state %></td>
+        <td><%= master.lic %></td>
+        <td><%= master.fname %></td>
+        <td><%= master.lname %></td>
+        <td><%= master.add %></td>
+        <td><%= master.add2 %></td>
+        <td><%= master.city %></td>
+        <td><%= master.st %></td>
+        <td><%= master.zip %></td>
+        <td><%= link_to 'Match', matching_empire_states_path(direct_matching: 'match', lid: master.lid, uid: params['uid']), class: 'btn btn-sm btn-primary bg-gradient text-light w100' %></td>
+      </tr>
+      <% end %>
+    <% elsif params['search'] == 'lic'%>
+      <% lic = params['lic'].to_i %>
+      <% EmpireMasterNyList.where(lic: lic).all.each do |master| %>
+        <tr>
+          <td><%= master.lid %></td>
+          <td><%= master.lic_state %></td>
+          <td><%= master.lic %></td>
+          <td><%= master.fname %></td>
+          <td><%= master.lname %></td>
+          <td><%= master.add %></td>
+          <td><%= master.add2 %></td>
+          <td><%= master.city %></td>
+          <td><%= master.st %></td>
+          <td><%= master.zip %></td>
+          <td><%= link_to 'Match', matching_empire_states_path(direct_matching: 'match', lid: master.lid, uid: params['uid']), class: 'btn btn-sm btn-primary bg-gradient text-light w100' %></td>
+        </tr>
+        <% end %>
+    <% end %>
+
+
+  </tbody>
+  </table>
+<% end %>
+</div>
+
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    $("#myInput").on("keyup", function() {
+      var value = $(this).val().toLowerCase();
+      $("#myTable tr").filter(function() {
+        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+      });
+    });
+  });
+</script>

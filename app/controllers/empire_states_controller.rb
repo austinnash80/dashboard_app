@@ -3,6 +3,10 @@ class EmpireStatesController < ApplicationController
 
   # GET /empire_states or /empire_states.json
   def index
+    if params['run'].present?
+      auto_matching
+    end
+
     @empire_states = EmpireState.all
 
     # DELETE ALL
@@ -16,7 +20,40 @@ class EmpireStatesController < ApplicationController
       format.html
       format.csv { send_data @empire_states.to_csv, filename: "Empire-States-#{Date.today}.csv" }
     end
+  end
 
+  def matching
+    if params['direct_matching'] == 'no_match'
+      member = EmpireMember.find_by(uid: params['uid'])
+      EmpireMasterNoMatch.create(
+        uid: member.uid,
+        list: params['list'],
+        lic_st: member.state,
+        lname: member.lname,
+        search_date: Time.now
+      ).save
+
+      redirect_to matching_empire_states_path(), notice: 'No Match Created'
+    elsif params['direct_matching'] == 'match'
+      member = EmpireMember.find_by(uid: params['uid'])
+      master = EmpireMasterNyList.find_by(lid: params['lid'])
+      EmpireMasterMatch.create(
+        lid: master.lid,
+        list: master.list,
+        exp: master.exp_date,
+        lic_st: member.state,
+        lic: master.lic,
+        uid: member.uid,
+        lname: member.lname,
+        search_date: Time.now
+      ).save
+
+      # redirect_to matching_empire_states_path(), notice: 'Match Created'
+    end
+
+  end
+
+  def auto_matching
     # RUN CUSTOMER UPDATE
     if params['run'].present? && params['run'] == 'NY'
       ny_total = EmpireMember.where(state: 'NY').count
@@ -421,7 +458,6 @@ class EmpireStatesController < ApplicationController
 
       redirect_to empire_states_path(), notice: "VA Update Done"
     end
-
   end
 
   # GET /empire_states/1 or /empire_states/1.json

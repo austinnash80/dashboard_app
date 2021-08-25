@@ -133,8 +133,9 @@
       <tbody id="myTable">
         <% @courses_pacifics.where(update_sheet: true).order(number: :asc).each do |courses_pacific| %>
           <tr>
-            <td class=""><%= courses_pacific.version_update? ? 'Version Update' : courses_pacific.new? ? 'New Course' : '' %></td>
-            <td class="fw-bold"><%= link_to courses_pacific.number, courses_pacific, class: 'text-dark' %></td>
+            <td class=""><%= courses_pacific.version_update? ? 'Update' : courses_pacific.new? ? 'New' : '' %></td>
+            <td class="fw-bold"><%= link_to 'Master', courses_pacific, class: 'text-dark' %></td>
+            <td class="fw-bold"><%= link_to courses_pacific.number, "https://www.pacificcpe.com/courses?dashboard=yes&course=#{courses_pacific.number}&version=#{courses_pacific.version}", class: 'text-dark' %></td>
             <td><%= courses_pacific.version %></td>
             <td><%= courses_pacific.title %></td>
             <td><%= courses_pacific.hours %></td>

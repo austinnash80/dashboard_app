@@ -28,6 +28,9 @@ class CoursesSequoiaController < ApplicationController
     elsif params['update'] == 'active'
       CoursesSequoium.where(id: params['course_id']).update_all active: true
       redirect_to in_progress_courses_sequoia_path()
+    elsif params['update'] == 'proof'
+      CoursesSequoium.where(id: params['course_id']).update_all proof: true
+      redirect_to in_progress_courses_sequoia_path()
     elsif params['update'] == 'update_sheet'
       CoursesSequoium.where(id: params['course_id']).update_all update_sheet: false
       redirect_to in_progress_courses_sequoia_path()
@@ -97,6 +100,6 @@ class CoursesSequoiaController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def courses_sequoium_params
-      params.require(:courses_sequoium).permit(:number, :version, :title, :category, :sub_category, :hours, :pub_date, :pes_number, :pes_version, :text, :exam, :active, :update_sheet, :notes, :version_update, :new)
+      params.require(:courses_sequoium).permit(:number, :version, :title, :category, :sub_category, :hours, :pub_date, :pes_number, :pes_version, :text, :exam, :active, :update_sheet, :notes, :version_update, :new, :proof)
     end
 end

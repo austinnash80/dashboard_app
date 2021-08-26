@@ -56,6 +56,7 @@
       <th>Text Complete</th>
       <th>Exam Complete</th>
       <th>Active Listed</th>
+      <th>Proofed</th>
       <th>Notes</th>
       <th colspan="3"></th>
     </tr>
@@ -81,6 +82,7 @@
         <td><%= courses_sequoium.text? ? 'YES' : 'NO' %></td>
         <td><%= courses_sequoium.exam? ? 'YES' : 'NO' %></td>
         <td><%= courses_sequoium.active? ? 'YES' : 'NO' %></td>
+        <td><%= courses_sequoium.proof? ? 'YES' : 'NO' %></td>
         <td><%= courses_sequoium.notes %></td>
         <td><%= link_to 'Show', courses_sequoium %></td>
         <td><%= link_to 'Edit', edit_courses_sequoium_path(courses_sequoium) %></td>

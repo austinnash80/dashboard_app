@@ -66,11 +66,13 @@
         <% end %>
         <% if courses_sequoium.notes.blank? %>
           <td><%= link_to 'Note', edit_courses_sequoium_path(courses_sequoium), class: 'btn btn-sm btn-secondary text-light gb-gradient' %></td>
+        <% else %>
+          <td><%= courses_sequoium.notes %></td>
         <% end %>
         <% if courses_sequoium.active? &&  courses_sequoium.exam? && courses_sequoium.text? %>
           <td><%= link_to 'Remove', in_progress_courses_sequoia_path(course_id: courses_sequoium.id, update: 'update_sheet'), class: 'btn btn-sm btn-secondary text-light w100' %></td>
         <% else %>
-          <td><%= courses_sequoium.notes %></td>
+          <td></td>
         <% end %>
         <!-- <td><%= link_to 'Edit', edit_courses_sequoium_path(courses_sequoium) %></td> -->
         <!-- <td><%= link_to 'Destroy', courses_sequoium, method: :delete, data: { confirm: 'Are you sure?' } %></td> -->

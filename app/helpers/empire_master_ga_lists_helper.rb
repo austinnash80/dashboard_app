@@ -1,0 +1,2 @@
+module EmpireMasterGaListsHelper
+end

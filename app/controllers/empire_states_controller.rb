@@ -457,6 +457,37 @@ class EmpireStatesController < ApplicationController
       EmpireState.where(st: 'VA').update_all customers: va_total, matched_customers: va_matched, list_size: va_list
 
       redirect_to empire_states_path(), notice: "VA Update Done"
+    elsif params['run'].present? && params['run'] == 'GA'
+      ga_total = EmpireMember.where(state: 'GA').count
+      ga_list = EmpireMasterGaList.count
+      ga_already_matched_uid = EmpireMasterMatch.where(lic_st: 'GA').pluck(:uid)
+      ga_master = EmpireMasterGaList.pluck(:lic, :lname)
+      ga_customer = EmpireMember.where.not(uid: ga_already_matched_uid).where(state: 'GA').pluck(:lic_num, :lname)
+      ga_match = (ga_customer & ga_master)
+      ga_lic = [].uniq
+
+      ga_match.each do |a,b|
+        ga_lic.push(a)
+      end
+
+      EmpireMember.where(state: 'GA').where(lic_num: ga_lic).each do |i|
+        master = EmpireMasterGaList.find_by(lic: i.lic_num)
+        EmpireMasterMatch.create(
+          lid: master.lid,
+          list: master.list,
+          exp: master.exp_date,
+          lic_st: master.lic_state,
+          lic: master.lic,
+          uid: i.uid,
+          lname: master.lname,
+          search_date: Time.now,
+        ).save
+      end
+
+      ga_matched = EmpireMasterMatch.where(lic_st: 'GA').count
+      EmpireState.where(st: 'GA').update_all customers: ga_total, matched_customers: ga_matched, list_size: ga_list
+
+      redirect_to empire_states_path(), notice: "GA Update Done"
     end
   end
 

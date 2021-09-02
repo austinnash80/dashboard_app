@@ -132,7 +132,7 @@
         </tr>
       </thead>
       <tbody id="myTable">
-        <% @courses_pacifics.where(update_sheet: true).order(number: :asc).each do |courses_pacific| %>
+        <% @courses_pacifics.where(update_sheet: true).order(number: :asc).order(version: :asc).each do |courses_pacific| %>
           <tr>
             <td class=""><%= courses_pacific.version_update? ? 'Update' : courses_pacific.new? ? 'New' : '' %></td>
             <td class="fw-bold"><%= link_to 'Master', courses_pacific, class: 'text-dark' %></td>
@@ -157,7 +157,7 @@
             <% if courses_pacific.active? %>
               <td><i class="fas fa-check-circle text-success fa-2x"></td>
             <% else %>
-              <td><%= link_to 'NO', courses_pacifics_path(display: 'in_progress', course_id: courses_pacific.id, update: 'active'), class: 'btn btn-danger btn-sm bg-gradient w50 text-light' %></td>
+              <td><%= link_to 'NO', courses_pacifics_path(display: 'in_progress', course_id: courses_pacific.id, update: 'active'), class: 'btn btn-danger btn-sm bg-gradient w50 text-light', title: 'This will also change any older versions to inactive', 'data-toggle' => 'tooltip', 'data-placement' => 'right' %></td>
             <% end %>
             <% if courses_pacific.active? &&  courses_pacific.exam? && courses_pacific.text? %>
               <td><%= link_to 'Remove', courses_pacifics_path(display: 'in_progress', course_id: courses_pacific.id, update: 'update_sheet'), class: 'btn btn-sm btn-secondary text-light w100' %></td>

@@ -24,6 +24,8 @@ class CoursesPacificsController < ApplicationController
       redirect_to courses_pacifics_path(display: params['display'])
     elsif params['update'] == 'active'
       CoursesPacific.where(id: params['course_id']).update_all active: true
+      course = CoursesPacific.find_by(id: params['course_id'].to_i)
+      CoursesPacific.where(number: course.number).where.not(version: course.version).where(active: true).update_all active: false
       redirect_to courses_pacifics_path(display: params['display'])
     elsif params['update'] == 'update_sheet'
       CoursesPacific.where(id: params['course_id']).update_all update_sheet: false

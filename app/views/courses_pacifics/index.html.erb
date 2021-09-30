@@ -115,7 +115,7 @@
         <tr class="bg-secondary bg-gradient text-light">
           <th>Type</th>
           <th></th>
-          <th>Number</th>
+          <th colspan="2">Number</th>
           <th>Version</th>
           <th>Title</th>
           <th>Hours</th>
@@ -137,6 +137,8 @@
             <td class=""><%= courses_pacific.version_update? ? 'Update' : courses_pacific.new? ? 'New' : '' %></td>
             <td class="fw-bold"><%= link_to 'Master', courses_pacific, class: 'text-dark' %></td>
             <td class="fw-bold"><%= link_to courses_pacific.number, "https://www.pacificcpe.com/courses?dashboard=yes&course=#{courses_pacific.number}&version=#{courses_pacific.version}", class: 'text-dark', target: 'blank' %></td>
+            <td class="fw-bold"><%= link_to 'Create', "https://www.pacificcpe.com/courses/new?dashboard=yes&course=#{courses_pacific.number}&version=#{courses_pacific.version}&title=#{courses_pacific.title}&hours=#{courses_pacific.hours}&category=#{courses_pacific.category}", class: 'text-dark', target: 'blank' %></td>
+            <!-- <td class="fw-bold"><%#= link_to courses_pacific.number, "http://localhost:3001/courses/new?dashboard=yes&course=#{courses_pacific.number}&version=#{courses_pacific.version}&title=#{courses_pacific.title.to_s}&hours=#{courses_pacific.hours}&category=#{courses_pacific.category}", class: 'text-dark', target: 'blank' %></td> -->
             <td><%= courses_pacific.version %></td>
             <td><%= courses_pacific.title %></td>
             <td><%= courses_pacific.hours %></td>

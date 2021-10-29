@@ -53,6 +53,10 @@ class CoursesPacificsController < ApplicationController
 
     respond_to do |format|
       if @courses_pacific.save
+        seq_courses = CoursesSequoium.pluck(:number)
+        if seq_courses.exclude?(@courses_pacific.sequoia_number)
+          redirect_to edit_courses_pacific_path(id: @courses_pacific.id), notice: 'Update Sequoia Course Number' and return
+        end
         format.html { redirect_to @courses_pacific, notice: "Courses pacific was successfully created." }
         format.json { render :show, status: :created, location: @courses_pacific }
       else

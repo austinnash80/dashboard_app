@@ -56,7 +56,7 @@
   </thead>
   <tbody id="myTable">
     <% no_mail_lid = MasterCpaNoMail.pluck(:lid) %>
-    <% MasterCpa.where(lname: params['lname']).all.each do |i| %>
+    <% MasterCpa.where('upper(lname) = ?', params['lname']).all.each do |i| %>
     <tr>
       <td><%= i.lid %></td>
       <td><%= i.list %></td>

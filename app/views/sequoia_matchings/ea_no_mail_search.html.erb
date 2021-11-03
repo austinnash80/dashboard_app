@@ -53,7 +53,7 @@
     </tr>
   </thead>
   <tbody id="myTable">
-    <% MasterEa.where(lname: params['lname']).all.each do |i| %>
+    <% MasterEa.where('upper(lname) = ?', params['lname']).all.each do |i| %>
     <tr>
       <td><%= i.lid %></td>
       <td><%= i.list %></td>

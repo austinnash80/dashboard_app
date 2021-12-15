@@ -53,7 +53,9 @@
         <td><%= empire_state.customers.present? ? number_with_delimiter(empire_state.customers) : '' %></td>
         <!-- <td><%= empire_state.matched_customers.present? ? number_with_delimiter(empire_state.matched_customers) : '' %></td> -->
         <!-- <td><%= empire_state.matched_customers.present? && empire_state.customers.present? ? number_to_percentage((empire_state.matched_customers.to_f / empire_state.customers.to_f)*100, precision: 0) : ''%></td> -->
-        <td><%= empire_state.list_size.present? ? number_with_delimiter(empire_state.list_size) : '' %></td>
+        <% path = "empire_master_#{empire_state.st.downcase}_lists" %>
+        <!-- <td><%= link_to empire_state.state, path %></td> -->
+        <td><% if empire_state.list_size.present? %> <%= link_to number_with_delimiter(empire_state.list_size), path %><% end %></td>
         <!-- <td><%= empire_state.matched_customers.present? && empire_state.list_size.present? ? number_to_percentage((empire_state.matched_customers.to_f / empire_state.list_size.to_f)*100, precision: 1) : ''%></td> -->
         <td><%= empire_state.list_date %></td>
         <td><%= empire_state.exp_type %></td>

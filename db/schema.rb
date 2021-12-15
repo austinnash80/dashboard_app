@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_27_182558) do
+ActiveRecord::Schema.define(version: 2021_12_14_215615) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -580,6 +580,27 @@ ActiveRecord::Schema.define(version: 2021_08_27_182558) do
     t.index ["uid"], name: "index_empire_members_on_uid", unique: true
   end
 
+  create_table "empire_state_tasks", force: :cascade do |t|
+    t.integer "empire_state_id"
+    t.integer "step_number"
+    t.string "step_name"
+    t.text "details"
+    t.string "assigned"
+    t.date "due_date"
+    t.boolean "completed"
+    t.string "completed_date"
+    t.text "task_notes"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "empire_state_tasks_suppliments", force: :cascade do |t|
+    t.integer "step_number"
+    t.string "step_name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "empire_states", force: :cascade do |t|
     t.string "state"
     t.string "st"
@@ -795,6 +816,20 @@ ActiveRecord::Schema.define(version: 2021_08_27_182558) do
     t.string "delivery_type"
     t.date "range_3_a"
     t.date "range_3_b"
+    t.date "range_4_a"
+    t.date "range_4_b"
+    t.date "range_5_a"
+    t.date "range_5_b"
+    t.date "range_6_a"
+    t.date "range_6_b"
+    t.date "range_7_a"
+    t.date "range_7_b"
+    t.date "range_8_a"
+    t.date "range_8_b"
+    t.date "range_9_a"
+    t.date "range_9_b"
+    t.date "range_10_a"
+    t.date "range_10_b"
   end
 
   create_table "no_mail_not_founds", force: :cascade do |t|

@@ -1,0 +1,12 @@
+
+<div class="card bg-light" style="width: 40rem;">
+  <div class="card-body m-3">
+    <h4 class="card-title">Edit Empire State Tas</h4>
+    <% state = EmpireState.find_by(id: @empire_state_task.empire_state_id) %>
+    <h5>State: <strong><%= state.state %> </strong></h5>
+    <%= render 'form', empire_state_task: @empire_state_task %>
+</div>
+
+
+<%#= link_to 'Show', @empire_state_task %>
+<%#= link_to 'Back', empire_state_tasks_path %>

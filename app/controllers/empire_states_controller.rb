@@ -493,6 +493,15 @@ class EmpireStatesController < ApplicationController
 
   # GET /empire_states/1 or /empire_states/1.json
   def show
+    @empire_state_task = EmpireStateTask.new
+    steps = EmpireStateTask.where(empire_state_id: @empire_state.id).pluck(:step_number)
+
+    if steps.blank?
+      @step_number = 1
+    else
+      @step_number = (steps.max + 1)
+    end
+    @step_name = EmpireStateTasksSuppliment.where(step_number: @step_number).pluck(:step_name)
   end
 
   # GET /empire_states/new

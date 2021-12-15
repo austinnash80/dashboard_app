@@ -1,0 +1,49 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Empire state:</strong>
+  <%= @empire_state_task.empire_state_id %>
+</p>
+
+<p>
+  <strong>Step number:</strong>
+  <%= @empire_state_task.step_number %>
+</p>
+
+<p>
+  <strong>Step name:</strong>
+  <%= @empire_state_task.step_name %>
+</p>
+
+<p>
+  <strong>Details:</strong>
+  <%= @empire_state_task.details %>
+</p>
+
+<p>
+  <strong>Assigned:</strong>
+  <%= @empire_state_task.assigned %>
+</p>
+
+<p>
+  <strong>Due date:</strong>
+  <%= @empire_state_task.due_date %>
+</p>
+
+<p>
+  <strong>Completed:</strong>
+  <%= @empire_state_task.completed %>
+</p>
+
+<p>
+  <strong>Completed date:</strong>
+  <%= @empire_state_task.completed_date %>
+</p>
+
+<p>
+  <strong>Task notes:</strong>
+  <%= @empire_state_task.task_notes %>
+</p>
+
+<%= link_to 'Edit', edit_empire_state_task_path(@empire_state_task) %> |
+<%= link_to 'Back', empire_state_tasks_path %>

@@ -4,10 +4,10 @@
   <h1 class="">Pacific</h1>
   <%# Button Colors %>
     <% if params['display'] == 'pacific_courses' || params['display'].blank? %><% pacific_color = 'btn-secondary' %><% else %> <% pacific_color = 'btn-primary' %><% end %>
-    <% if params['display'] == 'master_courses' %><% master_color = 'btn-secondary' %><% else %> <% master_color = 'btn-primary' %><% end %>
+    <% if params['display'] == 'parent_courses' %><% master_color = 'btn-secondary' %><% else %> <% master_color = 'btn-primary' %><% end %>
     <% if params['display'] == 'in_progress' %><% in_progress_color = 'btn-secondary' %><% else %> <% in_progress_color = 'btn-primary' %><% end %>
   <div class="m-2 btn-group">
-    <%= link_to 'Master Courses', courses_pacifics_path(display: 'master_courses'), class: "btn btn-sm #{master_color} text-light bg-gradient w150" %>
+    <%= link_to 'Parent Courses', courses_pacifics_path(display: 'parent_courses'), class: "btn btn-sm #{master_color} text-light bg-gradient w150" %>
     <%= link_to 'Pacific Courses', courses_pacifics_path(display: 'pacific_courses'), class: "btn btn-sm #{pacific_color} text-light bg-gradient w150" %>
     <%= link_to "In Progress (#{CoursesPacific.where(update_sheet: true).count})", courses_pacifics_path(display: 'in_progress'), class: "btn btn-sm #{in_progress_color} text-light bg-gradient w150" %>
   </div>
@@ -92,7 +92,7 @@
             <td><%= courses_pacific.sub_category %></td>
             <td><%= courses_pacific.pub_date %></td>
             <td><%= courses_pacific.sequoia_number %><%= courses_pacific.sequoia_version %></td>
-            <% if sequoia_course_version.active? %>
+            <% if sequoia_course_version.present? && sequoia_course_version.active? %>
               <td class="fw-bold text-success">YES</td>
             <% else %>
               <td class="fw-bold text-danger">NO</td>
@@ -175,14 +175,14 @@
       </tbody>
     </table>
 
-<!-- Master Courses -->
+<!-- Parent Courses -->
 <% else params['display'] == 'master_course' %>
-  <h2 class="text-center">Master Courses</h2>
+  <h2 class="text-center">Parent Courses</h2>
   <div class="col-lg-2"><input class="form-control" id="myInput" type="text" placeholder="Filter Table"></div><br>
   <table class="table table-striped">
     <thead>
       <tr class="bg-secondary bg-gradient text-light">
-        <th>Master Number</th>
+        <th>Parent Number</th>
         <th>Active Pacific Courses</th>
         <th>Sequoia Course</th>
         <th>Hours</th>

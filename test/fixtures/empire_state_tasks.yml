@@ -1,0 +1,23 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  empire_state_id: 1
+  step_number: 
+  step_name: MyString
+  details: MyText
+  assigned: MyString
+  due_date: 2021-12-14
+  completed: false
+  completed_date: MyString
+  task_notes: MyText
+
+two:
+  empire_state_id: 1
+  step_number: 
+  step_name: MyString
+  details: MyText
+  assigned: MyString
+  due_date: 2021-12-14
+  completed: false
+  completed_date: MyString
+  task_notes: MyText

@@ -19,7 +19,29 @@
 </div>
 <div class="m-5">
 
-<table class="table table-striped">
+  <div class="row">
+    <div class="col-md-3">
+      <input class="form-control" id="myInput" type="text" placeholder="Filter Table">
+    </div>
+    <div class="col-md-3">
+      <%= text_field_tag "id", '', class: "delivery_type_field form-control", value: params['delivery_type'], placeholder: 'Search by Delivery Type' %>
+      <br>
+      <%= link_to 'Search', mktg_postcards_path(), class: 'search_link btn btn-sm btn-primary gb-gradient w150 text-light' %>
+      <%= link_to 'Clear', mktg_postcards_path(), class: 'btn btn-sm btn-secondary gb-gradient w150 text-light' %>
+    </div>
+    <div class="col-md-3">
+      <%= text_field_tag "id", '', class: "company_field form-control", value: params['company'], placeholder: 'Search by Compnay' %>
+      <br>
+      <%= link_to 'Search', mktg_postcards_path(), class: 'company_search_link btn btn-sm btn-primary gb-gradient w150 text-light' %>
+      <%= link_to 'Clear', mktg_postcards_path(), class: 'btn btn-sm btn-secondary gb-gradient w150 text-light' %>
+    </div>
+  </div>
+
+
+
+<br>
+
+<table class="table table-striped ">
   <thead>
   <!-- <caption class="caption-top">Total Records: <%#= number_with_delimiter(SequoiaMember.count) %> | Display Limit: 500</caption> -->
   <tr class="bg-secondary bg-gradient text-light">
@@ -31,12 +53,6 @@
       <th>Mail day</th>
       <th>Drop day</th>
       <th>Land day</th>
-      <th>Range 1 a</th>
-      <th>Range 1 b</th>
-      <th>Range 2 a</th>
-      <th>Range 2 b</th>
-      <th>Range 3 a</th>
-      <th>Range 3 b</th>
       <th>Done</th>
       <th>Sent</th>
       <th>Notes</th>
@@ -44,8 +60,10 @@
     </tr>
   </thead>
 
-  <tbody>
-    <% @mktg_postcards.order(mail_day: :asc).order(campaign: :asc).order(segment: :asc).each do |mktg_postcard| %>
+  <% params['delivery_type'].present? ? mktg_display = @mktg_postcards.where(delivery_type: params['delivery_type'] ).order(mail_day: :asc).order(campaign: :asc).order(segment: :asc) : params['company'].present? ? mktg_display = @mktg_postcards.where(company: params['company'] ).order(mail_day: :asc).order(campaign: :asc).order(segment: :asc) : mktg_display = @mktg_postcards.order(mail_day: :asc).order(campaign: :asc).order(segment: :asc) %>
+
+  <tbody id="myTable">
+    <% mktg_display.each do |mktg_postcard| %>
       <tr>
         <td><%= mktg_postcard.campaign_id %></td>
         <td><%= mktg_postcard.company.titlecase %></td>
@@ -55,16 +73,10 @@
         <td class="fw-bold"><%= mktg_postcard.mail_day %></td>
         <td><%= mktg_postcard.drop_day %></td>
         <td><%= mktg_postcard.land_day %></td>
-        <td><%= mktg_postcard.range_1_a %></td>
-        <td><%= mktg_postcard.range_1_b %></td>
-        <td><%= mktg_postcard.range_2_a %></td>
-        <td><%= mktg_postcard.range_2_b %></td>
-        <td><%= mktg_postcard.range_3_a %></td>
-        <td><%= mktg_postcard.range_3_b %></td>
         <td class="text-success fw-bold"><%= mktg_postcard.done? ? 'DONE' : '' %></td>
         <td class="fw-bold"><%= number_with_delimiter(mktg_postcard.sent) %></td>
         <td><%= mktg_postcard.notes %></td>
-        <td><%= link_to 'show', mktg_postcard, class: '' %></td>
+        <td><%= link_to 'View', mktg_postcard, class: '' %></td>
         <!-- <td><%= link_to 'Destroy', mktg_postcard, method: :delete, data: { confirm: 'Are you sure?' } %></td> -->
       </tr>
     <% end %>
@@ -73,3 +85,29 @@
 <br>
 <%= link_to 'New Mktg Postcard', new_mktg_postcard_path %>
 </div>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    $("#myInput").on("keyup", function() {
+      var value = $(this).val().toLowerCase();
+      $("#myTable tr").filter(function() {
+        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+      });
+    });
+  });
+</script>
+
+<script type="text/javascript">
+  $(".search_link").click(function() {
+    $(this).attr("href", function() {
+      return this.href + "?delivery_type=" + $('.delivery_type_field').val();
+    });
+  });
+</script>
+<script type="text/javascript">
+  $(".company_search_link").click(function() {
+    $(this).attr("href", function() {
+      return this.href + "?company=" + $('.company_field').val();
+    });
+  });
+</script>

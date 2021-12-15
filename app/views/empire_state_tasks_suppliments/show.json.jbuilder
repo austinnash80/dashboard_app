@@ -1,0 +1,1 @@
+json.partial! "empire_state_tasks_suppliments/empire_state_tasks_suppliment", empire_state_tasks_suppliment: @empire_state_tasks_suppliment

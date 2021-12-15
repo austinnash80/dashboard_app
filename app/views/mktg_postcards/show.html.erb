@@ -1,60 +1,33 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Campaign:</strong>
-  <%= @mktg_postcard.campaign %>
-</p>
-<p>
-  <strong>Segment:</strong>
-  <%= @mktg_postcard.segment %>
-</p>
+<h2><strong>Mail day:</strong> <%= @mktg_postcard.mail_day.present? ? @mktg_postcard.mail_day.strftime('%B %-d, %Y') : '' %></h2>
+<h4><strong>Company:</strong> <%= @mktg_postcard.company.present? ? @mktg_postcard.company.titlecase : '' %></h4>
+<h4><strong>Campaign:</strong> <%= @mktg_postcard.campaign.present? ?  @mktg_postcard.campaign.titlecase : '' %></h4>
+<h4><strong>Segments:</strong> <%= @mktg_postcard.segment.present? ?  @mktg_postcard.segment.upcase : '' %></h4>
 
-<p>
-  <strong>Company:</strong>
-  <%= @mktg_postcard.company %>
-</p>
+<hr class="w550">
 
-<p>
-  <strong>Mail day:</strong>
-  <%= @mktg_postcard.mail_day %>
-</p>
+<h6><strong>Done:</strong> <%= @mktg_postcard.done %></h6>
+<h6><strong>Sent:</strong> <%= @mktg_postcard.sent %></h6>
+<h6><strong>Notes:</strong><%= @mktg_postcard.notes %></h6>
 
-<p>
-  <strong>Range 1 a:</strong>
-  <%= @mktg_postcard.range_1_a %>
-</p>
+<hr class="w550">
 
-<p>
-  <strong>Range 1 b:</strong>
-  <%= @mktg_postcard.range_1_b %>
-</p>
+<p><strong>Range 1:</strong> <%= @mktg_postcard.range_1_a.present? ? @mktg_postcard.range_1_a.strftime('%-m/%-d/%y') : @mktg_postcard.range_1_a %> - <%= @mktg_postcard.range_1_b.present? ? @mktg_postcard.range_1_b.strftime('%-m/%-d/%y') : @mktg_postcard.range_1_b %></p>
+<p><strong>Range 2:</strong> <%= @mktg_postcard.range_2_a.present? ? @mktg_postcard.range_2_a.strftime('%-m/%-d/%y') : @mktg_postcard.range_2_a %> - <%= @mktg_postcard.range_2_b.present? ? @mktg_postcard.range_2_b.strftime('%-m/%-d/%y') : @mktg_postcard.range_2_b %></p>
+<p><strong>Range 3:</strong> <%= @mktg_postcard.range_3_a.present? ? @mktg_postcard.range_3_a.strftime('%-m/%-d/%y') : @mktg_postcard.range_3_a %> - <%= @mktg_postcard.range_3_b.present? ? @mktg_postcard.range_3_b.strftime('%-m/%-d/%y') : @mktg_postcard.range_3_b %></p>
+<p><strong>Range 4:</strong> <%= @mktg_postcard.range_4_a.present? ? @mktg_postcard.range_4_a.strftime('%-m/%-d/%y') : @mktg_postcard.range_4_a %> - <%= @mktg_postcard.range_4_b.present? ? @mktg_postcard.range_4_b.strftime('%-m/%-d/%y') : @mktg_postcard.range_4_b %></p>
+<p><strong>Range 5:</strong> <%= @mktg_postcard.range_5_a.present? ? @mktg_postcard.range_5_a.strftime('%-m/%-d/%y') : @mktg_postcard.range_5_a %> - <%= @mktg_postcard.range_5_b.present? ? @mktg_postcard.range_5_b.strftime('%-m/%-d/%y') : @mktg_postcard.range_5_b %></p>
+<p><strong>Range 6:</strong> <%= @mktg_postcard.range_6_a.present? ? @mktg_postcard.range_6_a.strftime('%-m/%-d/%y') : @mktg_postcard.range_6_a %> - <%= @mktg_postcard.range_6_b.present? ? @mktg_postcard.range_6_b.strftime('%-m/%-d/%y') : @mktg_postcard.range_6_b %></p>
+<p><strong>Range 7:</strong> <%= @mktg_postcard.range_7_a.present? ? @mktg_postcard.range_7_a.strftime('%-m/%-d/%y') : @mktg_postcard.range_7_a %> - <%= @mktg_postcard.range_7_b.present? ? @mktg_postcard.range_7_b.strftime('%-m/%-d/%y') : @mktg_postcard.range_7_b %></p>
+<p><strong>Range 8:</strong> <%= @mktg_postcard.range_8_a.present? ? @mktg_postcard.range_8_a.strftime('%-m/%-d/%y') : @mktg_postcard.range_8_a %> - <%= @mktg_postcard.range_8_b.present? ? @mktg_postcard.range_8_b.strftime('%-m/%-d/%y') : @mktg_postcard.range_8_b %></p>
+<p><strong>Range 9:</strong> <%= @mktg_postcard.range_9_a.present? ? @mktg_postcard.range_9_a.strftime('%-m/%-d/%y') : @mktg_postcard.range_9_a %> - <%= @mktg_postcard.range_9_b.present? ? @mktg_postcard.range_9_b.strftime('%-m/%-d/%y') : @mktg_postcard.range_9_b %></p>
+<p><strong>Range 10:</strong> <%= @mktg_postcard.range_10_a.present? ? @mktg_postcard.range_10_a.strftime('%-m/%-d/%y') : @mktg_postcard.range_10_a %> - <%= @mktg_postcard.range_10_b.present? ? @mktg_postcard.range_10_b.strftime('%-m/%-d/%y') : @mktg_postcard.range_10_b %></p>
 
-<p>
-  <strong>Range 2 a:</strong>
-  <%= @mktg_postcard.range_2_a %>
-</p>
+<hr class="w550">
 
-<p>
-  <strong>Range 2 b:</strong>
-  <%= @mktg_postcard.range_2_b %>
-</p>
-
-<p>
-  <strong>Done:</strong>
-  <%= @mktg_postcard.done %>
-</p>
-
-<p>
-  <strong>Sent:</strong>
-  <%= @mktg_postcard.sent %>
-</p>
-
-<p>
-  <strong>Notes:</strong>
-  <%= @mktg_postcard.notes %>
-</p>
-
-<%= link_to 'Go to Postcard Mailing Schedule', day_mktg_postcards_path(day: @mktg_postcard.mail_day), class: 'btn btn-sm btn-primary bg-gradient text-light' %>
+<%= link_to 'Mailing Day', day_mktg_postcards_path(day: @mktg_postcard.mail_day), class: 'btn btn-sm btn-primary bg-gradient text-light w150' %>
 <br><br>
-<%= link_to 'Edit', edit_mktg_postcard_path(@mktg_postcard) %> |
-<%= link_to 'Back', mktg_postcards_path %>
+<%= link_to 'Mailing Index', mktg_postcards_path, class: 'btn btn-sm btn-primary bg-gradient text-light w150' %>
+<br><br>
+<%= link_to 'Edit', edit_mktg_postcard_path(@mktg_postcard), class: 'btn btn-sm btn-primary bg-gradient text-light w150' %>

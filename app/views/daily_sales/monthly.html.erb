@@ -430,7 +430,7 @@
       </thead>
       <tbody class="">
         <% data.each do |k,v| %>
-          <% if k > '2021-12-27'.to_date && k < '2023-01-02'.to_date %>
+          <% if k > '2021-12-26'.to_date && k < '2023-01-02'.to_date %>
         <tr>
           <td><%= k %></td>
           <td><%= number_to_currency(v.pluck(:sales).sum / 100, precision: 0) %></td>

@@ -1,6 +1,6 @@
 <p id="notice"><%= notice %></p>
 
-<h1 class="text-center">Mktg Postcards</h1>
+<h1 class="text-center">Mktg Schedule</h1>
 
 <a class="btn btn-sm btn-light text-secondary bg-gradient border" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">Upload/Export</a>
 <div class="collapse" id="collapseExample">
@@ -45,7 +45,6 @@
   <thead>
   <!-- <caption class="caption-top">Total Records: <%#= number_with_delimiter(SequoiaMember.count) %> | Display Limit: 500</caption> -->
   <tr class="bg-secondary bg-gradient text-light">
-      <th>Campaign ID</th>
       <th>Company</th>
       <th>Campaign</th>
       <th>Segment</th>
@@ -65,10 +64,9 @@
   <tbody id="myTable">
     <% mktg_display.each do |mktg_postcard| %>
       <tr>
-        <td><%= mktg_postcard.campaign_id %></td>
-        <td><%= mktg_postcard.company.titlecase %></td>
-        <td><%= mktg_postcard.campaign.upcase %></td>
-        <td><%= mktg_postcard.segment.upcase %></td>
+        <td><%= mktg_postcard.company %></td>
+        <td><%= mktg_postcard.campaign %></td>
+        <td><%= mktg_postcard.segment %></td>
         <td><%= mktg_postcard.delivery_type %></td>
         <td class="fw-bold"><%= mktg_postcard.mail_day %></td>
         <td><%= mktg_postcard.drop_day %></td>

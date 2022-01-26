@@ -27,13 +27,13 @@ class MktgExportsController < ApplicationController
     end
 
     # buttons
-    params['campaign'] == 'Return Customer' && params['co'] == 'sequoia' && params['des'] == 'cpa'? @sequoia_rc_cpa = 'btn-secondary' : @sequoia_rc_cpa = 'btn-primary'
-    params['campaign'] == 'Return Customer' && params['co'] == 'sequoia' && params['des'] == 'ea'? @sequoia_rc_ea = 'btn-secondary' : @sequoia_rc_ea = 'btn-primary'
-    params['campaign'] == 'New Customer' && params['co'] == 'sequoia' && params['des'] == 'cpa'? @sequoia_nc_cpa = 'btn-secondary' : @sequoia_nc_cpa = 'btn-primary'
-    params['campaign'] == 'New Customer' && params['co'] == 'sequoia' && params['des'] == 'ea'? @sequoia_nc_ea = 'btn-secondary' : @sequoia_nc_ea = 'btn-primary'
+    params['campaign'] == 'Return' && params['co'] == 'Sequoia' && params['des'] == 'CPA'? @sequoia_rc_cpa = 'btn-secondary' : @sequoia_rc_cpa = 'btn-primary'
+    params['campaign'] == 'Return' && params['co'] == 'Sequoia' && params['des'] == 'EA'? @sequoia_rc_ea = 'btn-secondary' : @sequoia_rc_ea = 'btn-primary'
+    params['campaign'] == 'New' && params['co'] == 'Sequoia' && params['des'] == 'CPA'? @sequoia_nc_cpa = 'btn-secondary' : @sequoia_nc_cpa = 'btn-primary'
+    params['campaign'] == 'New' && params['co'] == 'Sequoia' && params['des'] == 'EA'? @sequoia_nc_ea = 'btn-secondary' : @sequoia_nc_ea = 'btn-primary'
 
-    params['campaign'] == 'Return Customer' && params['co'] == 'empire' ? @empire_rc = 'btn-secondary' : @empire_rc = 'btn-primary'
-    params['campaign'] == 'New Customer' && params['co'] == 'empire' ? @empire_nc = 'btn-secondary' : @empire_nc = 'btn-primary'
+    params['campaign'] == 'Return' && params['co'] == 'Empire' ? @empire_rc = 'btn-secondary' : @empire_rc = 'btn-primary'
+    params['campaign'] == 'New' && params['co'] == 'Empire' ? @empire_nc = 'btn-secondary' : @empire_nc = 'btn-primary'
 
     if params['campaign'].present? && params['range_1_date_1'].present?
       MktgExport.delete_all
@@ -71,9 +71,9 @@ class MktgExportsController < ApplicationController
         (r3d1.to_date..r3d2).each do |i| @seg_3.push(i) end
       end
 
-      if params['co'] == 'sequoia'
+      if params['co'] == 'Sequoia'
         sequoia
-      elsif params['co'] == 'empire'
+      elsif params['co'] == 'Empire'
         empire
       end
 
@@ -82,21 +82,21 @@ class MktgExportsController < ApplicationController
 
   def sequoia
     active_auto_renew = AutoRenewList.pluck(:uid)
-    if params['campaign'] == 'Return Customer' && params['des'] == 'cpa'#CREATE the record just with UID
+    if params['campaign'] == 'Return' && params['des'] == 'CPA'#CREATE the record just with UID
       SequoiaMember.where(membership_exp: @dates).where(cpa: true).where.not(uid: active_auto_renew).all.each do |i|
-        MktgExport.create(uid: i.uid, exp: i.membership_exp, campaign: 'Return Customer', des: 'cpa')
+        MktgExport.create(uid: i.uid, exp: i.membership_exp, campaign: 'Return', des: 'CPA')
       end
-    elsif params['campaign'] == 'Return Customer' && params['des'] == 'ea'#CREATE the record just with UID
+    elsif params['campaign'] == 'Return' && params['des'] == 'EA'#CREATE the record just with UID
       SequoiaMember.where(membership_exp: @dates).where(ea: true).where.not(uid: active_auto_renew).all.each do |i|
-        MktgExport.create(uid: i.uid, exp: i.membership_exp, campaign: 'Return Customer', des: 'ea')
+        MktgExport.create(uid: i.uid, exp: i.membership_exp, campaign: 'Return', des: 'EA')
       end
-    elsif params['campaign'] == 'New Customer' && params['des'] == 'cpa'
+    elsif params['campaign'] == 'New' && params['des'] == 'CPA'
       SequoiaMember.where(first_purchase: @dates).where(cpa: true).where(cpa_memberships: 1).all.each do |i|
-        MktgExport.create(uid: i.uid, exp: i.first_purchase, campaign: 'New Customer', des: params['des'])
+        MktgExport.create(uid: i.uid, exp: i.first_purchase, campaign: 'New', des: params['des'])
       end
-    elsif params['campaign'] == 'New Customer' && params['des'] == 'ea'
+    elsif params['campaign'] == 'New' && params['des'] == 'EA'
       SequoiaMember.where(first_purchase: @dates).where(ea: true).where(ea_memberships: 1).all.each do |i|
-        MktgExport.create(uid: i.uid, exp: i.first_purchase, campaign: 'New Customer', des: params['des'])
+        MktgExport.create(uid: i.uid, exp: i.first_purchase, campaign: 'New', des: params['des'])
       end
     end
 

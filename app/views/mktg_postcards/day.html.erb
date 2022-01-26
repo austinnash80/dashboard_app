@@ -1,4 +1,4 @@
-<h1 class="text-center">Postcard Mailing Schedule</h1>
+<h1 class="text-center">Marketing Schedule</h1>
 <h5 class="text-center"><%= @day.strftime('%A, %b %-d, %Y') %></h5>
 <div class="m-5">
   <div class="btn-group" role="group">
@@ -9,50 +9,53 @@
 <table class="table table-striped">
   <thead>
     <tr class="bg-secondary bg-gradient text-light">
-      <th width="5%">Company</th>
-      <th width="5%">Segment</th>
-      <th width="10%">Campaign</th>
-      <th width="10%">Delivery</th>
-      <th width="10%">Range 1A</th>
-      <th width="10%">Range 1B</th>
-      <th width="10%">Range 2A</th>
-      <th width="10%">Range 2B</th>
-      <th width="10%">Range 3A</th>
-      <th width="10%">Range 3B</th>
-      <th width="10%"></th>
-      <th width="10%"></th>
-      <th width="10%"></th>
-      <th width="5%"></th>
+      <th width="8%">Company</th>
+      <th width="8%">Segment</th>
+      <th width="8%">Campaign</th>
+      <th width="8%">Delivery</th>
+      <th width="8%">Drop Date</th>
+      <th width="8%">Land Date</th>
+      <th width="22%">Notes</th>
+      <th width="30%" colspan="4"></th>
     </tr>
   </thead>
   <tbody>
-    <% MktgPostcard.order(campaign: :asc).order(segment: :asc).where(mail_day: @day).all.each do |i| %>
-      <tr>
-        <td><%= i.company %></td>
-        <td><%= i.segment %></td>
-        <td><%= i.campaign %></td>
-        <td class="fw-bold"><%= i.delivery_type %></td>
-        <td><%= i.range_1_a %></td>
-        <td><%= i.range_1_b %></td>
-        <td><%= i.range_2_a %></td>
-        <td><%= i.range_2_b %></td>
-        <td><%= i.range_3_a %></td>
-        <td><%= i.range_3_b %></td>
+    <% MktgPostcard.order(company: :asc).order(campaign: :asc).order(segment: :asc).where(mail_day: @day).all.each do |i| %>
+      <tr data-toggle="collapse" data-target="#demo1" class="accordion-toggle"><big>
+        <td><big><%= i.company %></big></td>
+        <td><big><%= i.segment %></big></td>
+        <td><big><%= i.campaign %></big></td>
+        <td class="fw-bold"><big><%= i.delivery_type %></big></td>
+        <td><%= i.drop_day.present? ? i.drop_day.strftime('%-m/%d/%y') : '' %></td>
+        <td><%= i.land_day.present? ? i.land_day.strftime('%-m/%d/%y') : '' %></td>
+        <td colspan="1">
+          <% if i.notes.present? %> <%= i.notes %> <% end %>
+          <% if i.range_1_a.present? && i.range_1_b.present? %> Date Ranges: <%= i.range_1_a.strftime('%-m/%-d/%y') %> - <%= i.range_1_b.strftime('%-m/%-d/%y') %><% end %>
+          <% if i.range_2_a.present? && i.range_2_b.present? %>, <%= i.range_2_a.strftime('%-m/%-d/%y') %> - <%= i.range_2_b.strftime('%-m/%-d/%y') %><% end %>
+          <% if i.range_3_a.present? && i.range_3_b.present? %>, <%= i.range_3_a.strftime('%-m/%-d/%y') %> - <%= i.range_3_b.strftime('%-m/%-d/%y') %><% end %>
+          <% if i.range_4_a.present? && i.range_4_b.present? %>, <%= i.range_4_a.strftime('%-m/%-d/%y') %> - <%= i.range_4_b.strftime('%-m/%-d/%y') %><% end %>
+          <% if i.range_5_a.present? && i.range_5_b.present? %>, <%= i.range_5_a.strftime('%-m/%-d/%y') %> - <%= i.range_5_b.strftime('%-m/%-d/%y') %><% end %>
+          <% if i.range_6_a.present? && i.range_6_b.present? %>, <%= i.range_6_a.strftime('%-m/%-d/%y') %> - <%= i.range_6_b.strftime('%-m/%-d/%y') %><% end %>
+          <% if i.range_7_a.present? && i.range_7_b.present? %>, <%= i.range_7_a.strftime('%-m/%-d/%y') %> - <%= i.range_7_b.strftime('%-m/%-d/%y') %><% end %>
+          <% if i.range_8_a.present? && i.range_8_b.present? %>, <%= i.range_8_a.strftime('%-m/%-d/%y') %> - <%= i.range_8_b.strftime('%-m/%-d/%y') %><% end %>
+          <% if i.range_9_a.present? && i.range_9_b.present? %>, <%= i.range_9_a.strftime('%-m/%-d/%y') %> - <%= i.range_9_b.strftime('%-m/%-d/%y') %><% end %>
+          <% if i.range_10_a.present? && i.range_10_b.present? %>, <%= i.range_10_a.strftime('%-m/%-d/%y') %> - <%= i.range_10_b.strftime('%-m/%-d/%y') %><% end %>
+        </td>
         <% if i.done? %>
-          <td class="text-success fw-bold">Done</td>
-          <td class="fw-bold"><%= number_with_delimiter(i.sent) %></td>
+          <td class="text-success fw-bold"><big>Done</big></td>
+          <td class="fw-bold"><big><%= number_with_delimiter(i.sent) %></big></td>
           <td></td>
         <% else %>
-          <% if i.campaign == 'Direct Mail' %>
-            <td><strong>Drop:</strong> <%= i.drop_day.present? ? i.drop_day.strftime('%-m/%d/%y') : '' %></td>
-          <% else %>
-            <td><%= link_to 'Run', mktg_exports_path(run: 'yes', campaign_id: i.campaign_id,  mail_day: i.mail_day, campaign: i.campaign.titlecase, co: i.company.downcase, des: i.segment, delivery_type: i.delivery_type, range_1_date_1: i.range_1_a, range_1_date_2: i.range_1_b, range_2_date_1: i.range_2_a, range_2_date_2: i.range_2_b, range_3_date_1: i.range_3_a, range_3_date_2: i.range_3_b, empire_st: i.segment), target: '_blank', class: 'btn btn-sm btn-primary gb-gradient w100 text-light' %></td>
-          <% end %>
-          <td><%= text_field_tag "id", '', class: "sent_field form-control w150", value: i.sent, placeholder: '' %></td>
-          <td><%= link_to 'Done', day_mktg_postcards_path(day: @day, campaign_id: i.id), class: "sent_link btn btn-sm btn-primary gb-gradient w100 text-light" %></td>
+          <% if i.delivery_type == 'Postcard' || i.delivery_type == 'Email' %>
+            <td><big><%= link_to 'Get Records', mktg_exports_path(run: 'yes', campaign_id: i.campaign_id,  mail_day: i.mail_day, campaign: i.campaign, co: i.company, des: i.segment, delivery_type: i.delivery_type, range_1_date_1: i.range_1_a, range_1_date_2: i.range_1_b, range_2_date_1: i.range_2_a, range_2_date_2: i.range_2_b, range_3_date_1: i.range_3_a, range_3_date_2: i.range_3_b, range_4_date_1: i.range_4_a, range_4_date_2: i.range_4_b, range_5_date_1: i.range_5_a, range_5_date_2: i.range_5_b, range_6_date_1: i.range_6_a, range_6_date_2: i.range_6_b, range_7_date_1: i.range_7_a, range_7_date_2: i.range_7_b, range_8_date_1: i.range_8_a, range_8_date_2: i.range_8_b, range_9_date_1: i.range_9_a, range_9_date_2: i.range_9_b, range_10_date_1: i.range_10_a, range_10_date_2: i.range_10_b, empire_st: i.segment), target: '_blank', class: 'btn btn-sm btn-outline-secondary gb-gradient w150' %></big></td>
+          <% else %><td></td><% end %>
+          <td><big><%= text_field_tag "id", '', class: "sent_field form-control w200", value: i.sent, placeholder: 'Enter Quanity' %></big></td>
+          <td><big><%= link_to 'Done', day_mktg_postcards_path(day: @day, campaign_id: i.id), class: "sent_link btn-sm btn btn-primary" %></big></td>
         <% end %>
-        <td><%= link_to 'Edit', edit_mktg_postcard_path(i.id, day: @day) %></td>
-      </tr>
+        <td><big><%= link_to 'Edit', edit_mktg_postcard_path(i.id, day: @day),class: 'btn btn-sm btn-link' %></big></td>
+      </big></tr>
+
+
     <% end %>
   </tbody>
 

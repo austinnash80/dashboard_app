@@ -46,8 +46,7 @@
     <% @empire_states.order(st: :ASC).each do |empire_state| %>
       <tr>
         <td><%= link_to 'Run Match', empire_states_path(run: empire_state.st), class: 'btn btn-primary text-light btn-sm w100', data: {disable_with: "Loading..."} %></td>
-        <% path = "empire_master_#{empire_state.st.downcase}_lists" %>
-        <td><%= link_to empire_state.state, send("empire_master_#{empire_state.st.downcase}_lists_path") %></td>
+        <td><%#= link_to empire_state.state, send("empire_master_#{empire_state.st.downcase}_lists_path") %></td>
         <td><%= empire_state.st %></td>
         <td><%= empire_state.customers.present? ? number_with_delimiter(empire_state.customers) : '' %></td>
         <td><%= empire_state.matched_customers.present? ? number_with_delimiter(empire_state.matched_customers) : '' %></td>

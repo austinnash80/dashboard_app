@@ -12,7 +12,7 @@
       <p><strong>Completed Steps:</strong> <%= EmpireCourseRevisionStep.where(complete: true).count > 0 ? number_with_delimiter(EmpireCourseRevisionStep.where(complete: true).count) : 0 %></p>
     </div>
   <div class="col-md-3">
-    <% names = EmpireCourseRevisionStep.where.not(assigned: '').pluck(:assigned).uniq %>
+    <% names = EmpireCourseRevisionStep.where.not(assigned: '').pluck(:assigned).uniq.sort %>
     <h3 class="text-center bold">Assigned Tasks</h3>
     <br>
     <table class="table table-outline table-striped">

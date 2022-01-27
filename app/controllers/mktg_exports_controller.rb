@@ -19,21 +19,7 @@ class MktgExportsController < ApplicationController
 
     if params['delete'] == 'yes'
       MktgExport.delete_all
-      if params['co'] == 'empire'
-        redirect_to mktg_exports_path(co: 'empire')
-      elsif params['co'] == 'sequoia'
-        redirect_to mktg_exports_path(co: 'sequoia')
-      end
     end
-
-    # buttons
-    params['campaign'] == 'Return' && params['co'] == 'Sequoia' && params['des'] == 'CPA'? @sequoia_rc_cpa = 'btn-secondary' : @sequoia_rc_cpa = 'btn-primary'
-    params['campaign'] == 'Return' && params['co'] == 'Sequoia' && params['des'] == 'EA'? @sequoia_rc_ea = 'btn-secondary' : @sequoia_rc_ea = 'btn-primary'
-    params['campaign'] == 'New' && params['co'] == 'Sequoia' && params['des'] == 'CPA'? @sequoia_nc_cpa = 'btn-secondary' : @sequoia_nc_cpa = 'btn-primary'
-    params['campaign'] == 'New' && params['co'] == 'Sequoia' && params['des'] == 'EA'? @sequoia_nc_ea = 'btn-secondary' : @sequoia_nc_ea = 'btn-primary'
-
-    params['campaign'] == 'Return' && params['co'] == 'Empire' ? @empire_rc = 'btn-secondary' : @empire_rc = 'btn-primary'
-    params['campaign'] == 'New' && params['co'] == 'Empire' ? @empire_nc = 'btn-secondary' : @empire_nc = 'btn-primary'
 
     if params['campaign'].present? && params['range_1_date_1'].present?
       MktgExport.delete_all
@@ -43,19 +29,40 @@ class MktgExportsController < ApplicationController
         @seg_1 = [].uniq
         @seg_2 = [].uniq
         @seg_3 = [].uniq
+        @seg_4 = [].uniq
+        @seg_5 = [].uniq
+        @seg_6 = [].uniq
+        @seg_7 = [].uniq
+        @seg_8 = [].uniq
+        @seg_9 = [].uniq
+        @seg_10 = [].uniq
       ## END SEGEMENTS
 
-      #Input box dates
+      #Date Ranges in Params
       r1d1 = params['range_1_date_1'].present? ? params['range_1_date_1'].to_date : ''
       r1d2 = params['range_1_date_2'].present? ? params['range_1_date_2'].to_date : ''
       r2d1 = params['range_2_date_1'].present? ? params['range_2_date_1'].to_date : ''
       r2d2 = params['range_2_date_2'].present? ? params['range_2_date_2'].to_date : ''
       r3d1 = params['range_3_date_1'].present? ? params['range_3_date_1'].to_date : ''
       r3d2 = params['range_3_date_2'].present? ? params['range_3_date_2'].to_date : ''
+      r4d1 = params['range_4_date_1'].present? ? params['range_4_date_1'].to_date : ''
+      r4d2 = params['range_4_date_2'].present? ? params['range_4_date_2'].to_date : ''
+      r5d1 = params['range_5_date_1'].present? ? params['range_5_date_1'].to_date : ''
+      r5d2 = params['range_5_date_2'].present? ? params['range_5_date_2'].to_date : ''
+      r6d1 = params['range_6_date_1'].present? ? params['range_6_date_1'].to_date : ''
+      r6d2 = params['range_6_date_2'].present? ? params['range_6_date_2'].to_date : ''
+      r7d1 = params['range_7_date_1'].present? ? params['range_7_date_1'].to_date : ''
+      r7d2 = params['range_7_date_2'].present? ? params['range_7_date_2'].to_date : ''
+      r8d1 = params['range_8_date_1'].present? ? params['range_8_date_1'].to_date : ''
+      r8d2 = params['range_8_date_2'].present? ? params['range_8_date_2'].to_date : ''
+      r9d1 = params['range_9_date_1'].present? ? params['range_9_date_1'].to_date : ''
+      r9d2 = params['range_9_date_2'].present? ? params['range_9_date_2'].to_date : ''
+      r10d1 = params['range_10_date_1'].present? ? params['range_10_date_1'].to_date : ''
+      r10d2 = params['range_10_date_2'].present? ? params['range_10_date_2'].to_date : ''
     # Dealing with blank input boxes
-      if r1d2.blank?
-        r1d2 = r1d1
-      end
+      # if r1d2.blank?
+      #   r1d2 = r1d1
+      # end
 
     ## APPEND DATES WANTED INTO ARRAYS
       if r1d1.present? && r1d2.present?
@@ -69,6 +76,34 @@ class MktgExportsController < ApplicationController
       if r3d1.present? && r3d2.present?
         (r3d1.to_date..r3d2).each do |i| @dates.push(i) end
         (r3d1.to_date..r3d2).each do |i| @seg_3.push(i) end
+      end
+      if r4d1.present? && r4d2.present?
+        (r4d1.to_date..r4d2).each do |i| @dates.push(i) end
+        (r4d1.to_date..r4d2).each do |i| @seg_4.push(i) end
+      end
+      if r5d1.present? && r5d2.present?
+        (r5d1.to_date..r5d2).each do |i| @dates.push(i) end
+        (r5d1.to_date..r5d2).each do |i| @seg_5.push(i) end
+      end
+      if r6d1.present? && r6d2.present?
+        (r6d1.to_date..r6d2).each do |i| @dates.push(i) end
+        (r6d1.to_date..r6d2).each do |i| @seg_6.push(i) end
+      end
+      if r7d1.present? && r7d2.present?
+        (r7d1.to_date..r7d2).each do |i| @dates.push(i) end
+        (r7d1.to_date..r7d2).each do |i| @seg_7.push(i) end
+      end
+      if r8d1.present? && r8d2.present?
+        (r8d1.to_date..r8d2).each do |i| @dates.push(i) end
+        (r8d1.to_date..r8d2).each do |i| @seg_8.push(i) end
+      end
+      if r9d1.present? && r9d2.present?
+        (r9d1.to_date..r9d2).each do |i| @dates.push(i) end
+        (r9d1.to_date..r9d2).each do |i| @seg_9.push(i) end
+      end
+      if r10d1.present? && r10d2.present?
+        (r10d1.to_date..r10d2).each do |i| @dates.push(i) end
+        (r10d1.to_date..r10d2).each do |i| @seg_10.push(i) end
       end
 
       if params['co'] == 'Sequoia'
@@ -116,28 +151,23 @@ class MktgExportsController < ApplicationController
     end
 
     #Add the Marketing TEXT (do with a table in the future?)
-    if params['campaign'] == 'Return Customer' && params['des'] == 'cpa'
+    if params['campaign'] == 'Return' && params['des'] == 'CPA'
       MktgExport.update_all text_1: 'Membership Expires',text_2: '',text_3: ''
-    elsif params['campaign'] == 'Return Customer' && params['des'] == 'ea'
+    elsif params['campaign'] == 'Return' && params['des'] == 'EA'
       MktgExport.update_all text_1: 'Membership Expires',text_2: '',text_3: ''
-    elsif params['campaign'] == 'New Customer' && params['des'] == 'cpa'
+    elsif params['campaign'] == 'New' && params['des'] == 'CPA'
       MktgExport.update_all text_1: 'Membership Valid Through',text_2: '',text_3: ''
-    elsif params['campaign'] == 'New Customer' && params['des'] == 'ea'
+    elsif params['campaign'] == 'New' && params['des'] == 'EA'
       MktgExport.update_all text_1: 'Membership Valid Through',text_2: '',text_3: ''
     end
   end
 
   def empire
-    ##### EMPIRE NC (IF NEEDED IN FUTURE)
-    # if params['campaign'] == 'New Customer'
-    #   states = params['empire_st'].upcase.split()
-    #   EmpireMember.where(first_purchase: @dates).where(state: states).all.each do |i|
-    #     MktgExport.create(uid: i.uid, exp: i.first_purchase, campaign: params['campaign'], des: i.state).save
-    #   end
-    # end
     ##### EMPIRE RC
-    if params['campaign'] == 'Return Customer' ##### EMPIRE RC
-      states = params['empire_st'].upcase.split()
+    if params['campaign'] == 'Return' ##### EMPIRE RC
+      if params['empire_st'] == 'Rolling'
+        states = ['CA', 'NY']
+      end
       EmpireMasterMatch.where(exp: @dates).where(lic_st: states).all.each do |i|
         member = EmpireMember.find_by(uid: i.uid)
         if member.state == 'NY' && member.last_purchase < Date.today - 18.months
@@ -148,35 +178,43 @@ class MktgExportsController < ApplicationController
       end
     end
 
-
+    ## RELOAD THE PAGE HERE TO AVOID TIMING OUT
 
     ##### NEW MEXICO DIRECT MAIL - INHOUSE PROSPECTIVE CUSTOMERS
-    if params['campaign'] == 'Nm Direct'
-      states = params['empire_st'].upcase.split()
-      customer_lic_number = EmpireCustomer.where(lic_state: 'NM').pluck(:lic_num)
-
-      EmpireMasterNmList.where(exp_date: @dates).where.not(lic: customer_lic_number).where.not(bad: true).all.each do |i|
-        MktgExport.create(uid: i.lid, exp: i.exp_date, campaign: params['campaign'], des: i.lic_state, fname: i.fname, lname: i.lname, street_1: i.add, street_2: i.add2, city: i.city, state: i.st, zip: i.zip).save
-      end
-    end
+    # if params['campaign'] == 'Nm Direct'
+    #   states = params['empire_st'].upcase.split()
+    #   customer_lic_number = EmpireCustomer.where(lic_state: 'NM').pluck(:lic_num)
+    #
+    #   EmpireMasterNmList.where(exp_date: @dates).where.not(lic: customer_lic_number).where.not(bad: true).all.each do |i|
+    #     MktgExport.create(uid: i.lid, exp: i.exp_date, campaign: params['campaign'], des: i.lic_state, fname: i.fname, lname: i.lname, street_1: i.add, street_2: i.add2, city: i.city, state: i.st, zip: i.zip).save
+    #   end
+    # end
     #Add the remaining customer infomation
-    if params['campaign'] == 'Return Customer'
+
+    if params['campaign'] == 'Return'
       MktgExport.all.each do |i| #Add the remaining customer infomation
         customer_data = EmpireCustomer.order(purchase: :DESC).find_by(uid: i.uid)
         MktgExport.where(uid: i.uid).update_all email: customer_data.email, fname: customer_data.fname, lname: (customer_data.lname), street_1: customer_data.street_1, street_2: customer_data.street_2, city: customer_data.city, state: customer_data.state, zip: customer_data.zip
       end
     end
     # ADD Additonal TEXT FOR PRINT and EMAIL
-    if params['delivery_type'].present? && params['delivery_type'].upcase == 'postcard'.upcase
+    if params['delivery_type'].present? && params['delivery_type'] == 'Postcard'
       MktgExport.where(des: 'NY').update_all text_1: '22.5-Hour New York CE Package',text_2: '$59.99'
       MktgExport.where(des: 'CA').update_all text_1: '45-Hour California CE Package',text_2: '$47.99'
-    elsif params['delivery_type'].present? && params['delivery_type'].upcase == 'email'.upcase
+    elsif params['delivery_type'].present? && params['delivery_type'] == 'Email'
       MktgExport.where(des: 'NY').update_all text_1: 'NY 22.5hr packages only $59.99'
       MktgExport.where(des: 'CA').update_all text_1: 'CA 45hr packages only $47.99'
       ## ADDING SEGMENTS BASED ON EXP DATE - > DETERMINES WITCH EMAIL THEY WILL RECIEVE
         MktgExport.where(exp: @seg_1).update_all text_10: '1'
         MktgExport.where(exp: @seg_2).update_all text_10: '2'
         MktgExport.where(exp: @seg_3).update_all text_10: '3'
+        MktgExport.where(exp: @seg_4).update_all text_10: '4'
+        MktgExport.where(exp: @seg_5).update_all text_10: '5'
+        MktgExport.where(exp: @seg_6).update_all text_10: '6'
+        MktgExport.where(exp: @seg_7).update_all text_10: '7'
+        MktgExport.where(exp: @seg_8).update_all text_10: '8'
+        MktgExport.where(exp: @seg_9).update_all text_10: '9'
+        MktgExport.where(exp: @seg_10).update_all text_10: '10'
       #REMOVE ANYONE WHO DOES NOT HAVE AN EMAIL ADDRESS (CA Has Old one without emails)
         MktgExport.where(email: 'null').delete_all
     end

@@ -22,6 +22,13 @@ class EmpireStatesController < ApplicationController
     end
   end
 
+  def list_data_hp
+    @empire_states = EmpireState.all
+
+    auto_matching
+
+  end
+
   def matching
     if params['direct_matching'] == 'no_match'
       member = EmpireMember.find_by(uid: params['uid'])
@@ -84,7 +91,7 @@ class EmpireStatesController < ApplicationController
       ny_matched = EmpireMasterMatch.where(lic_st: 'NY').count
       EmpireState.where(st: 'NY').update_all customers: ny_total, matched_customers: ny_matched
 
-      redirect_to empire_states_path(), notice: "NY Update Done"
+      redirect_to list_data_hp_empire_states_path(), notice: "NY Update Done"
 
     elsif params['run'].present? && params['run'] == 'CA'
       ca_total = EmpireMember.where(state: 'CA').count
@@ -115,7 +122,7 @@ class EmpireStatesController < ApplicationController
       ca_matched = EmpireMasterMatch.where(lic_st: 'CA').count
       EmpireState.where(st: 'CA').update_all customers: ca_total, matched_customers: ca_matched
 
-      redirect_to empire_states_path(), notice: "CA Update Done"
+      redirect_to list_data_hp_empire_states_path(), notice: "CA Update Done"
   elsif params['run'].present? && params['run'] == 'NC'
       nc_total = EmpireMember.where(state: 'NC').count
       nc_list = EmpireMasterNcList.count
@@ -146,7 +153,7 @@ class EmpireStatesController < ApplicationController
       nc_matched = EmpireMasterMatch.where(lic_st: 'NC').count
       EmpireState.where(st: 'NC').update_all customers: nc_total, matched_customers: nc_matched, list_size: nc_list
 
-      redirect_to empire_states_path(), notice: "NC Update Done"
+      redirect_to list_data_hp_empire_states_path(), notice: "NC Update Done"
     elsif params['run'].present? && params['run'] == 'NJ'
       nj_total = EmpireMember.where(state: 'NJ').count
       nj_list = EmpireMasterNjList.count
@@ -177,7 +184,7 @@ class EmpireStatesController < ApplicationController
       nj_matched = EmpireMasterMatch.where(lic_st: 'NJ').count
       EmpireState.where(st: 'NJ').update_all customers: nj_total, matched_customers: nj_matched, list_size: nj_list
 
-      redirect_to empire_states_path(), notice: "NJ Update Done"
+      redirect_to list_data_hp_empire_states_path(), notice: "NJ Update Done"
     elsif params['run'].present? && params['run'] == 'NM'
       nm_total = EmpireMember.where(state: 'NM').count
       nm_list = EmpireMasterNmList.count
@@ -208,7 +215,7 @@ class EmpireStatesController < ApplicationController
       nm_matched = EmpireMasterMatch.where(lic_st: 'NM').count
       EmpireState.where(st: 'NM').update_all customers: nm_total, matched_customers: nm_matched, list_size: nm_list
 
-      redirect_to empire_states_path(), notice: "NM Update Done"
+      redirect_to list_data_hp_empire_states_path(), notice: "NM Update Done"
     elsif params['run'].present? && params['run'] == 'TX'
       tx_total = EmpireMember.where(state: 'TX').count
       tx_list = EmpireMasterTxList.count
@@ -239,7 +246,7 @@ class EmpireStatesController < ApplicationController
       tx_matched = EmpireMasterMatch.where(lic_st: 'TX').count
       EmpireState.where(st: 'TX').update_all customers: tx_total, matched_customers: tx_matched, list_size: tx_list
 
-      redirect_to empire_states_path(), notice: "TX Update Done"
+      redirect_to list_data_hp_empire_states_path(), notice: "TX Update Done"
     elsif params['run'].present? && params['run'] == 'PA'
       pa_total = EmpireMember.where(state: 'PA').count
       pa_list = EmpireMasterPaList.count
@@ -270,7 +277,7 @@ class EmpireStatesController < ApplicationController
       pa_matched = EmpireMasterMatch.where(lic_st: 'PA').count
       EmpireState.where(st: 'PA').update_all customers: pa_total, matched_customers: pa_matched, list_size: pa_list
 
-      redirect_to empire_states_path(), notice: "PA Update Done"
+      redirect_to list_data_hp_empire_states_path(), notice: "PA Update Done"
     elsif params['run'].present? && params['run'] == 'MO'
       mo_total = EmpireMember.where(state: 'MO').count
       mo_list = EmpireMasterMoList.count
@@ -301,7 +308,7 @@ class EmpireStatesController < ApplicationController
       mo_matched = EmpireMasterMatch.where(lic_st: 'MO').count
       EmpireState.where(st: 'MO').update_all customers: mo_total, matched_customers: mo_matched, list_size: mo_list
 
-      redirect_to empire_states_path(), notice: "MO Update Done"
+      redirect_to list_data_hp_empire_states_path(), notice: "MO Update Done"
     elsif params['run'].present? && params['run'] == 'IND'
       ind_total = EmpireMember.where(state: 'IND').count
       ind_list = EmpireMasterIndList.count
@@ -332,7 +339,7 @@ class EmpireStatesController < ApplicationController
       ind_matched = EmpireMasterMatch.where(lic_st: 'IND').count
       EmpireState.where(st: 'IND').update_all customers: ind_total, matched_customers: ind_matched, list_size: ind_list
 
-      redirect_to empire_states_path(), notice: "IND Update Done"
+      redirect_to list_data_hp_empire_states_path(), notice: "IND Update Done"
     elsif params['run'].present? && params['run'] == 'UT'
       ut_total = EmpireMember.where(state: 'UT').count
       ut_list = EmpireMasterUtList.count
@@ -363,7 +370,7 @@ class EmpireStatesController < ApplicationController
       ut_matched = EmpireMasterMatch.where(lic_st: 'UT').count
       EmpireState.where(st: 'UT').update_all customers: ut_total, matched_customers: ut_matched, list_size: ut_list
 
-      redirect_to empire_states_path(), notice: "UT Update Done"
+      redirect_to list_data_hp_empire_states_path(), notice: "UT Update Done"
     elsif params['run'].present? && params['run'] == 'SC'
       sc_total = EmpireMember.where(state: 'SC').count
       sc_list = EmpireMasterScList.count
@@ -394,7 +401,7 @@ class EmpireStatesController < ApplicationController
       sc_matched = EmpireMasterMatch.where(lic_st: 'SC').count
       EmpireState.where(st: 'SC').update_all customers: sc_total, matched_customers: sc_matched, list_size: sc_list
 
-      redirect_to empire_states_path(), notice: "SC Update Done"
+      redirect_to list_data_hp_empire_states_path(), notice: "SC Update Done"
     elsif params['run'].present? && params['run'] == 'WA'
       wa_total = EmpireMember.where(state: 'WA').count
       wa_list = EmpireMasterWaList.count
@@ -425,7 +432,7 @@ class EmpireStatesController < ApplicationController
       wa_matched = EmpireMasterMatch.where(lic_st: 'WA').count
       EmpireState.where(st: 'WA').update_all customers: wa_total, matched_customers: wa_matched, list_size: wa_list
 
-      redirect_to empire_states_path(), notice: "WA Update Done"
+      redirect_to list_data_hp_empire_states_path(), notice: "WA Update Done"
     elsif params['run'].present? && params['run'] == 'VA'
       va_total = EmpireMember.where(state: 'VA').count
       va_list = EmpireMasterVaList.count
@@ -456,7 +463,7 @@ class EmpireStatesController < ApplicationController
       va_matched = EmpireMasterMatch.where(lic_st: 'VA').count
       EmpireState.where(st: 'VA').update_all customers: va_total, matched_customers: va_matched, list_size: va_list
 
-      redirect_to empire_states_path(), notice: "VA Update Done"
+      redirect_to list_data_hp_empire_states_path(), notice: "VA Update Done"
     elsif params['run'].present? && params['run'] == 'GA'
       ga_total = EmpireMember.where(state: 'GA').count
       ga_list = EmpireMasterGaList.count
@@ -487,7 +494,7 @@ class EmpireStatesController < ApplicationController
       ga_matched = EmpireMasterMatch.where(lic_st: 'GA').count
       EmpireState.where(st: 'GA').update_all customers: ga_total, matched_customers: ga_matched, list_size: ga_list
 
-      redirect_to empire_states_path(), notice: "GA Update Done"
+      redirect_to list_data_hp_empire_states_path(), notice: "GA Update Done"
     end
   end
 

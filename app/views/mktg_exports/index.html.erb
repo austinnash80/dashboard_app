@@ -1,16 +1,4 @@
-
 <h1 class="text-center fw-bold">MKTG Exports</h1>
-
-<% unless params['run'] == 'yes' %>
-  <% params['co'] == 'sequoia' ? sequoia_active = 'btn-secondary' : sequoia_active = 'btn-primary' %>
-  <% params['co'] == 'empire' ? empire_active = 'btn-secondary' : empire_active = 'btn-primary' %>
-  <div class="text-center ">
-    <div class="btn-group" role="group" aria-label="Basic example">
-      <%= link_to 'Sequoia', mktg_exports_path(co: 'sequoia', delete: 'yes'), class: "#{sequoia_active} btn btn-primary text-light mt-2 w200" %>
-      <%= link_to 'Empire', mktg_exports_path(co: 'empire', delete: 'yes'), class: "#{empire_active} btn btn-primary text-light mt-2 w200" %>
-    </div>
-  </div>
-<% end %>
 <p id="notice" class="text-center fw-bold"><%= notice %></p>
 
 <!-- UPLOAD, DELETE, EXPORT, PRINT -->
@@ -36,89 +24,31 @@
 <!-- END UPLOAD, DELETE, EXPORT, PRINT -->
 
 <div class="m-5">
-<% unless params['run'] == 'yes' %>
-<!-- INPUT FIELDS -->
-<% if params['co'].present? %>
-  <div class="row">
-    <p>Date Range 1</p>
-    <div class="col-2">
-      <% if params['range_1_date_1'].present? %>
-        <%= text_field_tag "id", '', class: "range_1_date_1_field form-control", placeholder: 'Day 1', value: params['range_1_date_1'] %><br>
-      <% else %>
-        <%= text_field_tag "id", '', class: "range_1_date_1_field form-control", placeholder: 'Day 1' %><br>
-      <% end %>
-    </div>
-    <div class="col-2">
-      <% if params['range_1_date_2'].present? %>
-        <%= text_field_tag "id", '', class: "range_1_date_2_field form-control", placeholder: 'Day 2', value: params['range_1_date_2'] %><br>
-      <% else %>
-        <%= text_field_tag "id", '', class: "range_1_date_2_field form-control", placeholder: 'Day 2' %><br>
-      <% end %>
-    </div>
-  </div>
-  <div class="row">
-    <p>Date Range 2</p>
-    <div class="col-2">
-      <% if params['range_2_date_1'].present? %>
-        <%= text_field_tag "id", '', class: "range_2_date_1_field form-control", placeholder: 'Day 1', value: params['range_2_date_1'] %><br>
-      <% else %>
-        <%= text_field_tag "id", '', class: "range_2_date_1_field form-control", placeholder: 'Day 1' %><br>
-      <% end %>
-    </div>
-    <div class="col-2">
-      <% if params['range_2_date_2'].present? %>
-        <%= text_field_tag "id", '', class: "range_2_date_2_field form-control", placeholder: 'Day 2', value: params['range_2_date_2'] %><br>
-      <% else %>
-        <%= text_field_tag "id", '', class: "range_2_date_2_field form-control", placeholder: 'Day 2' %><br>
-      <% end %>
-    </div>
-  </div>
-  <% end %>
-<!-- END INPUT FIELDS -->
-<!-- CAMPAIGN BUTTONS SEQUOIA-->
-  <% if params['co'] == 'sequoia' %>
-  <div class="btn-group" role="group" aria-label="Basic example">
-    <%= link_to 'CPA NC', mktg_exports_path(co: 'sequoia', campaign: 'New Customer', des: 'cpa'), class: "#{@sequoia_nc_cpa} w100 search_link btn btn-sm btn-primary text-light bg-gradient" %>
-    <%= link_to 'EA NC', mktg_exports_path(co: 'sequoia', campaign: 'New Customer', des: 'ea'), class: "#{@sequoia_nc_ea} w100 search_link btn btn-sm btn-primary text-light bg-gradient" %>
-    <%= link_to 'CPA RC', mktg_exports_path(co: 'sequoia', campaign: 'Return Customer', des: 'cpa'), class: "#{@sequoia_rc_cpa} w100 search_link btn btn-sm btn-primary text-light bg-gradient" %>
-    <%= link_to 'EA RC', mktg_exports_path(co: 'sequoia', campaign: 'Return Customer', des: 'ea'), class: "#{@sequoia_rc_ea} w100 search_link btn btn-sm btn-primary text-light bg-gradient" %>
-  </div>
-  <% elsif params['co'] == 'empire' %>
-    <%= text_field_tag "id", '', class: "empire_st_field form-control w150", placeholder: 'State', value: params['empire_st']  %> Add multiple states - no common between. Active states: CA NY<br> <br>
-    <div class="btn-group" role="group" aria-label="Empire">
-      <%= link_to 'New Customer', mktg_exports_path(co: 'empire', campaign: 'New Customer'), class: "#{@empire_nc} w150 search_link btn btn-sm btn-primary text-light bg-gradient" %>
-      <%= link_to 'Return Customer', mktg_exports_path(co: 'empire', campaign: 'Return Customer'), class: "#{@empire_rc} w150 search_link btn btn-sm btn-primary text-light bg-gradient" %>
-    </div>
-  <% end %>
-<!-- END CAMPAIGN BUTTONS -->
-<% else %> <!-- RUN == YES -->
-<h4 class="fw-bold">Campaign Details</h4>
-<ul>
-  <li><strong>Mail Day:</strong> <%= params['mail_day'].present? ? params['mail_day'].to_date.strftime('%-m/%-d/%Y') : '' %></li>
-  <li><strong>Delivery:</strong> <%= params['delivery_type'].present? ? params['delivery_type'] : '' %></li>
-  <li><strong>Company:</strong> <%= params['co'].present? ? params['co'].titlecase : '' %></li>
-  <li><strong>Campaign Type:</strong> <%= params['campaign'].present? ? params['campaign'] : '' %></li>
-  <li><strong>Segment:</strong> <%= params['des'].present? ? params['des'] : '' %></li>
-  <% if params['range_1_date_1'].present? && params['range_1_date_2'].present? %><li><strong>Date Range 1:</strong> <%= params['range_1_date_1'].to_date.strftime('%-m/%-d/%Y') %> - <%= params['range_1_date_2'].to_date.strftime('%-m/%-d/%Y') %> <% unless params['campaign'].present? && params['campaign'].upcase == 'NEW CUSTOMER' %>(<strong><%= ((params['range_1_date_1'].to_date - params['mail_day'].to_date).to_i + (params['range_1_date_2'].to_date - params['mail_day'].to_date).to_i) / 2 %></strong> avg days between mail date and EXP)<% end %></li><% end %>
-  <% if params['range_2_date_1'].present? && params['range_2_date_2'].present? %><li><strong>Date Range 2:</strong> <%= params['range_2_date_1'].to_date.strftime('%-m/%-d/%Y') %> - <%= params['range_2_date_2'].to_date.strftime('%-m/%-d/%Y') %> <% unless params['campaign'].present? && params['campaign'].upcase == 'NEW CUSTOMER' %>(<strong><%= ((params['range_2_date_1'].to_date - params['mail_day'].to_date).to_i + (params['range_2_date_2'].to_date - params['mail_day'].to_date).to_i) / 2 %></strong> avg days between mail date and EXP)<% end %></li><% end %>
-  <% if params['range_3_date_1'].present? && params['range_3_date_2'].present? %><li><strong>Date Range 3:</strong> <%= params['range_3_date_1'].to_date.strftime('%-m/%-d/%Y') %> - <%= params['range_3_date_2'].to_date.strftime('%-m/%-d/%Y') %> <% unless params['campaign'].present? && params['campaign'].upcase == 'NEW CUSTOMER' %>(<strong><%= ((params['range_3_date_1'].to_date - params['mail_day'].to_date).to_i + (params['range_3_date_2'].to_date - params['mail_day'].to_date).to_i) / 2 %></strong> avg days between mail date and EXP)<% end %></li><% end %>
-  <% if params['range_4_date_1'].present? && params['range_4_date_2'].present? %><li><strong>Date Range 4:</strong> <%= params['range_4_date_1'].to_date.strftime('%-m/%-d/%Y') %> - <%= params['range_4_date_2'].to_date.strftime('%-m/%-d/%Y') %> <% unless params['campaign'].present? && params['campaign'].upcase == 'NEW CUSTOMER' %>(<strong><%= ((params['range_4_date_1'].to_date - params['mail_day'].to_date).to_i + (params['range_4_date_2'].to_date - params['mail_day'].to_date).to_i) / 2 %></strong> avg days between mail date and EXP)<% end %></li><% end %>
-  <% if params['range_5_date_1'].present? && params['range_5_date_2'].present? %><li><strong>Date Range 5:</strong> <%= params['range_5_date_1'].to_date.strftime('%-m/%-d/%Y') %> - <%= params['range_5_date_2'].to_date.strftime('%-m/%-d/%Y') %> <% unless params['campaign'].present? && params['campaign'].upcase == 'NEW CUSTOMER' %>(<strong><%= ((params['range_5_date_1'].to_date - params['mail_day'].to_date).to_i + (params['range_5_date_2'].to_date - params['mail_day'].to_date).to_i) / 2 %></strong> avg days between mail date and EXP)<% end %></li><% end %>
-  <% if params['range_6_date_1'].present? && params['range_6_date_2'].present? %><li><strong>Date Range 6:</strong> <%= params['range_6_date_1'].to_date.strftime('%-m/%-d/%Y') %> - <%= params['range_6_date_2'].to_date.strftime('%-m/%-d/%Y') %> <% unless params['campaign'].present? && params['campaign'].upcase == 'NEW CUSTOMER' %>(<strong><%= ((params['range_6_date_1'].to_date - params['mail_day'].to_date).to_i + (params['range_6_date_2'].to_date - params['mail_day'].to_date).to_i) / 2 %></strong> avg days between mail date and EXP)<% end %></li><% end %>
-  <% if params['range_7_date_1'].present? && params['range_7_date_2'].present? %><li><strong>Date Range 7:</strong> <%= params['range_7_date_1'].to_date.strftime('%-m/%-d/%Y') %> - <%= params['range_7_date_2'].to_date.strftime('%-m/%-d/%Y') %> <% unless params['campaign'].present? && params['campaign'].upcase == 'NEW CUSTOMER' %>(<strong><%= ((params['range_7_date_1'].to_date - params['mail_day'].to_date).to_i + (params['range_7_date_2'].to_date - params['mail_day'].to_date).to_i) / 2 %></strong> avg days between mail date and EXP)<% end %></li><% end %>
-  <% if params['range_8_date_1'].present? && params['range_8_date_2'].present? %><li><strong>Date Range 8:</strong> <%= params['range_8_date_1'].to_date.strftime('%-m/%-d/%Y') %> - <%= params['range_8_date_2'].to_date.strftime('%-m/%-d/%Y') %> <% unless params['campaign'].present? && params['campaign'].upcase == 'NEW CUSTOMER' %>(<strong><%= ((params['range_8_date_1'].to_date - params['mail_day'].to_date).to_i + (params['range_8_date_2'].to_date - params['mail_day'].to_date).to_i) / 2 %></strong> avg days between mail date and EXP)<% end %></li><% end %>
-  <% if params['range_9_date_1'].present? && params['range_9_date_2'].present? %><li><strong>Date Range 9:</strong> <%= params['range_9_date_1'].to_date.strftime('%-m/%-d/%Y') %> - <%= params['range_9_date_2'].to_date.strftime('%-m/%-d/%Y') %> <% unless params['campaign'].present? && params['campaign'].upcase == 'NEW CUSTOMER' %>(<strong><%= ((params['range_9_date_1'].to_date - params['mail_day'].to_date).to_i + (params['range_9_date_2'].to_date - params['mail_day'].to_date).to_i) / 2 %></strong> avg days between mail date and EXP)<% end %></li><% end %>
-  <% if params['range_10_date_1'].present? && params['range_10_date_2'].present? %><li><strong>Date Range 10:</strong> <%= params['range_10_date_1'].to_date.strftime('%-m/%-d/%Y') %> - <%= params['range_10_date_2'].to_date.strftime('%-m/%-d/%Y') %> <% unless params['campaign'].present? && params['campaign'].upcase == 'NEW CUSTOMER' %>(<strong><%= ((params['range_10_date_1'].to_date - params['mail_day'].to_date).to_i + (params['range_10_date_2'].to_date - params['mail_day'].to_date).to_i) / 2 %></strong> avg days between mail date and EXP)<% end %></li><% end %>
-  <li><strong>Campaign Description:</strong></li>
-</ul>
-
-<% end %>
+  <h4 class="fw-bold">Campaign Details</h4>
+  <ul>
+    <li><strong>Mail Day:</strong> <%= params['mail_day'].present? ? params['mail_day'].to_date.strftime('%-m/%-d/%Y') : '' %></li>
+    <li><strong>Delivery:</strong> <%= params['delivery_type'].present? ? params['delivery_type'] : '' %></li>
+    <li><strong>Company:</strong> <%= params['co'].present? ? params['co'].titlecase : '' %></li>
+    <li><strong>Campaign Type:</strong> <%= params['campaign'].present? ? params['campaign'] : '' %></li>
+    <li><strong>Segment:</strong> <%= params['des'].present? ? params['des'] : '' %></li>
+    <% if params['range_1_date_1'].present? && params['range_1_date_2'].present? %><li><strong>Date Range 1:</strong> <%= params['range_1_date_1'].to_date.strftime('%-m/%-d/%Y') %> - <%= params['range_1_date_2'].to_date.strftime('%-m/%-d/%Y') %> <% unless params['campaign'].present? && params['campaign'].upcase == 'NEW CUSTOMER' %>(<strong><%= ((params['range_1_date_1'].to_date - params['mail_day'].to_date).to_i + (params['range_1_date_2'].to_date - params['mail_day'].to_date).to_i) / 2 %></strong> avg days between mail date and EXP)<% end %></li><% end %>
+    <% if params['range_2_date_1'].present? && params['range_2_date_2'].present? %><li><strong>Date Range 2:</strong> <%= params['range_2_date_1'].to_date.strftime('%-m/%-d/%Y') %> - <%= params['range_2_date_2'].to_date.strftime('%-m/%-d/%Y') %> <% unless params['campaign'].present? && params['campaign'].upcase == 'NEW CUSTOMER' %>(<strong><%= ((params['range_2_date_1'].to_date - params['mail_day'].to_date).to_i + (params['range_2_date_2'].to_date - params['mail_day'].to_date).to_i) / 2 %></strong> avg days between mail date and EXP)<% end %></li><% end %>
+    <% if params['range_3_date_1'].present? && params['range_3_date_2'].present? %><li><strong>Date Range 3:</strong> <%= params['range_3_date_1'].to_date.strftime('%-m/%-d/%Y') %> - <%= params['range_3_date_2'].to_date.strftime('%-m/%-d/%Y') %> <% unless params['campaign'].present? && params['campaign'].upcase == 'NEW CUSTOMER' %>(<strong><%= ((params['range_3_date_1'].to_date - params['mail_day'].to_date).to_i + (params['range_3_date_2'].to_date - params['mail_day'].to_date).to_i) / 2 %></strong> avg days between mail date and EXP)<% end %></li><% end %>
+    <% if params['range_4_date_1'].present? && params['range_4_date_2'].present? %><li><strong>Date Range 4:</strong> <%= params['range_4_date_1'].to_date.strftime('%-m/%-d/%Y') %> - <%= params['range_4_date_2'].to_date.strftime('%-m/%-d/%Y') %> <% unless params['campaign'].present? && params['campaign'].upcase == 'NEW CUSTOMER' %>(<strong><%= ((params['range_4_date_1'].to_date - params['mail_day'].to_date).to_i + (params['range_4_date_2'].to_date - params['mail_day'].to_date).to_i) / 2 %></strong> avg days between mail date and EXP)<% end %></li><% end %>
+    <% if params['range_5_date_1'].present? && params['range_5_date_2'].present? %><li><strong>Date Range 5:</strong> <%= params['range_5_date_1'].to_date.strftime('%-m/%-d/%Y') %> - <%= params['range_5_date_2'].to_date.strftime('%-m/%-d/%Y') %> <% unless params['campaign'].present? && params['campaign'].upcase == 'NEW CUSTOMER' %>(<strong><%= ((params['range_5_date_1'].to_date - params['mail_day'].to_date).to_i + (params['range_5_date_2'].to_date - params['mail_day'].to_date).to_i) / 2 %></strong> avg days between mail date and EXP)<% end %></li><% end %>
+    <% if params['range_6_date_1'].present? && params['range_6_date_2'].present? %><li><strong>Date Range 6:</strong> <%= params['range_6_date_1'].to_date.strftime('%-m/%-d/%Y') %> - <%= params['range_6_date_2'].to_date.strftime('%-m/%-d/%Y') %> <% unless params['campaign'].present? && params['campaign'].upcase == 'NEW CUSTOMER' %>(<strong><%= ((params['range_6_date_1'].to_date - params['mail_day'].to_date).to_i + (params['range_6_date_2'].to_date - params['mail_day'].to_date).to_i) / 2 %></strong> avg days between mail date and EXP)<% end %></li><% end %>
+    <% if params['range_7_date_1'].present? && params['range_7_date_2'].present? %><li><strong>Date Range 7:</strong> <%= params['range_7_date_1'].to_date.strftime('%-m/%-d/%Y') %> - <%= params['range_7_date_2'].to_date.strftime('%-m/%-d/%Y') %> <% unless params['campaign'].present? && params['campaign'].upcase == 'NEW CUSTOMER' %>(<strong><%= ((params['range_7_date_1'].to_date - params['mail_day'].to_date).to_i + (params['range_7_date_2'].to_date - params['mail_day'].to_date).to_i) / 2 %></strong> avg days between mail date and EXP)<% end %></li><% end %>
+    <% if params['range_8_date_1'].present? && params['range_8_date_2'].present? %><li><strong>Date Range 8:</strong> <%= params['range_8_date_1'].to_date.strftime('%-m/%-d/%Y') %> - <%= params['range_8_date_2'].to_date.strftime('%-m/%-d/%Y') %> <% unless params['campaign'].present? && params['campaign'].upcase == 'NEW CUSTOMER' %>(<strong><%= ((params['range_8_date_1'].to_date - params['mail_day'].to_date).to_i + (params['range_8_date_2'].to_date - params['mail_day'].to_date).to_i) / 2 %></strong> avg days between mail date and EXP)<% end %></li><% end %>
+    <% if params['range_9_date_1'].present? && params['range_9_date_2'].present? %><li><strong>Date Range 9:</strong> <%= params['range_9_date_1'].to_date.strftime('%-m/%-d/%Y') %> - <%= params['range_9_date_2'].to_date.strftime('%-m/%-d/%Y') %> <% unless params['campaign'].present? && params['campaign'].upcase == 'NEW CUSTOMER' %>(<strong><%= ((params['range_9_date_1'].to_date - params['mail_day'].to_date).to_i + (params['range_9_date_2'].to_date - params['mail_day'].to_date).to_i) / 2 %></strong> avg days between mail date and EXP)<% end %></li><% end %>
+    <% if params['range_10_date_1'].present? && params['range_10_date_2'].present? %><li><strong>Date Range 10:</strong> <%= params['range_10_date_1'].to_date.strftime('%-m/%-d/%Y') %> - <%= params['range_10_date_2'].to_date.strftime('%-m/%-d/%Y') %> <% unless params['campaign'].present? && params['campaign'].upcase == 'NEW CUSTOMER' %>(<strong><%= ((params['range_10_date_1'].to_date - params['mail_day'].to_date).to_i + (params['range_10_date_2'].to_date - params['mail_day'].to_date).to_i) / 2 %></strong> avg days between mail date and EXP)<% end %></li><% end %>
+    <li><strong>Campaign Description:</strong></li>
+  </ul>
 <br>
 <!-- <h6 class="text-center text-success fw-bold"><%= @dates.present? ? "New dates displayed: #{(@dates.uniq.map{ |date| date.strftime("%Y-%m-%d") }).join(', ')}" : '' %></h6> -->
 <table class="table table-striped">
-<thead>
-<caption class="caption-top">Total Records: <%= number_with_delimiter(MktgExport.count) %> | Display Limit: 250</caption>
-<tr class="bg-secondary bg-gradient text-light">
+  <thead>
+  <caption class="caption-top">Total Records: <%= number_with_delimiter(MktgExport.count) %> | Display Limit: 250</caption>
+    <tr class="bg-secondary bg-gradient text-light">
       <th>Uid</th>
       <th>Campaign</th>
       <th><%= params['co'].present? && params['co'] == 'empire' ? 'Lic St' : params['co'].present? && params['co'] == 'sequoia' ? 'DES' : '' %></th>

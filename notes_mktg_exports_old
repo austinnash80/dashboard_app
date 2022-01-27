@@ -1,0 +1,80 @@
+OLD STUFF DELETED OUT OF MKTG index - Used to enter manullay dates for campaigns -> Not currently using
+
+<% unless params['run'] == 'yes' %>
+  <% params['co'] == 'sequoia' ? sequoia_active = 'btn-secondary' : sequoia_active = 'btn-primary' %>
+  <% params['co'] == 'empire' ? empire_active = 'btn-secondary' : empire_active = 'btn-primary' %>
+  <div class="text-center ">
+    <div class="btn-group" role="group" aria-label="Basic example">
+      <%= link_to 'Sequoia', mktg_exports_path(co: 'sequoia', delete: 'yes'), class: "#{sequoia_active} btn btn-primary text-light mt-2 w200" %>
+      <%= link_to 'Empire', mktg_exports_path(co: 'empire', delete: 'yes'), class: "#{empire_active} btn btn-primary text-light mt-2 w200" %>
+    </div>
+  </div>
+<% end %>
+
+
+<% unless params['run'] == 'yes' %>
+<!-- INPUT FIELDS -->
+<% if params['co'].present? %>
+  <div class="row">
+    <p>Date Range 1</p>
+    <div class="col-2">
+      <% if params['range_1_date_1'].present? %>
+        <%= text_field_tag "id", '', class: "range_1_date_1_field form-control", placeholder: 'Day 1', value: params['range_1_date_1'] %><br>
+      <% else %>
+        <%= text_field_tag "id", '', class: "range_1_date_1_field form-control", placeholder: 'Day 1' %><br>
+      <% end %>
+    </div>
+    <div class="col-2">
+      <% if params['range_1_date_2'].present? %>
+        <%= text_field_tag "id", '', class: "range_1_date_2_field form-control", placeholder: 'Day 2', value: params['range_1_date_2'] %><br>
+      <% else %>
+        <%= text_field_tag "id", '', class: "range_1_date_2_field form-control", placeholder: 'Day 2' %><br>
+      <% end %>
+    </div>
+  </div>
+  <div class="row">
+    <p>Date Range 2</p>
+    <div class="col-2">
+      <% if params['range_2_date_1'].present? %>
+        <%= text_field_tag "id", '', class: "range_2_date_1_field form-control", placeholder: 'Day 1', value: params['range_2_date_1'] %><br>
+      <% else %>
+        <%= text_field_tag "id", '', class: "range_2_date_1_field form-control", placeholder: 'Day 1' %><br>
+      <% end %>
+    </div>
+    <div class="col-2">
+      <% if params['range_2_date_2'].present? %>
+        <%= text_field_tag "id", '', class: "range_2_date_2_field form-control", placeholder: 'Day 2', value: params['range_2_date_2'] %><br>
+      <% else %>
+        <%= text_field_tag "id", '', class: "range_2_date_2_field form-control", placeholder: 'Day 2' %><br>
+      <% end %>
+    </div>
+  </div>
+  <% end %>
+<!-- END INPUT FIELDS -->
+<!-- CAMPAIGN BUTTONS SEQUOIA-->
+  <% if params['co'] == 'sequoia' %>
+  <div class="btn-group" role="group" aria-label="Basic example">
+    <%= link_to 'CPA NC', mktg_exports_path(co: 'sequoia', campaign: 'New Customer', des: 'cpa'), class: "#{@sequoia_nc_cpa} w100 search_link btn btn-sm btn-primary text-light bg-gradient" %>
+    <%= link_to 'EA NC', mktg_exports_path(co: 'sequoia', campaign: 'New Customer', des: 'ea'), class: "#{@sequoia_nc_ea} w100 search_link btn btn-sm btn-primary text-light bg-gradient" %>
+    <%= link_to 'CPA RC', mktg_exports_path(co: 'sequoia', campaign: 'Return Customer', des: 'cpa'), class: "#{@sequoia_rc_cpa} w100 search_link btn btn-sm btn-primary text-light bg-gradient" %>
+    <%= link_to 'EA RC', mktg_exports_path(co: 'sequoia', campaign: 'Return Customer', des: 'ea'), class: "#{@sequoia_rc_ea} w100 search_link btn btn-sm btn-primary text-light bg-gradient" %>
+  </div>
+  <% elsif params['co'] == 'empire' %>
+    <%= text_field_tag "id", '', class: "empire_st_field form-control w150", placeholder: 'State', value: params['empire_st']  %> Add multiple states - no common between. Active states: CA NY<br> <br>
+    <div class="btn-group" role="group" aria-label="Empire">
+      <%= link_to 'New Customer', mktg_exports_path(co: 'empire', campaign: 'New Customer'), class: "#{@empire_nc} w150 search_link btn btn-sm btn-primary text-light bg-gradient" %>
+      <%= link_to 'Return Customer', mktg_exports_path(co: 'empire', campaign: 'Return Customer'), class: "#{@empire_rc} w150 search_link btn btn-sm btn-primary text-light bg-gradient" %>
+    </div>
+  <% end %>
+<!-- END CAMPAIGN BUTTONS -->
+
+CONTROLLER PART:
+
+# # buttons
+# params['campaign'] == 'Return' && params['co'] == 'Sequoia' && params['des'] == 'CPA'? @sequoia_rc_cpa = 'btn-secondary' : @sequoia_rc_cpa = 'btn-primary'
+# params['campaign'] == 'Return' && params['co'] == 'Sequoia' && params['des'] == 'EA'? @sequoia_rc_ea = 'btn-secondary' : @sequoia_rc_ea = 'btn-primary'
+# params['campaign'] == 'New' && params['co'] == 'Sequoia' && params['des'] == 'CPA'? @sequoia_nc_cpa = 'btn-secondary' : @sequoia_nc_cpa = 'btn-primary'
+# params['campaign'] == 'New' && params['co'] == 'Sequoia' && params['des'] == 'EA'? @sequoia_nc_ea = 'btn-secondary' : @sequoia_nc_ea = 'btn-primary'
+#
+# params['campaign'] == 'Return' && params['co'] == 'Empire' ? @empire_rc = 'btn-secondary' : @empire_rc = 'btn-primary'
+# params['campaign'] == 'New' && params['co'] == 'Empire' ? @empire_nc = 'btn-secondary' : @empire_nc = 'btn-primary'

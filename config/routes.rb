@@ -15,6 +15,7 @@ Rails.application.routes.draw do
   resources :empire_states do collection {post :import}
     collection do
         get 'matching'
+        get 'list_data_hp'
       end
     end
   resources :auto_renew_lists do collection {post :import} end

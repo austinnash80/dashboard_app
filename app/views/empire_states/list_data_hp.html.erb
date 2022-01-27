@@ -1,5 +1,6 @@
 
-<h1 class="text-center">Empire States</h1>
+<h1 class="text-center">Empire List Data and Matching</h1>
+<p class="text-center"><%= link_to 'Empire States Page', empire_states_path(), class: 'btn btn-outline-primary' %></p>
 
 <a class="btn btn-sm btn-light text-secondary bg-gradient border" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">Upload/Export</a>
 <div class="collapse" id="collapseExample">
@@ -21,10 +22,6 @@
 
 <div class="w300 m-5"><input class="form-control" id="myInput" type="text" placeholder="Filter Table"></div>
 <div class="m-5">
-  <div class="">
-    <%= link_to 'Add New State', new_empire_state_path(), class: 'btn btn-primary text-light btn-sm w200' %>
-  </div>
-  <br><br>
   <p id="notice"><%= notice %></p>
 <table class="table table-striped">
   <thead>
@@ -50,7 +47,7 @@
       <tr>
         <td><%= link_to 'Run Match', empire_states_path(run: empire_state.st), class: 'btn btn-primary text-light btn-sm w100', data: {disable_with: "Loading..."} %></td>
         <% path = "empire_master_#{empire_state.st.downcase}_lists" %>
-        <td><%= link_to empire_state.state, path %></td>
+        <td><%= link_to empire_state.state, send("empire_master_#{empire_state.st.downcase}_lists_path") %></td>
         <td><%= empire_state.st %></td>
         <td><%= empire_state.customers.present? ? number_with_delimiter(empire_state.customers) : '' %></td>
         <td><%= empire_state.matched_customers.present? ? number_with_delimiter(empire_state.matched_customers) : '' %></td>

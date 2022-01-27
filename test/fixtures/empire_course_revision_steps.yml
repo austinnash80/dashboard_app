@@ -1,0 +1,31 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  number: 1
+  phase: MyString
+  step: MyString
+  details: MyString
+  assigned: MyString
+  note: MyText
+  due_date: 2022-01-26
+  complete: false
+  complete_date: 2022-01-26
+  file: MyString
+  empire_course_revision_id: 1
+  extra_s: MyString
+  extra_i: 1
+
+two:
+  number: 1
+  phase: MyString
+  step: MyString
+  details: MyString
+  assigned: MyString
+  note: MyText
+  due_date: 2022-01-26
+  complete: false
+  complete_date: 2022-01-26
+  file: MyString
+  empire_course_revision_id: 1
+  extra_s: MyString
+  extra_i: 1

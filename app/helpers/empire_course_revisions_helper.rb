@@ -1,0 +1,2 @@
+module EmpireCourseRevisionsHelper
+end

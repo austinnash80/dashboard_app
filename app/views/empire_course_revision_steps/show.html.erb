@@ -1,0 +1,30 @@
+<%= link_to 'Course Revision Dashboard', dash_empire_course_revisions_path(), class: 'btn btn-outline-success w300' %>
+<p id="notice"><%= notice %></p>
+<% course = EmpireCourseRevision.find_by(id: @empire_course_revision_step.empire_course_revision_id) %>
+<h2 class="text-center"><strong>Step:</strong> <%= @empire_course_revision_step.step %></h2>
+<h4 class="text-center"><strong>Course:</strong> <%= course.course %></h4>
+
+<div class="m-5">
+  <p><%= link_to 'Edit Step', edit_empire_course_revision_step_path(@empire_course_revision_step), class: 'btn btn-sm btn-outline-primary w200' %> </p>
+
+
+<br>
+  <h4 class="bold">Step Details</h4>
+  <p><strong>Number:</strong> <%= @empire_course_revision_step.number %></p>
+  <p><strong>Phase:</strong> <%= @empire_course_revision_step.phase %></p>
+  <p><strong>Step:</strong> <%= @empire_course_revision_step.step %></p>
+  <p><strong>Details:</strong> <%= @empire_course_revision_step.details %></p>
+  <p><strong>Assigned:</strong> <%= @empire_course_revision_step.assigned %></p>
+  <p><strong>Note:</strong> <%= @empire_course_revision_step.note %></p>
+  <p><strong>Due date:</strong> <%= @empire_course_revision_step.due_date %></p>
+  <p><strong>Complete:</strong> <%= @empire_course_revision_step.complete %></p>
+  <p><strong>Complete date:</strong> <%= @empire_course_revision_step.complete_date %></p>
+  <p><strong>File:</strong> <%= @empire_course_revision_step.file %></p>
+  <p><strong>Empire course revision:</strong> <%= @empire_course_revision_step.empire_course_revision_id %></p>
+  <!-- <p><strong>Extra s:</strong> <%= @empire_course_revision_step.extra_s %></p> -->
+  <!-- <p><strong>Extra i:</strong> <%= @empire_course_revision_step.extra_i %></p> -->
+<br><br>
+  <p><%= link_to 'Go to Course', empire_course_revision_path(id: course.id), class: 'btn btn-sm btn-outline-primary w200' %></p>
+  <p><%= link_to 'Go to Course Index', empire_course_revisions_path(), class: 'btn btn-sm btn-outline-primary w200' %></p>
+  <p><%= link_to 'Go to Step Index', empire_course_revision_steps_path(), class: 'btn btn-sm btn-outline-primary w200' %></p>
+</div>

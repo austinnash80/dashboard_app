@@ -1,0 +1,103 @@
+<h1 class="text-center">Empire Course Revision Dashboard</h1>
+<br>
+<p class="text-center"><%= link_to 'Course Revision Index', empire_course_revisions_path(), class: 'btn btn-sm btn-outline-primary w250 m-2' %><%= link_to 'Steps Index', empire_course_revision_steps_path(), class: 'btn btn-sm btn-outline-primary w250 m-2' %></p>
+
+<div class="m-5">
+  <div class="row">
+    <div class="col-md-2 outline">
+      <h3 class="text-center bold">Details</h3>
+      <br>
+      <p><strong>Courses:</strong> <%= EmpireCourseRevision.count > 0 ? number_with_delimiter(EmpireCourseRevision.count) : '' %></p>
+      <p><strong>Steps:</strong> <%= EmpireCourseRevisionStep.count > 0 ? number_with_delimiter(EmpireCourseRevisionStep.count) : '' %></p>
+      <p><strong>Completed Steps:</strong> <%= EmpireCourseRevisionStep.where(complete: true).count > 0 ? number_with_delimiter(EmpireCourseRevisionStep.where(complete: true).count) : 0 %></p>
+    </div>
+  <div class="col-md-3">
+    <% names = EmpireCourseRevisionStep.where.not(assigned: '').pluck(:assigned).uniq %>
+    <h3 class="text-center bold">Assigned Tasks</h3>
+    <br>
+    <table class="table table-outline table-striped">
+      <thead>
+        <tr>
+          <th>Assignee</th>
+          <th>Completed/Assigned</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% unless names[0].blank? %>
+        <tr>
+          <td class=""><%= EmpireCourseRevisionStep.where(assigned: names[0]).pluck(:assigned).uniq[0] %></td>
+          <td class=""><%= EmpireCourseRevisionStep.where(assigned: names[0]).count(:complete) %> / <%= EmpireCourseRevisionStep.where(assigned: names[0]).count(:assigned) %></td>
+          <td><%= link_to 'View', personal_steps_empire_course_revisions_path(name: names[0]), class: 'btn btn-sm btn-outline-success' %></td>
+        </tr>
+        <% end %>
+        <% unless names[1].blank? %>
+        <tr>
+          <td class=""><%= EmpireCourseRevisionStep.where(assigned: names[1]).pluck(:assigned).uniq[0] %></td>
+          <td class=""><%= EmpireCourseRevisionStep.where(assigned: names[1]).count(:complete) %> / <%= EmpireCourseRevisionStep.where(assigned: names[1]).count(:assigned) %></td>
+          <td><%= link_to 'View', personal_steps_empire_course_revisions_path(name: names[1]), class: 'btn btn-sm btn-outline-success' %></td>
+        </tr>
+        <% end %>
+        <% unless names[2].blank? %>
+        <tr>
+          <td class=""><%= EmpireCourseRevisionStep.where(assigned: names[2]).pluck(:assigned).uniq[0] %></td>
+          <td class=""><%= EmpireCourseRevisionStep.where(assigned: names[2]).count(:complete) %> / <%= EmpireCourseRevisionStep.where(assigned: names[2]).count(:assigned) %></td>
+          <td><%= link_to 'View', personal_steps_empire_course_revisions_path(name: names[2]), class: 'btn btn-sm btn-outline-success' %></td>
+        </tr>
+        <% end %>
+        <% unless names[3].blank? %>
+        <tr>
+          <td class=""><%= EmpireCourseRevisionStep.where(assigned: names[3]).pluck(:assigned).uniq[0] %></td>
+          <td class=""><%= EmpireCourseRevisionStep.where(assigned: names[3]).count(:complete) %> / <%= EmpireCourseRevisionStep.where(assigned: names[3]).count(:assigned) %></td>
+          <td><%= link_to 'View', personal_steps_empire_course_revisions_path(name: names[3]), class: 'btn btn-sm btn-outline-success' %></td>
+        </tr>
+        <% end %>
+        <% unless names[4].blank? %>
+        <tr>
+          <td class=""><%= EmpireCourseRevisionStep.where(assigned: names[4]).pluck(:assigned).uniq[0] %></td>
+          <td class=""><%= EmpireCourseRevisionStep.where(assigned: names[4]).count(:complete) %> / <%= EmpireCourseRevisionStep.where(assigned: names[4]).count(:assigned) %></td>
+          <td><%= link_to 'View', personal_steps_empire_course_revisions_path(name: names[4]), class: 'btn btn-sm btn-outline-success' %></td>
+        </tr>
+        <% end %>
+        <% unless names[5].blank? %>
+        <tr>
+          <td class=""><%= EmpireCourseRevisionStep.where(assigned: names[5]).pluck(:assigned).uniq[0] %></td>
+          <td class=""><%= EmpireCourseRevisionStep.where(assigned: names[5]).count(:complete) %> / <%= EmpireCourseRevisionStep.where(assigned: names[5]).count(:assigned) %></td>
+          <td><%= link_to 'View', personal_steps_empire_course_revisions_path(name: names[5]), class: 'btn btn-sm btn-outline-success' %></td>
+        </tr>
+        <% end %>
+        <% unless names[6].blank? %>
+        <tr>
+          <td class=""><%= EmpireCourseRevisionStep.where(assigned: names[6]).pluck(:assigned).uniq[0] %></td>
+          <td class=""><%= EmpireCourseRevisionStep.where(assigned: names[6]).count(:complete) %> / <%= EmpireCourseRevisionStep.where(assigned: names[6]).count(:assigned) %></td>
+          <td><%= link_to 'View', personal_steps_empire_course_revisions_path(name: names[6]), class: 'btn btn-sm btn-outline-success' %></td>
+        </tr>
+        <% end %>
+        <% unless names[7].blank? %>
+        <tr>
+          <td class=""><%= EmpireCourseRevisionStep.where(assigned: names[7]).pluck(:assigned).uniq[0] %></td>
+          <td class=""><%= EmpireCourseRevisionStep.where(assigned: names[7]).count(:complete) %> / <%= EmpireCourseRevisionStep.where(assigned: names[7]).count(:assigned) %></td>
+          <td><%= link_to 'View', personal_steps_empire_course_revisions_path(name: names[7]), class: 'btn btn-sm btn-outline-success' %></td>
+        </tr>
+        <% end %>
+        <% unless names[8].blank? %>
+        <tr>
+          <td class=""><%= EmpireCourseRevisionStep.where(assigned: names[8]).pluck(:assigned).uniq[0] %></td>
+          <td class=""><%= EmpireCourseRevisionStep.where(assigned: names[8]).count(:complete) %> / <%= EmpireCourseRevisionStep.where(assigned: names[8]).count(:assigned) %></td>
+          <td><%= link_to 'View', personal_steps_empire_course_revisions_path(name: names[8]), class: 'btn btn-sm btn-outline-success' %></td>
+        </tr>
+        <% end %>
+        <% unless names[9].blank? %>
+        <tr>
+          <td class=""><%= EmpireCourseRevisionStep.where(assigned: names[9]).pluck(:assigned).uniq[0] %></td>
+          <td class=""><%= EmpireCourseRevisionStep.where(assigned: names[9]).count(:complete) %> / <%= EmpireCourseRevisionStep.where(assigned: names[9]).count(:assigned) %></td>
+          <td><%= link_to 'View', personal_steps_empire_course_revisions_path(name: names[9]), class: 'btn btn-sm btn-outline-success' %></td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+  </div>
+
+</div>
+</div>

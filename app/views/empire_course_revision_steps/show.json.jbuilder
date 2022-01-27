@@ -1,0 +1,1 @@
+json.partial! "empire_course_revision_steps/empire_course_revision_step", empire_course_revision_step: @empire_course_revision_step

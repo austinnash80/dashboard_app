@@ -1,0 +1,72 @@
+<%= link_to 'Course Revision Dashboard', dash_empire_course_revisions_path(), class: 'btn btn-outline-success w300' %>
+
+<p id="notice"><%= notice %></p>
+
+<h1 class="text-center"><%= @empire_course_revision.course_number %> - <%= @empire_course_revision.course %></h1>
+<br>
+<p class="text-center"><%= link_to 'Back to Courses', empire_course_revisions_path(), class: 'btn btn-outline-primary w200' %></p>
+<div class="m-5">
+  <div class="row">
+    <div class="col-md-3">
+      <h4 class="bold text-center">Course Details</h4>
+      <br>
+      <p><strong>Priority:</strong> <%= @empire_course_revision.priority %></p>
+      <p><strong>Course number:</strong> <%= @empire_course_revision.course_number %></p>
+      <p><strong>Course:</strong> <%= @empire_course_revision.course %></p>
+      <p><strong>Course type:</strong> <%= @empire_course_revision.course_type %></p>
+      <p><strong>State:</strong> <%= @empire_course_revision.state %></p>
+      <p><strong>Status:</strong> <%= @empire_course_revision.status %></p>
+      <p><strong>Hour:</strong> <%= @empire_course_revision.hour %></p>
+      <p><strong>Revision:</strong> <%= @empire_course_revision.revision %></p>
+      <p><strong>Note:</strong> <%= @empire_course_revision.note %></p>
+      <p><strong>Upgrades:</strong> <%= @empire_course_revision.upgrades %></p>
+    </div>
+    <div class="col-9">
+      <h4 class="bold text-center">Course Revision Steps</h4>
+      <br>
+      <table class="table table-striped table-outline">
+        <thead>
+          <tr>
+            <th>Number</th>
+            <th>Phase</th>
+            <th>Step</th>
+            <th>Details</th>
+            <th>Assigned</th>
+            <th>Note</th>
+            <th>Due date</th>
+            <th>Complete</th>
+            <th>Complete Date</th>
+            <th></th>
+            <!-- <th>File</th> -->
+          </tr>
+        </thead>
+        <tbody>
+          <% EmpireCourseRevisionStep.order(number: :asc).where(empire_course_revision_id: @empire_course_revision.id).each do |empire_course_revision_step| %>
+          <tr>
+            <td><%= empire_course_revision_step.number %></td>
+            <td><%= empire_course_revision_step.phase %></td>
+            <td><%= empire_course_revision_step.step %></td>
+            <td><%= empire_course_revision_step.details %></td>
+            <td><%= empire_course_revision_step.assigned %></td>
+            <td><%= empire_course_revision_step.note %></td>
+            <td><%= empire_course_revision_step.due_date %></td>
+            <% if empire_course_revision_step.complete? %>
+              <td class="text-success bold">True</td>
+            <% else %>
+              <td class="">False</td>
+            <% end %>
+            <td><%= empire_course_revision_step.complete_date %></td>
+            <td><%= link_to 'View', empire_course_revision_step_path(id: empire_course_revision_step.id), class: 'btn btn-sm btn-outline-primary w75' %></td>
+            <!-- <td><%= empire_course_revision_step.file %></td> -->
+          </tr>
+          <% end %>
+        </tbody>
+      </table>
+
+    </div>
+  </div>
+</div>
+
+
+<%= link_to 'Edit', edit_empire_course_revision_path(@empire_course_revision) %> |
+<%= link_to 'Back', empire_course_revisions_path %>

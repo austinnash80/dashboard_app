@@ -1,0 +1,22 @@
+
+<%= simple_form_for(@empire_course_revision) do |f| %>
+  <%= f.error_notification %>
+  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+  <div class="form-inputs">
+    <%= f.input :priority %>
+    <%= f.input :course_number %>
+    <%= f.input :course %>
+    <%= f.input :course_type %>
+    <%= f.input :state %>
+    <%= f.input :status %>
+    <%= f.input :hour %>
+    <%= f.input :revision %>
+    <%= f.input :note %>
+    <%= f.input :upgrades %>
+  </div>
+<br><br>
+  <div class="form-actions">
+    <%= f.button :submit, 'Submit', class: 'btn btn-lg btn-outline-primary' %>
+  </div>
+<% end %>

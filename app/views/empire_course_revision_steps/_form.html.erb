@@ -1,0 +1,31 @@
+
+<%= simple_form_for(@empire_course_revision_step) do |f| %>
+  <%= f.error_notification %>
+  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+  <div class="form-inputs">
+    <div class="row">
+      <div class="col-md-3">
+        <%= f.input :number, label: 'Step Number' %><br>
+
+        <%= f.input :phase, label: 'Phase' %><br>
+        <%= f.input :step, label: 'Step Name' %><br>
+        <%= f.input :details, label: 'Details' %><br>
+        <%= f.input :assigned, label: 'Assigned', as: :select, collection: ['John','Christian','Racheal', 'James','Caris','Makenzie','Sabrina', 'Michael', 'Melissa','Kyle','Austin']%><br>
+        <%= f.input :note, label: 'Notes' %><br>
+        <%= f.input :due_date, label: 'Due Date', include_blank: true %><br>
+        <%= f.input :complete, label: 'Complete' %><br>
+        <%= f.input :complete_date, label: 'Complete Date', include_blank: true %><br>
+        <%#= f.input :file %>
+        <%= f.input :empire_course_revision_id, label: 'Empire Course Revision ID' %><br>
+      </div>
+
+    </div>
+
+
+  </div>
+<br>
+  <div class="form-actions">
+    <%= f.button :submit, 'Submit', class: 'btn btn-outline-primary w150' %>
+  </div>
+<% end %>

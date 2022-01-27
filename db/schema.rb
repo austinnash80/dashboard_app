@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_14_215615) do
+ActiveRecord::Schema.define(version: 2022_01_27_050246) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -115,6 +115,39 @@ ActiveRecord::Schema.define(version: 2021_12_14_215615) do
     t.string "day_of_week"
     t.integer "sales"
     t.integer "orders"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "empire_course_revision_steps", force: :cascade do |t|
+    t.integer "number"
+    t.string "phase"
+    t.string "step"
+    t.string "details"
+    t.string "assigned"
+    t.text "note"
+    t.date "due_date"
+    t.boolean "complete"
+    t.date "complete_date"
+    t.string "file"
+    t.integer "empire_course_revision_id"
+    t.string "extra_s"
+    t.integer "extra_i"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "empire_course_revisions", force: :cascade do |t|
+    t.integer "priority"
+    t.integer "course_number"
+    t.string "course"
+    t.string "course_type"
+    t.string "state"
+    t.string "status"
+    t.integer "hour"
+    t.string "revision"
+    t.text "note"
+    t.text "upgrades"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

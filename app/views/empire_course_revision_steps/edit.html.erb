@@ -1,0 +1,10 @@
+<div class="m-5">
+<% course = EmpireCourseRevision.find_by(id: @empire_course_revision_step.empire_course_revision_id) %>
+<h1 class="text-center"><%= course.course %></h1>
+<h2 class="text-center">Edit Step</h2>
+<br>
+<%= render 'form', empire_course_revision_step: @empire_course_revision_step %>
+<br><br>
+<p><%= link_to 'Back to Step', @empire_course_revision_step, class: 'btn btn-sm btn-outline-primary w150' %> </p>
+<p><%= link_to 'Steps Index', empire_course_revision_steps_path, class: 'btn btn-sm btn-outline-primary w150' %></p>
+</div>

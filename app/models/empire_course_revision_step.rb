@@ -16,7 +16,7 @@ class EmpireCourseRevisionStep < ApplicationRecord
       attributes = %w{empire_course_revision_id number phase step	details	assigned note due_date complete	complete_date file	extra_s	extra_i}
       CSV.generate(headers: true) do |csv|
         csv << attributes
-          all.each do |i|
+          all.order(empire_course_revision_id: :asc).order(number: :asc).each do |i|
             csv << attributes.map{ |attr| i.send(attr) }
           end
       end

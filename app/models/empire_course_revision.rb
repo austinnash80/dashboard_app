@@ -16,7 +16,7 @@ class EmpireCourseRevision < ApplicationRecord
       attributes = %w{id priority course_number course course_type state status hour revision note upgrades}
       CSV.generate(headers: true) do |csv|
         csv << attributes
-          all.each do |i|
+          all.order(priority: :asc).each do |i|
             csv << attributes.map{ |attr| i.send(attr) }
           end
       end

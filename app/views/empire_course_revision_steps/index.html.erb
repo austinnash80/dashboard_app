@@ -32,7 +32,8 @@
   <thead>
     <tr class="bg-secondary bg-gradient text-light">
       <th>CID</th>
-      <th>Course Revision Title</th>
+      <th>Course Number</th>
+      <th>Course Title</th>
       <th>Number</th>
       <th>Phase</th>
       <th>Step</th>
@@ -54,6 +55,7 @@
       <tr>
         <td><%= empire_course_revision_step.empire_course_revision_id %></td>
         <% course_revision = EmpireCourseRevision.find_by(id: empire_course_revision_step.empire_course_revision_id) %>
+        <td><%= course_revision.present? ? course_revision.course_number : ''%></td>
         <td><%= course_revision.present? ? course_revision.course : ''%></td>
         <td><%= empire_course_revision_step.number %></td>
         <td><%= empire_course_revision_step.phase %></td>

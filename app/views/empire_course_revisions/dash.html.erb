@@ -27,7 +27,7 @@
         <% unless names[0].blank? %>
         <tr>
           <td class=""><%= EmpireCourseRevisionStep.where(assigned: names[0]).pluck(:assigned).uniq[0] %></td>
-          <td class=""><%= EmpireCourseRevisionStep.where(assigned: names[0]).count(:complete) %> / <%= EmpireCourseRevisionStep.where(assigned: names[0]).count(:assigned) %></td>
+          <td class=""><%= EmpireCourseRevisionStep.where(assigned: names[0]).where(complete: true).count %> / <%= EmpireCourseRevisionStep.where(assigned: names[0]).count %></td>
           <td><%= link_to 'View', personal_steps_empire_course_revisions_path(name: names[0]), class: 'btn btn-sm btn-outline-success' %></td>
         </tr>
         <% end %>

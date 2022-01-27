@@ -22,7 +22,7 @@
   <p><strong>File:</strong> <%= @empire_course_revision_step.file %></p>
   <p><strong>Empire course revision:</strong> <%= @empire_course_revision_step.empire_course_revision_id %></p>
   <!-- <p><strong>Extra s:</strong> <%= @empire_course_revision_step.extra_s %></p> -->
-  <!-- <p><strong>Extra i:</strong> <%= @empire_course_revision_step.extra_i %></p> -->
+  <p><strong>Assignee Priority:</strong> <%= @empire_course_revision_step.extra_i %></p>
 <br><br>
   <p><%= link_to 'Go to Course', empire_course_revision_path(id: course.id), class: 'btn btn-sm btn-outline-primary w200' %></p>
   <p><%= link_to 'Go to Course Index', empire_course_revisions_path(), class: 'btn btn-sm btn-outline-primary w200' %></p>

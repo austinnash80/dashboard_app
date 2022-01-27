@@ -4,7 +4,9 @@
   <table class="table table-outline table-striped">
     <thead>
       <tr>
-        <th>Course Revision Title</th>
+        <th>Order</th>
+        <th>Course Number</th>
+        <th>Course Title</th>
         <th>Number</th>
         <th>Phase</th>
         <th>Step</th>
@@ -18,10 +20,12 @@
       </tr>
     </thead>
     <tbody>
-      <% EmpireCourseRevisionStep.order(empire_course_revision_id: :asc).where(assigned: params['name']).each do |empire_course_revision_step| %>
+      <% EmpireCourseRevisionStep.order(extra_i: :asc).order(due_date: :asc).where(assigned: params['name']).each do |empire_course_revision_step| %>
       <tr>
+        <td><%= empire_course_revision_step.extra_i %></td>
         <% course_revision = EmpireCourseRevision.find_by(id: empire_course_revision_step.empire_course_revision_id) %>
           <% if course_revision.present? %>
+            <td><%= course_revision.course_number %></td>
             <td><%= link_to course_revision.course, empire_course_revision_path(id: course_revision.id) %></td>
           <% else %>
             <td></td>
@@ -33,7 +37,11 @@
         <td><%= empire_course_revision_step.assigned %></td>
         <td><%= empire_course_revision_step.note %></td>
         <td><%= empire_course_revision_step.due_date %></td>
-        <td><%= empire_course_revision_step.complete %></td>
+        <% if empire_course_revision_step.complete? %>
+          <td class="text-success bold">True</td>
+        <% else %>
+          <td>False</td>
+        <% end %>
         <td><%= empire_course_revision_step.complete_date %></td>
         <td><%= link_to 'View/Edit', empire_course_revision_step_path(id: empire_course_revision_step.id), class: 'btn btn-sm btn-outline-primary w100' %></td>
       </tr>

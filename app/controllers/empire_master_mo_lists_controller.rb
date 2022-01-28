@@ -58,10 +58,7 @@ class EmpireMasterMoListsController < ApplicationController
     end
   end
 
-  def import #Uploading CSV function
-    EmpireMasterMoList.my_import(params[:file])
-    redirect_to empire_master_mo_lists_path, notice: "Upload Complete"
-  end
+
 
   # DELETE /empire_master_mo_lists/1 or /empire_master_mo_lists/1.json
   def destroy
@@ -70,6 +67,11 @@ class EmpireMasterMoListsController < ApplicationController
       format.html { redirect_to empire_master_mo_lists_url, notice: "Empire master mo list was successfully destroyed." }
       format.json { head :no_content }
     end
+  end
+
+  def import #Uploading CSV function
+    EmpireMasterMoList.my_import(params[:file])
+    redirect_to empire_master_mo_lists_path, notice: "Upload Complete"
   end
 
   private

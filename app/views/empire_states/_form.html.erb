@@ -26,11 +26,11 @@
       <div class="col-lg-12"><%= f.input :link, placeholder: '' %></div>
     </div>
     <div class="row m-2">
-      <div class="col-lg-6"><%= f.input :exp_type, as: :select, collection: ['Individual', 'Split', 'All Together'] %></div>
+      <div class="col-lg-6"><%= f.input :exp_type, as: :select, collection: ['Rolling', 'Monthly'] %></div>
       <div class="col-lg-6"><%= f.input :renewal_cycle, placeholder: 'ex: 2 years' %></div>
     </div>
     <div class="row m-2">
-      <div class="col-lg-6"><%= f.input :next_exp, include_blank: true, hint: 'Leave blank for type Individual' %></div>
+      <div class="col-lg-6"><%= f.input :next_exp, include_blank: true, hint: 'Leave blank for rolling states' %></div>
     </div>
     <div class="row m-2">
       <div class="col-lg-12"><%= f.input :exp_notes, placeholder: 'Anything unique or important about the state expiration, ex: salespersons and brokers different exp, etc.' %></div>

@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+
   resources :empire_course_revision_steps do collection {post :import} end
   resources :empire_course_revisions do collection {post :import}
     collection do
@@ -8,6 +9,7 @@ Rails.application.routes.draw do
     end
   resources :empire_state_tasks do collection {post :import} end
   resources :empire_state_tasks_suppliments do collection {post :import} end
+  resources :empire_master_tn_lists do collection {post :import} end
   resources :empire_master_ga_lists do collection {post :import} end
   resources :empire_master_va_lists do collection {post :import} end
   resources :empire_master_wa_lists do collection {post :import} end

@@ -13,7 +13,7 @@ class EmpireMasterIndListsController < ApplicationController
     # EXPORT
     respond_to do |format|
       format.html
-      format.csv { send_data @empire_master_mo_lists.to_csv, filename: "Empire_Master_MO_List-#{Date.today}.csv" }
+      format.csv { send_data @empire_master_ind_lists.to_csv, filename: "Empire_Master_IN_List-#{Date.today}.csv" }
     end
   end
 

@@ -1,6 +1,9 @@
 <p id="notice"><%= notice %></p>
 
 <h1 class="text-center">Empire Master PA List</h1>
+<div class="m-3"><p class="text-center"><%= link_to 'Empire States Table', empire_states_path(), class: 'btn btn-sm btn-outline-primary w200 m-1' %> <%= link_to 'List Data Home Page', list_data_hp_empire_states_path(), class: 'btn btn-sm btn-outline-primary w200 m-1' %></p></div>
+
+<div class="m-5">
 
     <p class="fs-4">Upload New List</p>
       <%= form_tag import_empire_master_pa_lists_path, multipart: true do %>
@@ -17,7 +20,6 @@
     <p><%= link_to 'Export List (csv)', empire_master_pa_lists_path('csv'), class: 'btn btn-sm btn-secondary text-light mt-2' %></p>
 
 
-<div class="m-5">
 <table class="table table-striped">
   <thead>
     <caption class="caption-top">Total Records: <%= number_with_delimiter(EmpireMasterPaList.count) %> | Display Limit: 250</caption>

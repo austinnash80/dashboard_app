@@ -1,6 +1,22 @@
 Rails.application.routes.draw do
-
-
+  resources :empire_master_wa_matches do collection {post :import} end
+  resources :empire_master_va_matches do collection {post :import} end
+  resources :empire_master_ut_matches do collection {post :import} end
+  resources :empire_master_tx_matches do collection {post :import} end
+  resources :empire_master_tn_matches do collection {post :import} end
+  resources :empire_master_sc_matches do collection {post :import} end
+  resources :empire_master_pa_matches do collection {post :import} end
+  resources :empire_master_ny_matches do collection {post :import} end
+  resources :empire_master_nm_matches do collection {post :import} end
+  resources :empire_master_nj_matches do collection {post :import} end
+  resources :empire_master_nc_matches do collection {post :import} end
+  resources :empire_master_mo_matches do collection {post :import} end
+  resources :empire_master_md_matches do collection {post :import} end
+  resources :empire_master_ild_matches
+  resources :empire_master_il_matches do collection {post :import} end
+  resources :empire_master_ind_matches do collection {post :import} end
+  resources :empire_master_ga_matches do collection {post :import} end
+  resources :empire_master_ca_matches do collection {post :import} end
   resources :empire_course_revision_steps do collection {post :import} end
   resources :empire_course_revisions do collection {post :import}
     collection do

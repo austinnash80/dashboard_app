@@ -1,0 +1,2 @@
+module EmpireMasterWaMatchesHelper
+end

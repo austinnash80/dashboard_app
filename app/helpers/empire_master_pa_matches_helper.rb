@@ -1,0 +1,2 @@
+module EmpireMasterPaMatchesHelper
+end

@@ -1,0 +1,2 @@
+class EmpireMasterIldMatch < ApplicationRecord
+end

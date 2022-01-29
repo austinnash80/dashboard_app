@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_28_192534) do
+ActiveRecord::Schema.define(version: 2022_01_29_011824) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -204,6 +204,19 @@ ActiveRecord::Schema.define(version: 2022_01_28_192534) do
     t.index ["lid"], name: "index_empire_master_ca_lists_on_lid", unique: true
   end
 
+  create_table "empire_master_ca_matches", force: :cascade do |t|
+    t.string "st"
+    t.integer "lid"
+    t.string "list"
+    t.date "exp"
+    t.string "lic"
+    t.integer "uid"
+    t.string "lname"
+    t.date "search_date"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "empire_master_double_accounts", force: :cascade do |t|
     t.integer "uid"
     t.string "lic_st"
@@ -242,6 +255,19 @@ ActiveRecord::Schema.define(version: 2022_01_28_192534) do
     t.index ["lid"], name: "index_empire_master_ga_lists_on_lid", unique: true
   end
 
+  create_table "empire_master_ga_matches", force: :cascade do |t|
+    t.string "st"
+    t.integer "lid"
+    t.string "list"
+    t.date "exp"
+    t.string "lic"
+    t.integer "uid"
+    t.string "lname"
+    t.date "search_date"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "empire_master_il_lists", force: :cascade do |t|
     t.integer "lid"
     t.string "list"
@@ -270,6 +296,32 @@ ActiveRecord::Schema.define(version: 2022_01_28_192534) do
     t.index ["lid"], name: "index_empire_master_il_lists_on_lid", unique: true
   end
 
+  create_table "empire_master_il_matches", force: :cascade do |t|
+    t.string "st"
+    t.integer "lid"
+    t.string "list"
+    t.date "exp"
+    t.string "lic"
+    t.integer "uid"
+    t.string "lname"
+    t.date "search_date"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "empire_master_ild_matches", force: :cascade do |t|
+    t.string "st"
+    t.integer "lid"
+    t.string "list"
+    t.date "exp"
+    t.string "lic"
+    t.integer "uid"
+    t.string "lname"
+    t.date "search_date"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "empire_master_ind_lists", force: :cascade do |t|
     t.integer "lid"
     t.string "list"
@@ -296,6 +348,19 @@ ActiveRecord::Schema.define(version: 2022_01_28_192534) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["lid"], name: "index_empire_master_ind_lists_on_lid", unique: true
+  end
+
+  create_table "empire_master_ind_matches", force: :cascade do |t|
+    t.string "st"
+    t.integer "lid"
+    t.string "list"
+    t.date "exp"
+    t.string "lic"
+    t.integer "uid"
+    t.string "lname"
+    t.date "search_date"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "empire_master_matches", force: :cascade do |t|
@@ -340,6 +405,19 @@ ActiveRecord::Schema.define(version: 2022_01_28_192534) do
     t.index ["lid"], name: "index_empire_master_md_lists_on_lid", unique: true
   end
 
+  create_table "empire_master_md_matches", force: :cascade do |t|
+    t.string "st"
+    t.integer "lid"
+    t.string "list"
+    t.date "exp"
+    t.string "lic"
+    t.integer "uid"
+    t.string "lname"
+    t.date "search_date"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "empire_master_mo_lists", force: :cascade do |t|
     t.integer "lid"
     t.string "list"
@@ -368,6 +446,19 @@ ActiveRecord::Schema.define(version: 2022_01_28_192534) do
     t.index ["lid"], name: "index_empire_master_mo_lists_on_lid", unique: true
   end
 
+  create_table "empire_master_mo_matches", force: :cascade do |t|
+    t.string "st"
+    t.integer "lid"
+    t.string "list"
+    t.date "exp"
+    t.string "lic"
+    t.integer "uid"
+    t.string "lname"
+    t.date "search_date"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "empire_master_nc_lists", force: :cascade do |t|
     t.integer "lid"
     t.string "list"
@@ -394,6 +485,19 @@ ActiveRecord::Schema.define(version: 2022_01_28_192534) do
     t.index ["lid"], name: "index_empire_master_nc_lists_on_lid", unique: true
   end
 
+  create_table "empire_master_nc_matches", force: :cascade do |t|
+    t.string "st"
+    t.integer "lid"
+    t.string "list"
+    t.date "exp"
+    t.string "lic"
+    t.integer "uid"
+    t.string "lname"
+    t.date "search_date"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "empire_master_nj_lists", force: :cascade do |t|
     t.integer "lid"
     t.string "list"
@@ -418,6 +522,19 @@ ActiveRecord::Schema.define(version: 2022_01_28_192534) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["lid"], name: "index_empire_master_nj_lists_on_lid", unique: true
+  end
+
+  create_table "empire_master_nj_matches", force: :cascade do |t|
+    t.string "st"
+    t.integer "lid"
+    t.string "list"
+    t.date "exp"
+    t.string "lic"
+    t.integer "uid"
+    t.string "lname"
+    t.date "search_date"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "empire_master_nm_lists", force: :cascade do |t|
@@ -448,6 +565,19 @@ ActiveRecord::Schema.define(version: 2022_01_28_192534) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["lid"], name: "index_empire_master_nm_lists_on_lid", unique: true
+  end
+
+  create_table "empire_master_nm_matches", force: :cascade do |t|
+    t.string "st"
+    t.integer "lid"
+    t.string "list"
+    t.date "exp"
+    t.string "lic"
+    t.integer "uid"
+    t.string "lname"
+    t.date "search_date"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "empire_master_no_matches", force: :cascade do |t|
@@ -488,6 +618,19 @@ ActiveRecord::Schema.define(version: 2022_01_28_192534) do
     t.index ["lid"], name: "index_empire_master_ny_lists_on_lid", unique: true
   end
 
+  create_table "empire_master_ny_matches", force: :cascade do |t|
+    t.string "st"
+    t.integer "lid"
+    t.string "list"
+    t.date "exp"
+    t.string "lic"
+    t.integer "uid"
+    t.string "lname"
+    t.date "search_date"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "empire_master_pa_lists", force: :cascade do |t|
     t.integer "lid"
     t.string "list"
@@ -514,6 +657,19 @@ ActiveRecord::Schema.define(version: 2022_01_28_192534) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["lid"], name: "index_empire_master_pa_lists_on_lid", unique: true
+  end
+
+  create_table "empire_master_pa_matches", force: :cascade do |t|
+    t.string "st"
+    t.integer "lid"
+    t.string "list"
+    t.date "exp"
+    t.string "lic"
+    t.integer "uid"
+    t.string "lname"
+    t.date "search_date"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "empire_master_sc_lists", force: :cascade do |t|
@@ -544,6 +700,19 @@ ActiveRecord::Schema.define(version: 2022_01_28_192534) do
     t.index ["lid"], name: "index_empire_master_sc_lists_on_lid", unique: true
   end
 
+  create_table "empire_master_sc_matches", force: :cascade do |t|
+    t.string "st"
+    t.integer "lid"
+    t.string "list"
+    t.date "exp"
+    t.string "lic"
+    t.integer "uid"
+    t.string "lname"
+    t.date "search_date"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "empire_master_tn_lists", force: :cascade do |t|
     t.integer "lid"
     t.string "list"
@@ -572,6 +741,19 @@ ActiveRecord::Schema.define(version: 2022_01_28_192534) do
     t.index ["lid"], name: "index_empire_master_tn_lists_on_lid", unique: true
   end
 
+  create_table "empire_master_tn_matches", force: :cascade do |t|
+    t.string "st"
+    t.integer "lid"
+    t.string "list"
+    t.date "exp"
+    t.string "lic"
+    t.integer "uid"
+    t.string "lname"
+    t.date "search_date"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "empire_master_tx_lists", force: :cascade do |t|
     t.integer "lid"
     t.string "list"
@@ -596,6 +778,19 @@ ActiveRecord::Schema.define(version: 2022_01_28_192534) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["lid"], name: "index_empire_master_tx_lists_on_lid", unique: true
+  end
+
+  create_table "empire_master_tx_matches", force: :cascade do |t|
+    t.string "st"
+    t.integer "lid"
+    t.string "list"
+    t.date "exp"
+    t.string "lic"
+    t.integer "uid"
+    t.string "lname"
+    t.date "search_date"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "empire_master_ut_lists", force: :cascade do |t|
@@ -626,6 +821,19 @@ ActiveRecord::Schema.define(version: 2022_01_28_192534) do
     t.index ["lid"], name: "index_empire_master_ut_lists_on_lid", unique: true
   end
 
+  create_table "empire_master_ut_matches", force: :cascade do |t|
+    t.string "st"
+    t.integer "lid"
+    t.string "list"
+    t.date "exp"
+    t.string "lic"
+    t.integer "uid"
+    t.string "lname"
+    t.date "search_date"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "empire_master_va_lists", force: :cascade do |t|
     t.integer "lid"
     t.string "list"
@@ -654,6 +862,19 @@ ActiveRecord::Schema.define(version: 2022_01_28_192534) do
     t.index ["lid"], name: "index_empire_master_va_lists_on_lid", unique: true
   end
 
+  create_table "empire_master_va_matches", force: :cascade do |t|
+    t.string "st"
+    t.integer "lid"
+    t.string "list"
+    t.date "exp"
+    t.string "lic"
+    t.integer "uid"
+    t.string "lname"
+    t.date "search_date"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "empire_master_wa_lists", force: :cascade do |t|
     t.integer "lid"
     t.string "list"
@@ -680,6 +901,19 @@ ActiveRecord::Schema.define(version: 2022_01_28_192534) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["lid"], name: "index_empire_master_wa_lists_on_lid", unique: true
+  end
+
+  create_table "empire_master_wa_matches", force: :cascade do |t|
+    t.string "st"
+    t.integer "lid"
+    t.string "list"
+    t.date "exp"
+    t.string "lic"
+    t.integer "uid"
+    t.string "lname"
+    t.date "search_date"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "empire_members", force: :cascade do |t|

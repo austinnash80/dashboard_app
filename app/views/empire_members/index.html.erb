@@ -1,11 +1,13 @@
 
-<h1 class="text-center">Empire Members</h1>
-<div class="text-center">
-  <div class="btn-group" role="group">
-    <%= link_to 'Run Member Update', run_update_empire_members_path(), class: 'btn btn-primary bg-gradient ext-light mt-2 text-light w250' %>
-    <%= link_to 'Run Purchase Update', run_update_2_empire_members_path(), class: 'btn btn-primary bg-gradient text-light mt-2 text-light w250' %>
+<h1 class="text-center"><%= params['st'] %> Empire Members</h1>
+<% unless params['st'].present? %>
+  <div class="text-center">
+    <div class="btn-group" role="group">
+      <%= link_to 'Run Member Update', run_update_empire_members_path(), class: 'btn btn-primary bg-gradient ext-light mt-2 text-light w250' %>
+      <%= link_to 'Run Purchase Update', run_update_2_empire_members_path(), class: 'btn btn-primary bg-gradient text-light mt-2 text-light w250' %>
+    </div>
   </div>
-</div>
+<% end %>
 <p id="notice" class="text-center fw-bold"><%= notice %></p>
 
 <a class="btn btn-sm btn-light text-secondary bg-gradient border" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">Upload/Export</a>
@@ -35,17 +37,29 @@
   </div>
   <br><br>
 
+  <% if params['lname'].present? %>
+    <% if params['lname'].match(/^(\d)+$/).present? %>
+      <% empire_member = EmpireMember.where(uid: params['lname'].to_i).all %>
+    <% else %>
+      <% empire_member = EmpireMember.where(lname: params['lname'].titlecase).all %>
+    <% end %>
+  <% elsif params['st'].present? %>
+    <% empire_member = EmpireMember.where(state: params['st']).all %>
+  <% else %>
+    <% empire_member = EmpireMember.all %>
+  <% end %>
+
   <table class="table table-striped">
   <thead>
-  <caption class="caption-top">Total Records: <%= number_with_delimiter(EmpireMember.count) %> | Display Limit: 250</caption>
+  <caption class="caption-top">Total Records: <%= number_with_delimiter(empire_member.count) %> | Display Limit: 250</caption>
     <tr class="bg-secondary bg-gradient text-light">
       <th>Uid</th>
-      <th>Lname</th>
-      <th>Email</th>
-      <th>First purchase</th>
-      <th>Last purchase</th>
       <th>State</th>
       <th>Lic Num</th>
+      <th>Lname</th>
+      <th>Email</th>
+      <th>First Purchase</th>
+      <th>Last Purchase</th>
       <th>Purchases</th>
       <th>Email Unsubscribe</th>
       <th colspan="1"></th>
@@ -53,25 +67,15 @@
   </thead>
 
   <tbody>
-    <% if params['lname'].present? %>
-      <% if params['lname'].match(/^(\d)+$/).present? %>
-        <% empire_member = EmpireMember.where(uid: params['lname'].to_i).all %>
-      <% else %>
-        <% empire_member = EmpireMember.where(lname: params['lname'].titlecase).all %>
-      <% end %>
-    <% else %>
-      <% empire_member = EmpireMember.all %>
-    <% end %>
-
     <% empire_member.order(last_purchase: :DESC).order(first_purchase: :DESC).order(uid: :DESC).limit(250).each do |empire_member| %>
       <tr>
         <td><a target="_blank" href="https://www.empirelearning.com/admin/user-profile?u=<%= empire_member.uid %>"><%= empire_member.uid %></a></td>
+        <td><%= empire_member.state %></td>
+        <td><%= empire_member.lic_num %></td>
         <td><%= empire_member.lname %></td>
         <td><%= empire_member.email %></td>
         <td><%= empire_member.first_purchase %></td>
         <td><%= empire_member.last_purchase %></td>
-        <td><%= empire_member.state %></td>
-        <td><%= empire_member.lic_num %></td>
         <td><%= empire_member.purchases %></td>
         <% if empire_member.email_unsubscribe? %><td class="text-success">true</td><% else %><td>false</td><% end %>
         <td><%= link_to 'Info', empire_member, class: 'btn btn-sm btn-info bg-gradient text-dark w100' %></td>

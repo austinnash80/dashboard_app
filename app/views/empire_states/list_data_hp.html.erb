@@ -8,18 +8,17 @@
 <table class="table table-striped border">
   <thead>
     <tr class="bg-secondary bg-gradient text-light">
-      <th></th>
       <th>State</th>
-      <th>St</th>
-      <th>Customers</th>
+      <th>Action</th>
       <th>Matched</th>
-      <th>% Matched</th>
+      <th>Customers</th>
       <th>List Size</th>
+      <th>List Date</th>
+      <th>% Matched</th>
       <th>Market Share</th>
-      <th>List date</th>
-      <th>Exp type</th>
-      <th>Renewal cycle</th>
-      <th>Next exp</th>
+      <th>Exp Type</th>
+      <th>Renewal Cycle</th>
+      <th>Next Exp</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -27,16 +26,17 @@
   <tbody id="myTable">
     <% @empire_states.order(st: :ASC).each do |empire_state| %>
       <tr>
-        <td><%= link_to 'Run Match', empire_states_path(run: empire_state.st), class: 'btn btn-outline-success btn-sm w100', data: {disable_with: "Loading..."} %></td>
-        <!-- <td><%= empire_state.state %></td> -->
-        <td><%= link_to empire_state.state, send("empire_master_#{empire_state.st.downcase}_lists_path"), class: 'btn btn-sm btn-outline-secondary w150' %></td>
-        <td><%= empire_state.st %></td>
-        <td><%= empire_state.customers.present? ? number_with_delimiter(empire_state.customers) : '' %></td>
-        <td><%= empire_state.matched_customers.present? ? number_with_delimiter(empire_state.matched_customers) : '' %></td>
-        <td><%= empire_state.matched_customers.present? && empire_state.customers.present? ? number_to_percentage((empire_state.matched_customers.to_f / empire_state.customers.to_f)*100, precision: 0) : ''%></td>
-        <td><%= empire_state.list_size.present? ? number_with_delimiter(empire_state.list_size) : '' %></td>
-        <td><%= empire_state.matched_customers.present? && empire_state.list_size.present? ? number_to_percentage((empire_state.matched_customers.to_f / empire_state.list_size.to_f)*100, precision: 1) : ''%></td>
+        <td><strong><%= empire_state.state %></strong></td>
+        <td><%= link_to 'Run Match', send("empire_master_#{empire_state.st.downcase}_matches_path", run: 'yes', route: 'hp'), class: 'btn btn-outline-success btn-sm w100', data: {disable_with: "Loading..."} %></td>
+        <% if empire_state.matched_customers.present? %>
+          <td><%= link_to number_with_delimiter(empire_state.matched_customers), send("empire_master_#{empire_state.st.downcase}_matches_path"), class: 'btn btn-sm btn-outline-secondary w100' %></td>
+        <% else %> <td> </td><% end %>
+        <!-- <td><%#= empire_state.matched_customers.present? ? number_with_delimiter(empire_state.matched_customers) : '' %></td> -->
+        <% if empire_state.customers.present? %><td><%= link_to number_with_delimiter(empire_state.customers), empire_members_path(st: empire_state.st ), class: 'btn btn-sm btn-outline-secondary w100' %></td><% else %> <td> </td><% end %>
+        <% if empire_state.list_size.present? %><td><%= link_to number_with_delimiter(empire_state.list_size), send("empire_master_#{empire_state.st.downcase}_lists_path"), class: 'btn btn-sm btn-outline-secondary w150' %></td><% else %> <td> </td><% end %>
         <td><%= empire_state.list_date %></td>
+        <td><%= empire_state.matched_customers.present? && empire_state.customers.present? ? number_to_percentage((empire_state.matched_customers.to_f / empire_state.customers.to_f)*100, precision: 0) : ''%></td>
+        <td><%= empire_state.matched_customers.present? && empire_state.list_size.present? ? number_to_percentage((empire_state.matched_customers.to_f / empire_state.list_size.to_f)*100, precision: 1) : ''%></td>
         <td><%= empire_state.exp_type %></td>
         <td><%= empire_state.renewal_cycle %></td>
         <td><%= empire_state.next_exp %></td>

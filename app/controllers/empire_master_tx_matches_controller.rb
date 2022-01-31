@@ -20,7 +20,7 @@ class EmpireMasterTxMatchesController < ApplicationController
     if params['run'] == 'yes'
       run
     end
-
+  end 
   # GET /empire_master_tx_matches/1 or /empire_master_tx_matches/1.json
   def show
   end

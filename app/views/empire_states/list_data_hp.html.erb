@@ -49,13 +49,13 @@
         <% customers = EmpireState.sum(:customers) %>
         <% matched = EmpireState.sum(:matched_customers) %>
         <% list = EmpireState.sum(:list_size) %>
-        <td colspan="1"></td>
         <td>States: <%= EmpireState.count %></td>
-        <td></td>
-        <td><%= number_with_delimiter(customers) %></td>
+        <td colspan="1"></td>
         <td><%= number_with_delimiter(matched) %></td>
-        <td><%= number_to_percentage((matched.to_f/customers.to_f)*100, precision: 0) %></td>
+        <td><%= number_with_delimiter(customers) %></td>
         <td><%= number_with_delimiter(list) %></td>
+        <td></td>
+        <td><%= number_to_percentage((matched.to_f/customers.to_f)*100, precision: 0) %></td>
         <td><%= number_to_percentage((customers.to_f/list.to_f)*100, precision: 1) %></td>
         <td colspan="8"></td>
       </tr>

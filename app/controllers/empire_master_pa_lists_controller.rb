@@ -7,6 +7,7 @@ class EmpireMasterPaListsController < ApplicationController
     # DELETE ALL
     if params['remove_all'] == 'yes' && params['confirm'] == 'yes'
       EmpireMasterPaList.delete_all
+      EmpireState.where(st: 'PA').update_all list_size: 0
       redirect_to empire_master_pa_lists_path(), notice: 'Records Deleted'
     end
 

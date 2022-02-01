@@ -7,6 +7,7 @@ class EmpireMasterScListsController < ApplicationController
     # DELETE ALL
     if params['remove_all'] == 'yes' && params['confirm'] == 'yes'
       EmpireMasterScList.delete_all
+      EmpireState.where(st: 'SC').update_all list_size: 0
       redirect_to empire_master_sc_lists_path(), notice: 'Records Deleted'
     end
 

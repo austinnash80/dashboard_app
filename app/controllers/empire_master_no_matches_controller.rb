@@ -8,6 +8,7 @@ class EmpireMasterNoMatchesController < ApplicationController
     # DELETE ALL
     if params['remove_all'] == 'yes' && params['confirm'] == 'yes'
       EmpireMasterNoMatch.delete_all
+      EmpireState.where(st: 'MO').update_all list_size: 0
       redirect_to empire_master_no_matches_path(), notice: 'Records Deleted'
     end
 

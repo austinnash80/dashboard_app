@@ -7,6 +7,7 @@ class EmpireMasterNcListsController < ApplicationController
     # DELETE ALL
     if params['remove_all'] == 'yes' && params['confirm'] == 'yes'
       EmpireMasterNcList.delete_all
+      EmpireState.where(st: 'NC').update_all list_size: 0
       redirect_to empire_master_nc_lists_path(), notice: 'Records Deleted'
     end
 

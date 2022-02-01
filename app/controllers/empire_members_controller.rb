@@ -27,12 +27,26 @@ class EmpireMembersController < ApplicationController
       end
       redirect_to empire_members_path(), notice: 'New Member Update Complete'
   end
-
   def run_update_2 #Purchases
     @e_id = (IdNumberStorage.pluck(:empire_member_e_id))[0]
       EmpireCustomer.where('e_id > ?', @e_id).order(id: :asc).each do |i|
         member = EmpireMember.find_by(uid: i.uid)
         EmpireMember.where(uid: i.uid).update_all state: i.lic_state, last_purchase: i.purchase, lic_num: i.lic_num, email: i.email, purchases: (member.purchases + 1)
+        # FIX LIC NUMBER FORMAT 8 DIGITS FOR CA
+        if member.state == 'CA' && member.lic_num.present? && member.lic_num.length =! 8
+          if member.lic_num.length == 4
+            EmpireMember.where(id: member.id).update_all lic_num: '0000' + member.lic_num
+          elsif member.lic_num.length == 5
+            EmpireMember.where(id: member.id).update_all lic_num: '000' + member.lic_num
+          elsif member.lic_num.length == 6
+            EmpireMember.where(id: member.id).update_all lic_num: '00' + member.lic_num
+          elsif member.lic_num.length == 7
+            EmpireMember.where(id: member.id).update_all lic_num: '0' + member.lic_num
+          end
+        end # END LIC NUMBER FORMAT
+        if member.lname.present? ## LAST NAME FIX
+          EmpireMember.where(id: member.id).update_all lname: member.lname.upcase
+        end ## END LAST NAME FIX
         IdNumberStorage.update_all empire_member_e_id: i.e_id
       end
       redirect_to empire_members_path(), notice: 'Purchase Update Complete'

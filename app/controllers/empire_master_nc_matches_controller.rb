@@ -22,6 +22,45 @@ class EmpireMasterNcMatchesController < ApplicationController
     end
   end
 
+  def run
+
+    # lic_fix_member
+    # lic_fix_master
+
+    already_matched_uid = EmpireMasterNcMatch.pluck(:uid)
+    master = EmpireMasterNcList.pluck(:lic, :lname)
+    customer = EmpireMember.where.not(uid: already_matched_uid).where(state: 'NC').pluck(:lic_num, :lname)
+    match = (customer & master)
+    lic = [].uniq
+
+    match.each do |a,b|
+      lic.push(a)
+    end
+
+    EmpireMember.where(state: 'NC').where(lic_num: lic).each do |i|
+      master = EmpireMasterNcList.find_by(lic: i.lic_num)
+      if master.present?
+        EmpireMasterNcMatch.create(
+          st: "NC",
+          lid: master.lid,
+          list: master.list,
+          exp: master.exp_date,
+          lic: master.lic,
+          uid: i.uid,
+          lname: master.lname,
+          search_date: Time.now,
+        ).save
+      end
+    end
+
+    total = EmpireMember.where(state: 'NC').count
+    matched = EmpireMasterNcMatch.count
+    EmpireState.where(st: 'NC').update_all customers: total, matched_customers: matched
+
+    redirect_to list_data_hp_empire_states_path(), notice: "NC Update Done"
+    # redirect_to empire_master_nc_matches_path(), notice: "Update Done"
+  end
+
   # GET /empire_master_nc_matches/1 or /empire_master_nc_matches/1.json
   def show
   end

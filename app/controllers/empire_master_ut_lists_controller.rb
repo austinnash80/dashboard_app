@@ -69,6 +69,11 @@ class EmpireMasterUtListsController < ApplicationController
 
   def import #Uploading CSV function
     EmpireMasterUtList.my_import(params[:file])
+    list = EmpireMasterUtList.first(1).pluck(:list)
+      y = list.join[2,4]
+      m = list.join[6,2]
+      d = list.join[8,2]
+    EmpireState.where(st: 'UT').update_all list_size: EmpireMasterUtList.count, list_date: y+'-'+m+"-"+d
     redirect_to empire_master_ut_lists_path, notice: "Upload Complete"
   end
 

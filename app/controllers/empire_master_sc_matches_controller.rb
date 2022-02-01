@@ -22,6 +22,45 @@ class EmpireMasterScMatchesController < ApplicationController
     end
   end
 
+  def run
+
+    # lic_fix_member
+    # lic_fix_master
+
+    already_matched_uid = EmpireMasterScMatch.pluck(:uid)
+    master = EmpireMasterScList.pluck(:lic, :lname)
+    customer = EmpireMember.where.not(uid: already_matched_uid).where(state: 'SC').pluck(:lic_num, :lname)
+    match = (customer & master)
+    lic = [].uniq
+
+    match.each do |a,b|
+      lic.push(a)
+    end
+
+    EmpireMember.where(state: 'SC').where(lic_num: lic).each do |i|
+      master = EmpireMasterScList.find_by(lic: i.lic_num)
+      if master.present?
+        EmpireMasterScMatch.create(
+          st: "SC",
+          lid: master.lid,
+          list: master.list,
+          exp: master.exp_date,
+          lic: master.lic,
+          uid: i.uid,
+          lname: master.lname,
+          search_date: Time.now,
+        ).save
+      end
+    end
+
+    total = EmpireMember.where(state: 'SC').count
+    matched = EmpireMasterScMatch.count
+    EmpireState.where(st: 'SC').update_all customers: total, matched_customers: matched
+
+    redirect_to list_data_hp_empire_states_path(), notice: "SC Update Done"
+    # redirect_to empire_master_ny_matches_path(), notice: "Update Done"
+  end
+
   # GET /empire_master_sc_matches/1 or /empire_master_sc_matches/1.json
   def show
   end

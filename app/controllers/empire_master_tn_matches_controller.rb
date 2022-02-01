@@ -22,6 +22,45 @@ class EmpireMasterTnMatchesController < ApplicationController
     end
   end
 
+  def run
+
+    # lic_fix_member
+    # lic_fix_master
+
+    already_matched_uid = EmpireMasterTnMatch.pluck(:uid)
+    master = EmpireMasterTnList.pluck(:lic, :lname)
+    customer = EmpireMember.where.not(uid: already_matched_uid).where(state: 'TN').pluck(:lic_num, :lname)
+    match = (customer & master)
+    lic = [].uniq
+
+    match.each do |a,b|
+      lic.push(a)
+    end
+
+    EmpireMember.where(state: 'TN').where(lic_num: lic).each do |i|
+      master = EmpireMasterTnList.find_by(lic: i.lic_num)
+      if master.present?
+        EmpireMasterTnMatch.create(
+          st: "TN",
+          lid: master.lid,
+          list: master.list,
+          exp: master.exp_date,
+          lic: master.lic,
+          uid: i.uid,
+          lname: master.lname,
+          search_date: Time.now,
+        ).save
+      end
+    end
+
+    total = EmpireMember.where(state: 'TN').count
+    matched = EmpireMasterTnMatch.count
+    EmpireState.where(st: 'TN').update_all customers: total, matched_customers: matched
+
+    redirect_to list_data_hp_empire_states_path(), notice: "TN Update Done"
+    # redirect_to empire_master_ny_matches_path(), notice: "Update Done"
+  end
+
   # GET /empire_master_tn_matches/1 or /empire_master_tn_matches/1.json
   def show
   end

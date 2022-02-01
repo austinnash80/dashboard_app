@@ -17,6 +17,8 @@
 <% end %>
 
 <p><%= link_to 'Export List (csv)', empire_master_nj_lists_path('csv'), class: 'btn btn-sm btn-secondary text-light mt-2' %></p>
+<br>
+<p><small><strong>Notes:</strong> LIC must be 7 numbers. <%= link_to 'Run', empire_master_nj_lists_path(run: 'lic_fix'), class: 'btn btn-xs btn-outline-secondary' %>  leading '0' fix.</small></p>
 
 <table class="table table-striped">
   <thead>

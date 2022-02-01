@@ -15,6 +15,32 @@ class EmpireMasterNcListsController < ApplicationController
       format.html
       format.csv { send_data @empire_master_nc_lists.to_csv, filename: "Empire_Master_NC_List-#{Date.today}.csv" }
     end
+
+    if params['run'] == 'lic_fix'
+      lic_fix
+    end
+  end
+
+  def lic_fix
+
+    @empire_master_nc_lists.all.each do |i|
+      if i.lic.present? && i.lic.length != 7
+        if i.lic.length == 1
+          EmpireMasterNcList.where(id: i.id).update_all lic: '000000' + i.lic
+        elsif i.lic.length == 2
+          EmpireMasterNcList.where(id: i.id).update_all lic: '00000' + i.lic
+        elsif i.lic.length == 3
+          EmpireMasterNcList.where(id: i.id).update_all lic: '0000' + i.lic
+        elsif i.lic.length == 4
+          EmpireMasterNcList.where(id: i.id).update_all lic: '000' + i.lic
+        elsif i.lic.length == 5
+          EmpireMasterNcList.where(id: i.id).update_all lic: '00' + i.lic
+        elsif i.lic.length == 6
+          EmpireMasterNcList.where(id: i.id).update_all lic: '0' + i.lic
+        end
+      end
+    end
+
   end
 
   # GET /empire_master_nc_lists/1 or /empire_master_nc_lists/1.json
@@ -60,6 +86,11 @@ class EmpireMasterNcListsController < ApplicationController
 
   def import #Uploading CSV function
     EmpireMasterNcList.my_import(params[:file])
+    list = EmpireMasterNcList.first(1).pluck(:list)
+      y = list.join[2,4]
+      m = list.join[6,2]
+      d = list.join[8,2]
+    EmpireState.where(st: 'NC').update_all list_size: EmpireMasterNcList.count, list_date: y+'-'+m+"-"+d
     redirect_to empire_master_nc_lists_path, notice: "Upload Complete"
   end
 

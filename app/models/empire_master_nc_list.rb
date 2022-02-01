@@ -7,8 +7,8 @@ class EmpireMasterNcList < ApplicationRecord
       if batch.size >= batch_size
         EmpireMasterNcList.import batch
           batch = []
+      end
     end
-  end
     EmpireMasterNcList.import batch
   end
 

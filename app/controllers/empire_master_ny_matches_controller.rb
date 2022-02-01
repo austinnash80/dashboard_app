@@ -8,6 +8,7 @@ class EmpireMasterNyMatchesController < ApplicationController
     # DELETE ALL
     if params['remove_all'] == 'yes' && params['confirm'] == 'yes'
       EmpireMasterNyMatch.delete_all
+      EmpireState.where(st: 'NY').update_all matched_customers: 0
       redirect_to empire_master_ny_matches_path(), notice: 'Records Deleted'
     end
 
@@ -57,8 +58,8 @@ class EmpireMasterNyMatchesController < ApplicationController
     matched = EmpireMasterNyMatch.count
     EmpireState.where(st: 'NY').update_all customers: total, matched_customers: matched
 
-    # redirect_to list_data_hp_empire_states_path(), notice: "CA Update Done"
-    redirect_to empire_master_ny_matches_path(), notice: "Update Done"
+    redirect_to list_data_hp_empire_states_path(), notice: "NY Update Done"
+    # redirect_to empire_master_ny_matches_path(), notice: "Update Done"
   end
 
   # GET /empire_master_ny_matches/1 or /empire_master_ny_matches/1.json

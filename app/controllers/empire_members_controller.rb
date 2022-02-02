@@ -33,15 +33,17 @@ class EmpireMembersController < ApplicationController
         member = EmpireMember.find_by(uid: i.uid)
         EmpireMember.where(uid: i.uid).update_all state: i.lic_state, last_purchase: i.purchase, lic_num: i.lic_num, email: i.email, purchases: (member.purchases + 1)
         # FIX LIC NUMBER FORMAT 8 DIGITS FOR CA
-        if member.state == 'CA' && member.lic_num.present? && member.lic_num.length =! 8
-          if member.lic_num.length == 4
-            EmpireMember.where(id: member.id).update_all lic_num: '0000' + member.lic_num
-          elsif member.lic_num.length == 5
-            EmpireMember.where(id: member.id).update_all lic_num: '000' + member.lic_num
-          elsif member.lic_num.length == 6
-            EmpireMember.where(id: member.id).update_all lic_num: '00' + member.lic_num
-          elsif member.lic_num.length == 7
-            EmpireMember.where(id: member.id).update_all lic_num: '0' + member.lic_num
+        unless member.lic_num.blank?
+          if member.state == 'CA' && member.lic_num.length =! 8
+            if member.lic_num.length == 4
+              EmpireMember.where(id: member.id).update_all lic_num: '0000' + member.lic_num
+            elsif member.lic_num.length == 5
+              EmpireMember.where(id: member.id).update_all lic_num: '000' + member.lic_num
+            elsif member.lic_num.length == 6
+              EmpireMember.where(id: member.id).update_all lic_num: '00' + member.lic_num
+            elsif member.lic_num.length == 7
+              EmpireMember.where(id: member.id).update_all lic_num: '0' + member.lic_num
+            end
           end
         end # END LIC NUMBER FORMAT
         if member.lname.present? ## LAST NAME FIX

@@ -53,7 +53,7 @@
   </thead>
 
   <tbody>
-    <% @empire_master_nm_lists.each do |empire_master_nm_list| %>
+    <% @empire_master_nm_lists.limit(250).each do |empire_master_nm_list| %>
       <tr>
         <td><%= empire_master_nm_list.lid %></td>
         <td><%= empire_master_nm_list.list %></td>

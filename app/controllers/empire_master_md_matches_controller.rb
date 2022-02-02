@@ -22,6 +22,48 @@ class EmpireMasterMdMatchesController < ApplicationController
     end
   end
 
+  def run
+
+    already_matched_uid = EmpireMasterMdMatch.pluck(:uid)
+    master = EmpireMasterMdList.pluck(:lic, :lname)
+    customer = EmpireMember.where.not(uid: already_matched_uid).where(state: 'MD').pluck(:lic_num, :lname)
+    match = (customer & master)
+    lic = [].uniq
+
+    match.each do |a,b|
+      lic.push(a)
+    end
+
+    EmpireMember.where(state: 'MD').where(lic_num: lic).each do |i|
+      master = EmpireMasterMdList.find_by(lic: i.lic_num)
+      if master.present?
+        EmpireMasterMdMatch.create(
+          st: "MD",
+          lid: master.lid,
+          list: master.list,
+          exp: master.exp_date,
+          lic: master.lic,
+          uid: i.uid,
+          lname: master.lname,
+          search_date: Time.now,
+        ).save
+      end
+    end
+
+    total = EmpireMember.where(state: 'MD').count
+    matched = EmpireMasterMdMatch.count
+    EmpireState.where(st: 'MD').update_all customers: total, matched_customers: matched
+
+    # redirect_to list_data_hp_empire_states_path(), notice: "CA Update Done"
+    if params['route'] == 'hp'
+      redirect_to list_data_hp_empire_states_path(), notice: "MD Update Done"
+    else
+      redirect_to empire_master_ga_matches_path(), notice: "Update Done"
+    end
+  end
+
+
+
   # GET /empire_master_md_matches/1 or /empire_master_md_matches/1.json
   def show
   end

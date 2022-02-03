@@ -1,7 +1,7 @@
 
-<p><%= link_to 'Temp Fix LIC', list_data_hp_empire_states_path(temp: 'lic_fix'), class: 'btn btn-sm btn-outline-success' %></p>
-<p><%= link_to 'Temp Fix Upcase', list_data_hp_empire_states_path(temp: 'upcase_fix'), class: 'btn btn-sm btn-outline-success' %></p>
-<p><%= link_to 'Temp Fix Leading Zero', list_data_hp_empire_states_path(temp: 'leading_zero_fix'), class: 'btn btn-sm btn-outline-success' %></p>
+<!-- <p><%#= link_to 'Temp Fix LIC', list_data_hp_empire_states_path(temp: 'lic_fix'), class: 'btn btn-sm btn-outline-success' %></p> -->
+<!-- <p><%#= link_to 'Temp Fix Upcase', list_data_hp_empire_states_path(temp: 'upcase_fix'), class: 'btn btn-sm btn-outline-success' %></p> -->
+<!-- <p><%#= link_to 'Temp Fix Leading Zero', list_data_hp_empire_states_path(temp: 'leading_zero_fix'), class: 'btn btn-sm btn-outline-success' %></p> -->
 
 <h1 class="text-center">Empire List Data and Matching</h1>
 <p class="text-center"><%= link_to 'Empire States Page', empire_states_path(), class: 'btn btn-outline-primary' %></p>
@@ -13,11 +13,13 @@
   <thead>
     <tr class="bg-secondary bg-gradient text-light">
       <th>State</th>
-      <th>Action</th>
-      <th>Matched</th>
-      <th>Customers</th>
-      <th>Non Matched</th>
-      <th>List Size</th>
+      <th class="text-center">Action</th>
+      <th class="text-center">Matched</th>
+      <th class="text-center">Customers</th>
+      <th class="text-center">Expired</th>
+      <th class="text-center">Other</th>
+      <th class="text-center">Non Matched</th>
+      <th class="text-center">List Size</th>
       <th>List Date</th>
       <th>% Matched</th>
       <th>Market Share</th>
@@ -38,9 +40,10 @@
         <% else %> <td> </td><% end %>
         <!-- <td><%#= empire_state.matched_customers.present? ? number_with_delimiter(empire_state.matched_customers) : '' %></td> -->
         <% if empire_state.customers.present? %><td><%= link_to number_with_delimiter(empire_state.customers), empire_members_path(st: empire_state.st ), class: 'btn btn-sm btn-outline-secondary w100' %></td><% else %> <td> </td><% end %>
-        <% if empire_state.customers.present? %><td><%= link_to number_with_delimiter(empire_state.customers - empire_state.matched_customers), empire_members_path(st: empire_state.st, type: 'no_match' ), class: 'btn btn-sm btn-outline-secondary w100' %></td><% else %> <td> </td><% end %>
-
-        <% if empire_state.list_size.present? %><td><%= link_to number_with_delimiter(empire_state.list_size), send("empire_master_#{empire_state.st.downcase}_lists_path"), class: 'btn btn-sm btn-outline-secondary w150' %></td><% else %> <td> </td><% end %>
+        <% if empire_state.lic_expired.present? %><td><%= link_to number_with_delimiter(empire_state.lic_expired), empire_members_path(st: empire_state.st, type: 'expired' ), class: 'btn btn-sm btn-outline-secondary w100' %></td><% else %> <td> </td><% end %>
+        <% if empire_state.lic_other.present? %><td><%= link_to number_with_delimiter(empire_state.lic_other), empire_members_path(st: empire_state.st, type: 'other' ), class: 'btn btn-sm btn-outline-secondary w100' %></td><% else %> <td> </td><% end %>
+        <% if empire_state.customers.present? && empire_state.lic_expired.present? && empire_state.lic_other.present? %><td><%= link_to number_with_delimiter(empire_state.customers - empire_state.matched_customers - empire_state.lic_expired - empire_state.lic_other), empire_members_path(st: empire_state.st, type: 'no_match' ), class: 'btn btn-sm btn-outline-secondary w100' %></td><% else %> <td> </td><% end %>
+        <% if empire_state.list_size.present? %><td><%= link_to number_with_delimiter(empire_state.list_size), send("empire_master_#{empire_state.st.downcase}_lists_path"), class: 'btn btn-sm btn-outline-secondary w100' %></td><% else %> <td> </td><% end %>
         <td><%= empire_state.list_date %></td>
         <td><%= empire_state.matched_customers.present? && empire_state.customers.present? ? number_to_percentage((empire_state.matched_customers.to_f / empire_state.customers.to_f)*100, precision: 0) : ''%></td>
         <td><%= empire_state.matched_customers.present? && empire_state.list_size.present? ? number_to_percentage((empire_state.matched_customers.to_f / empire_state.list_size.to_f)*100, precision: 1) : ''%></td>

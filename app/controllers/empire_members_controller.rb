@@ -16,6 +16,22 @@ class EmpireMembersController < ApplicationController
       format.html
       format.csv { send_data @empire_members.to_csv, filename: "Empire_Members-#{Date.today}.csv" }
     end
+
+    ## update the LIST DATA HP When click on Expired/other
+    if params['type'] == 'expired'
+      expired = EmpireMember.where(state: params['st']).where(lic_expired: true).count
+      if expired.blank?
+        expired = 0
+      end
+      EmpireState.where(st:  params['st']).update_all lic_expired: expired
+    elsif params['type'] == 'other'
+      other = EmpireMember.where(state: params['st']).where(lic_not_found: true).or(EmpireMember.where(state: params['st']).where(lic_not_in_master: true)).count
+      if other.blank?
+        other = 0
+      end
+      EmpireState.where(st:  params['st']).update_all lic_other: other
+    end
+
   end
 
   def run_update #Adding new Members
@@ -23,7 +39,7 @@ class EmpireMembersController < ApplicationController
     uid = EmpireMember.pluck(:uid) #So no duplicates created (alredy in the table)
 
       EmpireCustomer.where('e_id > ?', @e_id).where.not(uid: uid).order(id: :ASC).all.each do |i|
-        EmpireMember.create(uid: i.uid, lname: i.lname, first_purchase: i.purchase, last_purchase: i.purchase, purchases: 0).save
+        EmpireMember.create(uid: i.uid, lname: i.lname, first_purchase: i.purchase, last_purchase: i.purchase, purchases: 0, lic_expired: false, lic_edit: false, lic_not_found: false, lic_not_in_master: false).save
       end
       redirect_to empire_members_path(), notice: 'New Member Update Complete'
   end
@@ -137,6 +153,6 @@ class EmpireMembersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def empire_member_params
-      params.require(:empire_member).permit(:uid, :lname, :first_purchase, :last_purchase, :state, :purchases, :email_unsubscribe, :email, :lic_num)
+      params.require(:empire_member).permit(:uid, :lname, :first_purchase, :last_purchase, :state, :purchases, :email_unsubscribe, :email, :lic_num, :fname, :lic_expired, :lic_not_found, :lic_edit, :lic_notes, :lic_not_in_master)
     end
 end

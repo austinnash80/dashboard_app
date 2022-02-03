@@ -32,7 +32,7 @@
     <% EmpireCustomer.where(uid: member.uid).order(purchase: :desc).all.each do |i| %>
       <tr>
         <!-- <td><%#= link_to 'No Match', empire_manual_matches_path(match: 'no', uid: member.uid), class: 'btn btn-xs btn-outline-danger w100' %></td> -->
-        <td><%= link_to 'Edit', edit_empire_member_path(id: member.id), class: 'btn btn-xs btn-outline-info w100' %></td>
+        <td><%= link_to 'Edit', edit_empire_member_path(id: member.id, form: 'lic_edit'), class: 'btn btn-xs btn-outline-success w100' %></td>
         <td><a target="_blank" href="https://www.empirelearning.com/admin/user-profile?u=<%= i.uid %>" class="btn btn-xs btn-outline-secondary w100"><%= i.uid %></a></td>
         <td><%= i.lic_state %></td>
         <td><%= member.lic_num %></td>
@@ -45,9 +45,17 @@
         <td><%= i.zip %></td>
         <td><%= i.purchase %></td>
       </tr>
+      <tr>
+        <% if i.lic_state == 'CA' %><td><a href="https://www2.dre.ca.gov/PublicASP/pplinfo.asp?start=1" class="btn btn-xs btn-outline-secondary" target="_blank">CA License Lookup</a></td><% end %>
+        <% if i.lic_state == 'GA' %><td><a href="https://ata.grec.state.ga.us/Account/Search" class="btn btn-xs btn-outline-secondary" target="_blank">GA License Lookup</a></td><% end %>
+        <% if i.lic_state == 'TN' %><td><a href="https://verify.tn.gov/" class="btn btn-xs btn-outline-secondary" target="_blank">TN License Lookup</a></td><% end %>
+        <% if i.lic_state == 'UT' %><td><a href="https://secure.utah.gov/rer/relv/search.html" class="btn btn-xs btn-outline-secondary" target="_blank">UT License Lookup</a></td><% end %>
+        <% if i.lic_state == 'WA' %><td><a href="https://professions.dol.wa.gov/s/license-lookup" class="btn btn-xs btn-outline-secondary" target="_blank">WA License Lookup</a></td><% end %>
+      </tr>
     <% end %>
   </tbody>
 </table>
+
 <br>
 <div class="w300"><input class="form-control" id="myInput" type="text" placeholder="Filter Table"></div>
 
@@ -55,7 +63,7 @@
   <caption class="caption-top">Records: <%= table.count %></caption>
   <thead>
     <tr class="bg-secondary bg-gradient text-light">
-      <th></th>
+      <!-- <th></th> -->
       <th>LID</th>
       <th>List</th>
       <th>Lic State</th>
@@ -73,7 +81,7 @@
   <tbody id="myTable">
     <% table.all.each do |i| %>
       <tr>
-        <td><%= link_to 'Match', empire_manual_matches_path(match: 'yes', lic_state: i.lic_state, list: i.list, lid: i.lid, lname: i.lname, lic: i.lic, uid: member.uid), class: 'btn btn-xs btn-outline-success w100' %></td>
+        <!-- <td><%= link_to 'Match', empire_manual_matches_path(match: 'yes', lic_state: i.lic_state, list: i.list, lid: i.lid, lname: i.lname, lic: i.lic, uid: member.uid), class: 'btn btn-xs btn-outline-success w100' %></td> -->
         <td><%= i.lid %></td>
         <td><%= i.list %></td>
         <td><%= i.lic_state %></td>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_02_02_221935) do
+ActiveRecord::Schema.define(version: 2022_02_03_223040) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -942,6 +942,12 @@ ActiveRecord::Schema.define(version: 2022_02_02_221935) do
     t.boolean "email_unsubscribe"
     t.string "email"
     t.string "lic_num"
+    t.string "fname"
+    t.boolean "lic_expired"
+    t.boolean "lic_not_found"
+    t.boolean "lic_edit"
+    t.text "lic_notes"
+    t.boolean "lic_not_in_master"
     t.index ["uid"], name: "index_empire_members_on_uid", unique: true
   end
 
@@ -982,6 +988,8 @@ ActiveRecord::Schema.define(version: 2022_02_02_221935) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "link"
+    t.integer "lic_expired"
+    t.integer "lic_other"
   end
 
   create_table "id_number_storages", force: :cascade do |t|

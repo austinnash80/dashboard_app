@@ -41,8 +41,10 @@ class EmpireMasterGaMatchesController < ApplicationController
     end
 
     total = EmpireMember.where(state: 'GA').count
+    expired = EmpireMember.where(state: 'GA').where(lic_expired: true).count
+    other = EmpireMember.where(state: 'GA').where(lic_not_found: true).count + EmpireMember.where(state: 'GA').where(lic_not_in_master: true).count
     matched = EmpireMasterGaMatch.count
-    EmpireState.where(st: 'GA').update_all customers: total, matched_customers: matched
+    EmpireState.where(st: 'GA').update_all customers: total, matched_customers: matched, lic_expired: expired, lic_other: other
 
     # redirect_to list_data_hp_empire_states_path(), notice: "CA Update Done"
     if params['route'] == 'hp'

@@ -2,7 +2,35 @@
 <%= simple_form_for(@empire_member) do |f| %>
   <%= f.error_notification %>
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
-
+  <% if params['form'] == 'lic_edit' %>
+  <div class="form-inputs">
+    <div class="row m-2">
+      <div class="col-lg-4"><%= f.input :uid %></div>
+      <div class="col-lg-4"><%= f.input :fname %></div>
+      <div class="col-lg-4"><%= f.input :lname %></div>
+    </div>
+      <div class="row m-2">
+        <div class="col-lg-12"><%= f.input :email %></div>
+      </div>
+      <div class="row m-2">
+        <div class="col-lg-8"><%= f.input :lic_num %></div>
+        <div class="col-lg-4"><%= f.input :state %></div>
+      </div>
+      <div class="row m-2">
+        <%= f.input :lic_edit, label: 'Lic Num Edited' %>
+        <%= f.input :lic_expired, label: 'Expired' %>
+        <%= f.input :lic_not_found, label: 'Not Found' %>
+        <%= f.input :lic_not_in_master, label: 'Not In Master List (Active in State Lookup)' %>
+      </div>
+      <div class="row m-2">
+        <div class="col-lg-12"><%= f.input :lic_notes %></div>
+      </div>
+    </div>
+    <div class="form-actions m-4">
+      <%= f.button :submit, 'Submit', class: 'btn btn-outline-primary w100' %>
+    </div>
+    <br>
+  <% else %>
   <div class="form-inputs">
     <div class="row m-2">
       <div class="col-lg-6"><%= f.input :uid %></div>
@@ -31,5 +59,6 @@
   <div class="form-actions m-3">
     <%= f.button :submit, 'Submit', class: 'btn btn-primary btn-gradiant w100' %>
   </div>
-<br>
+  <br>
+  <% end %>
 <% end %>

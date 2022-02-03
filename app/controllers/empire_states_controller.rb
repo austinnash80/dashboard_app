@@ -616,6 +616,6 @@ class EmpireStatesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def empire_state_params
-      params.require(:empire_state).permit(:state, :st, :customers, :matched_customers, :list_size, :list_date, :list_cost, :list_notes, :exp_type, :renewal_cycle, :next_exp, :exp_notes, :link)
+      params.require(:empire_state).permit(:state, :st, :customers, :matched_customers, :list_size, :list_date, :list_cost, :list_notes, :exp_type, :renewal_cycle, :next_exp, :exp_notes, :link, :lic_expired, :lic_other)
     end
 end

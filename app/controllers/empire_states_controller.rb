@@ -27,6 +27,52 @@ class EmpireStatesController < ApplicationController
 
     auto_matching
 
+  ## LIC FIX QUERRIES
+    if params['temp'] == 'lic_fix'
+      EmpireCustomer.order(purchase: :asc).all.each do |customer|
+        EmpireMember.where(uid: customer.uid).update_all lic_num: customer.lic_num
+      end
+      redirect_to list_data_hp_empire_states_path(), notice: 'Lic Fix Done'
+    end
+    if params['temp'] == 'upcase_fix'
+      EmpireMember.all.each do |i|
+        if i.lic_num.present?
+          EmpireMember.where(id: i.id).update_all lic_num: i.lic_num.upcase
+        end
+      end
+      redirect_to list_data_hp_empire_states_path(), notice: 'Upcase Fix Done'
+    end
+    if params['temp'] == 'leading_zero_fix'
+      EmpireMember.all.each do |i|
+        member = EmpireMember.find_by(id: i.id)
+        unless i.lic_num.blank?
+          if i.state == 'CA' && i.lic_num.length != 8
+            if member.lic_num.length == 4
+              EmpireMember.where(id: member.id).update_all lic_num: '0000' + member.lic_num
+            elsif member.lic_num.length == 5
+              EmpireMember.where(id: member.id).update_all lic_num: '000' + member.lic_num
+            elsif member.lic_num.length == 6
+              EmpireMember.where(id: member.id).update_all lic_num: '00' + member.lic_num
+            elsif member.lic_num.length == 7
+              EmpireMember.where(id: member.id).update_all lic_num: '0' + member.lic_num
+            end
+          elsif i.state == 'NJ' && i.lic_num != 7
+            if i.lic_num.length == 3
+              EmpireMember.where(id: i.id).update_all lic_num: '0000' + i.lic_num
+            elsif i.lic_num.length == 4
+              EmpireMember.where(id: i.id).update_all lic_num: '000' + i.lic_num
+            elsif i.lic_num.length == 5
+              EmpireMember.where(id: i.id).update_all lic_num: '00' + i.lic_num
+            elsif i.lic_num.length == 6
+              EmpireMember.where(id: i.id).update_all lic_num: '0' + i.lic_num
+            end
+          end
+        end
+      end
+      redirect_to list_data_hp_empire_states_path(), notice: 'Leading Zero Fix Done'
+    end
+  ## END LIC FIX QUERRIES
+
   end
 
   def matching

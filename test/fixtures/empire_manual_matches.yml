@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  match: false
+  uid: 1
+  lid: 1
+  list: MyString
+  lic: MyString
+  lname: MyString
+
+two:
+  match: false
+  uid: 1
+  lid: 1
+  list: MyString
+  lic: MyString
+  lname: MyString

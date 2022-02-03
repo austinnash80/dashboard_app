@@ -1,0 +1,110 @@
+<h1 class="text-center">Empire Manual Matching</h1>
+<% member = EmpireMember.find_by(uid: params['uid']) %>
+<%# purchase = EmpireCustomer.find_by(uid: params['uid']) %>
+<% table = "EmpireMaster#{member.state.titlecase}List".constantize.where(lname: params['lname']) %>
+
+<div class="m-5">
+
+  <div class="w300">
+    <%= text_field_tag "id", '', class: "lname_field form-control", value: params['lname'] %>
+    <br>
+    <%= link_to 'Edit Last Name', matching_empire_members_path(uid: params['uid']), class: 'search_link btn btn-sm btn-outline-primary w200' %>
+  </div>
+<br>
+<table class="table table-outline table-striped">
+  <thead>
+    <tr class="bg-secondary bg-gradient text-light">
+      <th></th>
+      <th>UID</th>
+      <th>State</th>
+      <th>Lic Num</th>
+      <th>Fname</th>
+      <th>Lname</th>
+      <th>Street 1</th>
+      <th>Street 2</th>
+      <th>City</th>
+      <th>State</th>
+      <th>Zip</th>
+      <th>Purchase Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% EmpireCustomer.where(uid: member.uid).order(purchase: :desc).all.each do |i| %>
+      <tr>
+        <!-- <td><%#= link_to 'No Match', empire_manual_matches_path(match: 'no', uid: member.uid), class: 'btn btn-xs btn-outline-danger w100' %></td> -->
+        <td><%= link_to 'Edit', edit_empire_member_path(id: member.id), class: 'btn btn-xs btn-outline-info w100' %></td>
+        <td><a target="_blank" href="https://www.empirelearning.com/admin/user-profile?u=<%= i.uid %>" class="btn btn-xs btn-outline-secondary w100"><%= i.uid %></a></td>
+        <td><%= i.lic_state %></td>
+        <td><%= member.lic_num %></td>
+        <td><%= i.fname.present? ? i.fname.upcase : '' %></td>
+        <td><%= i.lname.present? ? i.lname.upcase : '' %></td>
+        <td><%= i.street_1.present? ? i.street_1.upcase : '' %></td>
+        <td><%= i.street_2.present? ? i.street_2.upcase : '' %></td>
+        <td><%= i.city.present? ? i.city.upcase : '' %></td>
+        <td><%= i.state %></td>
+        <td><%= i.zip %></td>
+        <td><%= i.purchase %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<br>
+<div class="w300"><input class="form-control" id="myInput" type="text" placeholder="Filter Table"></div>
+
+<table class="table table-outline table-striped">
+  <caption class="caption-top">Records: <%= table.count %></caption>
+  <thead>
+    <tr class="bg-secondary bg-gradient text-light">
+      <th></th>
+      <th>LID</th>
+      <th>List</th>
+      <th>Lic State</th>
+      <th>Lic</th>
+      <th>Fname</th>
+      <th>mi</th>
+      <th>Lname</th>
+      <th>Street 1</th>
+      <th>Street 2</th>
+      <th>City</th>
+      <th>State</th>
+      <th>Zip</th>
+    </tr>
+  </thead>
+  <tbody id="myTable">
+    <% table.all.each do |i| %>
+      <tr>
+        <td><%= link_to 'Match', empire_manual_matches_path(match: 'yes', lic_state: i.lic_state, list: i.list, lid: i.lid, lname: i.lname, lic: i.lic, uid: member.uid), class: 'btn btn-xs btn-outline-success w100' %></td>
+        <td><%= i.lid %></td>
+        <td><%= i.list %></td>
+        <td><%= i.lic_state %></td>
+        <td><%= i.lic %></td>
+        <td><%= i.fname %></td>
+        <td><%= i.mi %></td>
+        <td><%= i.lname %></td>
+        <td><%= i.add %></td>
+        <td><%= i.add2 %></td>
+        <td><%= i.city %></td>
+        <td><%= i.st %></td>
+        <td><%= i.zip %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+</div>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    $("#myInput").on("keyup", function() {
+      var value = $(this).val().toLowerCase();
+      $("#myTable tr").filter(function() {
+        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+      });
+    });
+  });
+
+  $(".search_link").click(function() {
+    $(this).attr("href", function() {
+      return this.href + "&lname=" + $('.lname_field').val().toUpperCase();
+    });
+  });
+  </script>

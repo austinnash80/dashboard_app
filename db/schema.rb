@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_02_02_002841) do
+ActiveRecord::Schema.define(version: 2022_02_02_221935) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -174,6 +174,18 @@ ActiveRecord::Schema.define(version: 2022_02_02_002841) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["e_id"], name: "index_empire_customers_on_e_id", unique: true
+  end
+
+  create_table "empire_manual_matches", force: :cascade do |t|
+    t.boolean "match"
+    t.integer "uid"
+    t.integer "lid"
+    t.string "list"
+    t.string "lic"
+    t.string "lname"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "lic_state"
   end
 
   create_table "empire_master_ca_lists", force: :cascade do |t|

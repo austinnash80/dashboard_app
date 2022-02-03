@@ -24,21 +24,21 @@ class EmpireMasterCaMatchesController < ApplicationController
   end
 
   def run
-
-    # lic_fix_member
-    # lic_fix_master
+      ## MATCH BY LNAME AND LIC
+      # already_matched_uid = EmpireMasterCaMatch.pluck(:uid)
+      # lic = EmpireMember.where(state: 'CA').where.not(uid: already_matched_uid).pluck(:lic_num)
+      # master = EmpireMasterCaList.pluck(:lic, :lname)
+      # customer = EmpireMember.where.not(uid: already_matched_uid).where(state: 'CA').pluck(:lic_num, :lname)
+      # match = (customer & master)
+      # lic = [].uniq
+      #
+      # match.each do |a,b|
+      #   lic.push(a)
+      # end
+      ## END DOUBLE MATCH
 
     already_matched_uid = EmpireMasterCaMatch.pluck(:uid)
-    master = EmpireMasterCaList.pluck(:lic, :lname)
-    customer = EmpireMember.where.not(uid: already_matched_uid).where(state: 'CA').pluck(:lic_num, :lname)
-    match = (customer & master)
-    lic = [].uniq
-
-    match.each do |a,b|
-      lic.push(a)
-    end
-
-    EmpireMember.where(state: 'CA').where(lic_num: lic).each do |i|
+    EmpireMember.where(state: 'CA').where.not(uid: already_matched_uid).each do |i|
       master = EmpireMasterCaList.find_by(lic: i.lic_num)
       if master.present?
         EmpireMasterCaMatch.create(

@@ -24,20 +24,8 @@ class EmpireMasterNjMatchesController < ApplicationController
   end
 
   def run
-
-    lic_fix_member
-
     already_matched_uid = EmpireMasterNjMatch.pluck(:uid)
-    master = EmpireMasterNjList.pluck(:lic, :lname)
-    customer = EmpireMember.where.not(uid: already_matched_uid).where(state: 'NJ').pluck(:lic_num, :lname)
-    match = (customer & master)
-    lic = [].uniq
-
-    match.each do |a,b|
-      lic.push(a)
-    end
-
-    EmpireMember.where(state: 'NJ').where(lic_num: lic).each do |i|
+    EmpireMember.where(state: 'NJ').where.not(uid: already_matched_uid).each do |i|
       master = EmpireMasterNjList.find_by(lic: i.lic_num)
       if master.present?
         EmpireMasterNjMatch.create(
@@ -59,28 +47,6 @@ class EmpireMasterNjMatchesController < ApplicationController
 
     redirect_to list_data_hp_empire_states_path(), notice: "NJ Update Done"
     # redirect_to empire_master_nj_matches_path(), notice: "Update Done"
-  end
-
-  def lic_fix_member
-
-    EmpireMember.where(state: 'NJ').all.each do |i|
-      if i.lic_num.present? && i.lic_num.length != 7
-        if i.lic_num.length == 1
-          EmpireMember.where(id: i.id).update_all lic_num: '000000' + i.lic_num
-        elsif i.lic_num.length == 2
-          EmpireMember.where(id: i.id).update_all lic_num: '00000' + i.lic_num
-        elsif i.lic_num.length == 3
-          EmpireMember.where(id: i.id).update_all lic_num: '0000' + i.lic_num
-        elsif i.lic_num.length == 4
-          EmpireMember.where(id: i.id).update_all lic_num: '000' + i.lic_num
-        elsif i.lic_num.length == 5
-          EmpireMember.where(id: i.id).update_all lic_num: '00' + i.lic_num
-        elsif i.lic_num.length == 6
-          EmpireMember.where(id: i.id).update_all lic_num: '0' + i.lic_num
-        end
-      end
-    end
-
   end
 
   # GET /empire_master_nj_matches/1 or /empire_master_nj_matches/1.json

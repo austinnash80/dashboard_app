@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :empire_manual_matches do collection {post :import} end
   resources :empire_master_wa_matches do collection {post :import} end
   resources :empire_master_va_matches do collection {post :import} end
   resources :empire_master_ut_matches do collection {post :import} end
@@ -83,6 +84,7 @@ Rails.application.routes.draw do
     collection do
       get 'run_update'
       get 'run_update_2'
+      get 'matching'
     end
   end
   resources :empire_master_ny_lists do collection {post :import} end

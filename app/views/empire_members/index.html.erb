@@ -1,5 +1,6 @@
 
 <h1 class="text-center"><%= params['st'] %> Empire Members</h1>
+<% if params['type'] == 'no_match' %><h4 class="bold text-center">Non Matched Members</h4><% end %>
 <% unless params['st'].present? %>
   <div class="text-center">
     <div class="btn-group" role="group">
@@ -44,7 +45,12 @@
       <% empire_member = EmpireMember.where(lname: params['lname'].titlecase).all %>
     <% end %>
   <% elsif params['st'].present? %>
-    <% empire_member = EmpireMember.where(state: params['st']).all %>
+    <% if params['type'] == 'no_match' %>
+      <% match = "EmpireMaster#{params['st'].titlecase}Match".constantize.pluck(:uid) %>
+      <% empire_member = EmpireMember.where(state: params['st']).where.not(uid: match).all %>
+    <% else %>
+      <% empire_member = EmpireMember.where(state: params['st']).all %>
+    <% end %>
   <% else %>
     <% empire_member = EmpireMember.all %>
   <% end %>
@@ -53,6 +59,7 @@
   <thead>
   <caption class="caption-top">Total Records: <%= number_with_delimiter(empire_member.count) %> | Display Limit: 250</caption>
     <tr class="bg-secondary bg-gradient text-light">
+      <% if params['type'] == 'no_match' %><th>Matching</th><% end %>
       <th>Uid</th>
       <th>State</th>
       <th>Lic Num</th>
@@ -69,6 +76,7 @@
   <tbody>
     <% empire_member.order(last_purchase: :DESC).order(first_purchase: :DESC).order(uid: :DESC).limit(250).each do |empire_member| %>
       <tr>
+        <% if params['type'] == 'no_match' %><td><%= link_to 'Search', matching_empire_members_path(uid: empire_member.uid, lname: empire_member.lname), class: 'btn btn-xs btn-outline-success'%></td><% end %>
         <td><a target="_blank" href="https://www.empirelearning.com/admin/user-profile?u=<%= empire_member.uid %>"><%= empire_member.uid %></a></td>
         <td><%= empire_member.state %></td>
         <td><%= empire_member.lic_num %></td>

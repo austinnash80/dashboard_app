@@ -23,21 +23,8 @@ class EmpireMasterScMatchesController < ApplicationController
   end
 
   def run
-
-    # lic_fix_member
-    # lic_fix_master
-
     already_matched_uid = EmpireMasterScMatch.pluck(:uid)
-    master = EmpireMasterScList.pluck(:lic, :lname)
-    customer = EmpireMember.where.not(uid: already_matched_uid).where(state: 'SC').pluck(:lic_num, :lname)
-    match = (customer & master)
-    lic = [].uniq
-
-    match.each do |a,b|
-      lic.push(a)
-    end
-
-    EmpireMember.where(state: 'SC').where(lic_num: lic).each do |i|
+    EmpireMember.where(state: 'SC').where.not(uid: already_matched_uid).each do |i|
       master = EmpireMasterScList.find_by(lic: i.lic_num)
       if master.present?
         EmpireMasterScMatch.create(

@@ -38,5 +38,7 @@
   <%= @empire_member.email_unsubscribe %>
 </p>
 
+<p><%= link_to "#{@empire_member.state} Unmatched", empire_members_path(type: 'no_match', st: @empire_member.state), class: 'btn btn-sm btn-outline-primary w200' %> <%= link_to 'Empire List Data', list_data_hp_empire_states_path(), class: 'btn btn-sm btn-outline-primary w200' %></p>
+
 <%= link_to 'Edit', edit_empire_member_path(@empire_member) %> |
 <%= link_to 'Back', empire_members_path %>

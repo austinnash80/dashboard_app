@@ -38,7 +38,7 @@
   </thead>
 
   <tbody>
-    <% @empire_master_nm_matches.limit(250).each do |empire_master_nm_match| %>
+    <% @empire_master_nm_matches.order(search_date: :desc).limit(250).each do |empire_master_nm_match| %>
       <tr>
         <td><%= empire_master_nm_match.st %></td>
         <td><%= empire_master_nm_match.lid %></td>

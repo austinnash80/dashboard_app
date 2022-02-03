@@ -12,6 +12,7 @@
       <th>Action</th>
       <th>Matched</th>
       <th>Customers</th>
+      <th>Non Matched</th>
       <th>List Size</th>
       <th>List Date</th>
       <th>% Matched</th>
@@ -33,6 +34,8 @@
         <% else %> <td> </td><% end %>
         <!-- <td><%#= empire_state.matched_customers.present? ? number_with_delimiter(empire_state.matched_customers) : '' %></td> -->
         <% if empire_state.customers.present? %><td><%= link_to number_with_delimiter(empire_state.customers), empire_members_path(st: empire_state.st ), class: 'btn btn-sm btn-outline-secondary w100' %></td><% else %> <td> </td><% end %>
+        <% if empire_state.customers.present? %><td><%= link_to number_with_delimiter(empire_state.customers - empire_state.matched_customers), empire_members_path(st: empire_state.st, type: 'no_match' ), class: 'btn btn-sm btn-outline-secondary w100' %></td><% else %> <td> </td><% end %>
+
         <% if empire_state.list_size.present? %><td><%= link_to number_with_delimiter(empire_state.list_size), send("empire_master_#{empire_state.st.downcase}_lists_path"), class: 'btn btn-sm btn-outline-secondary w150' %></td><% else %> <td> </td><% end %>
         <td><%= empire_state.list_date %></td>
         <td><%= empire_state.matched_customers.present? && empire_state.customers.present? ? number_to_percentage((empire_state.matched_customers.to_f / empire_state.customers.to_f)*100, precision: 0) : ''%></td>
@@ -53,10 +56,11 @@
         <td colspan="1"></td>
         <td><%= number_with_delimiter(matched) %></td>
         <td><%= number_with_delimiter(customers) %></td>
+        <td></td>
         <td><%= number_with_delimiter(list) %></td>
         <td></td>
         <td><%= number_to_percentage((matched.to_f/customers.to_f)*100, precision: 0) %></td>
-        <td><%= number_to_percentage((customers.to_f/list.to_f)*100, precision: 1) %></td>
+        <td><%= number_to_percentage((matched.to_f/list.to_f)*100, precision: 1) %></td>
         <td colspan="8"></td>
       </tr>
   </tbody>

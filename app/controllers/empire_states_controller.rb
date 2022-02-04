@@ -25,9 +25,14 @@ class EmpireStatesController < ApplicationController
   def list_data_hp
     @empire_states = EmpireState.all
 
+## UPDATE THE CUSTOMERS FOR EACH STATE
+    EmpireState.all.each do |i|
+      EmpireState.where(id: i.id).update_all customers: EmpireMember.where(state: i.st).count
+    end
+
     auto_matching
 
-  ## LIC FIX QUERRIES
+  ## TEMP LIC FIX QUERRIES
     if params['temp'] == 'lic_fix'
       EmpireCustomer.order(purchase: :asc).all.each do |customer|
         EmpireMember.where(uid: customer.uid).update_all lic_num: customer.lic_num

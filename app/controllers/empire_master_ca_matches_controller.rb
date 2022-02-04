@@ -8,6 +8,7 @@ class EmpireMasterCaMatchesController < ApplicationController
     # DELETE ALL
     if params['remove_all'] == 'yes' && params['confirm'] == 'yes'
       EmpireMasterCaMatch.delete_all
+      EmpireState.where(st: 'CA').update_all matched_customers: 0
       redirect_to empire_master_ca_matches_path(), notice: 'Records Deleted'
     end
 

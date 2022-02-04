@@ -8,6 +8,7 @@ class EmpireMasterUtMatchesController < ApplicationController
     # DELETE ALL
     if params['remove_all'] == 'yes' && params['confirm'] == 'yes'
       EmpireMasterUtMatch.delete_all
+      EmpireState.where(st: 'UT').update_all matched_customers: 0
       redirect_to empire_master_ut_matches_path(), notice: 'Records Deleted'
     end
 

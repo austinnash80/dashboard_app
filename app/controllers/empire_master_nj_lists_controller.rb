@@ -27,17 +27,17 @@ class EmpireMasterNjListsController < ApplicationController
       unless i.lic.blank?
         if i.lic.length != 7
           if i.lic.length == 1
-            EmpireMasterNJList.where(id: i.id).update_all lic: '000000' + i.lic
+            EmpireMasterNjList.where(id: i.id).update_all lic: '000000' + i.lic
           elsif i.lic.length == 2
-            EmpireMasterNJList.where(id: i.id).update_all lic: '00000' + i.lic
+            EmpireMasterNjList.where(id: i.id).update_all lic: '00000' + i.lic
           elsif i.lic.length == 3
-            EmpireMasterNJList.where(id: i.id).update_all lic: '0000' + i.lic
+            EmpireMasterNjList.where(id: i.id).update_all lic: '0000' + i.lic
           elsif i.lic.length == 4
-            EmpireMasterNJList.where(id: i.id).update_all lic: '000' + i.lic
+            EmpireMasterNjList.where(id: i.id).update_all lic: '000' + i.lic
           elsif i.lic.length == 5
-            EmpireMasterNJList.where(id: i.id).update_all lic: '00' + i.lic
+            EmpireMasterNjList.where(id: i.id).update_all lic: '00' + i.lic
           elsif i.lic.length == 6
-            EmpireMasterNJList.where(id: i.id).update_all lic: '0' + i.lic
+            EmpireMasterNjList.where(id: i.id).update_all lic: '0' + i.lic
           end
         end
       end

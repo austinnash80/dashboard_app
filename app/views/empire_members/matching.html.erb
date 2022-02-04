@@ -45,14 +45,14 @@
         <td><%= i.zip %></td>
         <td><%= i.purchase %></td>
       </tr>
-      <tr>
-        <% if i.lic_state == 'CA' %><td><a href="https://www2.dre.ca.gov/PublicASP/pplinfo.asp?start=1" class="btn btn-xs btn-outline-secondary" target="_blank">CA License Lookup</a></td><% end %>
-        <% if i.lic_state == 'GA' %><td><a href="https://ata.grec.state.ga.us/Account/Search" class="btn btn-xs btn-outline-secondary" target="_blank">GA License Lookup</a></td><% end %>
-        <% if i.lic_state == 'TN' %><td><a href="https://verify.tn.gov/" class="btn btn-xs btn-outline-secondary" target="_blank">TN License Lookup</a></td><% end %>
-        <% if i.lic_state == 'UT' %><td><a href="https://secure.utah.gov/rer/relv/search.html" class="btn btn-xs btn-outline-secondary" target="_blank">UT License Lookup</a></td><% end %>
-        <% if i.lic_state == 'WA' %><td><a href="https://professions.dol.wa.gov/s/license-lookup" class="btn btn-xs btn-outline-secondary" target="_blank">WA License Lookup</a></td><% end %>
-      </tr>
     <% end %>
+    <tr>
+      <% if member.state == 'CA' %><td><a href="https://www2.dre.ca.gov/PublicASP/pplinfo.asp?start=1" class="btn btn-xs btn-outline-secondary" target="_blank">CA License Lookup</a></td><% end %>
+      <% if member.state == 'GA' %><td><a href="https://ata.grec.state.ga.us/Account/Search" class="btn btn-xs btn-outline-secondary" target="_blank">GA License Lookup</a></td><% end %>
+      <% if member.state == 'TN' %><td><a href="https://verify.tn.gov/" class="btn btn-xs btn-outline-secondary" target="_blank">TN License Lookup</a></td><% end %>
+      <% if member.state == 'UT' %><td><a href="https://secure.utah.gov/rer/relv/search.html" class="btn btn-xs btn-outline-secondary" target="_blank">UT License Lookup</a></td><% end %>
+      <% if member.state == 'WA' %><td><a href="https://professions.dol.wa.gov/s/license-lookup" class="btn btn-xs btn-outline-secondary" target="_blank">WA License Lookup</a></td><% end %>
+    </tr>
   </tbody>
 </table>
 

@@ -37,29 +37,41 @@ class EmpireMasterCaMatchesController < ApplicationController
       # end
       ## END DOUBLE MATCH
 
+      # if params['empire_member_id'].present?
+      #   empire_member_id_max = empire_member_id.max
+      # else
+      #   empire_member_id_max = 0
+      # end
+
+
+    # empire_member_id = []
     already_matched_uid = EmpireMasterCaMatch.pluck(:uid)
-    EmpireMember.where(state: 'CA').where.not(uid: already_matched_uid).each do |i|
-      master = EmpireMasterCaList.find_by(lic: i.lic_num)
-      if master.present?
-        EmpireMasterCaMatch.create(
-          st: "CA",
-          lid: master.lid,
-          list: master.list,
-          exp: master.exp_date,
-          lic: master.lic,
-          uid: i.uid,
-          lname: master.lname,
-          search_date: Time.now,
-        ).save
+      EmpireMember.order(id: :asc).where("id > ?", empire_member_id_max).where(state: 'CA').where.not(uid: already_matched_uid).each do |i|
+        master = EmpireMasterCaList.find_by(lic: i.lic_num)
+        if master.present?
+          EmpireMasterCaMatch.create(
+            st: "CA",
+            lid: master.lid,
+            list: master.list,
+            exp: master.exp_date,
+            lic: master.lic,
+            uid: i.uid,
+            lname: master.lname,
+            search_date: Time.now,
+          ).save
+        end
+        # empire_member_id.push(i.id)
+        # if empire_member_id.length > 200
+        #   redirect_to empire_master_ca_matches_path(run: 'yes', route: 'hp', empire_member_id_max: empire_member_id.max), notice: "CA Update Done" and return
+        # end
       end
-    end
 
     total = EmpireMember.where(state: 'CA').count
     matched = EmpireMasterCaMatch.count
     EmpireState.where(st: 'CA').update_all customers: total, matched_customers: matched
 
-    # redirect_to list_data_hp_empire_states_path(), notice: "CA Update Done"
-    redirect_to empire_master_ca_matches_path(), notice: "Update Done"
+    redirect_to list_data_hp_empire_states_path(), notice: "CA Update Done"
+    # redirect_to empire_master_ca_matches_path(), notice: "Update Done"
   end
 
   def lic_fix_member

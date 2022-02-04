@@ -65,9 +65,18 @@
     <% empire_member = EmpireMember.all %>
   <% end %>
 
+  <% lic = [] %>
+  <% empire_member.all.each do |i| %>
+    <% if i.lic_num.blank? %>
+      <% lic.push(0) %>
+    <% else %>
+      <% lic.push(i.lic_num.length) %>
+    <% end %>
+  <% end %>
+
   <table class="table table-striped">
   <thead>
-  <caption class="caption-top">Total Records: <%= number_with_delimiter(empire_member.count) %> | Display Limit: 250</caption>
+  <caption class="caption-top">Total Records: <%= number_with_delimiter(empire_member.count) %> | Display Limit: 250 | LIC Tally: <%= lic.tally %></caption>
     <tr class="bg-secondary bg-gradient text-light">
       <% if params['type'] == 'no_match' %><th colspan="2">Matching</th><% end %>
       <th>Uid</th>

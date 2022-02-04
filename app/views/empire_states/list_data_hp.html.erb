@@ -66,14 +66,19 @@
         <% customers = EmpireState.sum(:customers) %>
         <% matched = EmpireState.sum(:matched_customers) %>
         <% list = EmpireState.sum(:list_size) %>
+        <% lic_expired = EmpireState.sum(:lic_expired) %>
+        <% lic_other = EmpireState.sum(:lic_other) %>
         <td>States: <%= EmpireState.count %></td>
         <td colspan="1"></td>
-        <td><%= number_with_delimiter(matched) %></td>
-        <td><%= number_with_delimiter(customers) %></td>
+        <td class="text-center"><%= number_with_delimiter(matched) %></td>
+        <td class="text-center"><%= number_with_delimiter(customers) %></td>
+        <td class="text-center"><%= number_with_delimiter(lic_expired) %></td>
+        <td class="text-center"><%= number_with_delimiter(lic_other) %></td>
+        <td class="text-center"><%= number_with_delimiter(customers - matched - lic_other - lic_expired) %></td>
+        <td class="text-center"><%= number_with_delimiter(list) %></td>
         <td></td>
-        <td><%= number_with_delimiter(list) %></td>
-        <td></td>
-        <td><%= number_to_percentage((matched.to_f/customers.to_f)*100, precision: 0) %></td>
+        <td><%= number_to_percentage((matched.to_f/customers.to_f)*100, precision: 1) %></td>
+        <td><%= number_to_percentage((lic_expired.to_f/customers.to_f)*100, precision: 1) %></td>
         <td><%= number_to_percentage((matched.to_f/list.to_f)*100, precision: 1) %></td>
         <td colspan="8"></td>
       </tr>

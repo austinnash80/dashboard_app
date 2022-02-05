@@ -25,10 +25,10 @@ class EmpireStatesController < ApplicationController
   def list_data_hp
     @empire_states = EmpireState.all
 
-## UPDATE THE CUSTOMERS FOR EACH STATE
-    EmpireState.all.each do |i|
-      EmpireState.where(id: i.id).update_all customers: EmpireMember.where(state: i.st).count
-    end
+## UPDATE THE CUSTOMERS FOR EACH STATE -- TAKE TO LONG - ONLY RUN FROM 'RUN MATCH STATE BY STATE'
+    # EmpireState.all.each do |i|
+    #   EmpireState.where(id: i.id).update_all customers: EmpireMember.where(state: i.st).count
+    # end
 
     auto_matching
 

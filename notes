@@ -61,3 +61,8 @@ rails g scaffold EmpireMasterMdList lid:integer list:string lic_state:string lic
 rails g migration AddIndexToEmpireMasterMdList
 
 rails g scaffold EmpireMasterWaMatch st:string lid:integer list:string exp:date lic:string uid:integer lname:string search_date:date
+
+$## LIC FIX UPLOAD
+LicFixUpload.all.each do |i|
+  EmpireMember.where(uid: i.uid).update_all lic_num: i.lic
+end

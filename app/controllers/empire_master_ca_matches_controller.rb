@@ -47,7 +47,7 @@ class EmpireMasterCaMatchesController < ApplicationController
 
     # empire_member_id = []
     already_matched_uid = EmpireMasterCaMatch.pluck(:uid)
-      EmpireMember.order(id: :asc).where("id > ?", empire_member_id_max).where(state: 'CA').where.not(uid: already_matched_uid).each do |i|
+      EmpireMember.where.not(uid: already_matched_uid).where(state: 'CA').order(id: :asc).each do |i|
         master = EmpireMasterCaList.find_by(lic: i.lic_num)
         if master.present?
           EmpireMasterCaMatch.create(

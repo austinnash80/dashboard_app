@@ -118,7 +118,7 @@ class EmpireMasterCaMatchesController < ApplicationController
 
     if params['match'] == 'bulk'
       EmpireMasterCaList.select("id","lid","lic", "exp_date", "lname").where(lic: new).find_in_batches(batch_size: 500).each do |masters|
-        EmpireMember.transaction do
+        # EmpireMember.transaction do
           masters.each do |master|
             uid = EmpireMember.find_by(lic_num: master.lic)
             EmpireMasterCaMatch.create(
@@ -132,7 +132,7 @@ class EmpireMasterCaMatchesController < ApplicationController
               search_date: Time.now,
             ).save
           end
-        end
+        # end
       end
     elsif new.count > 250
       redirect_to empire_master_ca_matches_path(upload: 'bulk'), notice: 'Bulk Match Needed' and return

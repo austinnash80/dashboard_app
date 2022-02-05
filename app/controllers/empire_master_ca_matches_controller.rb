@@ -61,10 +61,6 @@ class EmpireMasterCaMatchesController < ApplicationController
             search_date: Time.now,
           ).save
         end
-        # empire_member_id.push(i.id)
-        # if empire_member_id.length > 200
-        #   redirect_to empire_master_ca_matches_path(run: 'yes', route: 'hp', empire_member_id_max: empire_member_id.max), notice: "CA Update Done" and return
-        # end
       end
 
     total = EmpireMember.where(state: 'CA').count

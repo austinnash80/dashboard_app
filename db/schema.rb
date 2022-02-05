@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_02_04_230625) do
+ActiveRecord::Schema.define(version: 2022_02_05_032436) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -227,6 +227,7 @@ ActiveRecord::Schema.define(version: 2022_02_04_230625) do
     t.date "search_date"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["lid"], name: "index_empire_master_ca_matches_on_lid", unique: true
   end
 
   create_table "empire_master_double_accounts", force: :cascade do |t|

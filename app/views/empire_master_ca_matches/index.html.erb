@@ -18,7 +18,8 @@
   <p><%= link_to "Remove All Records", empire_master_ca_matches_path(remove_all: 'yes'), class: 'btn btn-sm btn-warning mt-4' %></p>
 <% end %>
 
-<p><%= link_to 'Export List (csv)', empire_master_ca_matches_path('csv'), class: 'btn btn-sm btn-secondary text-light mt-2' %></p>
+<p><%= link_to 'Export List (csv)', empire_master_ca_matches_path('csv'), class: 'btn btn-sm btn-secondary text-light mt-2 w150' %></p>
+<p><%= link_to 'Bulk Match', empire_master_ca_matches_path(match: 'bulk', run: 'yes'), target: :_blank, class: 'btn btn-sm btn-outline-success mt-2 w150' %></p>
 
 <br>
 <table class="table table-striped">

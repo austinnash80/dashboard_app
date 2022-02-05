@@ -30,17 +30,20 @@ class EmpireStatesController < ApplicationController
         count = "EmpireMaster#{i.st.titlecase}Match".constantize.count
         EmpireState.where(id: i.id).update_all matched_customers: count
       end
+      redirect_to list_data_hp_empire_states_path(), notice: 'Matched Update Done' and return
     elsif params['update'] == 'customers'
       EmpireState.all.each do |i|
         count = EmpireMember.where(state: i.st).count
         EmpireState.where(id: i.id).update_all customers: count
       end
+      redirect_to list_data_hp_empire_states_path(), notice: 'Customers Update Done' and return
     elsif params['update'] == 'expired'
       EmpireState.all.each do |i|
         expired = EmpireMember.where(state: i.st).where(lic_expired: true).count
         other = EmpireMember.where(state: i.st).where(lic_not_found: true).or(EmpireMember.where(state: i.st).where(lic_not_in_master: true)).count
         EmpireState.where(id: i.id).update_all lic_expired: expired, lic_other: other
       end
+      redirect_to list_data_hp_empire_states_path(), notice: 'Expired/Other Update Done' and return
     end
 
 

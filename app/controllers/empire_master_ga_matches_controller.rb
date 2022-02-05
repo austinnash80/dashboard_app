@@ -24,22 +24,58 @@ class EmpireMasterGaMatchesController < ApplicationController
   end
 
   def run
-    already_matched_uid = EmpireMasterGaMatch.pluck(:uid)
-    EmpireMember.where(state: 'GA').where.not(uid: already_matched_uid).each do |i|
-      master = EmpireMasterGaList.find_by(lic: i.lic_num)
-      if master.present?
-        EmpireMasterGaMatch.create(
-          st: "GA",
-          lid: master.lid,
-          list: master.list,
-          exp: master.exp_date,
-          lic: master.lic,
-          uid: i.uid,
-          lname: master.lname,
-          search_date: Time.now,
-        ).save
-      end
+    # already_matched_uid = EmpireMasterGaMatch.pluck(:uid)
+    # EmpireMember.where(state: 'GA').where.not(uid: already_matched_uid).each do |i|
+    #   master = EmpireMasterGaList.find_by(lic: i.lic_num)
+    #   if master.present?
+    #     EmpireMasterGaMatch.create(
+    #       st: "GA",
+    #       lid: master.lid,
+    #       list: master.list,
+    #       exp: master.exp_date,
+    #       lic: master.lic,
+    #       uid: i.uid,
+    #       lname: master.lname,
+    #       search_date: Time.now,
+    #     ).save
+    #   end
+    # end
+
+    # EmpireMember.select("id","uid", "lic_num").where(state: 'GA').find_in_batches(batch_size: 250) do |members|
+    #   EmpireMember.transaction do
+    #     members.each do |i|
+    #       master = EmpireMasterGaList.find_by(lic: i.lic_num)
+    #       if master.present?
+    #         EmpireMasterGaMatch.create(
+    #           st: "GA",
+    #           lid: master.lid,
+    #           list: master.list,
+    #           exp: master.exp_date,
+    #           lic: master.lic,
+    #           uid: i.uid,
+    #           lname: master.lname,
+    #           search_date: Time.now,
+    #         ).save
+    #       end
+    #     end
+    #   end
+    # end
+
+    member = EmpireMember.where(state: "GA").pluck(:lic_num)
+    master = EmpireMasterGaList.pluck(:lic)
+    matched = EmpireMasterGaMatch.pluck(:lic)
+    new = (master - matched) & member
+
+    new.each do |i|
+      EmpireMasterGaMatch.create(lic: i).save
     end
+
+    EmpireMasterGaMatch.where(uid: nil).each do |i|
+      empire_member = EmpireMember.where(state: 'GA').find_by(lic_num: i.lic)
+      master_list = EmpireMasterGaList.find_by(lic: i.lic)
+      EmpireMasterGaMatch.where(id: i.id).update_all st: "GA", lid: master_list.lid, list: master_list.list, exp: master_list.exp_date, lname: master_list.lname, uid: empire_member.uid, search_date: Time.now
+    end
+
 
     total = EmpireMember.where(state: 'GA').count
     expired = EmpireMember.where(state: 'GA').where(lic_expired: true).count

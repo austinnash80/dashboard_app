@@ -28,7 +28,7 @@
   </thead>
 
   <tbody>
-    <% @lic_fix_uploads.each do |lic_fix_upload| %>
+    <% @lic_fix_uploads.limit(250).each do |lic_fix_upload| %>
       <tr>
         <td><%= lic_fix_upload.uid %></td>
         <td><%= lic_fix_upload.lic %></td>

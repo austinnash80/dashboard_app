@@ -17,21 +17,6 @@ class EmpireMembersController < ApplicationController
       format.csv { send_data @empire_members.to_csv, filename: "Empire_Members-#{Date.today}.csv" }
     end
 
-    ## update the LIST DATA HP When click on Expired/other
-    if params['type'] == 'expired'
-      expired = EmpireMember.where(state: params['st']).where(lic_expired: true).count
-      if expired.blank?
-        expired = 0
-      end
-      EmpireState.where(st:  params['st']).update_all lic_expired: expired
-    elsif params['type'] == 'other'
-      other = EmpireMember.where(state: params['st']).where(lic_not_found: true).or(EmpireMember.where(state: params['st']).where(lic_not_in_master: true)).count
-      if other.blank?
-        other = 0
-      end
-      EmpireState.where(st:  params['st']).update_all lic_other: other
-    end
-
   end
 
   def run_update #Adding new Members

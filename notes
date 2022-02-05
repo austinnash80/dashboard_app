@@ -64,5 +64,8 @@ rails g scaffold EmpireMasterWaMatch st:string lid:integer list:string exp:date 
 
 $## LIC FIX UPLOAD
 LicFixUpload.all.each do |i|
-  EmpireMember.where(uid: i.uid).update_all lic_num: i.lic
+  EmpireMember.where(lic_edit: false).where(uid: i.uid).update_all lic_num: i.lic
 end
+
+
+Performance Consultant - https://pawelurbanek.com/slow-rails-queries

@@ -6,8 +6,15 @@
 <h1 class="text-center">Empire List Data and Matching</h1>
 <p class="text-center"><%= link_to 'Empire States Page', empire_states_path(), class: 'btn btn-outline-primary' %></p>
 
-<div class="w300 m-5"><input class="form-control" id="myInput" type="text" placeholder="Filter Table"></div>
 <div class="m-5">
+  <div class="w300"><input class="form-control" id="myInput" type="text" placeholder="Filter Table"></div>
+  <div class="text-center">
+    <div class="btn-group text-center" role="group" aria-label="Basic example">
+      <%= link_to 'Update Matched', list_data_hp_empire_states_path(update: 'matched'), class: 'btn btn-sm btn-outline-success w200' %>
+      <%= link_to 'Update Customers', list_data_hp_empire_states_path(update: 'customers'), class: 'btn btn-sm btn-outline-success w200' %>
+      <%= link_to 'Update Expired/Other', list_data_hp_empire_states_path(update: 'expired'), class: 'btn btn-sm btn-outline-success w200' %>
+    </div>
+  </div>
   <p id="notice"><%= notice %></p>
 <table class="table table-striped border">
   <thead>

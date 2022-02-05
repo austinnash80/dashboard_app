@@ -53,6 +53,9 @@
       <% if member.state == 'UT' %><td><a href="https://secure.utah.gov/rer/relv/search.html" class="btn btn-xs btn-outline-secondary" target="_blank">UT License Lookup</a></td><% end %>
       <% if member.state == 'WA' %><td><a href="https://professions.dol.wa.gov/s/license-lookup" class="btn btn-xs btn-outline-secondary" target="_blank">WA License Lookup</a></td><% end %>
       <% if member.state == 'PA' %><td><a href="https://www.pals.pa.gov/#/page/search" class="btn btn-xs btn-outline-secondary" target="_blank">PA License Lookup</a></td><% end %>
+      <% if member.state == 'NJ' %><td><a href="https://www-dobi.state.nj.us/DOBI_LicSearch/recSearch.jsp" class="btn btn-xs btn-outline-secondary" target="_blank">NJ License Lookup</a></td><% end %>
+      <% if member.state == 'NC' %><td><a href="http://license.ncrec.gov/ncrec/oecgi3.exe/O4W_LIC_SEARCH_NEW" class="btn btn-xs btn-outline-secondary" target="_blank">NC License Lookup</a> <a href="https://license.ncrec.gov/ncrec/oecgi3.exe/O4W_WRAPPER?ID=O4W_LIC_SHOW_DETAILV2_NEW&LIC_NO=<%= member.lic_num %>" class="btn btn-xs btn-outline-secondary" target="_blank">Direct Check</a></td><% end %>
+      <td colspan="12"></td>
     </tr>
   </tbody>
 </table>

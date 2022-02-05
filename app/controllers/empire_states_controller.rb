@@ -25,6 +25,25 @@ class EmpireStatesController < ApplicationController
   def list_data_hp
     @empire_states = EmpireState.all
 
+    if params['update'] == 'matched'
+      EmpireState.all.each do |i|
+        count = "EmpireMaster#{i.st.titlecase}Match".constantize.count
+        EmpireState.where(id: i.id).update_all matched_customers: count
+      end
+    elsif params['update'] == 'customers'
+      EmpireState.all.each do |i|
+        count = EmpireMember.where(state: i.st).count
+        EmpireState.where(id: i.id).update_all customers: count
+      end
+    elsif params['update'] == 'expired'
+      EmpireState.all.each do |i|
+        expired = EmpireMember.where(state: i.st).where(lic_expired: true).count
+        other = EmpireMember.where(state: i.st).where(lic_not_found: true).or(EmpireMember.where(state: i.st).where(lic_not_in_master: true)).count
+        EmpireState.where(id: i.id).update_all lic_expired: expired, lic_other: other
+      end
+    end
+
+
 ## UPDATE THE CUSTOMERS FOR EACH STATE -- TAKE TO LONG - ONLY RUN FROM 'RUN MATCH STATE BY STATE'
     # EmpireState.all.each do |i|
     #   EmpireState.where(id: i.id).update_all customers: EmpireMember.where(state: i.st).count

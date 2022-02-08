@@ -3,7 +3,13 @@ class MktgExportsController < ApplicationController
 
   # GET /mktg_exports or /mktg_exports.json
   def index
+
     @mktg_exports = MktgExport.all
+
+    if params['co'] == 'Empire'
+      @test = 'YES'
+    end
+
 
     # DELETE ALL
     if params['remove_all'] == 'yes' && params['confirm'] == 'yes'
@@ -109,6 +115,7 @@ class MktgExportsController < ApplicationController
       if params['co'] == 'Sequoia'
         sequoia
       elsif params['co'] == 'Empire'
+
         empire
       end
 
@@ -163,20 +170,51 @@ class MktgExportsController < ApplicationController
   end
 
   def empire
+    ## FIND THE RIGHT STATE MODEL FOR MATCH RECORDS
+    if params['empire_st'] == 'MO_B' || params['empire_st'] == 'MO_S'
+      model = EmpireMasterMoMatch
+    else
+      model = "EmpireMaster#{params['empire_st'].titlecase}Match".constantize
+    end
+    ### REMOVE PEOPLE BASED ON WHEN THEY LAST PURCHASED
+    recent_purchase = Date.today - 12.months
+
+
     ##### EMPIRE RC
     if params['campaign'] == 'Return' ##### EMPIRE RC
-      if params['empire_st'] == 'Rolling'
-        states = ['CA', 'NY']
-      end
-      EmpireMasterMatch.where(exp: @dates).where(lic_st: states).all.each do |i|
-        member = EmpireMember.find_by(uid: i.uid)
-        if member.state == 'NY' && member.last_purchase < Date.today - 18.months
-          MktgExport.create(uid: i.uid, exp: i.exp, campaign: params['campaign'], des: i.lic_st).save
-        elsif member.state == 'CA' && member.last_purchase < Date.today - 36.months
-          MktgExport.create(uid: i.uid, exp: i.exp, campaign: params['campaign'], des: i.lic_st).save
+        model.where(exp: @dates).all.each do |i|
+          member = EmpireMember.find_by(uid: i.uid)
+          unless member.last_purchase > recent_purchase
+            MktgExport.create(uid: i.uid, exp: i.exp, campaign: params['campaign'], des: i.st).save
+          end
         end
-      end
+    else
     end
+
+      # end
+      # if params['empire_st'] == 'Rolling'
+      #   states = ['CA', 'NY']
+      # else
+      #   states = params['empire_st']
+      #   model = "EmpireMaster#{params['empire_st'].titlecase}Match".constantize
+      # end
+
+      # # model.where(exp: @dates).all.each do |i|
+      # EmpireMasterPaMatch.all.each do |i|
+      #   member = EmpireMember.find_by(uid: i.uid)
+      #   MktgExport.create(uid: i.uid, exp: i.exp, campaign: params['campaign'], des: i.st).save
+      # end
+
+
+      # EmpireMasterMatch.where(exp: @dates).where(lic_st: states).all.each do |i|
+      #   member = EmpireMember.find_by(uid: i.uid)
+      #   if member.state == 'NY' && member.last_purchase < Date.today - 18.months
+      #     MktgExport.create(uid: i.uid, exp: i.exp, campaign: params['campaign'], des: i.lic_st).save
+      #   elsif member.state == 'CA' && member.last_purchase < Date.today - 36.months
+      #     MktgExport.create(uid: i.uid, exp: i.exp, campaign: params['campaign'], des: i.lic_st).save
+      #   end
+      # end
+
 
     ## RELOAD THE PAGE HERE TO AVOID TIMING OUT
 
@@ -194,7 +232,7 @@ class MktgExportsController < ApplicationController
     if params['campaign'] == 'Return'
       MktgExport.all.each do |i| #Add the remaining customer infomation
         customer_data = EmpireCustomer.order(purchase: :DESC).find_by(uid: i.uid)
-        MktgExport.where(uid: i.uid).update_all email: customer_data.email, fname: customer_data.fname, lname: (customer_data.lname), street_1: customer_data.street_1, street_2: customer_data.street_2, city: customer_data.city, state: customer_data.state, zip: customer_data.zip
+        MktgExport.where(uid: i.uid).update_all email: customer_data.email, fname: customer_data.fname, lname: customer_data.lname, street_1: customer_data.street_1, street_2: customer_data.street_2, city: customer_data.city, state: customer_data.state, zip: customer_data.zip
       end
     end
     # ADD Additonal TEXT FOR PRINT and EMAIL
@@ -215,7 +253,7 @@ class MktgExportsController < ApplicationController
         MktgExport.where(exp: @seg_8).update_all text_10: '8'
         MktgExport.where(exp: @seg_9).update_all text_10: '9'
         MktgExport.where(exp: @seg_10).update_all text_10: '10'
-      #REMOVE ANYONE WHO DOES NOT HAVE AN EMAIL ADDRESS (CA Has Old one without emails)
+      #REMOVE ANYONE WHO DOES NOT HAVE AN EMAIL ADDRESS (CA Has Old ones without emails)
         MktgExport.where(email: 'null').delete_all
     end
 

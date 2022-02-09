@@ -38,7 +38,7 @@
   </thead>
 
   <tbody>
-    <% @empire_master_wa_matcheslimit.limit(250).each do |empire_master_wa_match| %>
+    <% @empire_master_wa_matches.limit(250).each do |empire_master_wa_match| %>
       <tr>
         <td><%= empire_master_wa_match.st %></td>
         <td><%= empire_master_wa_match.lid %></td>

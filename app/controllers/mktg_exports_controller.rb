@@ -3,14 +3,7 @@ class MktgExportsController < ApplicationController
 
   # GET /mktg_exports or /mktg_exports.json
   def index
-
     @mktg_exports = MktgExport.all
-
-    if params['co'] == 'Empire'
-      @test = 'YES'
-    end
-
-
     # DELETE ALL
     if params['remove_all'] == 'yes' && params['confirm'] == 'yes'
       MktgExport.delete_all
@@ -30,95 +23,98 @@ class MktgExportsController < ApplicationController
     if params['campaign'].present? && params['range_1_date_1'].present?
       MktgExport.delete_all
 
-      @dates = [].uniq
-      ##FOR EMAIL SEGMENTS - > SEPERATE DATE RANGES
-        @seg_1 = [].uniq
-        @seg_2 = [].uniq
-        @seg_3 = [].uniq
-        @seg_4 = [].uniq
-        @seg_5 = [].uniq
-        @seg_6 = [].uniq
-        @seg_7 = [].uniq
-        @seg_8 = [].uniq
-        @seg_9 = [].uniq
-        @seg_10 = [].uniq
-      ## END SEGEMENTS
-
-      #Date Ranges in Params
-      r1d1 = params['range_1_date_1'].present? ? params['range_1_date_1'].to_date : ''
-      r1d2 = params['range_1_date_2'].present? ? params['range_1_date_2'].to_date : ''
-      r2d1 = params['range_2_date_1'].present? ? params['range_2_date_1'].to_date : ''
-      r2d2 = params['range_2_date_2'].present? ? params['range_2_date_2'].to_date : ''
-      r3d1 = params['range_3_date_1'].present? ? params['range_3_date_1'].to_date : ''
-      r3d2 = params['range_3_date_2'].present? ? params['range_3_date_2'].to_date : ''
-      r4d1 = params['range_4_date_1'].present? ? params['range_4_date_1'].to_date : ''
-      r4d2 = params['range_4_date_2'].present? ? params['range_4_date_2'].to_date : ''
-      r5d1 = params['range_5_date_1'].present? ? params['range_5_date_1'].to_date : ''
-      r5d2 = params['range_5_date_2'].present? ? params['range_5_date_2'].to_date : ''
-      r6d1 = params['range_6_date_1'].present? ? params['range_6_date_1'].to_date : ''
-      r6d2 = params['range_6_date_2'].present? ? params['range_6_date_2'].to_date : ''
-      r7d1 = params['range_7_date_1'].present? ? params['range_7_date_1'].to_date : ''
-      r7d2 = params['range_7_date_2'].present? ? params['range_7_date_2'].to_date : ''
-      r8d1 = params['range_8_date_1'].present? ? params['range_8_date_1'].to_date : ''
-      r8d2 = params['range_8_date_2'].present? ? params['range_8_date_2'].to_date : ''
-      r9d1 = params['range_9_date_1'].present? ? params['range_9_date_1'].to_date : ''
-      r9d2 = params['range_9_date_2'].present? ? params['range_9_date_2'].to_date : ''
-      r10d1 = params['range_10_date_1'].present? ? params['range_10_date_1'].to_date : ''
-      r10d2 = params['range_10_date_2'].present? ? params['range_10_date_2'].to_date : ''
-    # Dealing with blank input boxes
-      # if r1d2.blank?
-      #   r1d2 = r1d1
-      # end
-
-    ## APPEND DATES WANTED INTO ARRAYS
-      if r1d1.present? && r1d2.present?
-        (r1d1..r1d2).each do |i| @dates.push(i) end
-        (r1d1..r1d2).each do |i| @seg_1.push(i) end
-      end
-      if r2d1.present? && r2d2.present?
-        (r2d1.to_date..r2d2).each do |i| @dates.push(i) end
-        (r2d1.to_date..r2d2).each do |i| @seg_2.push(i) end
-      end
-      if r3d1.present? && r3d2.present?
-        (r3d1.to_date..r3d2).each do |i| @dates.push(i) end
-        (r3d1.to_date..r3d2).each do |i| @seg_3.push(i) end
-      end
-      if r4d1.present? && r4d2.present?
-        (r4d1.to_date..r4d2).each do |i| @dates.push(i) end
-        (r4d1.to_date..r4d2).each do |i| @seg_4.push(i) end
-      end
-      if r5d1.present? && r5d2.present?
-        (r5d1.to_date..r5d2).each do |i| @dates.push(i) end
-        (r5d1.to_date..r5d2).each do |i| @seg_5.push(i) end
-      end
-      if r6d1.present? && r6d2.present?
-        (r6d1.to_date..r6d2).each do |i| @dates.push(i) end
-        (r6d1.to_date..r6d2).each do |i| @seg_6.push(i) end
-      end
-      if r7d1.present? && r7d2.present?
-        (r7d1.to_date..r7d2).each do |i| @dates.push(i) end
-        (r7d1.to_date..r7d2).each do |i| @seg_7.push(i) end
-      end
-      if r8d1.present? && r8d2.present?
-        (r8d1.to_date..r8d2).each do |i| @dates.push(i) end
-        (r8d1.to_date..r8d2).each do |i| @seg_8.push(i) end
-      end
-      if r9d1.present? && r9d2.present?
-        (r9d1.to_date..r9d2).each do |i| @dates.push(i) end
-        (r9d1.to_date..r9d2).each do |i| @seg_9.push(i) end
-      end
-      if r10d1.present? && r10d2.present?
-        (r10d1.to_date..r10d2).each do |i| @dates.push(i) end
-        (r10d1.to_date..r10d2).each do |i| @seg_10.push(i) end
-      end
+      dates ## FIND THE DESIRED EXP DATES AND SEGEMENTS AND PUTS THEM IN AN ARRAY
 
       if params['co'] == 'Sequoia'
         sequoia
       elsif params['co'] == 'Empire'
-
         empire
       end
 
+    end
+  end
+
+  def dates
+    @dates = [].uniq
+    ##FOR EMAIL SEGMENTS - > SEPERATE DATE RANGES
+      @seg_1 = [].uniq
+      @seg_2 = [].uniq
+      @seg_3 = [].uniq
+      @seg_4 = [].uniq
+      @seg_5 = [].uniq
+      @seg_6 = [].uniq
+      @seg_7 = [].uniq
+      @seg_8 = [].uniq
+      @seg_9 = [].uniq
+      @seg_10 = [].uniq
+    ## END SEGEMENTS
+
+    #Date Ranges in Params
+    r1d1 = params['range_1_date_1'].present? ? params['range_1_date_1'].to_date : ''
+    r1d2 = params['range_1_date_2'].present? ? params['range_1_date_2'].to_date : ''
+    r2d1 = params['range_2_date_1'].present? ? params['range_2_date_1'].to_date : ''
+    r2d2 = params['range_2_date_2'].present? ? params['range_2_date_2'].to_date : ''
+    r3d1 = params['range_3_date_1'].present? ? params['range_3_date_1'].to_date : ''
+    r3d2 = params['range_3_date_2'].present? ? params['range_3_date_2'].to_date : ''
+    r4d1 = params['range_4_date_1'].present? ? params['range_4_date_1'].to_date : ''
+    r4d2 = params['range_4_date_2'].present? ? params['range_4_date_2'].to_date : ''
+    r5d1 = params['range_5_date_1'].present? ? params['range_5_date_1'].to_date : ''
+    r5d2 = params['range_5_date_2'].present? ? params['range_5_date_2'].to_date : ''
+    r6d1 = params['range_6_date_1'].present? ? params['range_6_date_1'].to_date : ''
+    r6d2 = params['range_6_date_2'].present? ? params['range_6_date_2'].to_date : ''
+    r7d1 = params['range_7_date_1'].present? ? params['range_7_date_1'].to_date : ''
+    r7d2 = params['range_7_date_2'].present? ? params['range_7_date_2'].to_date : ''
+    r8d1 = params['range_8_date_1'].present? ? params['range_8_date_1'].to_date : ''
+    r8d2 = params['range_8_date_2'].present? ? params['range_8_date_2'].to_date : ''
+    r9d1 = params['range_9_date_1'].present? ? params['range_9_date_1'].to_date : ''
+    r9d2 = params['range_9_date_2'].present? ? params['range_9_date_2'].to_date : ''
+    r10d1 = params['range_10_date_1'].present? ? params['range_10_date_1'].to_date : ''
+    r10d2 = params['range_10_date_2'].present? ? params['range_10_date_2'].to_date : ''
+    # Dealing with blank input boxes
+    # if r1d2.blank?
+    #   r1d2 = r1d1
+    # end
+
+    ## APPEND DATES WANTED INTO ARRAYS
+    if r1d1.present? && r1d2.present?
+      (r1d1..r1d2).each do |i| @dates.push(i) end
+      (r1d1..r1d2).each do |i| @seg_1.push(i) end
+    end
+    if r2d1.present? && r2d2.present?
+      (r2d1.to_date..r2d2).each do |i| @dates.push(i) end
+      (r2d1.to_date..r2d2).each do |i| @seg_2.push(i) end
+    end
+    if r3d1.present? && r3d2.present?
+      (r3d1.to_date..r3d2).each do |i| @dates.push(i) end
+      (r3d1.to_date..r3d2).each do |i| @seg_3.push(i) end
+    end
+    if r4d1.present? && r4d2.present?
+      (r4d1.to_date..r4d2).each do |i| @dates.push(i) end
+      (r4d1.to_date..r4d2).each do |i| @seg_4.push(i) end
+    end
+    if r5d1.present? && r5d2.present?
+      (r5d1.to_date..r5d2).each do |i| @dates.push(i) end
+      (r5d1.to_date..r5d2).each do |i| @seg_5.push(i) end
+    end
+    if r6d1.present? && r6d2.present?
+      (r6d1.to_date..r6d2).each do |i| @dates.push(i) end
+      (r6d1.to_date..r6d2).each do |i| @seg_6.push(i) end
+    end
+    if r7d1.present? && r7d2.present?
+      (r7d1.to_date..r7d2).each do |i| @dates.push(i) end
+      (r7d1.to_date..r7d2).each do |i| @seg_7.push(i) end
+    end
+    if r8d1.present? && r8d2.present?
+      (r8d1.to_date..r8d2).each do |i| @dates.push(i) end
+      (r8d1.to_date..r8d2).each do |i| @seg_8.push(i) end
+    end
+    if r9d1.present? && r9d2.present?
+      (r9d1.to_date..r9d2).each do |i| @dates.push(i) end
+      (r9d1.to_date..r9d2).each do |i| @seg_9.push(i) end
+    end
+    if r10d1.present? && r10d2.present?
+      (r10d1.to_date..r10d2).each do |i| @dates.push(i) end
+      (r10d1.to_date..r10d2).each do |i| @seg_10.push(i) end
     end
   end
 
@@ -173,22 +169,35 @@ class MktgExportsController < ApplicationController
     ## FIND THE RIGHT STATE MODEL FOR MATCH RECORDS
     if params['empire_st'] == 'MO_B' || params['empire_st'] == 'MO_S'
       model = EmpireMasterMoMatch
-    else
+    elsif params['empire_st'] != 'Rolling'
       model = "EmpireMaster#{params['empire_st'].titlecase}Match".constantize
     end
+
     ### REMOVE PEOPLE BASED ON WHEN THEY LAST PURCHASED
-    recent_purchase = Date.today - 12.months
+      recent_purchase_exclude = Date.today - 12.months
+    #### EMPIRE RC - ADD THE UIDs FROM THE MATCH MODELS
+    if params['campaign'] == 'Return' && params['empire_st'] == 'Rolling'
+      rolling_state = ['CA', 'GA', 'NM', 'NY', 'TN', 'TX', 'UT', 'WA'] #Last Updated Feb 2022
 
-
-    ##### EMPIRE RC
-    if params['campaign'] == 'Return' ##### EMPIRE RC
+      rolling_state.each do |state|
+        model = "EmpireMaster#{state.titlecase}Match".constantize
         model.where(exp: @dates).all.each do |i|
           member = EmpireMember.find_by(uid: i.uid)
-          unless member.last_purchase > recent_purchase
+          if member.state == 'NC' or member.state == 'IND' ## FOR STATES WITH ANNUAL EXP - CHANGE THE EXCLUDE, DEFAULT IS EXCLUDE 1 YEAR
+            recent_purchase_exclude = Date.today - 9.months
+          end
+          unless member.last_purchase > recent_purchase_exclude
             MktgExport.create(uid: i.uid, exp: i.exp, campaign: params['campaign'], des: i.st).save
           end
         end
-    else
+      end
+    elsif params['campaign'] == 'Return'
+      model.where(exp: @dates).all.each do |i|
+        member = EmpireMember.find_by(uid: i.uid)
+        unless member.last_purchase > recent_purchase_exclude
+          MktgExport.create(uid: i.uid, exp: i.exp, campaign: params['campaign'], des: i.st).save
+        end
+      end
     end
 
       # end
@@ -240,8 +249,24 @@ class MktgExportsController < ApplicationController
       MktgExport.where(des: 'NY').update_all text_1: '22.5-Hour New York CE Package',text_2: '$59.99'
       MktgExport.where(des: 'CA').update_all text_1: '45-Hour California CE Package',text_2: '$47.99'
     elsif params['delivery_type'].present? && params['delivery_type'] == 'Email'
-      MktgExport.where(des: 'NY').update_all text_1: 'NY 22.5hr packages only $59.99'
-      MktgExport.where(des: 'CA').update_all text_1: 'CA 45hr packages only $47.99'
+      MktgExport.where(des: 'CA').update_all text_1: 'CA 45hr packages', text_2: '$47.99'
+      MktgExport.where(des: 'GA').update_all text_1: 'GA 36hr packages', text_2:  '$97.99'
+      MktgExport.where(des: 'NM').update_all text_1: 'NM 24hr packages', text_2: '$146.99'
+      MktgExport.where(des: 'NY').update_all text_1: 'NY 22.5hr packages', text_2: '$59.99'
+      MktgExport.where(des: 'TN').update_all text_1: 'TN 16hr packages', text_2: '$69.99'
+      MktgExport.where(des: 'TX').update_all text_1: 'TX 22.5hr packages', text_2: '$59.99'
+      MktgExport.where(des: 'UT').update_all text_1: 'UT 9hr packages', text_2: '$59.50'
+      MktgExport.where(des: 'WA').update_all text_1: 'WA 30hr packages', text_2: '$89.99'
+      MktgExport.where(des: 'PA').update_all text_1: 'PA 14hr packages', text_2: '$69.99'
+      MktgExport.where(des: 'MO').update_all text_1: 'MO 12hr packages', text_2: '$58.50'
+      MktgExport.where(des: 'MO_B').update_all text_1: 'MO 12hr packages', text_2: '$58.50'
+      MktgExport.where(des: 'MO_S').update_all text_1: 'MO 12hr packages', text_2: '$58.50'
+      MktgExport.where(des: 'IND').update_all text_1: 'IN 12hr packages', text_2: '$48.99'
+      MktgExport.where(des: 'IND').update_all text_1: 'IN 12hr packages', text_2: '$48.99'
+      MktgExport.where(des: 'NC').update_all text_1: 'NC 4hr packages', text_2: '$39.50'
+      MktgExport.where(des: 'NJ').update_all text_1: 'NJ 12hr packages', text_2: '$52.49'
+      MktgExport.where(des: 'SC').update_all text_1: 'SC 10hr packages', text_2: '$59.49'
+      MktgExport.where(des: 'VA').update_all text_1: 'VA 8hr packages', text_2: ''
       ## ADDING SEGMENTS BASED ON EXP DATE - > DETERMINES WITCH EMAIL THEY WILL RECIEVE
         MktgExport.where(exp: @seg_1).update_all text_10: '1'
         MktgExport.where(exp: @seg_2).update_all text_10: '2'

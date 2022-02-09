@@ -1,11 +1,11 @@
 <p id="notice"><%= notice %></p>
 
 <h1 class="text-center">Empire Master WA Matches</h1>
-<div class="m-3"><p class="text-center"><%= link_to 'WA List Table', empire_master_ny_lists_path(), class: 'btn btn-sm btn-outline-success w200 m-1' %> </p></div>
+<div class="m-3"><p class="text-center"><%= link_to 'WA List Table', empire_master_wa_lists_path(), class: 'btn btn-sm btn-outline-success w200 m-1' %> </p></div>
 <div class="m-3"><p class="text-center"><%= link_to 'Empire States Table', empire_states_path(), class: 'btn btn-sm btn-outline-primary w200 m-1' %> <%= link_to 'List Data Home Page', list_data_hp_empire_states_path(), class: 'btn btn-sm btn-outline-primary w200 m-1' %></p></div>
 
 <div class="m-5">
-  <p><%= link_to 'Run Match', empire_master_ny_matches_path(run: 'yes'), class: 'btn btn-sm btn-outline-info'%></p>
+  <p><%= link_to 'Run Match', empire_master_wa_matches_path(run: 'yes'), class: 'btn btn-sm btn-outline-info'%></p>
 <p class="fs-4">Upload New List</p>
   <%= form_tag import_empire_master_wa_matches_path, multipart: true do %>
   <%= file_field_tag :file, class: 'btn btn-sm btn-light' %>
@@ -13,12 +13,12 @@
 <% end %>
 
 <% if params['remove_all'] == 'yes' %>
-  <p><%= link_to "Confirm Delete", empire_master_ny_matches_path(remove_all: 'yes', confirm: 'yes'), class: 'btn btn-sm btn-danger mt-4' %></p>
+  <p><%= link_to "Confirm Delete", empire_master_wa_matches_path(remove_all: 'yes', confirm: 'yes'), class: 'btn btn-sm btn-danger mt-4' %></p>
 <% else %>
-  <p><%= link_to "Remove All Records", empire_master_ny_matches_path(remove_all: 'yes'), class: 'btn btn-sm btn-warning mt-4' %></p>
+  <p><%= link_to "Remove All Records", empire_master_wa_matches_path(remove_all: 'yes'), class: 'btn btn-sm btn-warning mt-4' %></p>
 <% end %>
 
-<p><%= link_to 'Export List (csv)', empire_master_ny_matches_path('csv'), class: 'btn btn-sm btn-secondary text-light mt-2' %></p>
+<p><%= link_to 'Export List (csv)', empire_master_wa_matches_path('csv'), class: 'btn btn-sm btn-secondary text-light mt-2' %></p>
 
 <br>
 <table class="table table-striped">

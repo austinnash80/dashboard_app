@@ -38,7 +38,7 @@ class IdNumberStoragesController < ApplicationController
   def update
     respond_to do |format|
       if @id_number_storage.update(id_number_storage_params)
-        format.html { redirect_to @id_number_storage, notice: "Id number storage was successfully updated." }
+        format.html { redirect_to id_number_storages_path(), notice: "Id number storage was successfully updated." }
         format.json { render :show, status: :ok, location: @id_number_storage }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -64,6 +64,6 @@ class IdNumberStoragesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def id_number_storage_params
-      params.require(:id_number_storage).permit(:sequoia_members_order_id, :daily_sales_id, :daily_sales_sequoia_customer_order_id, :sequoia_customer_s_id, :sequoia_member_exps_order_id, :empire_member_e_id, :empire_auto_match_id, :empire_daily_sales_id)
+      params.require(:id_number_storage).permit(:sequoia_members_order_id, :daily_sales_id, :daily_sales_sequoia_customer_order_id, :sequoia_customer_s_id, :sequoia_member_exps_order_id, :empire_member_e_id, :empire_auto_match_id, :empire_daily_sales_id, :campaign_id)
     end
 end

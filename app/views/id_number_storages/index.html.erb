@@ -1,40 +1,15 @@
 <p id="notice"><%= notice %></p>
 
 <h1 class="text-center">Id Number Storages</h1>
-
-
 <div class="m-5">
-  <table class="table table-striped">
-    <thead>
-      <tr class="bg-secondary bg-gradient text-light">
-        <th>Sequoia Customer S ID</th>
-        <th>Sequoia Members Order ID</th>
-        <th>Sequoia Member Exps Order Id</th>
-        <th>Sequoia Daily Sales Id</th>
-        <th>Empire Daily Sales Id</th>
-        <th>Empire Member E ID</th>
-        <th>Empire Auto Match ID</th>
-        <!-- <th>Daily Sales Sequoia Customer Order Id</th> -->
-        <th colspan="3"></th>
-      </tr>
-    </thead>
-
-    <tbody>
-      <% @id_number_storages.order(daily_sales_sequoia_customer_order_id: :asc).limit(100).each do |id_number_storage| %>
-        <tr>
-          <td><%= id_number_storage.sequoia_customer_s_id %></td>
-          <td><%= id_number_storage.sequoia_members_order_id %></td>
-          <td><%= id_number_storage.sequoia_member_exps_order_id %></td>
-          <td><%= id_number_storage.daily_sales_id %></td>
-          <td><%= id_number_storage.empire_daily_sales_id %></td>
-          <td><%= id_number_storage.empire_member_e_id%></td>
-          <td><%= id_number_storage.empire_auto_match_id%></td>
-          <!-- <td><%= id_number_storage.daily_sales_sequoia_customer_order_id %></td> -->
-          <td><%= link_to 'Show', id_number_storage %></td>
-          <td><%= link_to 'Edit', edit_id_number_storage_path(id_number_storage) %></td>
-          <!-- <td><%= link_to 'Destroy', id_number_storage, method: :delete, data: { confirm: 'Are you sure?' } %></td> -->
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
+  <% id_number_storage = IdNumberStorage.find_by(id: 1) %>
+  <p><strong>Sequoia Customer S ID:</strong> <%= id_number_storage.sequoia_customer_s_id %></p>
+  <p><strong>Sequoia Members Order ID:</strong> <%= id_number_storage.sequoia_members_order_id %></p>
+  <p><strong>Sequoia Member Exps Order Id:</strong> <%= id_number_storage.sequoia_member_exps_order_id %></p>
+  <p><strong>Sequoia Daily Sales Id:</strong> <%= id_number_storage.daily_sales_id %></p>
+  <p><strong>Empire Daily Sales Id:</strong> <%= id_number_storage.empire_daily_sales_id %></p>
+  <p><strong>Empire Member E ID:</strong> <%= id_number_storage.empire_member_e_id %></p>
+  <p><strong>Empire Auto Match ID:</strong> <%= id_number_storage.empire_auto_match_id %></p>
+  <p><strong>Campaign ID:</strong> <%= id_number_storage.campaign_id %></p>
+  <p><%= link_to 'Edit', edit_id_number_storage_path(id_number_storage), class: 'btn btn-outline-primary w100' %></p>
 </div>

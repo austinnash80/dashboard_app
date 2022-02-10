@@ -32,6 +32,7 @@ class MktgExportsController < ApplicationController
       end
 
     end
+
   end
 
   def dates
@@ -170,18 +171,12 @@ class MktgExportsController < ApplicationController
     elsif params['campaign'] == 'New' && params['des'] == 'EA'
       MktgExport.update_all text_1: 'Membership Valid Through',text_2: '',text_3: ''
     end
+    
+    IdNumberStorage.where(id: 1).update_all campaign_id: params['id']
+    redirect_to mktg_exports_path(id: params['id'])
   end
 
   def empire
-    ## FIND THE RIGHT STATE MODEL FOR MATCH RECORDS
-    # if params['empire_st'] == 'MO_B' || params['empire_st'] == 'MO_S'
-    #   model = EmpireMasterMoMatch
-    # elsif params['empire_st'] != 'Rolling'
-    #   model = "EmpireMaster#{params['empire_st'].titlecase}Match".constantize
-    # end
-
-    ### REMOVE PEOPLE BASED ON WHEN THEY LAST PURCHASED
-    #### EMPIRE RC - ADD THE UIDs FROM THE MATCH MODELS
     if params['campaign'] == 'Return' && params['empire_st'] == 'Rolling'
       rolling_state = ['CA','NY','GA','NM','TN','TX','UT','WA'] #Last Updated Feb 2022
       models = []
@@ -207,23 +202,6 @@ class MktgExportsController < ApplicationController
         end
 
       end
-
-
-      # EmpireMasterCaMatch.where(exp: @dates).all.each do |i|
-      #   MktgExport.create(uid: i.uid, exp: i.exp, campaign: params['campaign'], des: i.st).save
-      # end
-      # EmpireMasterNyMatch.where(exp: @dates).all.each do |i|
-      #   MktgExport.create(uid: i.uid, exp: i.exp, campaign: params['campaign'], des: i.st).save
-      # end
-      # EmpireMasterGaMatch.where(exp: @dates).all.each do |i|
-      #   MktgExport.create(uid: i.uid, exp: i.exp, campaign: params['campaign'], des: i.st).save
-      # end
-      # EmpireMasterNmMatch.where(exp: @dates).all.each do |i|
-      #   MktgExport.create(uid: i.uid, exp: i.exp, campaign: params['campaign'], des: i.st).save
-      # end
-
-
-
 
     elsif params['campaign'] == 'Return'
       model.where(exp: @dates).all.each do |i|
@@ -310,7 +288,8 @@ class MktgExportsController < ApplicationController
       #REMOVE ANYONE WHO DOES NOT HAVE AN EMAIL ADDRESS (CA Has Old ones without emails)
       MktgExport.where(email: 'null').delete_all
     end
-
+    IdNumberStorage.where(id: 1).update_all campaign_id: params['id']
+    redirect_to mktg_exports_path(id: params['id'])
   end
 
   def print

@@ -6,22 +6,27 @@
     <%= link_to 'Tomorrow', day_mktg_postcards_path(day: @day + 1.day), class: 'btn btn-sm btn-primary text-light bg-gradient w150' %>
   </div>
   <br><br>
+  <p>Current Export: ID <%= IdNumberStorage.where(id: 1).pluck(:campaign_id)[0] %></p>
+  <button onClick="window.location.reload();" class='btn btn-outline-primary btn-xs w75'>Reload</button>
+  <br><br>
 <table class="table table-striped">
   <thead>
     <tr class="bg-secondary bg-gradient text-light">
+      <th width="2%">id</th>
       <th width="8%">Company</th>
       <th width="8%">Segment</th>
       <th width="8%">Campaign</th>
       <th width="8%">Delivery</th>
       <th width="8%">Drop Date</th>
       <th width="8%">Land Date</th>
-      <th width="22%">Notes</th>
+      <th width="20%">Notes</th>
       <th width="30%" colspan="4"></th>
     </tr>
   </thead>
   <tbody>
     <% MktgPostcard.order(company: :asc).order(campaign: :asc).order(segment: :asc).where(mail_day: @day).all.each do |i| %>
       <tr data-toggle="collapse" data-target="#demo1" class="accordion-toggle"><big>
+        <td><big><%= i.id %></big></td>
         <td><big><%= i.company %></big></td>
         <td><big><%= i.segment %></big></td>
         <td><big><%= i.campaign %></big></td>
@@ -49,17 +54,18 @@
         <% else %>
           <% if i.delivery_type == 'Postcard' || i.delivery_type == 'Email' %>
             <td>
-              <div class="">
+              <% if IdNumberStorage.pluck(:campaign_id)[0] == i.id %>
                 <div class="btn-group" role="group" aria-label="Basic example">
-                  <%= link_to 'Run', mktg_exports_path(run: 'yes', id: i.id, campaign_id: i.campaign_id,  mail_day: i.mail_day, campaign: i.campaign, co: i.company, des: i.segment, delivery_type: i.delivery_type, range_1_date_1: i.range_1_a, range_1_date_2: i.range_1_b, range_2_date_1: i.range_2_a, range_2_date_2: i.range_2_b, range_3_date_1: i.range_3_a, range_3_date_2: i.range_3_b, range_4_date_1: i.range_4_a, range_4_date_2: i.range_4_b, range_5_date_1: i.range_5_a, range_5_date_2: i.range_5_b, range_6_date_1: i.range_6_a, range_6_date_2: i.range_6_b, range_7_date_1: i.range_7_a, range_7_date_2: i.range_7_b, range_8_date_1: i.range_8_a, range_8_date_2: i.range_8_b, range_9_date_1: i.range_9_a, range_9_date_2: i.range_9_b, range_10_date_1: i.range_10_a, range_10_date_2: i.range_10_b, range_11_date_1: i.range_11_a, range_11_date_2: i.range_11_b, empire_st: i.segment), target: '_blank', class: 'btn btn-outline-success gb-gradient w100' %>
-                   <%#= link_to 'View', mktg_exports_path(id: i.id), target: '_blank', class: 'btn btn-outline-success gb-gradient w100' %>
+                  <%= link_to 'View', mktg_exports_path(id: i.id), target: '_blank', class: 'btn btn-success gb-gradient w100 text-light' %>
+                  <%= link_to 'Re-Run', mktg_exports_path(run: 'yes', id: i.id, campaign_id: i.campaign_id,  mail_day: i.mail_day, campaign: i.campaign, co: i.company, des: i.segment, delivery_type: i.delivery_type, range_1_date_1: i.range_1_a, range_1_date_2: i.range_1_b, range_2_date_1: i.range_2_a, range_2_date_2: i.range_2_b, range_3_date_1: i.range_3_a, range_3_date_2: i.range_3_b, range_4_date_1: i.range_4_a, range_4_date_2: i.range_4_b, range_5_date_1: i.range_5_a, range_5_date_2: i.range_5_b, range_6_date_1: i.range_6_a, range_6_date_2: i.range_6_b, range_7_date_1: i.range_7_a, range_7_date_2: i.range_7_b, range_8_date_1: i.range_8_a, range_8_date_2: i.range_8_b, range_9_date_1: i.range_9_a, range_9_date_2: i.range_9_b, range_10_date_1: i.range_10_a, range_10_date_2: i.range_10_b, range_11_date_1: i.range_11_a, range_11_date_2: i.range_11_b, empire_st: i.segment), target: '_blank', class: 'btn btn-primary gb-gradient w100 text-light' %>
                 </div>
-              </div>
-
+              <% else %>
+                <%= link_to 'Run Data', mktg_exports_path(run: 'yes', id: i.id, campaign_id: i.campaign_id,  mail_day: i.mail_day, campaign: i.campaign, co: i.company, des: i.segment, delivery_type: i.delivery_type, range_1_date_1: i.range_1_a, range_1_date_2: i.range_1_b, range_2_date_1: i.range_2_a, range_2_date_2: i.range_2_b, range_3_date_1: i.range_3_a, range_3_date_2: i.range_3_b, range_4_date_1: i.range_4_a, range_4_date_2: i.range_4_b, range_5_date_1: i.range_5_a, range_5_date_2: i.range_5_b, range_6_date_1: i.range_6_a, range_6_date_2: i.range_6_b, range_7_date_1: i.range_7_a, range_7_date_2: i.range_7_b, range_8_date_1: i.range_8_a, range_8_date_2: i.range_8_b, range_9_date_1: i.range_9_a, range_9_date_2: i.range_9_b, range_10_date_1: i.range_10_a, range_10_date_2: i.range_10_b, range_11_date_1: i.range_11_a, range_11_date_2: i.range_11_b, empire_st: i.segment), target: '_blank', class: 'btn btn-primary gb-gradient w200 text-light' %>
+              <% end %>
             </td>
           <% else %><td></td><% end %>
           <td><big><%= text_field_tag "id", '', class: "sent_field form-control w200", value: i.sent, placeholder: 'Enter Quanity' %></big></td>
-          <td><big><%= link_to 'Done', day_mktg_postcards_path(day: @day, campaign_id: i.id), class: "sent_link btn-sm btn btn-primary" %></big></td>
+          <td><big><%= link_to 'Done', day_mktg_postcards_path(day: @day, campaign_id: i.id), class: "sent_link btn btn-primary" %></big></td>
         <% end %>
         <td><big><%= link_to 'Edit', edit_mktg_postcard_path(i.id, day: @day),class: 'btn btn-sm btn-link' %></big></td>
       </big></tr>
@@ -71,10 +77,15 @@
 </table>
 </div>
 
+<meta http-equiv="refresh" content="15" />
+
+
 <script type="text/javascript">
   $(".sent_link").click(function() {
     $(this).attr("href", function() {
       return this.href + "&sent=" + $('.sent_field').val().toUpperCase();
     });
   });
+
+
 </script>

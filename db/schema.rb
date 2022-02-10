@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_02_10_010623) do
+ActiveRecord::Schema.define(version: 2022_02_10_224838) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1004,6 +1004,7 @@ ActiveRecord::Schema.define(version: 2022_02_10_010623) do
     t.integer "empire_member_e_id"
     t.integer "empire_auto_match_id"
     t.integer "empire_daily_sales_id"
+    t.integer "campaign_id"
   end
 
   create_table "lic_fix_uploads", force: :cascade do |t|

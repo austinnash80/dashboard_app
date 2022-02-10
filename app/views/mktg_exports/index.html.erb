@@ -48,7 +48,7 @@
 <!-- <h6 class="text-center text-success fw-bold"><%= @dates.present? ? "New dates displayed: #{(@dates.uniq.map{ |date| date.strftime("%Y-%m-%d") }).join(', ')}" : '' %></h6> -->
 <table class="table table-striped">
   <thead>
-  <caption class="caption-top">Total Records: <%= number_with_delimiter(MktgExport.count) %> | Display Limit: 250</caption>
+  <caption class="caption-top">Total Records: <%= number_with_delimiter(MktgExport.count) %> | Display Limit: 250 | States Tally: <%= MktgExport.pluck(:des).tally %></caption>
     <tr class="bg-secondary bg-gradient text-light">
       <th>Uid</th>
       <th>Campaign</th>

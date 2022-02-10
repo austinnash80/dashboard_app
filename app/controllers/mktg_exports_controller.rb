@@ -47,6 +47,7 @@ class MktgExportsController < ApplicationController
       @seg_8 = [].uniq
       @seg_9 = [].uniq
       @seg_10 = [].uniq
+      @seg_11 = [].uniq
     ## END SEGEMENTS
 
     #Date Ranges in Params
@@ -115,6 +116,10 @@ class MktgExportsController < ApplicationController
     if r10d1.present? && r10d2.present?
       (r10d1.to_date..r10d2).each do |i| @dates.push(i) end
       (r10d1.to_date..r10d2).each do |i| @seg_10.push(i) end
+    end
+    if r11d1.present? && r11d2.present?
+      (r11d1.to_date..r11d2).each do |i| @dates.push(i) end
+      (r11d1.to_date..r11d2).each do |i| @seg_11.push(i) end
     end
   end
 
@@ -278,6 +283,7 @@ class MktgExportsController < ApplicationController
         MktgExport.where(exp: @seg_8).update_all text_10: '8'
         MktgExport.where(exp: @seg_9).update_all text_10: '9'
         MktgExport.where(exp: @seg_10).update_all text_10: '10'
+        MktgExport.where(exp: @seg_11).update_all text_10: '11'
       #REMOVE ANYONE WHO DOES NOT HAVE AN EMAIL ADDRESS (CA Has Old ones without emails)
         MktgExport.where(email: 'null').delete_all
     end

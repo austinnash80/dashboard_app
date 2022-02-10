@@ -110,6 +110,27 @@ class EmpireMasterCaMatchesController < ApplicationController
       #   EmpireMasterCaMatch.update_all uid: member.uid
       # end
 
+      # already_matched_uid = EmpireMasterNjMatch.pluck(:uid)
+      # EmpireMember.where(state: 'NJ').where.not(uid: already_matched_uid).each do |i|
+      #   master = EmpireMasterNjList.find_by(lic: i.lic_num)
+      #   if master.present?
+      #     EmpireMasterNjMatch.create(
+      #       st: "NJ",
+      #       lid: master.lid,
+      #       list: master.list,
+      #       exp: master.exp_date,
+      #       lic: master.lic,
+      #       uid: i.uid,
+      #       lname: master.lname,
+      #       search_date: Time.now,
+      #     ).save
+      #   end
+      # end
+
+      # total = EmpireMember.where(state: 'NJ').count
+      # matched = EmpireMasterNjMatch.count
+      # EmpireState.where(st: 'NJ').update_all customers: total, matched_customers: matched
+
     member = EmpireMember.where(state: "CA").pluck(:lic_num)
     master = EmpireMasterCaList.pluck(:lic)
     matched = EmpireMasterCaMatch.pluck(:lic)

@@ -71,6 +71,8 @@ class MktgExportsController < ApplicationController
     r9d2 = params['range_9_date_2'].present? ? params['range_9_date_2'].to_date : ''
     r10d1 = params['range_10_date_1'].present? ? params['range_10_date_1'].to_date : ''
     r10d2 = params['range_10_date_2'].present? ? params['range_10_date_2'].to_date : ''
+    r11d1 = params['range_11_date_1'].present? ? params['range_11_date_1'].to_date : ''
+    r11d2 = params['range_11_date_2'].present? ? params['range_11_date_2'].to_date : ''
     # Dealing with blank input boxes
     # if r1d2.blank?
     #   r1d2 = r1d1
@@ -188,11 +190,13 @@ class MktgExportsController < ApplicationController
         model = "EmpireMaster#{state.titlecase}Match".constantize
         model.where(exp: @dates).all.each do |i|
           member = EmpireMember.find_by(uid: i.uid)
-          if member.state == 'NC' or member.state == 'IND' ## FOR STATES WITH ANNUAL EXP - CHANGE THE EXCLUDE, DEFAULT IS EXCLUDE 1 YEAR
-            recent_purchase_exclude = Date.today - 9.months
-          end
-          unless member.last_purchase > recent_purchase_exclude
-            MktgExport.create(uid: i.uid, exp: i.exp, campaign: params['campaign'], des: i.st).save
+          unless member.blank?
+            if member.state == 'NC' or member.state == 'IND' ## FOR STATES WITH ANNUAL EXP - CHANGE THE EXCLUDE, DEFAULT IS EXCLUDE 1 YEAR
+              recent_purchase_exclude = Date.today - 9.months
+            end
+            unless member.last_purchase > recent_purchase_exclude
+              MktgExport.create(uid: i.uid, exp: i.exp, campaign: params['campaign'], des: i.st).save
+            end
           end
         end
       end

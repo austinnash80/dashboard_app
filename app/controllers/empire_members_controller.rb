@@ -33,13 +33,33 @@ class EmpireMembersController < ApplicationController
       EmpireCustomer.where('e_id > ?', @e_id).order(id: :asc).each do |i|
         member = EmpireMember.find_by(uid: i.uid)
         EmpireMember.where(uid: i.uid).update_all state: i.lic_state, last_purchase: i.purchase, lic_num: i.lic_num, email: i.email, purchases: (member.purchases + 1)
-        unless member.lic_num.blank?
-          if member.state == 'CA' && member.lic_num.length != 8
-            ca_lic_fix
-          elsif member.state == 'NJ' && member.lic_num.length != 7
-            nj_lic_fix
+          # LIC LEADDING ZERO FIX
+          if member.state == 'CA' || member.state == 'NJ'
+            unless member.lic_num.blank?
+              member_lic = EmpireMember.find_by(uid: i.uid)
+              if member_lic.state == 'CA' && member_lic.lic_num.length != 8
+                if member_lic.lic_num.length == 4
+                  EmpireMember.where(id: member_lic.id).update_all lic_num: '0000' + member_lic.lic_num
+                elsif member_lic.lic_num.length == 5
+                  EmpireMember.where(id: member_lic.id).update_all lic_num: '000' + member_lic.lic_num
+                elsif member_lic.lic_num.length == 6
+                  EmpireMember.where(id: member_lic.id).update_all lic_num: '00' + member_lic.lic_num
+                elsif member_lic.lic_num.length == 7
+                  EmpireMember.where(id: member_lic.id).update_all lic_num: '0' + member_lic.lic_num
+                end
+              elsif member_lic.state == 'NJ' && member_lic.lic_num.length != 7
+                if member_lic.lic_num.length == 3
+                  EmpireMember.where(id: member_lic.id).update_all lic_num: '0000' + member_lic.lic_num
+                elsif member_lic.lic_num.length == 4
+                  EmpireMember.where(id: member_lic.id).update_all lic_num: '000' + member_lic.lic_num
+                elsif member_lic.lic_num.length == 5
+                  EmpireMember.where(id: member_lic.id).update_all lic_num: '00' + member_lic.lic_num
+                elsif member_lic.lic_num.length == 6
+                  EmpireMember.where(id: member_lic.id).update_all lic_num: '0' + member_lic.lic_num
+                end
+              end
+            end
           end
-        end
 
         if member.lname.present? ## LAST NAME UPCASE
           EmpireMember.where(id: member.id).update_all lname: member.lname.upcase
@@ -53,26 +73,10 @@ class EmpireMembersController < ApplicationController
   end
 
   def ca_lic_fix # 8 DIGITS FORMAT
-    if member.lic_num.length == 4
-      EmpireMember.where(id: member.id).update_all lic_num: '0000' + member.lic_num
-    elsif member.lic_num.length == 5
-      EmpireMember.where(id: member.id).update_all lic_num: '000' + member.lic_num
-    elsif member.lic_num.length == 6
-      EmpireMember.where(id: member.id).update_all lic_num: '00' + member.lic_num
-    elsif member.lic_num.length == 7
-      EmpireMember.where(id: member.id).update_all lic_num: '0' + member.lic_num
-    end
+
   end
   def nj_lic_fix
-    if i.lic_num.length == 3
-      EmpireMember.where(id: i.id).update_all lic_num: '0000' + i.lic_num
-    elsif i.lic_num.length == 4
-      EmpireMember.where(id: i.id).update_all lic_num: '000' + i.lic_num
-    elsif i.lic_num.length == 5
-      EmpireMember.where(id: i.id).update_all lic_num: '00' + i.lic_num
-    elsif i.lic_num.length == 6
-      EmpireMember.where(id: i.id).update_all lic_num: '0' + i.lic_num
-    end
+
   end
 
   # GET /empire_members/1 or /empire_members/1.json

@@ -44,7 +44,7 @@
         <td><strong><%= empire_state.state %></strong></td>
         <td class="text-center">
           <div class="btn-group text-center" role="group" aria-label="Basic example">
-          <%= link_to 'Run Match', send("empire_master_#{empire_state.st.downcase}_matches_path", run: 'yes', route: 'hp'), class: 'btn btn-outline-success btn-sm w100', data: {disable_with: "Loading..."} %>
+            <%= link_to 'Run Match', send("empire_master_#{empire_state.st.downcase}_matches_path", run: 'yes', route: 'hp'), class: 'btn btn-outline-success btn-sm w100', data: {disable_with: "Loading..."} %>
           </div>
         </td>
         <% if empire_state.matched_customers.present? %>

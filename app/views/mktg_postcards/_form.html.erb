@@ -8,12 +8,36 @@
     <%= f.input :campaign %>
     <%= f.input :segment %>
     <%= f.input :mail_day %>
-    <%= f.input :range_1_a, include_blank: true %>
-    <%= f.input :range_1_b, include_blank: true %>
-    <%= f.input :range_2_a, include_blank: true  %>
-    <%= f.input :range_2_b, include_blank: true %>
-    <%= f.input :range_3_a, include_blank: true %>
-    <%= f.input :range_3_b, include_blank: true %>
+    <div class="row">
+      <div class="col-md-6">
+        <%= f.input :range_1_a, include_blank: true %>
+        <%= f.input :range_1_b, include_blank: true %>
+        <%= f.input :range_2_a, include_blank: true  %>
+        <%= f.input :range_2_b, include_blank: true %>
+        <%= f.input :range_3_a, include_blank: true %>
+        <%= f.input :range_3_b, include_blank: true %>
+        <%= f.input :range_4_a, include_blank: true %>
+        <%= f.input :range_4_b, include_blank: true %>
+        <%= f.input :range_5_a, include_blank: true %>
+        <%= f.input :range_5_b, include_blank: true %>
+        <%= f.input :range_6_a, include_blank: true %>
+        <%= f.input :range_6_b, include_blank: true %>
+      </div>
+      <div class="col-md-6">
+        <%= f.input :range_7_a, include_blank: true %>
+        <%= f.input :range_7_b, include_blank: true %>
+        <%= f.input :range_8_a, include_blank: true  %>
+        <%= f.input :range_8_b, include_blank: true %>
+        <%= f.input :range_9_a, include_blank: true %>
+        <%= f.input :range_9_b, include_blank: true %>
+        <%= f.input :range_10_a, include_blank: true %>
+        <%= f.input :range_10_b, include_blank: true %>
+        <%= f.input :range_11_a, include_blank: true %>
+        <%= f.input :range_11_b, include_blank: true %>
+      </div>
+
+    </div>
+
     <%= f.input :done %>
     <%= f.input :sent %>
     <%= f.input :notes %>

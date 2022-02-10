@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_02_05_032436) do
+ActiveRecord::Schema.define(version: 2022_02_10_005250) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1211,6 +1211,8 @@ ActiveRecord::Schema.define(version: 2022_02_05_032436) do
     t.date "range_9_b"
     t.date "range_10_a"
     t.date "range_10_b"
+    t.date "range_11_a"
+    t.date "range_11_b"
   end
 
   create_table "no_mail_not_founds", force: :cascade do |t|

@@ -27,7 +27,7 @@
         <br> <%= i.city.present? ? i.city.titlecase : ''%> <%= i.state.present? ? i.state.upcase : ''%> <%= i.zip %></p>
     <% elsif params['co'] == 'Sequoia' && params['campaign'] == 'New' %> <!-- SEQUOIA NC -->
         <p class="text-center"><span class="mktg_export_text_1_sequoia_rc"><%= i.text_1 %>
-        <br><strong>TEST<%#= (i.exp + 1.year).strftime('%B %-d, %Y') %></strong></span></p>
+        <br><strong><%= (i.exp + 1.year).strftime('%B %-d, %Y') %></strong></span></p>
         <p class="mktg_export_text_addess <% unless count == MktgExport.count %>mktg_print_padding_sequoia_rc <% end %>"><%= i.fname.present? ? i.fname.titlecase : "" %> <%= i.lname.present? ? i.lname.titlecase : ''%>
         <br> <%= i.street_1.present? ? i.street_1.titlecase : '' %> <%= i.street_2.present? && i.street_2 == 'XX' ? '' : i.street_2.present? ? i.street_2.titlecase : '' %>
         <br> <%= i.city.present? ? i.city.titlecase : ''%> <%= i.state.present? ? i.state.upcase : ''%> <%= i.zip %></p>

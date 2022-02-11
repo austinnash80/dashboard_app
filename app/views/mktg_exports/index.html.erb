@@ -21,7 +21,7 @@
 <br>
 <br>
   <p><%= link_to 'Export List (csv)', mktg_exports_path('csv'), class: 'btn btn-sm btn-secondary text-light mt-2 w200' %></p>
-  <% if campaign.delivery_type == 'Postcard' %><p><%= link_to 'Print View', print_mktg_exports_path(co: params['co'], campaign: params['campaign'], des: params['des']), class: 'btn btn-sm btn-success text-light mt-2 w200', target: '_blank' %></p><% end %>
+  <% if campaign.delivery_type == 'Postcard' %><p><%= link_to 'Print View', print_mktg_exports_path(co: campaign.company, campaign: campaign.campaign, des: campaign.segment), class: 'btn btn-sm btn-success text-light mt-2 w200', target: '_blank' %></p><% end %>
 <!-- END UPLOAD, DELETE, EXPORT, PRINT -->
 
 <div class="m-5">

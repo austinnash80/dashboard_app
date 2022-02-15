@@ -41,6 +41,7 @@ class EmpireMasterCaMatchesController < ApplicationController
       end
       EmpireMember.where(uid: member.uid).update_all dup: true
       EmpireMember.where(uid: master_match.uid).update_all dup: true
+      redirect_to empire_members_path(st: 'CA', type: 'no_match')
     end
 
   end

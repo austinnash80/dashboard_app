@@ -5,7 +5,7 @@
 <% elsif params['type'] == 'expired' %>
   <h4 class="bold text-center">Expired</h4>
 <% elsif params['type'] == 'other' %>
-  <h4 class="bold text-center">Other (not in master, can't find)</h4>
+  <h4 class="bold text-center">Other (not in master, can't find, Dup)</h4>
 <% end %>
 <% unless params['st'].present? %>
   <div class="text-center">
@@ -51,13 +51,13 @@
       <% empire_member = EmpireMember.where(lname: params['lname'].titlecase).all %>
     <% end %>
   <% elsif params['st'].present? %>
+    <% match = "EmpireMaster#{params['st'].titlecase}Match".constantize.pluck(:uid)%>
     <% if params['type'] == 'no_match' %>
-      <% match = "EmpireMaster#{params['st'].titlecase}Match".constantize.pluck(:uid)%>
       <% empire_member = EmpireMember.where(state: params['st']).where.not(uid: match).where(lic_expired: false).where(lic_not_found: false).where(lic_not_in_master: false).where(dup: false).all %>
     <% elsif params['type'] == 'expired' %>
       <% empire_member = EmpireMember.where(state: params['st']).where.not(uid: match).where(lic_expired: true).all %>
     <% elsif params['type'] == 'other' %>
-      <% empire_member = EmpireMember.where(state: params['st']).where.not(uid: match).where(lic_not_found: true).or(EmpireMember.where(state: params['st']).where.not(uid: match).where(lic_not_in_master: true)).all %>
+      <% empire_member = EmpireMember.where(state: params['st']).where.not(uid: match).where(lic_not_found: true).or(EmpireMember.where(state: params['st']).where.not(uid: match).where(lic_not_in_master: true)).or(EmpireMember.where(state: params['st']).where.not(uid: match).where(dup: true)).all %>
     <% else %>
       <% empire_member = EmpireMember.where(state: params['st']).all %>
     <% end %>

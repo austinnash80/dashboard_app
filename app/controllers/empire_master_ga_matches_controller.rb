@@ -79,7 +79,7 @@ class EmpireMasterGaMatchesController < ApplicationController
 
     total = EmpireMember.where(state: 'GA').count
     expired = EmpireMember.where(state: 'GA').where(lic_expired: true).count
-    other = EmpireMember.where(state: 'GA').where(lic_not_found: true).count + EmpireMember.where(state: 'GA').where(lic_not_in_master: true).count
+    other = EmpireMember.where(state: 'GA').where(lic_not_found: true).count + EmpireMember.where(state: 'GA').where(lic_not_in_master: true).count + EmpireMember.where(state: 'GA').where(dup: true).count
     matched = EmpireMasterGaMatch.count
     EmpireState.where(st: 'GA').update_all customers: total, matched_customers: matched, lic_expired: expired, lic_other: other
 

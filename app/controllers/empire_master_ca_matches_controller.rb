@@ -22,6 +22,27 @@ class EmpireMasterCaMatchesController < ApplicationController
       run
     end
 
+    if params['dup'] == 'yes'
+      member = EmpireMember.find_by(uid: params['uid'])
+      master_match = EmpireMasterCaMatch.find_by(lid: params['lid'])
+      # Switch the uid, add old (based n search data and last order) to uid2 and update member to 'dup'
+      if member.last_purchase > master_match.search_date
+        if master_match.uid2.present?
+          EmpireMasterCaMatch.where(lid: master_match.lid).update_all uid: member.uid, uid3: master_match.uid, search_date: Time.now
+        else
+          EmpireMasterCaMatch.where(lid: master_match.lid).update_all uid: member.uid, uid2: master_match.uid, search_date: Time.now
+        end
+      else
+        if master_match.uid2.present?
+          EmpireMasterCaMatch.where(lid: master_match.lid).update_all uid3: member.uid
+        else
+          EmpireMasterCaMatch.where(lid: master_match.lid).update_all uid2: member.uid
+        end
+      end
+      EmpireMember.where(uid: member.uid).update_all dup: true
+      EmpireMember.where(uid: master_match.uid).update_all dup: true
+    end
+
   end
 
   def run
@@ -169,11 +190,13 @@ class EmpireMasterCaMatchesController < ApplicationController
       end
     end
 
-
-
+    dup_primary = EmpireMasterCaMatch.where.not(uid2: nil).pluck(:uid)
+    dup = EmpireMember.where(dup: true).where.not(uid: dup_primary).count
+    expired = EmpireMember.where(state: 'CA').where(lic_expired: true).count
+    other = EmpireMember.where(state: 'CA').where(lic_not_found: true).count + EmpireMember.where(state: 'CA').where(lic_not_in_master: true).count + dup
     total = EmpireMember.where(state: 'CA').count
     matched = EmpireMasterCaMatch.count
-    EmpireState.where(st: 'CA').update_all customers: total, matched_customers: matched
+    EmpireState.where(st: 'CA').update_all customers: total, matched_customers: matched, lic_expired: expired, lic_other: other
 
     redirect_to list_data_hp_empire_states_path(), notice: "CA Update Done"
     # redirect_to empire_master_ca_matches_path(), notice: "Update Done"
@@ -291,6 +314,6 @@ class EmpireMasterCaMatchesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def empire_master_ca_match_params
-      params.require(:empire_master_ca_match).permit(:st, :lid, :list, :exp, :lic, :uid, :lname, :search_date)
+      params.require(:empire_master_ca_match).permit(:st, :lid, :list, :exp, :lic, :uid, :lname, :search_date, :uid2, :uid3, :notes)
     end
 end

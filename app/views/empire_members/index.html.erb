@@ -52,8 +52,8 @@
     <% end %>
   <% elsif params['st'].present? %>
     <% if params['type'] == 'no_match' %>
-      <% match = "EmpireMaster#{params['st'].titlecase}Match".constantize.pluck(:uid) %>
-      <% empire_member = EmpireMember.where(state: params['st']).where.not(uid: match).where(lic_expired: false).where(lic_not_found: false).where(lic_not_in_master: false).all %>
+      <% match = "EmpireMaster#{params['st'].titlecase}Match".constantize.pluck(:uid)%>
+      <% empire_member = EmpireMember.where(state: params['st']).where.not(uid: match).where(lic_expired: false).where(lic_not_found: false).where(lic_not_in_master: false).where(dup: false).all %>
     <% elsif params['type'] == 'expired' %>
       <% empire_member = EmpireMember.where(state: params['st']).where.not(uid: match).where(lic_expired: true).all %>
     <% elsif params['type'] == 'other' %>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_02_10_224838) do
+ActiveRecord::Schema.define(version: 2022_02_15_203407) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -226,6 +226,9 @@ ActiveRecord::Schema.define(version: 2022_02_10_224838) do
     t.date "search_date"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "uid2"
+    t.integer "uid3"
+    t.text "notes"
     t.index ["lid"], name: "index_empire_master_ca_matches_on_lid", unique: true
   end
 
@@ -948,6 +951,7 @@ ActiveRecord::Schema.define(version: 2022_02_10_224838) do
     t.boolean "lic_edit"
     t.text "lic_notes"
     t.boolean "lic_not_in_master"
+    t.boolean "dup"
     t.index ["uid"], name: "index_empire_members_on_uid", unique: true
   end
 

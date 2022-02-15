@@ -24,7 +24,7 @@ class EmpireMembersController < ApplicationController
     uid = EmpireMember.pluck(:uid) #So no duplicates created (alredy in the table)
 
       EmpireCustomer.where('e_id > ?', @e_id).where.not(uid: uid).order(id: :ASC).all.each do |i|
-        EmpireMember.create(uid: i.uid, fname: i.fname,lname: i.lname, first_purchase: i.purchase, last_purchase: i.purchase, purchases: 0, lic_expired: false, lic_edit: false, lic_not_found: false, lic_not_in_master: false).save
+        EmpireMember.create(uid: i.uid, fname: i.fname,lname: i.lname, first_purchase: i.purchase, last_purchase: i.purchase, purchases: 0, lic_expired: false, lic_edit: false, lic_not_found: false, lic_not_in_master: false, dup: false).save
       end
       redirect_to empire_members_path(), notice: 'New Member Update Complete'
   end
@@ -142,6 +142,6 @@ class EmpireMembersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def empire_member_params
-      params.require(:empire_member).permit(:uid, :lname, :first_purchase, :last_purchase, :state, :purchases, :email_unsubscribe, :email, :lic_num, :fname, :lic_expired, :lic_not_found, :lic_edit, :lic_notes, :lic_not_in_master)
+      params.require(:empire_member).permit(:uid, :lname, :first_purchase, :last_purchase, :state, :purchases, :email_unsubscribe, :email, :lic_num, :fname, :lic_expired, :lic_not_found, :lic_edit, :lic_notes, :lic_not_in_master, :dup)
     end
 end

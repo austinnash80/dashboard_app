@@ -34,7 +34,7 @@
       <th>Uid</th>
       <th>Lname</th>
       <th>Search date</th>
-      <th colspan="3"></th>
+      <th colspan="4"></th>
     </tr>
   </thead>
 
@@ -49,6 +49,7 @@
         <td><%= empire_master_ca_match.uid %></td>
         <td><%= empire_master_ca_match.lname %></td>
         <td><%= empire_master_ca_match.search_date %></td>
+        <% if empire_master_ca_match.uid2.present? || empire_master_ca_match.uid3.present? || empire_master_ca_match.notes.present? %><td>Has Note</td><% else %> <td></td><% end %>
         <td><%= link_to 'Show', empire_master_ca_match %></td>
         <td><%= link_to 'Edit', edit_empire_master_ca_match_path(empire_master_ca_match) %></td>
         <td><%= link_to 'Destroy', empire_master_ca_match, method: :delete, data: { confirm: 'Are you sure?' } %></td>

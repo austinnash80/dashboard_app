@@ -59,7 +59,7 @@
       <% if member.state == 'SC' %><td><a href="https://verify.llronline.com/LicLookup/Rec/Rec.aspx?div=19" class="btn btn-xs btn-outline-secondary" target="_blank">SC License Lookup</a> <% end %>
       <% if member.state == 'TX' %><td><a href="https://www.trec.texas.gov/apps/license-holder-search/?detail_id=881127289" class="btn btn-xs btn-outline-secondary" target="_blank">TX License Lookup</a> </td><% end %>
       <% if member.state == 'NY' %><td><a href="https://appext20.dos.ny.gov/nydos/searchByLicNumber.do" class="btn btn-xs btn-outline-secondary" target="_blank">NY License Lookup</a> <% end %>
-      <% if member.state == 'NM' %><td><a href="https://appext20.dos.ny.gov/nydos/searchByLicNumber.do" class="btn btn-xs btn-outline-secondary" target="_blank">NM License Lookup</a> <% end %>
+      <% if member.state == 'NM' %><td><a href="http://verification.rld.state.nm.us/" class="btn btn-xs btn-outline-secondary" target="_blank">NM License Lookup</a> <% end %>
       <% if member.state == 'IND' %><td><a href="https://mylicense.in.gov/everification/SearchResults.aspx" class="btn btn-xs btn-outline-secondary" target="_blank">IND License Lookup</a> <% end %>
       <td colspan="12"></td>
     </tr>
@@ -78,6 +78,7 @@
       <th>List</th>
       <th>Lic State</th>
       <th>Lic</th>
+      <th>EXP</th>
       <th>Fname</th>
       <th>mi</th>
       <th>Lname</th>
@@ -97,6 +98,7 @@
         <td><%= i.list %></td>
         <td><%= i.lic_state %></td>
         <td><%= i.lic %></td>
+        <td><%= i.exp %></td>
         <td><%= i.fname %></td>
         <td><%= i.mi %></td>
         <td><%= i.lname %></td>

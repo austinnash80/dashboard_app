@@ -37,6 +37,26 @@
   <strong>Email Unsubscribe:</strong>
   <%= @empire_member.email_unsubscribe %>
 </p>
+<p>
+  <strong>Lic Expired:</strong>
+  <%= @empire_member.lic_expired %>
+</p>
+<p>
+  <strong>Lic Not Found:</strong>
+  <%= @empire_member.lic_not_found %>
+</p>
+<p>
+  <strong>Lic Edit:</strong>
+  <%= @empire_member.lic_edit %>
+</p>
+<p>
+  <strong>Lic Not in Master:</strong>
+  <%= @empire_member.lic_not_in_master %>
+</p>
+<p>
+  <strong>Lic Dup:</strong>
+  <%= @empire_member.dup %>
+</p>
 
 <p><%= link_to "#{@empire_member.state} Unmatched", empire_members_path(type: 'no_match', st: @empire_member.state, expired: "#{@empire_member.state}"), class: 'btn btn-sm btn-outline-primary w200' %> <%= link_to 'Empire List Data', list_data_hp_empire_states_path(expired: "#{@empire_member.state}"), class: 'btn btn-sm btn-outline-primary w200' %></p>
 

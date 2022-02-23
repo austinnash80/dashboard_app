@@ -34,8 +34,8 @@
         <td><%= i.drop_day.present? ? i.drop_day.strftime('%-m/%d/%y') : '' %></td>
         <td><%= i.land_day.present? ? i.land_day.strftime('%-m/%d/%y') : '' %></td>
         <td colspan="1">
-          <% if i.notes.present? %> <%= i.notes %> <% end %>
-          <% if i.range_1_a.present? && i.range_1_b.present? %> Date Ranges: <%= i.range_1_a.strftime('%-m/%-d/%y') %> - <%= i.range_1_b.strftime('%-m/%-d/%y') %><% end %>
+          <% if i.notes.present? %> <%= i.notes %> <br><% end %>
+          <% if i.range_1_a.present? && i.range_1_b.present? %> <strong><% unless i.campaign == 'New' %>EXP<% else %>Date<% end %> Range:</strong> <%= i.range_1_a.strftime('%-m/%-d/%y') %> - <%= i.range_1_b.strftime('%-m/%-d/%y') %><% end %>
           <% if i.range_2_a.present? && i.range_2_b.present? %>, <%= i.range_2_a.strftime('%-m/%-d/%y') %> - <%= i.range_2_b.strftime('%-m/%-d/%y') %><% end %>
           <% if i.range_3_a.present? && i.range_3_b.present? %>, <%= i.range_3_a.strftime('%-m/%-d/%y') %> - <%= i.range_3_b.strftime('%-m/%-d/%y') %><% end %>
           <% if i.range_4_a.present? && i.range_4_b.present? %>, <%= i.range_4_a.strftime('%-m/%-d/%y') %> - <%= i.range_4_b.strftime('%-m/%-d/%y') %><% end %>
@@ -77,15 +77,13 @@
 </table>
 </div>
 
-<meta http-equiv="refresh" content="15" />
-
 
 <script type="text/javascript">
+  setTimeout("location.reload();",15000);
+
   $(".sent_link").click(function() {
     $(this).attr("href", function() {
       return this.href + "&sent=" + $('.sent_field').val().toUpperCase();
     });
   });
-
-
 </script>

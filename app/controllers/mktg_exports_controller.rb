@@ -171,7 +171,7 @@ class MktgExportsController < ApplicationController
     elsif params['campaign'] == 'New' && params['des'] == 'EA'
       MktgExport.update_all text_1: 'Membership Valid Through',text_2: '',text_3: ''
     end
-    
+
     IdNumberStorage.where(id: 1).update_all campaign_id: params['id']
     redirect_to mktg_exports_path(id: params['id'])
   end
@@ -200,14 +200,22 @@ class MktgExportsController < ApplicationController
         else
           MktgExport.where(id: i.id).update_all email: customer.email, fname: customer.fname, lname: customer.lname, street_1: customer.street_1, street_2: customer.street_2, city: customer.city, state: customer.state, zip: customer.zip
         end
-
       end
 
-    elsif params['campaign'] == 'Return'
-      model.where(exp: @dates).all.each do |i|
+    elsif params['campaign'] == 'Return' && params['des'] == 'PA'
+      EmpireMasterPaMatch.where(exp: @dates).all.each do |i|
+        MktgExport.create(uid: i.uid, exp: i.exp, campaign: params['campaign'], des: i.st).save
+      end
+      MktgExport.all.each do |i|
         member = EmpireMember.find_by(uid: i.uid)
-        unless member.last_purchase > recent_purchase_exclude
-          MktgExport.create(uid: i.uid, exp: i.exp, campaign: params['campaign'], des: i.st).save
+        customer = EmpireCustomer.order(purchase: :DESC).find_by(uid: i.uid)
+        recent_purchase_exclude = Date.today - 12.months
+        if member.blank? || customer.blank?
+          MktgExport.where(id: i.id).delete_all
+        elsif member.last_purchase > recent_purchase_exclude
+          MktgExport.where(id: i.id).delete_all
+        else
+          MktgExport.where(id: i.id).update_all email: customer.email, fname: customer.fname, lname: customer.lname, street_1: customer.street_1, street_2: customer.street_2, city: customer.city, state: customer.state, zip: customer.zip
         end
       end
     end

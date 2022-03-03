@@ -218,6 +218,22 @@ class MktgExportsController < ApplicationController
           MktgExport.where(id: i.id).update_all email: customer.email, fname: customer.fname, lname: customer.lname, street_1: customer.street_1, street_2: customer.street_2, city: customer.city, state: customer.state, zip: customer.zip
         end
       end
+    elsif params['campaign'] == 'Return' && params['des'] == 'MO_B'
+      EmpireMasterMoMatch.where(exp: @dates).all.each do |i|
+        MktgExport.create(uid: i.uid, exp: i.exp, campaign: params['campaign'], des: i.st).save
+      end
+      MktgExport.all.each do |i|
+        member = EmpireMember.find_by(uid: i.uid)
+        customer = EmpireCustomer.order(purchase: :DESC).find_by(uid: i.uid)
+        recent_purchase_exclude = Date.today - 12.months
+        if member.blank? || customer.blank?
+          MktgExport.where(id: i.id).delete_all
+        elsif member.last_purchase > recent_purchase_exclude
+          MktgExport.where(id: i.id).delete_all
+        else
+          MktgExport.where(id: i.id).update_all email: customer.email, fname: customer.fname, lname: customer.lname, street_1: customer.street_1, street_2: customer.street_2, city: customer.city, state: customer.state, zip: customer.zip
+        end
+      end
     end
 
       # end

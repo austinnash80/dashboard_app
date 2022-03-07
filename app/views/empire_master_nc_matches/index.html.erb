@@ -13,12 +13,12 @@
 <% end %>
 
 <% if params['remove_all'] == 'yes' %>
-  <p><%= link_to "Confirm Delete", empire_master_mo_matches_path(remove_all: 'yes', confirm: 'yes'), class: 'btn btn-sm btn-danger mt-4' %></p>
+  <p><%= link_to "Confirm Delete", empire_master_nc_matches_path(remove_all: 'yes', confirm: 'yes'), class: 'btn btn-sm btn-danger mt-4' %></p>
 <% else %>
-  <p><%= link_to "Remove All Records", empire_master_mo_matches_path(remove_all: 'yes'), class: 'btn btn-sm btn-warning mt-4' %></p>
+  <p><%= link_to "Remove All Records", empire_master_nc_matches_path(remove_all: 'yes'), class: 'btn btn-sm btn-warning mt-4' %></p>
 <% end %>
 
-<p><%= link_to 'Export List (csv)', empire_master_mo_matches_path('csv'), class: 'btn btn-sm btn-secondary text-light mt-2' %></p>
+<p><%= link_to 'Export List (csv)', empire_master_nc_matches_path('csv'), class: 'btn btn-sm btn-secondary text-light mt-2' %></p>
 
 <br>
 <table class="table table-striped">

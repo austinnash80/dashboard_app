@@ -5,7 +5,7 @@
 <div class="m-3"><p class="text-center"><%= link_to 'Empire States Table', empire_states_path(), class: 'btn btn-sm btn-outline-primary w200 m-1' %> <%= link_to 'List Data Home Page', list_data_hp_empire_states_path(), class: 'btn btn-sm btn-outline-primary w200 m-1' %></p></div>
 
 <div class="m-5">
-  <p><%= link_to 'Run Match', empire_master_mo_matches_path(run: 'yes'), class: 'btn btn-sm btn-outline-info'%></p>
+  <p><%= link_to 'Run Match', empire_master_nc_matches_path(run: 'yes'), class: 'btn btn-sm btn-outline-info'%></p>
 <p class="fs-4">Upload New List</p>
   <%= form_tag import_empire_master_mo_matches_path, multipart: true do %>
   <%= file_field_tag :file, class: 'btn btn-sm btn-light' %>

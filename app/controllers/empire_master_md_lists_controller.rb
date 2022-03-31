@@ -9,6 +9,8 @@ class EmpireMasterMdListsController < ApplicationController
     if params['remove_all'] == 'yes' && params['confirm'] == 'yes'
       EmpireMasterMdList.delete_all
       EmpireState.where(st: 'MD').update_all list_size: 0
+      EmpireMasterMDMatch.delete_all
+      EmpireState.where(st: 'MD').update_all matched_customers: 0
       redirect_to empire_master_md_lists_path(), notice: 'Records Deleted'
     end
 

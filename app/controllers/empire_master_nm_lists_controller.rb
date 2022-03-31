@@ -8,6 +8,8 @@ class EmpireMasterNmListsController < ApplicationController
     if params['remove_all'] == 'yes' && params['confirm'] == 'yes'
       EmpireMasterNmList.delete_all
       EmpireState.where(st: 'NM').update_all list_size: 0
+      EmpireMasterNmMatch.delete_all
+      EmpireState.where(st: 'NM').update_all matched_customers: 0
       redirect_to empire_master_nm_lists_path(), notice: 'Records Deleted'
     end
 

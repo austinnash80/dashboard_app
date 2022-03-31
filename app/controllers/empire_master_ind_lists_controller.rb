@@ -8,6 +8,8 @@ class EmpireMasterIndListsController < ApplicationController
     if params['remove_all'] == 'yes' && params['confirm'] == 'yes'
       EmpireMasterIndList.delete_all
       EmpireState.where(st: 'IND').update_all list_size: 0
+      EmpireMasterIndMatch.delete_all
+      EmpireState.where(st: 'IND').update_all matched_customers: 0
       redirect_to empire_master_ind_lists_path(), notice: 'Records Deleted'
     end
 

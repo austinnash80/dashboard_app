@@ -8,6 +8,8 @@ class EmpireMasterNjListsController < ApplicationController
     if params['remove_all'] == 'yes' && params['confirm'] == 'yes'
       EmpireMasterNjList.delete_all
       EmpireState.where(st: 'NJ').update_all list_size: 0
+      EmpireMasterNjMatch.delete_all
+      EmpireState.where(st: 'NJ').update_all matched_customers: 0
       redirect_to empire_master_nj_lists_path(), notice: 'Records Deleted'
     end
 

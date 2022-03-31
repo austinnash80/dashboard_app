@@ -8,6 +8,8 @@ class EmpireMasterGaListsController < ApplicationController
     if params['remove_all'] == 'yes' && params['confirm'] == 'yes'
       EmpireMasterGaList.delete_all
       EmpireState.where(st: 'GA').update_all list_size: 0
+      EmpireMasterGaMatch.delete_all
+      EmpireState.where(st: 'GA').update_all matched_customers: 0
       redirect_to empire_master_ga_lists_path(), notice: 'Records Deleted'
     end
 

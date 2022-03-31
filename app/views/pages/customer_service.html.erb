@@ -85,7 +85,7 @@
       <div class="card bg-light bg-gradient">
         <div class="card-body">
           <h5 class="card-title fw-bold">Sequoia Courses</h5>
-          <p class="card-text">Course tables - for course updates and new courses</p>
+          <p class="card-text">Status - Text: <span class="danger"><%= @courses_counter_text %></span> | Exam: <span class="danger"><%= @courses_counter_exam %></span> | Not Proofed: <span class="danger"><%= @courses_counter_proof %></span></p>
           <div class="btn-group" role="group" aria-label="">
             <%= link_to 'PES', courses_pes_path(), class: 'btn btn-sm btn-secondary text-light bg-gradient w100' %>
             <%= link_to 'Sequoia', courses_sequoia_path(), class: 'btn btn-sm btn-secondary text-light bg-gradient w100' %>

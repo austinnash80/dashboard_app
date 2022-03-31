@@ -24,29 +24,51 @@ class EmpireMasterTnMatchesController < ApplicationController
   end
 
   def run
-    already_matched_uid = EmpireMasterTnMatch.pluck(:uid)
-    EmpireMember.where(state: 'TN').where.not(uid: already_matched_uid).each do |i|
-      master = EmpireMasterTnList.find_by(lic: i.lic_num)
-      if master.present?
+    member = EmpireMember.where(state: "TN").pluck(:lic_num)
+    master = EmpireMasterTnList.pluck(:lic)
+    matched = EmpireMasterTnMatch.pluck(:lic)
+    new = (master - matched) & member
+    list = EmpireMasterTnList.first(1).pluck(:list)[0]
+
+    if params['type'] == 'large'
+      EmpireMasterTnList.select("id","lid","lic", "exp_date", "lname").where(lic: new).find_in_batches(batch_size: 500).each do |masters|
+        masters.each do |master|
+          uid = EmpireMember.find_by(lic_num: master.lic)
+          EmpireMasterTnMatch.create(
+            st: "TN",
+            lid: master.lid,
+            list: list,
+            exp: master.exp_date,
+            lic: master.lic,
+            uid: uid.uid,
+            lname: master.lname,
+            search_date: Time.now,
+          ).save
+        end
+      end
+    elsif params['type'] == 'small'
+      new.each do |i|
         EmpireMasterTnMatch.create(
-          st: "TN",
-          lid: master.lid,
-          list: master.list,
-          exp: master.exp_date,
-          lic: master.lic,
-          uid: i.uid,
-          lname: master.lname,
-          search_date: Time.now,
+          lic: i,
+          st: 'TN',
+          list: list,
+          search_date: Time.now
         ).save
+      end
+      EmpireMasterTnMatch.where(uid: nil).each do |i|
+        empire_member = EmpireMember.where(state: 'TN').find_by(lic_num: i.lic)
+        master_list = EmpireMasterTnList.find_by(lic: i.lic)
+        EmpireMasterTnMatch.where(id: i.id).update_all lid: master_list.lid, exp: master_list.exp_date, lname: master_list.lname, uid: empire_member.uid
       end
     end
 
+    expired = EmpireMember.where(state: 'TN').where(lic_expired: true).count
+    other = EmpireMember.where(state: 'TN').where(lic_not_found: true).count + EmpireMember.where(state: 'TN').where(lic_not_in_master: true).count
     total = EmpireMember.where(state: 'TN').count
     matched = EmpireMasterTnMatch.count
-    EmpireState.where(st: 'TN').update_all customers: total, matched_customers: matched
+    EmpireState.where(st: 'TN').update_all customers: total, matched_customers: matched, lic_expired: expired, lic_other: other
 
     redirect_to list_data_hp_empire_states_path(), notice: "TN Update Done"
-    # redirect_to empire_master_ny_matches_path(), notice: "Update Done"
   end
 
   # GET /empire_master_tn_matches/1 or /empire_master_tn_matches/1.json

@@ -24,71 +24,51 @@ class EmpireMasterGaMatchesController < ApplicationController
   end
 
   def run
-    # already_matched_uid = EmpireMasterGaMatch.pluck(:uid)
-    # EmpireMember.where(state: 'GA').where.not(uid: already_matched_uid).each do |i|
-    #   master = EmpireMasterGaList.find_by(lic: i.lic_num)
-    #   if master.present?
-    #     EmpireMasterGaMatch.create(
-    #       st: "GA",
-    #       lid: master.lid,
-    #       list: master.list,
-    #       exp: master.exp_date,
-    #       lic: master.lic,
-    #       uid: i.uid,
-    #       lname: master.lname,
-    #       search_date: Time.now,
-    #     ).save
-    #   end
-    # end
-
-    # EmpireMember.select("id","uid", "lic_num").where(state: 'GA').find_in_batches(batch_size: 250) do |members|
-    #   EmpireMember.transaction do
-    #     members.each do |i|
-    #       master = EmpireMasterGaList.find_by(lic: i.lic_num)
-    #       if master.present?
-    #         EmpireMasterGaMatch.create(
-    #           st: "GA",
-    #           lid: master.lid,
-    #           list: master.list,
-    #           exp: master.exp_date,
-    #           lic: master.lic,
-    #           uid: i.uid,
-    #           lname: master.lname,
-    #           search_date: Time.now,
-    #         ).save
-    #       end
-    #     end
-    #   end
-    # end
-
     member = EmpireMember.where(state: "GA").pluck(:lic_num)
     master = EmpireMasterGaList.pluck(:lic)
     matched = EmpireMasterGaMatch.pluck(:lic)
     new = (master - matched) & member
+    list = EmpireMasterGaList.first(1).pluck(:list)[0]
 
-    new.each do |i|
-      EmpireMasterGaMatch.create(lic: i).save
+    if params['type'] == 'large'
+      EmpireMasterGaList.select("id","lid","lic", "exp_date", "lname").where(lic: new).find_in_batches(batch_size: 500).each do |masters|
+        masters.each do |master|
+          uid = EmpireMember.find_by(lic_num: master.lic)
+          EmpireMasterGaMatch.create(
+            st: "GA",
+            lid: master.lid,
+            list: list,
+            exp: master.exp_date,
+            lic: master.lic,
+            uid: uid.uid,
+            lname: master.lname,
+            search_date: Time.now,
+          ).save
+        end
+      end
+    elsif params['type'] == 'small'
+      new.each do |i|
+        EmpireMasterGaMatch.create(
+          lic: i,
+          st: 'GA',
+          list: list,
+          search_date: Time.now
+        ).save
+      end
+      EmpireMasterGaMatch.where(uid: nil).each do |i|
+        empire_member = EmpireMember.where(state: 'GA').find_by(lic_num: i.lic)
+        master_list = EmpireMasterGaList.find_by(lic: i.lic)
+        EmpireMasterGaMatch.where(id: i.id).update_all lid: master_list.lid, exp: master_list.exp_date, lname: master_list.lname, uid: empire_member.uid
+      end
     end
 
-    EmpireMasterGaMatch.where(uid: nil).each do |i|
-      empire_member = EmpireMember.where(state: 'GA').find_by(lic_num: i.lic)
-      master_list = EmpireMasterGaList.find_by(lic: i.lic)
-      EmpireMasterGaMatch.where(id: i.id).update_all st: "GA", lid: master_list.lid, list: master_list.list, exp: master_list.exp_date, lname: master_list.lname, uid: empire_member.uid, search_date: Time.now
-    end
-
-
-    total = EmpireMember.where(state: 'GA').count
     expired = EmpireMember.where(state: 'GA').where(lic_expired: true).count
-    other = EmpireMember.where(state: 'GA').where(lic_not_found: true).count + EmpireMember.where(state: 'GA').where(lic_not_in_master: true).count + EmpireMember.where(state: 'GA').where(dup: true).count
+    other = EmpireMember.where(state: 'GA').where(lic_not_found: true).count + EmpireMember.where(state: 'GA').where(lic_not_in_master: true).count
+    total = EmpireMember.where(state: 'GA').count
     matched = EmpireMasterGaMatch.count
     EmpireState.where(st: 'GA').update_all customers: total, matched_customers: matched, lic_expired: expired, lic_other: other
 
-    # redirect_to list_data_hp_empire_states_path(), notice: "CA Update Done"
-    if params['route'] == 'hp'
-      redirect_to list_data_hp_empire_states_path(), notice: "GA Update Done"
-    else
-      redirect_to empire_master_ga_matches_path(), notice: "Update Done"
-    end
+    redirect_to list_data_hp_empire_states_path(), notice: "GA Update Done"
   end
 
   # GET /empire_master_ga_matches/1 or /empire_master_ga_matches/1.json

@@ -8,6 +8,8 @@ class EmpireMasterTxListsController < ApplicationController
     if params['remove_all'] == 'yes' && params['confirm'] == 'yes'
       EmpireMasterTxList.delete_all
       EmpireState.where(st: 'TX').update_all list_size: 0
+      EmpireMasterTxMatch.delete_all
+      EmpireState.where(st: 'TX').update_all matched_customers: 0
       redirect_to empire_master_tx_lists_path(), notice: 'Records Deleted'
     end
 

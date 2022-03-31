@@ -24,33 +24,51 @@ class EmpireMasterIndMatchesController < ApplicationController
   end
 
   def run
-    already_matched_uid = EmpireMasterIndMatch.pluck(:uid)
-    EmpireMember.where(state: 'IND').where.not(uid: already_matched_uid).each do |i|
-      master = EmpireMasterIndList.find_by(lic: i.lic_num)
-      if master.present?
+    member = EmpireMember.where(state: "IND").pluck(:lic_num)
+    master = EmpireMasterIndList.pluck(:lic)
+    matched = EmpireMasterIndMatch.pluck(:lic)
+    new = (master - matched) & member
+    list = EmpireMasterIndList.first(1).pluck(:list)[0]
+
+    if params['type'] == 'large'
+      EmpireMasterIndList.select("id","lid","lic", "exp_date", "lname").where(lic: new).find_in_batches(batch_size: 500).each do |masters|
+        masters.each do |master|
+          uid = EmpireMember.find_by(lic_num: master.lic)
+          EmpireMasterIndMatch.create(
+            st: "IND",
+            lid: master.lid,
+            list: list,
+            exp: master.exp_date,
+            lic: master.lic,
+            uid: uid.uid,
+            lname: master.lname,
+            search_date: Time.now,
+          ).save
+        end
+      end
+    elsif params['type'] == 'small'
+      new.each do |i|
         EmpireMasterIndMatch.create(
-          st: "IND",
-          lid: master.lid,
-          list: master.list,
-          exp: master.exp_date,
-          lic: master.lic,
-          uid: i.uid,
-          lname: master.lname,
-          search_date: Time.now,
+          lic: i,
+          st: 'IND',
+          list: list,
+          search_date: Time.now
         ).save
+      end
+      EmpireMasterIndMatch.where(uid: nil).each do |i|
+        empire_member = EmpireMember.where(state: 'IND').find_by(lic_num: i.lic)
+        master_list = EmpireMasterIndList.find_by(lic: i.lic)
+        EmpireMasterIndMatch.where(id: i.id).update_all lid: master_list.lid, exp: master_list.exp_date, lname: master_list.lname, uid: empire_member.uid
       end
     end
 
+    expired = EmpireMember.where(state: 'IND').where(lic_expired: true).count
+    other = EmpireMember.where(state: 'IND').where(lic_not_found: true).count + EmpireMember.where(state: 'IND').where(lic_not_in_master: true).count
     total = EmpireMember.where(state: 'IND').count
     matched = EmpireMasterIndMatch.count
-    EmpireState.where(st: 'IND').update_all customers: total, matched_customers: matched
+    EmpireState.where(st: 'IND').update_all customers: total, matched_customers: matched, lic_expired: expired, lic_other: other
 
-    # redirect_to list_data_hp_empire_states_path(), notice: "CA Update Done"
-    if params['route'] == 'hp'
-      redirect_to list_data_hp_empire_states_path(), notice: "IND Update Done"
-    else
-      redirect_to empire_master_ind_matches_path(), notice: "Update Done"
-    end
+    redirect_to list_data_hp_empire_states_path(), notice: "IND Update Done"
   end
 
   # GET /empire_master_ind_matches/1 or /empire_master_ind_matches/1.json

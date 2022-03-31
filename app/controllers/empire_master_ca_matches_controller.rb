@@ -47,111 +47,6 @@ class EmpireMasterCaMatchesController < ApplicationController
   end
 
   def run
-      ## MATCH BY LNAME AND LIC
-      # already_matched_uid = EmpireMasterCaMatch.pluck(:uid)
-      # lic = EmpireMember.where(state: 'CA').where.not(uid: already_matched_uid).pluck(:lic_num)
-      # master = EmpireMasterCaList.pluck(:lic, :lname)
-      # customer = EmpireMember.where.not(uid: already_matched_uid).where(state: 'CA').pluck(:lic_num, :lname)
-      # match = (customer & master)
-      # lic = [].uniq
-      #
-      # match.each do |a,b|
-      #   lic.push(a)
-      # end
-      ## END DOUBLE MATCH
-
-      # if params['empire_member_id'].present?
-      #   empire_member_id_max = empire_member_id.max
-      # else
-      #   empire_member_id_max = 0
-      # end
-
-
-    # empire_member_id = []
-    # already_matched_uid = EmpireMasterCaMatch.pluck(:uid)
-    # ca_membe
-
-    # EmpireMember.select("id","uid", "lic_num").where(state: 'CA').find_in_batches(batch_size: 500) do |members|
-    #   # EmpireMember.transaction do
-    #     members.each do |i|
-    #       EmpireMasterCaList.where(lic: i.lic_num).each do |master|
-    #         EmpireMasterCaMatch.create(
-    #           st: "CA",
-    #           lid: master.lid,
-    #           list: master.list,
-    #           exp: master.exp_date,
-    #           lic: master.lic,
-    #           uid: i.uid,
-    #           lname: master.lname,
-    #           search_date: Time.now,
-    #         ).save
-    #       end
-    #     end
-    #   # end
-    # end
-
-      # EmpireMember.select("uid", "lic_num").where(state: 'CA').order(id: :asc).each do |i|
-      #   master = EmpireMasterCaList.find_by(lic: i.lic_num)
-      #   if master.present?
-      #     EmpireMasterCaMatch.create(
-      #       st: "CA",
-      #       lid: master.lid,
-      #       list: master.list,
-      #       exp: master.exp_date,
-      #       lic: master.lic,
-      #       uid: i.uid,
-      #       lname: master.lname,
-      #       search_date: Time.now,
-      #     ).save
-      #   end
-      # end
-
-      # member = EmpireMember.where(state: "CA").pluck(:lic_num)
-      # master = EmpireMasterCaList.pluck(:lic)
-      # matched = EmpireMasterCaMatch.pluck(:lic)
-      #
-      # new = (master - matched) & member
-      #
-      # EmpireMasterCaList.select("lid","lic", "list", "exp_date", "lname").where(lic: new).find_in_batches(batch_size: 250).each do |master|
-      #   EmpireMember.transaction do
-      #     EmpireMasterCaMatch.create(
-      #       st: "CA",
-      #       lid: master.lid,
-      #       list: master.list,
-      #       exp: master.exp_date,
-      #       lic: master.lic,
-      #       # uid: i.uid,
-      #       lname: master.lname,
-      #       search_date: Time.now,
-      #     ).save
-      #   end
-      # end
-
-      # EmpireMasterCaMatch.where(uid: nil).each do |i|
-      #   member = EmpireMember.find_by(lic_num: i.lic)
-      #   EmpireMasterCaMatch.update_all uid: member.uid
-      # end
-
-      # already_matched_uid = EmpireMasterNjMatch.pluck(:uid)
-      # EmpireMember.where(state: 'NJ').where.not(uid: already_matched_uid).each do |i|
-      #   master = EmpireMasterNjList.find_by(lic: i.lic_num)
-      #   if master.present?
-      #     EmpireMasterNjMatch.create(
-      #       st: "NJ",
-      #       lid: master.lid,
-      #       list: master.list,
-      #       exp: master.exp_date,
-      #       lic: master.lic,
-      #       uid: i.uid,
-      #       lname: master.lname,
-      #       search_date: Time.now,
-      #     ).save
-      #   end
-      # end
-
-      # total = EmpireMember.where(state: 'NJ').count
-      # matched = EmpireMasterNjMatch.count
-      # EmpireState.where(st: 'NJ').update_all customers: total, matched_customers: matched
 
     member = EmpireMember.where(state: "CA").pluck(:lic_num)
     master = EmpireMasterCaList.pluck(:lic)
@@ -159,31 +54,31 @@ class EmpireMasterCaMatchesController < ApplicationController
     new = (master - matched) & member
     list = EmpireMasterCaList.first(1).pluck(:list)[0]
 
-    if params['match'] == 'bulk'
+    if params['type'] == 'large'
       EmpireMasterCaList.select("id","lid","lic", "exp_date", "lname").where(lic: new).find_in_batches(batch_size: 500).each do |masters|
-        # EmpireMember.transaction do
-          masters.each do |master|
-            uid = EmpireMember.find_by(lic_num: master.lic)
-            EmpireMasterCaMatch.create(
-              st: "CA",
-              lid: master.lid,
-              list: list,
-              exp: master.exp_date,
-              lic: master.lic,
-              uid: uid.uid,
-              lname: master.lname,
-              search_date: Time.now,
-            ).save
-          end
-        # end
+        masters.each do |master|
+          uid = EmpireMember.find_by(lic_num: master.lic)
+          EmpireMasterCaMatch.create(
+            st: "CA",
+            lid: master.lid,
+            list: list,
+            exp: master.exp_date,
+            lic: master.lic,
+            uid: uid.uid,
+            lname: master.lname,
+            search_date: Time.now,
+          ).save
+        end
       end
-    elsif new.count > 250
-      redirect_to empire_master_ca_matches_path(upload: 'bulk'), notice: 'Bulk Match Needed' and return
-    else
+    elsif params['type'] == 'small'
       new.each do |i|
-        EmpireMasterCaMatch.create(lic: i, st: 'CA', list: list, search_date: Time.now).save
+        EmpireMasterCaMatch.create(
+          lic: i,
+          st: 'CA',
+          list: list,
+          search_date: Time.now
+        ).save
       end
-
       EmpireMasterCaMatch.where(uid: nil).each do |i|
         empire_member = EmpireMember.where(state: 'CA').find_by(lic_num: i.lic)
         master_list = EmpireMasterCaList.find_by(lic: i.lic)
@@ -200,7 +95,6 @@ class EmpireMasterCaMatchesController < ApplicationController
     EmpireState.where(st: 'CA').update_all customers: total, matched_customers: matched, lic_expired: expired, lic_other: other
 
     redirect_to list_data_hp_empire_states_path(), notice: "CA Update Done"
-    # redirect_to empire_master_ca_matches_path(), notice: "Update Done"
   end
 
   def lic_fix_member

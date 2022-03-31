@@ -1,26 +1,26 @@
 
 <!-- <p><%#= link_to 'Temp Fix LIC', list_data_hp_empire_states_path(temp: 'lic_fix'), class: 'btn btn-sm btn-outline-success' %></p> -->
 <!-- <p><%#= link_to 'Temp Fix Upcase', list_data_hp_empire_states_path(temp: 'upcase_fix'), class: 'btn btn-sm btn-outline-success' %></p> -->
-<p><%= link_to 'Temp Fix Leading Zero', list_data_hp_empire_states_path(temp: 'leading_zero_fix'), class: 'btn btn-sm btn-outline-success' %></p>
+<!-- <p><%#= link_to 'Temp Fix Leading Zero', list_data_hp_empire_states_path(temp: 'leading_zero_fix'), class: 'btn btn-sm btn-outline-success' %></p> -->
 
 <h1 class="text-center">Empire List Data and Matching</h1>
 <p class="text-center"><%= link_to 'Empire States Page', empire_states_path(), class: 'btn btn-outline-primary' %></p>
 
 <div class="m-5">
   <div class="w300"><input class="form-control" id="myInput" type="text" placeholder="Filter Table"></div>
-  <div class="text-center">
+  <!-- <div class="text-center">
     <div class="btn-group text-center" role="group" aria-label="Basic example">
-      <%= link_to 'Update Matched', list_data_hp_empire_states_path(update: 'matched'), class: 'btn btn-sm btn-outline-success w200' %>
-      <%= link_to 'Update Customers', list_data_hp_empire_states_path(update: 'customers'), class: 'btn btn-sm btn-outline-success w200' %>
-      <%= link_to 'Update Expired/Other', list_data_hp_empire_states_path(update: 'expired'), class: 'btn btn-sm btn-outline-success w200' %>
+      <%#= link_to 'Update Matched', list_data_hp_empire_states_path(update: 'matched'), class: 'btn btn-sm btn-outline-success w200' %>
+      <%#= link_to 'Update Customers', list_data_hp_empire_states_path(update: 'customers'), class: 'btn btn-sm btn-outline-success w200' %>
+      <%#= link_to 'Update Expired/Other', list_data_hp_empire_states_path(update: 'expired'), class: 'btn btn-sm btn-outline-success w200' %>
     </div>
-  </div>
+  </div> -->
   <p id="notice"><%= notice %></p>
 <table class="table table-striped border">
   <thead>
     <tr class="bg-secondary bg-gradient text-light">
       <th>State</th>
-      <th class="text-center">Action</th>
+      <th class="text-center">Run Match</th>
       <th class="text-center">Matched</th>
       <th class="text-center">Customers</th>
       <th class="text-center">Expired</th>
@@ -44,7 +44,8 @@
         <td><strong><%= empire_state.state %></strong></td>
         <td class="text-center">
           <div class="btn-group text-center" role="group" aria-label="Basic example">
-            <%= link_to 'Run Match', send("empire_master_#{empire_state.st.downcase}_matches_path", run: 'yes', route: 'hp'), class: 'btn btn-outline-success btn-sm w100', data: {disable_with: "Loading..."} %>
+            <%= link_to 'Small', send("empire_master_#{empire_state.st.downcase}_matches_path", run: 'yes', route: 'hp', type: 'small'), class: 'btn btn-outline-success btn-sm w75', data: {disable_with: "Loading..."} %>
+            <%= link_to 'Large', send("empire_master_#{empire_state.st.downcase}_matches_path", run: 'yes', route: 'hp', type: 'large'), target: :_blank, class: 'btn btn-outline-success btn-sm w75', data: {disable_with: "Loading..."} %>
           </div>
         </td>
         <% if empire_state.matched_customers.present? %>

@@ -39,7 +39,7 @@
   </thead>
 
   <tbody>
-    <% @empire_master_ca_matches.order(search_date: :desc).limit(250).each do |empire_master_ca_match| %>
+    <% @empire_master_ca_matches.limit(250).order(search_date: :desc).each do |empire_master_ca_match| %>
       <tr>
         <td><%= empire_master_ca_match.st %></td>
         <td><%= empire_master_ca_match.lid %></td>

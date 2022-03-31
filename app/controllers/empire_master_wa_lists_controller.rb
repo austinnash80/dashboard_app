@@ -8,6 +8,8 @@ class EmpireMasterWaListsController < ApplicationController
     if params['remove_all'] == 'yes' && params['confirm'] == 'yes'
       EmpireMasterWaList.delete_all
       EmpireState.where(st: 'WA').update_all list_size: 0
+      EmpireMasterWaMatch.delete_all
+      EmpireState.where(st: 'WA').update_all matched_customers: 0
       redirect_to empire_master_wa_lists_path(), notice: 'Records Deleted'
     end
 

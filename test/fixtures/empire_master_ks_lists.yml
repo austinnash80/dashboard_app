@@ -1,0 +1,49 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  lid: 1
+  list: MyString
+  lic_state: MyString
+  lic: MyString
+  record_type: MyString
+  lic_status: MyString
+  iss_date_s: MyString
+  iss_date: 2022-04-06
+  exp_date_s: MyString
+  exp_date: 2022-04-06
+  fname: MyString
+  mi: MyString
+  lname: MyString
+  suf: MyString
+  co: MyString
+  add: MyString
+  add2: MyString
+  city: MyString
+  st: MyString
+  zip: MyString
+  email: MyString
+  phone: MyString
+
+two:
+  lid: 1
+  list: MyString
+  lic_state: MyString
+  lic: MyString
+  record_type: MyString
+  lic_status: MyString
+  iss_date_s: MyString
+  iss_date: 2022-04-06
+  exp_date_s: MyString
+  exp_date: 2022-04-06
+  fname: MyString
+  mi: MyString
+  lname: MyString
+  suf: MyString
+  co: MyString
+  add: MyString
+  add2: MyString
+  city: MyString
+  st: MyString
+  zip: MyString
+  email: MyString
+  phone: MyString

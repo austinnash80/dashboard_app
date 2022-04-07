@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
   resources :lic_fix_uploads do collection {post :import} end
+    
+  resources :empire_master_ks_matches do collection {post :import} end
   resources :empire_manual_matches do collection {post :import} end
   resources :empire_master_wa_matches do collection {post :import} end
   resources :empire_master_va_matches do collection {post :import} end
@@ -29,6 +31,7 @@ Rails.application.routes.draw do
   resources :empire_state_tasks do collection {post :import} end
   resources :empire_state_tasks_suppliments do collection {post :import} end
   resources :empire_master_md_lists do collection {post :import} end
+  resources :empire_master_ks_lists do collection {post :import} end
   resources :empire_master_il_lists do collection {post :import} end
   resources :empire_master_tn_lists do collection {post :import} end
   resources :empire_master_ga_lists do collection {post :import} end

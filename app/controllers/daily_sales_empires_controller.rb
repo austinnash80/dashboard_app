@@ -40,6 +40,10 @@ class DailySalesEmpiresController < ApplicationController
   def monthly
 
   end
+  def state
+    @states = EmpireCustomer.pluck(:lic_state).uniq
+
+  end
 
   # GET /daily_sales_empires/1 or /daily_sales_empires/1.json
   def show

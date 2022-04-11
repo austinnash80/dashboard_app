@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   resources :lic_fix_uploads do collection {post :import} end
-    
+
   resources :empire_master_ks_matches do collection {post :import} end
   resources :empire_manual_matches do collection {post :import} end
   resources :empire_master_wa_matches do collection {post :import} end
@@ -66,6 +66,7 @@ Rails.application.routes.draw do
     collection do
       get 'run_update'
       get 'monthly'
+      get 'state'
     end
   end
   resources :mktg_postcards do collection {post :import}

@@ -1,0 +1,107 @@
+<h1 class="text-center">Empire Sales By State</h1>
+
+<% @date = DateTime.now %>
+<% month_s = @date.beginning_of_month %>
+<% month_e = @date.end_of_month %>
+<% year_s = @date.beginning_of_year %>
+<% year_e = @date.end_of_year %>
+
+<% month_s_prev = @date.beginning_of_month.prev_month %>
+<% month_e_prev = @date.end_of_month.prev_month %>
+
+
+<div class="row">
+  <div class="col-md-3">
+    <table class="table table-outline">
+      <caption class="caption-top">All Time</caption>
+      <caption class="">Based on Lic State (Displaying > 10 Purchases)</caption>
+      <thead>
+        <tr class="bg-secondary bg-gradient text-light">
+          <th>State</th>
+          <th>Purchases</th>
+          <th>Sales</th>
+        </tr>
+      </thead>
+      <tbody class="bg-light bg-gradient">
+        <% EmpireCustomer.order(lic_state: :asc).pluck(:lic_state).uniq.each do |i| %>
+          <% unless i.blank? || EmpireCustomer.where(lic_state: i).count(:price).to_i < 10 %>
+          <tr>
+            <td><%= i %></td>
+            <td><%= number_with_delimiter(EmpireCustomer.where(lic_state: i).count(:price)) %></td>
+            <td><%= number_to_currency(EmpireCustomer.where(lic_state: i).sum(:price) / 100, precision: 0) %></td>
+          </tr>
+          <% end %>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  <div class="col-md-3">
+    <table class="table table-outline">
+      <caption class="caption-top">Current Year  - <%= year_s.strftime('%Y') %></caption>
+      <thead>
+        <tr class="bg-secondary bg-gradient text-light">
+          <th>State</th>
+          <th>Purchases</th>
+          <th>Sales</th>
+        </tr>
+      </thead>
+      <tbody class="bg-light">
+        <% EmpireCustomer.order(lic_state: :asc).pluck(:lic_state).uniq.each do |i| %>
+          <% unless i.blank? || EmpireCustomer.where(lic_state: i).count(:price).to_i < 10 %>
+          <tr>
+            <td><%= i %></td>
+            <td><%= number_with_delimiter(EmpireCustomer.where(purchase: year_s...year_e).where(lic_state: i).count(:price)) %></td>
+            <td><%= number_to_currency(EmpireCustomer.where(purchase: year_s...year_e).where(lic_state: i).sum(:price) / 100, precision: 0) %></td>
+          </tr>
+          <% end %>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  <div class="col-md-3">
+    <table class="table table-outline">
+      <caption class="caption-top">Current Month - <%= month_s.strftime('%B') %></caption>
+      <thead>
+        <tr class="bg-secondary bg-gradient text-light">
+          <th>State</th>
+          <th>Purchases</th>
+          <th>Sales</th>
+        </tr>
+      </thead>
+      <tbody class="bg-light bg-gradient">
+        <% EmpireCustomer.order(lic_state: :asc).pluck(:lic_state).uniq.each do |i| %>
+          <% unless i.blank? || EmpireCustomer.where(lic_state: i).count(:price).to_i < 10 %>
+          <tr>
+            <td><%= i %></td>
+            <td><%= number_with_delimiter(EmpireCustomer.where(purchase: month_s..month_e).where(lic_state: i).count(:price)) %></td>
+            <td><%= number_to_currency(EmpireCustomer.where(purchase: month_s..month_e).where(lic_state: i).sum(:price) / 100, precision: 0) %></td>
+          </tr>
+          <% end %>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  <div class="col-md-3">
+    <table class="table table-outline">
+      <caption class="caption-top">Last Month - <%= month_s_prev.strftime('%B') %></caption>
+      <thead>
+        <tr class="bg-secondary bg-gradient text-light">
+          <th>State</th>
+          <th>Purchases</th>
+          <th>Sales</th>
+        </tr>
+      </thead>
+      <tbody class="bg-light bg-gradient">
+        <% EmpireCustomer.order(lic_state: :asc).pluck(:lic_state).uniq.each do |i| %>
+          <% unless i.blank? || EmpireCustomer.where(lic_state: i).count(:price).to_i < 10 %>
+          <tr>
+            <td><%= i %></td>
+            <td><%= number_with_delimiter(EmpireCustomer.where(purchase: month_s_prev...month_e_prev).where(lic_state: i).count(:price)) %></td>
+            <td><%= number_to_currency(EmpireCustomer.where(purchase: month_s_prev...month_e_prev).where(lic_state: i).sum(:price) / 100, precision: 0) %></td>
+          </tr>
+          <% end %>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

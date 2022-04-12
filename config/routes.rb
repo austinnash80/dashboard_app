@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :empire_master_mn_matches
+  resources :empire_master_mn_lists
   resources :lic_fix_uploads do collection {post :import} end
 
   resources :empire_master_ks_matches do collection {post :import} end

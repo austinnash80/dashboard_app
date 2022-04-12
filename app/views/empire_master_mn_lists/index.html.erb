@@ -1,0 +1,69 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Empire Master Mn Lists</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Lid</th>
+      <th>List</th>
+      <th>Lic state</th>
+      <th>Lic</th>
+      <th>Record type</th>
+      <th>Lic status</th>
+      <th>Iss date s</th>
+      <th>Iss date</th>
+      <th>Exp date s</th>
+      <th>Exp date</th>
+      <th>Fname</th>
+      <th>Mi</th>
+      <th>Lname</th>
+      <th>Suf</th>
+      <th>Co</th>
+      <th>Add</th>
+      <th>Add2</th>
+      <th>City</th>
+      <th>St</th>
+      <th>Zip</th>
+      <th>Email</th>
+      <th>Phone</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @empire_master_mn_lists.each do |empire_master_mn_list| %>
+      <tr>
+        <td><%= empire_master_mn_list.lid %></td>
+        <td><%= empire_master_mn_list.list %></td>
+        <td><%= empire_master_mn_list.lic_state %></td>
+        <td><%= empire_master_mn_list.lic %></td>
+        <td><%= empire_master_mn_list.record_type %></td>
+        <td><%= empire_master_mn_list.lic_status %></td>
+        <td><%= empire_master_mn_list.iss_date_s %></td>
+        <td><%= empire_master_mn_list.iss_date %></td>
+        <td><%= empire_master_mn_list.exp_date_s %></td>
+        <td><%= empire_master_mn_list.exp_date %></td>
+        <td><%= empire_master_mn_list.fname %></td>
+        <td><%= empire_master_mn_list.mi %></td>
+        <td><%= empire_master_mn_list.lname %></td>
+        <td><%= empire_master_mn_list.suf %></td>
+        <td><%= empire_master_mn_list.co %></td>
+        <td><%= empire_master_mn_list.add %></td>
+        <td><%= empire_master_mn_list.add2 %></td>
+        <td><%= empire_master_mn_list.city %></td>
+        <td><%= empire_master_mn_list.st %></td>
+        <td><%= empire_master_mn_list.zip %></td>
+        <td><%= empire_master_mn_list.email %></td>
+        <td><%= empire_master_mn_list.phone %></td>
+        <td><%= link_to 'Show', empire_master_mn_list %></td>
+        <td><%= link_to 'Edit', edit_empire_master_mn_list_path(empire_master_mn_list) %></td>
+        <td><%= link_to 'Destroy', empire_master_mn_list, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Empire Master Mn List', new_empire_master_mn_list_path %>

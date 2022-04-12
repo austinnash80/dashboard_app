@@ -1,0 +1,2 @@
+class EmpireMasterMnList < ApplicationRecord
+end

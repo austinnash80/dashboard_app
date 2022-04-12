@@ -1,0 +1,41 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Empire Master Mn Matches</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>St</th>
+      <th>Lid</th>
+      <th>List</th>
+      <th>Exp</th>
+      <th>Lic</th>
+      <th>Uid</th>
+      <th>Lname</th>
+      <th>Search date</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @empire_master_mn_matches.each do |empire_master_mn_match| %>
+      <tr>
+        <td><%= empire_master_mn_match.st %></td>
+        <td><%= empire_master_mn_match.lid %></td>
+        <td><%= empire_master_mn_match.list %></td>
+        <td><%= empire_master_mn_match.exp %></td>
+        <td><%= empire_master_mn_match.lic %></td>
+        <td><%= empire_master_mn_match.uid %></td>
+        <td><%= empire_master_mn_match.lname %></td>
+        <td><%= empire_master_mn_match.search_date %></td>
+        <td><%= link_to 'Show', empire_master_mn_match %></td>
+        <td><%= link_to 'Edit', edit_empire_master_mn_match_path(empire_master_mn_match) %></td>
+        <td><%= link_to 'Destroy', empire_master_mn_match, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Empire Master Mn Match', new_empire_master_mn_match_path %>

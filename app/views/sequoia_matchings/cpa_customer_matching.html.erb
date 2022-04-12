@@ -7,9 +7,9 @@
   </div>
 </div>
 <% if params['uid'].present? %>
-  <% sequoia = SequoiaCustomer.find_by(uid: params['uid']) %>
+  <% sequoia = SequoiaCustomer.order(purchase: :desc).find_by(uid: params['uid']) %>
 <% else %>
-  <% uid = SequoiaMember.order(last_purchase: :desc).where.not(uid: @cpa_matches_uid).where.not(uid: @cpa_double_uid).where.not(uid: @cpa_no_matches_uid).where(cpa: true).order(last_purchase: :desc).limit(1).pluck(:uid) %>
+  <% uid = SequoiaMember.where.not(uid: @cpa_matches_uid).where.not(uid: @cpa_double_uid).where.not(uid: @cpa_no_matches_uid).where(cpa: true).order(last_purchase: :desc).first(1).pluck(:uid) %>
   <% sequoia = SequoiaCustomer.order(purchase: :desc).find_by(uid: uid) %>
 <% end %>
 <div class="m-5">

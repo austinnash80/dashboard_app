@@ -7,15 +7,15 @@ class EmpireMasterMdMatchesController < ApplicationController
 
     # DELETE ALL
     if params['remove_all'] == 'yes' && params['confirm'] == 'yes'
-      EmpireMasterIndMatch.delete_all
+      EmpireMasterMdMatch.delete_all
       EmpireState.where(st: 'MD').update_all matched_customers: 0
-      redirect_to empire_master_ind_matches_path(), notice: 'Records Deleted'
+      redirect_to empire_master_md_matches_path(), notice: 'Records Deleted'
     end
 
     # EXPORT
     respond_to do |format|
       format.html
-      format.csv { send_data @empire_master_ind_matches.to_csv, filename: "Empire_Master_Ind_Matches-#{Date.today}.csv" }
+      format.csv { send_data @empire_master_md_matches.to_csv, filename: "Empire_Master_Md_Matches-#{Date.today}.csv" }
     end
 
     if params['run'] == 'yes'

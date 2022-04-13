@@ -144,6 +144,14 @@ class MktgExportsController < ApplicationController
       SequoiaMember.where(first_purchase: @dates).where(ea: true).where(ea_memberships: 1).all.each do |i|
         MktgExport.create(uid: i.uid, exp: i.first_purchase, campaign: 'New', des: params['des'])
       end
+      ### Sequoia Email
+    elsif params['campaign'] == 'Return' && params['delivery_type'] == 'Email'
+      SequoiaMember.where(membership_exp: @dates).where.not(uid: active_auto_renew).all.each do |i|
+        i.cpa == true ? des = 'CPA' : i.ea == true ? des = 'EA' : ''
+        if des.present?
+          MktgExport.create(uid: i.uid, exp: i.membership_exp, campaign: 'Return', des: des)
+        end
+      end
     end
 
     #Add the remaining customer infomation, USE NCOA WHEN AVAILIABLE
@@ -170,6 +178,15 @@ class MktgExportsController < ApplicationController
       MktgExport.update_all text_1: 'Membership Valid Through',text_2: '',text_3: ''
     elsif params['campaign'] == 'New' && params['des'] == 'EA'
       MktgExport.update_all text_1: 'Membership Valid Through',text_2: '',text_3: ''
+    end
+
+    if params['campaign'] == 'Return' && params['delivery_type'] == 'Email'
+      MktgExport.where(des: 'CPA').update_all text_1: 'CPA', text_2: 'CPA Variable Text 2', text_3: 'CPA Variable Text 3'
+      MktgExport.where(des: 'EA').update_all text_1: 'EA', text_2: 'EA Variable Text 2', text_3: 'EA Variable Text 3'
+      MktgExport.where(exp: @seg_1).update_all text_10: '1'
+      MktgExport.where(exp: @seg_2).update_all text_10: '2'
+      MktgExport.where(exp: @seg_3).update_all text_10: '3'
+      MktgExport.where(exp: @seg_4).update_all text_10: '4'
     end
 
     IdNumberStorage.where(id: 1).update_all campaign_id: params['id']

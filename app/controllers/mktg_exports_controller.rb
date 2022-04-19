@@ -181,8 +181,8 @@ class MktgExportsController < ApplicationController
     end
 
     if params['campaign'] == 'Return' && params['delivery_type'] == 'Email'
-      MktgExport.where(des: 'CPA').update_all text_1: 'CPA', text_2: 'CPE', text_3: '15%', text_4: '$126.50'
-      MktgExport.where(des: 'EA').update_all text_1: 'EA', text_2: 'CE', text_3: '10%', text_4: '$89'
+      MktgExport.where(des: 'CPA').update_all text_1: 'CPE', text_2: '15%', text_3: '$126.50'
+      MktgExport.where(des: 'EA').update_all text_1: 'CE', text_2: '10%', text_3: '$89'
       MktgExport.where(exp: @seg_1).update_all text_10: '1'
       MktgExport.where(exp: @seg_2).update_all text_10: '2'
       MktgExport.where(exp: @seg_3).update_all text_10: '3'

@@ -42,7 +42,7 @@
   </div>
   <div class="col-md-3">
     <table class="table table-outline">
-      <caption class="caption-top">Current Year  - <%= year_s.strftime('%Y') %></caption>
+      <caption class="caption-top">YTD  - <%= year_s.strftime('%Y') %></caption>
       <thead>
         <tr class="bg-secondary bg-gradient text-light">
           <th>State</th>
@@ -120,6 +120,121 @@
           <td></td>
           <td></td>
           <td><%= number_to_currency(EmpireCustomer.where(purchase: month_s_prev...month_e_prev).sum(:price) / 100, precision: 0) %></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<p><%= (year_s - 2.year) %></p><p><%= (year_e - 2.year) %></p>
+<div class="row"> <!-- Bottom ROW -->
+  <div class="col-md-3">
+    <table class="table table-outline">
+      <caption class="caption-top"><%= (year_s - 1).strftime('%Y') %></caption>
+      <thead>
+        <tr class="bg-secondary bg-gradient text-light">
+          <th>State</th>
+          <th>Purchases</th>
+          <th>Sales</th>
+        </tr>
+      </thead>
+      <tbody class="bg-light">
+        <% EmpireCustomer.order(lic_state: :asc).pluck(:lic_state).uniq.each do |i| %>
+          <% unless i.blank? || EmpireCustomer.where(lic_state: i).count(:price).to_i < 10 %>
+          <tr>
+            <td><%= i %></td>
+            <td><%= number_with_delimiter(EmpireCustomer.where(purchase: (year_s - 1.year)...year_e - 1.year).where(lic_state: i).count(:price)) %></td>
+            <td><%= number_to_currency(EmpireCustomer.where(purchase: (year_s - 1.year)...(year_e - 1.year)).where(lic_state: i).sum(:price) / 100, precision: 0) %></td>
+          </tr>
+          <% end %>
+        <% end %>
+        <tr>
+          <td></td>
+          <td></td>
+          <td><%= number_to_currency(EmpireCustomer.where(purchase: (year_s - 1.year)...(year_e - 1.year)).sum(:price) / 100, precision: 0) %></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="col-md-3">
+    <table class="table table-outline">
+      <caption class="caption-top"><%= (year_s - 2.year).strftime('%Y') %></caption>
+      <thead>
+        <tr class="bg-secondary bg-gradient text-light">
+          <th>State</th>
+          <th>Purchases</th>
+          <th>Sales</th>
+        </tr>
+      </thead>
+      <tbody class="bg-light">
+        <% EmpireCustomer.order(lic_state: :asc).pluck(:lic_state).uniq.each do |i| %>
+          <% unless i.blank? || EmpireCustomer.where(lic_state: i).count(:price).to_i < 10 %>
+          <tr>
+            <td><%= i %></td>
+            <td><%= number_with_delimiter(EmpireCustomer.where(purchase: (year_s - 2.year)...year_e - 2.year).where(lic_state: i).count(:price)) %></td>
+            <td><%= number_to_currency(EmpireCustomer.where(purchase: (year_s - 2.year)...(year_e - 2.year)).where(lic_state: i).sum(:price) / 100, precision: 0) %></td>
+          </tr>
+          <% end %>
+        <% end %>
+        <tr>
+          <td></td>
+          <td></td>
+          <td><%= number_to_currency(EmpireCustomer.where(purchase: (year_s - 2.year)...(year_e - 2.year)).sum(:price) / 100, precision: 0) %></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="col-md-3">
+    <table class="table table-outline">
+      <caption class="caption-top"><%= (year_s - 3.year).strftime('%Y') %></caption>
+      <thead>
+        <tr class="bg-secondary bg-gradient text-light">
+          <th>State</th>
+          <th>Purchases</th>
+          <th>Sales</th>
+        </tr>
+      </thead>
+      <tbody class="bg-light">
+        <% EmpireCustomer.order(lic_state: :asc).pluck(:lic_state).uniq.each do |i| %>
+          <% unless i.blank? || EmpireCustomer.where(lic_state: i).count(:price).to_i < 10 %>
+          <tr>
+            <td><%= i %></td>
+            <td><%= number_with_delimiter(EmpireCustomer.where(purchase: (year_s - 3.year)...year_e - 3.year).where(lic_state: i).count(:price)) %></td>
+            <td><%= number_to_currency(EmpireCustomer.where(purchase: (year_s - 3.year)...(year_e - 3.year)).where(lic_state: i).sum(:price) / 100, precision: 0) %></td>
+          </tr>
+          <% end %>
+        <% end %>
+        <tr>
+          <td></td>
+          <td></td>
+          <td><%= number_to_currency(EmpireCustomer.where(purchase: (year_s - 3.year)...(year_e - 3.year)).sum(:price) / 100, precision: 0) %></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="col-md-3">
+    <table class="table table-outline">
+      <caption class="caption-top"><%= (year_s - 4.year).strftime('%Y') %></caption>
+      <thead>
+        <tr class="bg-secondary bg-gradient text-light">
+          <th>State</th>
+          <th>Purchases</th>
+          <th>Sales</th>
+        </tr>
+      </thead>
+      <tbody class="bg-light">
+        <% EmpireCustomer.order(lic_state: :asc).pluck(:lic_state).uniq.each do |i| %>
+          <% unless i.blank? || EmpireCustomer.where(lic_state: i).count(:price).to_i < 10 %>
+          <tr>
+            <td><%= i %></td>
+            <td><%= number_with_delimiter(EmpireCustomer.where(purchase: (year_s - 4.year)...year_e - 4.year).where(lic_state: i).count(:price)) %></td>
+            <td><%= number_to_currency(EmpireCustomer.where(purchase: (year_s - 4.year)...(year_e - 4.year)).where(lic_state: i).sum(:price) / 100, precision: 0) %></td>
+          </tr>
+          <% end %>
+        <% end %>
+        <tr>
+          <td></td>
+          <td></td>
+          <td><%= number_to_currency(EmpireCustomer.where(purchase: (year_s - 4.year)...(year_e - 3.year)).sum(:price) / 100, precision: 0) %></td>
         </tr>
       </tbody>
     </table>

@@ -1,6 +1,134 @@
 <p id="notice"><%= notice %></p>
 
 <h3 class="text-center">Empire State: <strong><%= @empire_state.state %></strong></h3>
+
+<h5 class="bold">Match Analysis</h5>
+
+<% less_5 = [] %>
+<% between_5_10 = [] %>
+<% between_10_15 = [] %>
+<% between_15_20 = [] %>
+<% between_20_25 = [] %>
+<% between_25_30 = [] %>
+<% over_30 = [] %>
+<% t_less_5 = [] %>
+<% t_between_5_10 = [] %>
+<% t_between_10_15 = [] %>
+<% t_between_15_20 = [] %>
+<% t_between_20_25 = [] %>
+<% t_between_25_30 = [] %>
+<% t_over_30 = [] %>
+
+
+<% st = @empire_state.st %>
+<% total = "EmpireMaster#{st.titlecase}Match".constantize.count %>
+<% iss_date = "EmpireMaster#{st.titlecase}List".constantize.first(1).pluck(:iss_date) %>
+
+<% if iss_date.include? (nil) || st == 'CA' %>
+  <p class="danger">No issue date in master list. Or list too big</p>
+<% else %>
+  <% "EmpireMaster#{st.titlecase}Match".constantize.all.each do |i| %>
+      <% member = EmpireMember.find_by(uid: i.uid) %>
+      <% master = "EmpireMaster#{st.titlecase}List".constantize.find_by(lid: i.lid) %>
+      <% if master.present? && member.present? %>
+        <% days_diff = (member.first_purchase - master.iss_date).to_i %>
+          <% if days_diff < 1825 %>
+            <% less_5.push(1) %>
+          <% elsif days_diff < 3650 %>
+            <% between_5_10.push(1) %>
+          <% elsif days_diff < 5475 %>
+            <% between_10_15.push(1) %>
+          <% elsif days_diff < 7300 %>
+            <% between_15_20.push(1) %>
+          <% elsif days_diff < 9125 %>
+            <% between_20_25.push(1) %>
+          <% elsif days_diff < 10950 %>
+            <% between_25_30.push(1) %>
+          <% elsif days_diff >= 10950 %>
+            <% over_30.push(1) %>
+          <% end %>
+        <% end %>
+  <% end %>
+<% end %>
+
+<div class="row">
+  <div class="col-md-3">
+    <table class="table table-striped table-outline">
+      <caption class="caption-top">Years between license issue date and first purchase</caption>
+      <thead>
+        <tr class="bg-secondary bg-gradient text-light">
+          <th>Years</th>
+          <th>Matches</th>
+          <th>Percent</th>
+        </tr>
+        <tbody>
+          <tr>
+            <td> <5</td>
+            <td><%= number_with_delimiter(less_5.sum) %></td>
+            <td><%= number_to_percentage((less_5.sum.to_f/total) * 100, precision: 0) %></td>
+          </tr>
+          <tr>
+            <td>5-10</td>
+            <td><%= number_with_delimiter(between_5_10.sum) %></td>
+            <td><%= number_to_percentage((between_5_10.sum.to_f/total) * 100, precision: 0) %></td>
+          </tr>
+          <tr>
+            <td>10-15</td>
+            <td><%= number_with_delimiter(between_10_15.sum) %></td>
+            <td><%= number_to_percentage((between_10_15.sum.to_f/total) * 100, precision: 0) %></td>
+          </tr>
+          <tr>
+            <td>15-20</td>
+            <td><%= number_with_delimiter(between_15_20.sum) %></td>
+            <td><%= number_to_percentage((between_15_20.sum.to_f/total) * 100, precision: 0) %></td>
+          </tr>
+          <tr>
+            <td>20-25</td>
+            <td><%= number_with_delimiter(between_20_25.sum) %></td>
+            <td><%= number_to_percentage((between_20_25.sum.to_f/total) * 100, precision: 0) %></td>
+          </tr>
+          <tr>
+            <td>20-25</td>
+            <td><%= number_with_delimiter(between_25_30.sum) %></td>
+            <td><%= number_to_percentage((between_25_30.sum.to_f/total) * 100, precision: 0) %></td>
+          </tr>
+          <tr>
+            <td>>30</td>
+            <td><%= number_with_delimiter(over_30.sum) %></td>
+            <td><%= number_to_percentage((over_30.sum.to_f/total) * 100, precision: 0) %></td>
+          </tr>
+          <tr class="bold">
+            <td>Total</td>
+            <td><%= number_with_delimiter(total) %></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </thead>
+    </table>
+  </div>
+</div>
+
+
+
+<hr>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
 <br>
 <h5 class=""><strong>New State Tasks</strong></h5>
 <br>

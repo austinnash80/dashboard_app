@@ -195,7 +195,7 @@ class MktgExportsController < ApplicationController
 
   def empire
     if params['campaign'] == 'Return' && params['empire_st'] == 'Rolling'
-      rolling_state = ['CA','NY','GA','NM','TN','TX','UT','WA'] #Last Updated Feb 2022
+      rolling_state = ['CA','NY','GA','NM','TN','TX','UT','WA', 'MO'] #Last Updated June 2022
       models = []
       rolling_state.each do |state|
         models.push("EmpireMaster#{state.titlecase}Match")

@@ -195,7 +195,7 @@ class MktgExportsController < ApplicationController
 
   def empire
     if params['campaign'] == 'Return' && params['empire_st'] == 'Rolling'
-      rolling_state = ['CA','NY','GA','NM','TN','TX','UT','WA', 'MO', 'PA', 'IND', 'NC', 'NJ', 'SC'] #Last Updated June 2022
+      rolling_state = ['CA','NY','GA','NM','TN','TX','UT','WA', 'MO', 'PA', 'IND', 'NC', 'NJ', 'SC', 'VA'] #Last Updated June 2022
       models = []
       rolling_state.each do |state|
         models.push("EmpireMaster#{state.titlecase}Match")
@@ -308,7 +308,6 @@ class MktgExportsController < ApplicationController
       MktgExport.where(des: 'MO').update_all text_1: 'MO 12hr packages', text_2: '$58.50'
       MktgExport.where(des: 'MO_B').update_all text_1: 'MO 12hr packages', text_2: '$58.50'
       MktgExport.where(des: 'MO_S').update_all text_1: 'MO 12hr packages', text_2: '$58.50'
-      MktgExport.where(des: 'IND').update_all text_1: 'IN 12hr packages', text_2: '$48.99'
       MktgExport.where(des: 'IND').update_all text_1: 'IN 12hr packages', text_2: '$48.99'
       MktgExport.where(des: 'NC').update_all text_1: 'NC 4hr packages', text_2: '$39.50'
       MktgExport.where(des: 'NJ').update_all text_1: 'NJ 12hr packages', text_2: '$52.49'

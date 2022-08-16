@@ -34,7 +34,7 @@
   </thead>
 
   <tbody>
-    <% @master_cpa_matches.limit(250).each do |master_cpa_match| %>
+    <% @master_cpa_matches.order(search_date: :desc).limit(250).each do |master_cpa_match| %>
       <tr>
         <td><%= master_cpa_match.lid %></td>
         <td><%= master_cpa_match.list %></td>

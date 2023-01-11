@@ -142,7 +142,7 @@ class MktgExportsController < ApplicationController
       end
     elsif params['campaign'] == 'New' && params['des'] == 'EA'
       SequoiaMember.where(first_purchase: @dates).where(ea: true).where(ea_memberships: 1).all.each do |i|
-        MktgExport.create(uid: i.uid, exp: i.first_purchase, campaign: 'New', des: params['des'])
+        MktgExport.create(uid: i.uid, exp: i.first_purchase, campaign: 'New', des: params['des'], text_2: (i.first_purchase + 12.months))
       end
       ### Sequoia Email
     elsif params['campaign'] == 'Return' && params['delivery_type'] == 'Email'

@@ -138,7 +138,7 @@ class MktgExportsController < ApplicationController
       end
     elsif params['campaign'] == 'New' && params['des'] == 'CPA'
       SequoiaMember.where(first_purchase: @dates).where(cpa: true).where(cpa_memberships: 1).all.each do |i|
-        MktgExport.create(uid: i.uid, exp: i.first_purchase, campaign: 'New', des: params['des'], text_2: i.first_purchase + 12.months)
+        MktgExport.create(uid: i.uid, exp: i.first_purchase, campaign: 'New', des: params['des'], text_2: (i.first_purchase + 12.months))
       end
     elsif params['campaign'] == 'New' && params['des'] == 'EA'
       SequoiaMember.where(first_purchase: @dates).where(ea: true).where(ea_memberships: 1).all.each do |i|
@@ -171,13 +171,13 @@ class MktgExportsController < ApplicationController
 
     #Add the Marketing TEXT (do with a table in the future?)
     if params['campaign'] == 'Return' && params['des'] == 'CPA'
-      MktgExport.update_all text_1: 'Membership Expires',text_2: '',text_3: ''
+      MktgExport.update_all text_1: 'Membership Expires',text_3: ''
     elsif params['campaign'] == 'Return' && params['des'] == 'EA'
-      MktgExport.update_all text_1: 'Membership Expires',text_2: '',text_3: ''
+      MktgExport.update_all text_1: 'Membership Expires'
     elsif params['campaign'] == 'New' && params['des'] == 'CPA'
-      MktgExport.update_all text_1: 'Membership Valid Through',text_2: '',text_3: ''
+      MktgExport.update_all text_1: 'Membership Valid Through'
     elsif params['campaign'] == 'New' && params['des'] == 'EA'
-      MktgExport.update_all text_1: 'Membership Valid Through',text_2: '',text_3: ''
+      MktgExport.update_all text_1: 'Membership Valid Through'
     end
 
     if params['campaign'] == 'Return' && params['delivery_type'] == 'Email'

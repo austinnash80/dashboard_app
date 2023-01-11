@@ -18,7 +18,7 @@
            var id = parseInt("<%= @id %>")
            for (i = id; i < id + 1; i++) {
              // text += d[i].purchase + "<br>";
-             // window.open("http://localhost:3000/sequoia_customers?s_id="+d[i].id+
+             // window.open("http://localhost:3001/sequoia_customers?s_id="+d[i].id+
              window.open("https://dashboard-app-21.herokuapp.com/sequoia_customers?s_id="+d[i].id+
              "&order_id="+d[i].order_id+
              "&uid="+d[i].uid+
@@ -50,3 +50,8 @@ get_the_data();
 // });
 
 </script>
+
+<form action="https://www.krnseq.com/nash-uw82mOC8lWd21.php" method=“POST”>
+<input type="hidden" name="anash_auth" value="c6D-YoR-lD3-fMp">
+<input type="submit" value="Go">
+</form>

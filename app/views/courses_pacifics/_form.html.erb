@@ -26,9 +26,9 @@
       <% end %>
       <br>
       <% if params['sub_category'].present? %>
-        <%= f.input :sub_category, label: 'Sub Category', hint: 'Only Business courses will have a Sub Category', input_html: {value: params['sub_category']} %>
+        <%= f.input :sub_category, label: 'Sub Category', hint: 'Only business courses will have a Sub Category', input_html: {value: params['sub_category']} %>
       <% else %>
-        <%= f.input :sub_category, label: 'Sub Category', as: :select, collection: ['Personnel/Human Resources', 'Personal Development', 'Management Services', 'Finance', 'Computer Software & Applications', 'Communications and Marketing', 'Business Management & Organization', 'Business Law'], hint: 'Only Business courses will have a Sub Category' %>
+        <%= f.input :sub_category, label: 'Sub Category', as: :select, collection: ['Personnel/Human Resources', 'Personal Development', 'Management Services', 'Finance', 'Computer Software & Applications', 'Communications and Marketing', 'Business Management & Organization', 'Business Law', 'Information Technology'], hint: 'Only Business courses will have a Sub Category' %>
       <% end %>
       <br>
       <% if params['pub_date'].present? %>

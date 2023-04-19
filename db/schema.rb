@@ -213,6 +213,7 @@ ActiveRecord::Schema.define(version: 2022_04_12_165453) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "lic_state"
+    t.index ["lid"], name: "index_empire_master_ca_lists_on_lid", unique: true
   end
 
   create_table "empire_master_ca_matches", force: :cascade do |t|
@@ -229,7 +230,6 @@ ActiveRecord::Schema.define(version: 2022_04_12_165453) do
     t.integer "uid2"
     t.integer "uid3"
     t.text "notes"
-    t.index ["lid"], name: "index_empire_master_ca_matches_on_lid", unique: true
   end
 
   create_table "empire_master_double_accounts", force: :cascade do |t|
